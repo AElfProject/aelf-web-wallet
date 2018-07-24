@@ -14,6 +14,10 @@ module.exports = appInfo => {
     mapping: {
       '.tpl': 'nunjucks',
     },
+  };
+  config.proxy = {
+    host: 'http://localhost:1234', // target host that matched path will be proxy to
+    match: /\/aelf\/api/ // path pattern.
   }
 
   // config.view = {

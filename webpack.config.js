@@ -42,8 +42,27 @@ module.exports = {
 			}
 		}, {
 			test: /\.scss$/,
-			use: ['style-loader', 'css-loader', 'sass-loader']
-		}, ]
+			use: [
+				'style-loader',
+				{
+					loader: 'css-loader',
+					options: {
+						modules: true,
+						localIdentName: 'AELF-[path][name]_[local]-[hash:base64:5]',
+						// localIdentName: '[path][name]__[local]--[hash:base64:5]',
+						// getLocalIdent: (context, localIdentName, localName, options) => {
+						// 	console.log('localIdentName', localName);
+						// 	return 'whatever_random_class_name'
+						// }
+					}
+				},
+				'sass-loader'
+			]
+		}, {
+			// 这里用来加载ant-mobile的样式，不做处理。
+			test: /\.css$/,
+			use: ['style-loader', 'css-loader']
+		}]
 	},
 	node: {
 		fs: 'empty',

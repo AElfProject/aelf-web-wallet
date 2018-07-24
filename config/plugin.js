@@ -14,3 +14,8 @@ exports.nunjucks = {
 //   enable: true,
 //   package: 'egg-view',
 // };
+
+exports.proxy = {
+  enable: true,
+  package: 'egg-proxy',
+};

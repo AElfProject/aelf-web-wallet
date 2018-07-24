@@ -1,0 +1,9 @@
+.forbidden {
+	word-wrap: break-word;
+    -webkit-user-select:none;
+    -moz-user-select: none; 
+    -ms-user-select: none;     
+    user-select:none;/*禁用页面内容选中和复制操作*/        
+    -webkit-touch-callout:none;/*禁用长按页面时的弹出菜单(iOS下有效)*/
+    -webkit-tap-highlight-color:rgba(0,0,0,0);/*去掉点击链接和文本框对象时默认的灰色半透明覆盖层(iOS)或者虚框(Android)*/        
+}

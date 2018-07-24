@@ -2,4 +2,6 @@
 .idea/
 **/logs
 **/run
+.travis.yml
+app/public/js/*
 test.js

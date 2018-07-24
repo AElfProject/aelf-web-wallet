@@ -1,0 +1,40 @@
+html {
+  display: flex;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+/**浏览器的css reset*/
+body, div, span {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+}
+
+span {
+  line-height: 1.2em;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+div, span {
+  flex-direction: column;
+  display: flex;
+}
+
+input {
+  display: flex;
+}
+
+img {
+  box-sizing: border-box;
+}
