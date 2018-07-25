@@ -8,10 +8,9 @@
   <link rel="stylesheet" href="../public/style/browser_reset.css">
 <body>
   <div id="welcome-page">
+    <p>Welcome to ELF wallet Beta.</p>
     <p>你好，AELF, 这里是开屏页。</p>
     <p>用来放宣传图片</p>
-    <p>广告</p>
-    <p>小游戏</p>
     <p>等等</p>
   </div>
 

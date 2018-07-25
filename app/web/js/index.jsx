@@ -18,6 +18,8 @@ import getWalletCreate from './components/getWallet/Create/Create'
 import getWalletBackup from './components/getWallet/Backup/Backup'
 import getWalletImport from './components/getWallet/Import/Import'
 
+import HomePage from './components/HomePage/HomePage'
+
 console.log("aelf: ", aelf);
 
 import style from '../style/index.scss'
@@ -73,11 +75,16 @@ const App02 = connect(
 // remove welcome-page
 let welcomePage = document.getElementById('welcome-page');
 welcomePage.style.display = 'none';
+// setTimeout(function () {
+//   let welcomePage = document.getElementById('welcome-page');
+//   welcomePage.style.display = 'none';
+// }, 1000);
 
+// <Route path="/" component={App}>
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
-      <Route path="/" component={App}>
+      <Route path="/" component={HomePage}>
         <Route path="/about" component={About}></Route>
         <Route path="/app" component={App02}></Route>
       </Route>

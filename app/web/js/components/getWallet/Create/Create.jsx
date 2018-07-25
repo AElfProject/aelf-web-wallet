@@ -1,95 +1,85 @@
 import React, { Component } from 'react'
-import { Button, WhiteSpace } from 'antd-mobile'
+import { Button, WhiteSpace, List, InputItem, Toast } from 'antd-mobile'
+import Password from '../Password/Password'
+
 import style from './Create.scss'
 import { hashHistory } from 'react-router'
+
+import passwordCheck from '../../../utils/passwordCheck'
+import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
+import insertWalletInfo from '../../../utils/walletStorage'
 
 import aelf from 'aelf-sdk'
 
 // React component
-class Agreement extends Component {
+class Create extends Component {
     constructor() {
         super();
         this.haveCreate = false;
         this.creating = false;
+        this.state = {
+            password: ''
+        };
     }
 
     createAndGO() {
         if (!!this.haveCreate) {
-            alert('钱包已经创建');
-            hashHistory.push('/');
+            Toast.info('钱包已经创建', 3, () => {
+                hashHistory.push('/get-wallet/backup');
+            });
             return;
         }
         if (!!this.creating) {
-            alert('钱包正在创建中');
+            Toast.info('钱包正在创建中', 3);
             return;
         }
 
         this.creating = true;
 
-        let password = 'hzz123';
+        let password = this.state.password;
 
-        // TODO: 将localStorage部分封装到aelf-sdk中去，
-        // node部分使用file（json）存储，RN使用AsyncStorage.
         let walletInfo = aelf.wallet.createNewWallet();
-        console.log('walletInfo:::: ', walletInfo);
-        walletInfo.AESEncryptoPrivateKey = aelf.wallet.AESEncrypto(walletInfo.privateKey, password);
-        walletInfo.AESEncryptoMnemonic = aelf.wallet.AESEncrypto(walletInfo.mnemonic, password);
+        let result = insertWalletInfo(walletInfo, password);
 
-        delete walletInfo.privateKey;
-        delete walletInfo.mnemonic;
-        delete walletInfo.xPrivateKey;
-
-        console.log('window decrypto: ', window.Aelf.wallet.AESDecrypto(walletInfo.AESEncryptoPrivateKey, password));
-        console.log('aelf decrypto: ', aelf.wallet.AESDecrypto(walletInfo.AESEncryptoMnemonic, password));
-        console.log('wallet info: ', walletInfo);
-        if (typeof localStorage !== 'undefined') {
-            let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList')) || {};
-
-            // 日哦, 哪里配错了？不让我用。。。babel?
-            // walletInfoList[walletInfo.address] = {
-            //     ...walletInfo,
-            //     walletId: walletInfo.address,
-            //     assets: [{
-            //         contractAddress: '',
-            //         tokenName: '',
-            //         // balance 从服务器再取
-            //     }]
-            // };
-            walletInfoList[walletInfo.address] = Object.assign(walletInfo, {
-                walletId: walletInfo.address,
-                assets: [{
-                    contractAddress: '',
-                    tokenName: ''
-                }]
+        if (result) {
+            this.haveCreate = true;
+            Toast.info('Create success. Turn to Backup after 3s.', 3, () => {
+                hashHistory.push('/get-wallet/backup');
             });
-            localStorage.setItem('walletInfoList', JSON.stringify(walletInfoList));
-            localStorage.setItem('agreement', true);
-            localStorage.setItem('lastuse', walletInfo.address);
         } else {
-            // TODO, 将这种判断提前到react的js加载之前。
-            alert('不支持使用钱包, 请使用现代浏览器，如: chrome, Firefox, IE10及以上');
+            Toast.fail('(꒦_꒦) ...Fail, please check the form. Or call Huang Zongzhe');
         }
-        this.haveCreate = true;
-        // TODO, 不提供限时的backup回退到这个页面
-        // hashHistory.push('/get-wallet/backup')
+    }
+
+    setPassword(password) {
+        this.setState({password: password});
     }
 
     render() {
+        let createButton = '';
+        if (this.state.password) {
+            createButton = <Button onClick={() => this.createAndGO()}>ELF to da moon!</Button>;
+        }
+
         return (
             <div>
-                <div className={style.center}>
-                    <h3>AELF使用条款</h3>
+                <h3 className={style.title}>创建钱包 / Create Wallet</h3>
+
+                <div className={style.text}>
+                    <p>https://en.wikipedia.org/wiki/Advanced_Encryption_Standard</p>
+                    <p>AES: In June 2003, the U.S. Government announced that AES could be used to protect classified information;</p>
+                    <p>Your privateKey,mnemonic + password -> AES -> localStorage without network transfer</p>
                 </div>
+
+                 <Password
+                    setPassword={password => this.setPassword(password)}
+                ></Password>
+
                 <WhiteSpace />
-                <div className={style.textContainer}>
-                    这里放条款
-                </div>
-                <WhiteSpace />
-                {/*<Button onClick={() => this.nextPage()}>已阅读并且同意条款</Button>*/}
-                <Button onClick={() => this.createAndGO()}>确认生成钱包</Button>
+                {createButton}
             </div>
         );
     }
 }
 
-export default Agreement
+export default Create

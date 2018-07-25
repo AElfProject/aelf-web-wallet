@@ -19,15 +19,15 @@ class Agreement extends Component {
         return (
             <div>
                 <div className={style.center}>
-                    <h3>AELF使用条款</h3>
+                    <h3>AELF钱包使用事项</h3>
                 </div>
                 <WhiteSpace />
                 <div className={style.textContainer}>
-                    这里放条款
+                    这里放使用事项 / Things you need to know.
                 </div>
                 <WhiteSpace />
                 {/*<Button onClick={() => this.nextPage()}>已阅读并且同意条款</Button>*/}
-                <Button onClick={() => hashHistory.push('/get-wallet/guide')}>已阅读并且同意条款</Button>
+                <Button onClick={() => hashHistory.push('/get-wallet/guide')}>已阅读并且同意 / Agree</Button>
             </div>
         );
     }
