@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react'
-import { WhiteSpace, List, InputItem, Toast } from 'antd-mobile'
+import { WhiteSpace, List, InputItem } from 'antd-mobile'
 import style from './Password.scss'
 import passwordCheck from '../../../utils/passwordCheck'
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'

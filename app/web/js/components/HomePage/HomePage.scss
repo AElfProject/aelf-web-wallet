@@ -12,3 +12,15 @@
   width: 300px;
   padding: 0;
 }
+
+.myDrawer .am-drawer-content .am-drawer-draghandle {
+	width: 0px;
+}
+
+.bottomTabBar {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 50px;
+}

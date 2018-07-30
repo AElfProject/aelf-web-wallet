@@ -6,6 +6,7 @@ import passwordCheck from '../../../utils/passwordCheck'
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import insertWalletInfo from '../../../utils/walletStorage'
 import Password from '../Password/Password'
+import WalletName from '../WalletName/WalletName'
 
 import aelf from 'aelf-sdk'
 
@@ -25,6 +26,11 @@ class Import extends Component {
             Toast.fail('No password', 2);
             return;
         }
+        if (!this.walletName) {
+            Toast.fail('No walletName', 2);
+            return;
+        }
+
         if (!this.state.mnemonic && !this.state.privateKey) {
             Toast.fail('Please input your privateKey or mnemonic', 3);
             return;
@@ -51,7 +57,9 @@ class Import extends Component {
             return;
         }
 
+
         let walletInfo = mnemonicWallet || privateKeyWallet; // 助记词钱包优先
+        walletInfo.walletName = this.walletName;
         let result = insertWalletInfo(walletInfo, password);
 
         if (result) {
@@ -81,6 +89,10 @@ class Import extends Component {
     setPassword(password) {
         this.password = password;
     }
+
+    setWalletName(walletName) {
+        this.walletName = walletName;
+    }
   
     render() {
         return (
@@ -88,6 +100,10 @@ class Import extends Component {
                 <h3 className={style.title}>导入钱包 / Import Wallet</h3>
 
                 <p className={style.title}>We will use mnemonic in preference than privateKey</p>
+
+                <WalletName
+                    setWalletName={walletName => this.setWalletName(walletName)}
+                ></WalletName>
 
                 <List renderHeader={() => '助记词 / Mnemonic'}>
                     <TextareaItem

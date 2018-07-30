@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, WhiteSpace, List, InputItem, Toast } from 'antd-mobile'
 import Password from '../Password/Password'
+import WalletName from '../WalletName/WalletName'
 
 import style from './Create.scss'
 import { hashHistory } from 'react-router'
@@ -39,6 +40,7 @@ class Create extends Component {
         let password = this.state.password;
 
         let walletInfo = aelf.wallet.createNewWallet();
+        walletInfo.walletName = this.state.walletName;
         let result = insertWalletInfo(walletInfo, password);
 
         if (result) {
@@ -55,9 +57,17 @@ class Create extends Component {
         this.setState({password: password});
     }
 
+    setWalletName(walletName) {
+        this.setState({walletName: walletName})
+    }
+
+    inputWalletName(walletName) {
+        this.setState({walletName: walletName});
+    }
+
     render() {
         let createButton = '';
-        if (this.state.password) {
+        if (this.state.password && this.state.walletName) {
             createButton = <Button onClick={() => this.createAndGO()}>ELF to da moon!</Button>;
         }
 
@@ -71,7 +81,11 @@ class Create extends Component {
                     <p>Your privateKey,mnemonic + password -> AES -> localStorage without network transfer</p>
                 </div>
 
-                 <Password
+                <WalletName
+                    setWalletName={walletName => this.setWalletName(walletName)}
+                ></WalletName>
+
+                <Password
                     setPassword={password => this.setPassword(password)}
                 ></Password>
 

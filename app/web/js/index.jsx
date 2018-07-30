@@ -19,6 +19,10 @@ import getWalletBackup from './components/getWallet/Backup/Backup'
 import getWalletImport from './components/getWallet/Import/Import'
 
 import HomePage from './components/HomePage/HomePage'
+import Assets from './components/Assets/Assets'
+import AssetHome from './components/Asset/Home/Home'
+import AssetTransfer from './components/Asset/Transfer/Transfer'
+import AssetTransactionDetail from './components/Asset/TransactionDetail/TransactionDetail'
 
 console.log("aelf: ", aelf);
 
@@ -72,9 +76,28 @@ const App02 = connect(
   mapDispatchToProps
 )(Counter)
 
+const HomePageConnected = (
+  mapStateToProps,
+  mapDispatchToProps
+)(HomePage);
+
+const AssetTransferConnected = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AssetTransfer);
+
+
+// TODO: localStorage file, asyncStorage统一成一个方法。
+let walletInfoList = localStorage.getItem('walletInfoList');
+let notPageGuide = !hashHistory.getCurrentLocation().pathname.match('/get-wallet/guide');
+if (!walletInfoList && notPageGuide) {
+  hashHistory.push('/get-wallet/guide');
+}
+
 // remove welcome-page
 let welcomePage = document.getElementById('welcome-page');
 welcomePage.style.display = 'none';
+
 // setTimeout(function () {
 //   let welcomePage = document.getElementById('welcome-page');
 //   welcomePage.style.display = 'none';
@@ -87,6 +110,10 @@ ReactDOM.render(
       <Route path="/" component={HomePage}>
         <Route path="/about" component={About}></Route>
         <Route path="/app" component={App02}></Route>
+        <Route path="/assets" component={Assets}></Route>
+        <Route path="/assethome" component={AssetHome}></Route>
+        <Route path="/assettransfer" component={AssetTransferConnected}></Route>
+        <Route path="/transactiondetail" component={AssetTransactionDetail}></Route>
       </Route>
       <Route path="/get-wallet/guide" component={getWalletGuide}/>
       <Route path="/get-wallet/agreement" component={getWalletAgreement}/>

@@ -22,6 +22,7 @@ function insertWalletInfo(walletInfoInput, password) {
     delete walletInfo.privateKey;
     delete walletInfo.mnemonic;
     delete walletInfo.xPrivateKey;
+    delete walletInfo.keyPair;
 
     // console.log('window decrypto: ', window.Aelf.wallet.AESDecrypto(walletInfo.AESEncryptoPrivateKey, password));
     // console.log('aelf decrypto: ', aelf.wallet.AESDecrypto(walletInfo.AESEncryptoMnemonic, password));
@@ -48,7 +49,10 @@ function insertWalletInfo(walletInfoInput, password) {
     }, walletInfo);
     localStorage.setItem('walletInfoList', JSON.stringify(walletInfoList));
     localStorage.setItem('agreement', true);
-    localStorage.setItem('lastuse', walletInfo.address);
+    localStorage.setItem('lastuse', JSON.stringify({
+        address: walletInfo.address,
+        walletName: walletInfo.walletName
+    }));
     return true;
 }
 

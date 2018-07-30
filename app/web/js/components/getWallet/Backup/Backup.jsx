@@ -20,7 +20,7 @@ class Backup extends Component {
     getPrivateKeyAndMnemonic() {
         let password = this.state.password;
 
-        let walletId = localStorage.getItem('lastuse');
+        let walletId = JSON.parse(localStorage.getItem('lastuse')).address;
         let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
         let walletInfo = walletInfoList[walletId];
 
