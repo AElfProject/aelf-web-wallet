@@ -12,6 +12,7 @@
     "egg-view": "^2.1.0",
     "egg-view-nunjucks": "^2.2.0",
     "egg-view-react": "^1.1.0",
+    "qrcode.react": "^0.8.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",

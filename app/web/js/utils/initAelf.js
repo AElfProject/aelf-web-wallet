@@ -7,7 +7,14 @@ import Aelf from 'aelf-sdk'
 import config from '../config/config.js'
 
 // 如果传入了password，则使用私人账户来操作。
-function init (password, contractAdress) {
+// 如果传入了password, 需要在组件内方法执行initAelf
+function init (options = {}) {
+	// let options = {
+	// 	password: password,
+	// 	contractAddress: contractAddress,
+	// 	chainOnly: true / false
+	// }
+	let {password, contractAddress, chainOnly} = options;
 	let wallet = '';
 	if (password) {
 		let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
@@ -32,7 +39,8 @@ function init (password, contractAdress) {
 
 	let aelf = new Aelf(new Aelf.providers.HttpProvider(config.httpProvider));
 	aelf.chain.connectChain();
-	let contractMethods = aelf.chain.contractAt(contractAdress || config.mainContract, wallet);
+	let contractMethods = chainOnly 
+		? {} : aelf.chain.contractAt(contractAddress || config.mainContract, wallet);
 	return {
 		aelf: aelf,
 		contractMethods: contractMethods

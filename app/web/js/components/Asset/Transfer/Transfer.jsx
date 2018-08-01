@@ -13,6 +13,14 @@ import initAelf from '../../../utils/initAelf'
 // TODO
 // 1.function addressCheck() {}
 // 2.insufficient funds
+
+// 需要更加完善的机制
+function addressCheck (address = '') {
+    if (address.length === 38 && address.match(/^0x/)) {
+        return true
+    }
+    return false;
+}
 class Transfer extends Component {
     constructor(props) {
         super(props);
@@ -46,7 +54,9 @@ class Transfer extends Component {
             return;
         }
 
-        let aelf = initAelf(password);
+        let aelf = initAelf({
+            password: password
+        });
 
         if (aelf.errormsg) {
             this.setState({passwordError: aelf.errormsg});
@@ -55,6 +65,12 @@ class Transfer extends Component {
 
         let amount = parseInt(this.state.amount);
         let address = this.state.address;
+
+        let addressReady = addressCheck(address);
+        if (!addressReady) {
+            this.setState({passwordError: 'wrong address.'});
+            return;
+        }
 
         let transfer = aelf.contractMethods.Transfer(address, amount);
 

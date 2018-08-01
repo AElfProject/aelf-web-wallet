@@ -53,7 +53,7 @@ class Password extends Component {
 
         return (
             <div>
-                <List renderHeader={() => 'Your password, at least 6 digits of mixed number and letter.'}>
+                <List renderHeader={() => 'Your password, at least 9 digits of mixed number and letter.'}>
                     <InputItem
                         value={this.state.password}
                         type="password"

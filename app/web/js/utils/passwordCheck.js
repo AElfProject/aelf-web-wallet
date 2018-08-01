@@ -19,10 +19,10 @@ function charType(num) {
 
 function check(password) {
     let level = 0;
-    let type = 'password is too short';
+    let type = 'Too short, at least 9.';
     let pwd = password.toString();
 
-    if (pwd.length >= 6) {
+    if (pwd.length >= 9) {
         let result = 0;
         for (let i = 0, len = pwd.length; i < len; ++i) {
             result |= charType(pwd.charCodeAt(i));

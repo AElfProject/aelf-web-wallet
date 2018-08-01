@@ -64,7 +64,7 @@ class Import extends Component {
 
         if (result) {
             Toast.info('Import success. Turn to home after 3s.', 3, () => {
-                hashHistory.push('/');
+                hashHistory.push('/assets');
             });
         } else {
             Toast.fail('(꒦_꒦) ...Fail, please check the form. Or call Huang Zongzhe');

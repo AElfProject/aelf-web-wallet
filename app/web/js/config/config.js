@@ -8,5 +8,5 @@
 
 export default {
 	httpProvider: 'http://localhost:7001/aelf/api',
-	mainContract: '0x8eaa0485799932c2c30f869f15e75e265402'
+	mainContract: '0x69e0a97fd519a919ee816787d7ecc97911d2'
 }

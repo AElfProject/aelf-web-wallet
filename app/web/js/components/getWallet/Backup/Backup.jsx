@@ -75,7 +75,7 @@ class Backup extends Component {
 
                 <WhiteSpace />
                 <WhiteSpace />
-                <Button onClick={() => hashHistory.push('/')}>返回主页 / Back to home</Button>
+                <Button onClick={() => hashHistory.push('/assets')}>返回主页 / Back to home</Button>
                 
             </div>
         );

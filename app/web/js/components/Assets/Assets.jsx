@@ -7,7 +7,15 @@ import { WhiteSpace, List } from 'antd-mobile'
 import style from './Assets.scss'
 import { hashHistory } from 'react-router'
 
+import config from '../../config/config.js'
+
+import initAelf from '../../utils/initAelf'
+import hexToString from '../../utils/hexToString'
+
 const Item = List.Item;
+
+const aelf = initAelf();
+
 // React component
 // TODO, 这里以后考虑使用ListView
 // https://mobile.ant.design/components/list-view-cn/#components-list-view-demo-basic
@@ -22,23 +30,39 @@ class Assets extends Component {
         //1. get Assets From address
         //2. getBalanceOf Assets
     }
+
+    getBalance() {
+        let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+        return aelf.contractMethods.BalanceOf(walletAddress);
+    }
+
+    getTokenName() {
+        return aelf.contractMethods.TokenName();
+    }
   
     render() {
-        let test = hashHistory.getCurrentLocation().search;
-        let dir = '/assethome?contract=0x8eaa0485799932c2c30f869f15e75e265402'
+        let contractAddress = config.mainContract;
+        let dir = `/assethome?contract=${contractAddress}`
+
+        // TODO；需要有批量获取TokenName的接口
+        let balance = parseInt(this.getBalance().return, 16);
+        let tokenName = hexToString(this.getTokenName().return);
 
         return (
             <div>
                 <List>
-                    <Item extra={'233 skr skr'}
+                    <Item extra={balance}
                     onClick={() => hashHistory.push(dir)}
-                    >{test}</Item>
+                    >{tokenName}</Item>
                 </List>
                 <List>
-                    <Item extra={'11111'}>Click the first list</Item>
+                    <Item extra={'233'}>Click the first list</Item>
                 </List>
                 <List>
-                    <Item extra={'11111'}>tokenName</Item>
+                    <Item extra={'666'}>other token</Item>
+                </List>
+                <List>
+                    <Item extra={'666'}>skr</Item>
                 </List>
             </div>
         );

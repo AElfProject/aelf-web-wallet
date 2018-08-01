@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Drawer, List, NavBar, Icon } from 'antd-mobile';
+import { Drawer, List, NavBar, Icon, WhiteSpace } from 'antd-mobile';
 import { hashHistory } from 'react-router'
 
 import BottomTabBar from '../BottomTabBar/BottomTabBar'
@@ -113,13 +113,15 @@ class HomePage extends Component {
     const lastuse = localStorage.getItem('lastuse');
     const walletInUseName = lastuse ? JSON.parse(localStorage.getItem('lastuse')).walletName : '请选择钱包';
 
-    // <NavBar icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange}>Basic</NavBar>
-    // className={style.myDrawer}
-    // contentStyle={{ color: '#A6A6A6', textAlign: 'center', paddingTop: 45 }}
     return (
       <div>
-        <NavBar icon={<Icon type="ellipsis" />} onLeftClick={() => this.onOpenChange()}>{walletInUseName}</NavBar>
+        <NavBar icon={<Icon type="left" />} onLeftClick={() => hashHistory.goBack()}
+          rightContent={[
+            <Icon key="1" type="ellipsis" onClick={() => this.onOpenChange()} />,
+          ]}
+        >{walletInUseName}</NavBar>
         <Drawer
+          position="right"
           className='my-drawer'
           style={{ height: document.documentElement.clientHeight - 45 - 22 }}
           enableDragHandle
@@ -128,10 +130,10 @@ class HomePage extends Component {
           open={this.state.open}
           onOpenChange={() => this.onOpenChange()}
         >
-          Welcome to AELF Wallet.
           {this.props.children}
           
         </Drawer>
+
         <div className={style.bottomTabBar}>
           <BottomTabBar>111</BottomTabBar>
         </div>

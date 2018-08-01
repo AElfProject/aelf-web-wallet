@@ -12,6 +12,7 @@ import store from './store'
 
 import About from './components/About/About'
 
+import getWalletNav from './components/getWallet/Nav/Nav'
 import getWalletGuide from './components/getWallet/Guide/Guide'
 import getWalletAgreement from './components/getWallet/Agreement/Agreement'
 import getWalletCreate from './components/getWallet/Create/Create'
@@ -23,6 +24,10 @@ import Assets from './components/Assets/Assets'
 import AssetHome from './components/Asset/Home/Home'
 import AssetTransfer from './components/Asset/Transfer/Transfer'
 import AssetTransactionDetail from './components/Asset/TransactionDetail/TransactionDetail'
+
+import personalCenterHome from './components/personalCenter/Home/Home'
+
+import QRCode from './components/QRCode/QRCode'
 
 console.log("aelf: ", aelf);
 
@@ -49,7 +54,6 @@ class Counter extends Component {
 
 // Action
 const increaseAction = { type: 'increase' }
-
 
 // Map Redux state to component props
 function mapStateToProps(state) {
@@ -92,6 +96,8 @@ let walletInfoList = localStorage.getItem('walletInfoList');
 let notPageGuide = !hashHistory.getCurrentLocation().pathname.match('/get-wallet/guide');
 if (!walletInfoList && notPageGuide) {
   hashHistory.push('/get-wallet/guide');
+} else {
+  hashHistory.push('/assets');
 }
 
 // remove welcome-page
@@ -109,17 +115,21 @@ ReactDOM.render(
     <Router history={hashHistory}>
       <Route path="/" component={HomePage}>
         <Route path="/about" component={About}></Route>
-        <Route path="/app" component={App02}></Route>
+        <Route path="/store/test" component={App02}></Route>
         <Route path="/assets" component={Assets}></Route>
         <Route path="/assethome" component={AssetHome}></Route>
         <Route path="/assettransfer" component={AssetTransferConnected}></Route>
         <Route path="/transactiondetail" component={AssetTransactionDetail}></Route>
+        <Route path="/qrcode" component={QRCode}></Route>
+        <Route path="/personalcenter/home" component={personalCenterHome}></Route>
       </Route>
-      <Route path="/get-wallet/guide" component={getWalletGuide}/>
-      <Route path="/get-wallet/agreement" component={getWalletAgreement}/>
-      <Route path="/get-wallet/create" component={getWalletCreate}/>
-      <Route path="/get-wallet/backup" component={getWalletBackup}/>
-      <Route path="/get-wallet/import" component={getWalletImport}/>
+      <Route path="/get-wallet/nav" component={getWalletNav}>
+        <Route path="/get-wallet/guide" component={getWalletGuide}/>
+        <Route path="/get-wallet/agreement" component={getWalletAgreement}/>
+        <Route path="/get-wallet/create" component={getWalletCreate}/>
+        <Route path="/get-wallet/backup" component={getWalletBackup}/>
+        <Route path="/get-wallet/import" component={getWalletImport}/>
+      </Route>
       
     </Router>
   </Provider>,
