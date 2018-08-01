@@ -44,8 +44,6 @@ function init (options = {}) {
 	return {
 		aelf: aelf,
 		contractMethods: contractMethods
-		// 这里不应该吐这个数据，这个数据和Aelf没啥关系。
-		// walletAddress: wallet.address
 	};
 }
 

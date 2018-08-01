@@ -5,7 +5,7 @@ import { Provider, connect } from 'react-redux'
 import TestContent from './components/TestContent'
 import BoilingVerdict from './components/BoilingVerdict'
 import { Router, Route, IndexRoute, hashHistory } from 'react-router'
-// import { Route, Router, HashHistory, Link, BrowserRouter, Switch} from 'react-router-dom'
+
 
 import aelf from 'aelf-sdk'
 import store from './store'
@@ -69,35 +69,29 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-// Connected Component
-const App = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Counter)
 
 const App02 = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Counter)
 
-const HomePageConnected = (
-  mapStateToProps,
-  mapDispatchToProps
-)(HomePage);
+// const HomePageConnected = (
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(HomePage);
 
-const AssetTransferConnected = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AssetTransfer);
-
+// const AssetTransferConnected = connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(AssetTransfer);
 
 // TODO: localStorage file, asyncStorage统一成一个方法。
 let walletInfoList = localStorage.getItem('walletInfoList');
-let notPageGuide = !hashHistory.getCurrentLocation().pathname.match('/get-wallet/guide');
-if (!walletInfoList && notPageGuide) {
-  hashHistory.push('/get-wallet/guide');
+
+if (!walletInfoList) {
+  hashHistory.replace('/agreement');
 } else {
-  hashHistory.push('/assets');
+  hashHistory.replace('/assets');
 }
 
 // remove welcome-page
@@ -118,16 +112,17 @@ ReactDOM.render(
         <Route path="/store/test" component={App02}></Route>
         <Route path="/assets" component={Assets}></Route>
         <Route path="/assethome" component={AssetHome}></Route>
-        <Route path="/assettransfer" component={AssetTransferConnected}></Route>
+        <Route path="/assettransfer" component={AssetTransfer}></Route>
         <Route path="/transactiondetail" component={AssetTransactionDetail}></Route>
         <Route path="/qrcode" component={QRCode}></Route>
         <Route path="/personalcenter/home" component={personalCenterHome}></Route>
       </Route>
+      
+      <Route path="/agreement" component={getWalletAgreement}/>
+      <Route path="/get-wallet/backup" component={getWalletBackup}/>
       <Route path="/get-wallet/nav" component={getWalletNav}>
         <Route path="/get-wallet/guide" component={getWalletGuide}/>
-        <Route path="/get-wallet/agreement" component={getWalletAgreement}/>
         <Route path="/get-wallet/create" component={getWalletCreate}/>
-        <Route path="/get-wallet/backup" component={getWalletBackup}/>
         <Route path="/get-wallet/import" component={getWalletImport}/>
       </Route>
       

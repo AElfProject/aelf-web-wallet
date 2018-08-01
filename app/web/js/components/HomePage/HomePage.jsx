@@ -68,7 +68,7 @@ class HomePage extends Component {
     let notSameWallet = !hashHistory.getCurrentLocation().pathname.match(targetPath);
     if (notSameWallet) {
       console.log('notSameWallet: ', notSameWallet);
-      hashHistory.push(targetPath);
+      hashHistory.replace(targetPath);
     }
     console.log(walletInfo);
   }
@@ -113,9 +113,14 @@ class HomePage extends Component {
     const lastuse = localStorage.getItem('lastuse');
     const walletInUseName = lastuse ? JSON.parse(localStorage.getItem('lastuse')).walletName : '请选择钱包';
 
+    let showLeftClick = true;
+    if (hashHistory.getCurrentLocation().pathname.match(/(assets)|(qrcode)|(personalcenter\/home)/)) {
+      showLeftClick = false;
+    }
+
     return (
       <div>
-        <NavBar icon={<Icon type="left" />} onLeftClick={() => hashHistory.goBack()}
+        <NavBar icon={showLeftClick ? <Icon type="left" /> : ''} onLeftClick={showLeftClick ? () => hashHistory.goBack() : () => {}}
           rightContent={[
             <Icon key="1" type="ellipsis" onClick={() => this.onOpenChange()} />,
           ]}

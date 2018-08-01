@@ -25,7 +25,7 @@ module.exports = {
 	entry: './app/web/js/index.jsx',
 	output: {
 		path: path.resolve(__dirname, 'app'),
-		filename: 'public/js/wallet.js'
+		filename: 'public/js/wallet.[hash:5].js'
 	},
 	resolve: {
 		extensions: ['.js', '.jsx', '.scss']
