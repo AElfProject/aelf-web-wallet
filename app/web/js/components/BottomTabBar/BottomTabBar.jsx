@@ -2,15 +2,28 @@ import React, { Component } from 'react'
 import { TabBar } from 'antd-mobile';
 import { hashHistory } from 'react-router'
 
+// import { connect } from 'react-redux'
+// import { mapDispatchToProps } from '../../actions'
+
 class BottomTabBar extends Component {
   constructor(props) {
     super(props);
+
+    let pathname = hashHistory.getCurrentLocation().pathname;
+    let selectedTab = '';
+    if (pathname.match(/\/personalcenter\/home/)) {
+      selectedTab = 'greenTab';
+    } else if (pathname.match(/\/qrcode/)) {
+      selectedTab = 'blueTab';
+    } else {
+      selectedTab = 'yellowTab';
+    }
+
     this.state = {
-      selectedTab: 'redTab',
+      selectedTab: selectedTab,
       hidden: false,
       fullScreen: false,
     };
-    // console.log('BottomTabBar this.props: ', this.props);
   }
 
   render() {
@@ -32,7 +45,7 @@ class BottomTabBar extends Component {
     //   title="Koubei"
     //   key="Koubei"
     //   badge={'new'}
-    //   selected={this.state.selectedTab === 'redTab'}
+    //   selected={this.props.selectedTab === 'redTab'}
     //   onPress={() => {
     //     this.setState({
     //       selectedTab: 'redTab',
@@ -59,7 +72,7 @@ class BottomTabBar extends Component {
               selected={this.state.selectedTab === 'yellowTab'}
               onPress={() => {
                 this.setState({
-                  selectedTab: 'yellowTab',
+                  selectedTab: 'yellowTab'
                 });
                 hashHistory.push('/assets');
               }}
@@ -86,15 +99,13 @@ class BottomTabBar extends Component {
             badge={1}
             onPress={() => {
               this.setState({
-                selectedTab: 'blueTab',
+                selectedTab: 'blueTab'
               });
               hashHistory.push('/qrcode');
             }}
             data-seed="logId"
           >
           </TabBar.Item>
-
-          
 
           <TabBar.Item
             icon={
@@ -117,7 +128,7 @@ class BottomTabBar extends Component {
             selected={this.state.selectedTab === 'greenTab'}
             onPress={() => {
               this.setState({
-                selectedTab: 'greenTab',
+                selectedTab: 'greenTab'
               });
               hashHistory.push('/personalcenter/home');
             }}
@@ -128,4 +139,11 @@ class BottomTabBar extends Component {
     );
   }
 }
+
+// function mapStateToProps(state) {
+//   return {
+//     selectedBottomTab: state.selectedBottomTab
+//   }
+// }
+// export default connect(mapStateToProps, mapDispatchToProps)(BottomTabBar)
 export default BottomTabBar

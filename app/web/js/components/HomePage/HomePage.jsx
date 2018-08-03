@@ -10,34 +10,6 @@ import style from './HomePage.scss'
 // pure css without css module.
 require('./HomePage.css');
 
-// TODO, 用store来处理交互？ 感觉这样各个组件之间的关系会越来越复杂。
-// 回头认真想想这个
-// import { connect } from 'react-redux'
-// // Action
-// const increaseAction = { type: 'increase' }
-
-// // Map Redux state to component props
-// function mapStateToProps(state) {
-//   return {
-//     value: state.count
-//   }
-// }
-
-// // Map Redux actions to component props
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     onIncreaseClick: () => dispatch(increaseAction)
-//   }
-// }
-
-// // Connected Component
-// const BottomTabBarConnected = connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(BottomTabBar)
-
-
-
 class HomePage extends Component {
   constructor(props) {
     super();
@@ -140,9 +112,8 @@ class HomePage extends Component {
         </Drawer>
 
         <div className={style.bottomTabBar}>
-          <BottomTabBar>111</BottomTabBar>
+          <BottomTabBar></BottomTabBar>
         </div>
-        
         
       </div>
       

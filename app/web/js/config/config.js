@@ -9,4 +9,5 @@
 export default {
 	httpProvider: 'http://localhost:7001/aelf/api',
 	mainContract: '0x69e0a97fd519a919ee816787d7ecc97911d2'
+	// mainContract: '0x69e0a97fd519a919ee816787d7ecc97911d1' // wrong address
 }
