@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { TabBar } from 'antd-mobile';
 import { hashHistory } from 'react-router'
 
+import { historyPush } from '../../utils/historyChange'
 // import { connect } from 'react-redux'
 // import { mapDispatchToProps } from '../../actions'
 
@@ -24,6 +25,13 @@ class BottomTabBar extends Component {
       hidden: false,
       fullScreen: false,
     };
+  }
+
+  onPress(selected, dir) {
+    this.setState({
+      selectedTab: selected
+    });
+    historyPush(dir);
   }
 
   render() {
@@ -70,12 +78,7 @@ class BottomTabBar extends Component {
               title="My"
               key="my"
               selected={this.state.selectedTab === 'yellowTab'}
-              onPress={() => {
-                this.setState({
-                  selectedTab: 'yellowTab'
-                });
-                hashHistory.push('/assets');
-              }}
+              onPress={() => this.onPress('yellowTab', '/assets')}
             >
               
           </TabBar.Item>
@@ -97,12 +100,7 @@ class BottomTabBar extends Component {
             }
             selected={this.state.selectedTab === 'blueTab'}
             badge={1}
-            onPress={() => {
-              this.setState({
-                selectedTab: 'blueTab'
-              });
-              hashHistory.push('/qrcode');
-            }}
+            onPress={() => this.onPress('blueTab', '/qrcode')}
             data-seed="logId"
           >
           </TabBar.Item>
@@ -126,12 +124,7 @@ class BottomTabBar extends Component {
             key="Friend"
             dot
             selected={this.state.selectedTab === 'greenTab'}
-            onPress={() => {
-              this.setState({
-                selectedTab: 'greenTab'
-              });
-              hashHistory.push('/personalcenter/home');
-            }}
+            onPress={() => this.onPress('greenTab', '/personalcenter/home')}
           >
           </TabBar.Item>
         </TabBar>

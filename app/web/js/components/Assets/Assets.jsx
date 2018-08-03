@@ -3,7 +3,7 @@
  * 2018.07.26
  */
 import React, { Component } from 'react'
-import { WhiteSpace, List } from 'antd-mobile'
+import { WhiteSpace, List, Toast } from 'antd-mobile'
 import style from './Assets.scss'
 import { hashHistory } from 'react-router'
 
@@ -11,6 +11,7 @@ import config from '../../config/config.js'
 
 import initAelf from '../../utils/initAelf'
 import hexToString from '../../utils/hexToString'
+import { historyPush } from '../../utils/historyChange'
 
 const Item = List.Item;
 
@@ -52,7 +53,7 @@ class Assets extends Component {
             <div>
                 <List>
                     <Item extra={balance}
-                    onClick={() => hashHistory.push(dir)}
+                    onClick={() => historyPush(dir)}
                     >{tokenName}</Item>
                 </List>
                 <List>

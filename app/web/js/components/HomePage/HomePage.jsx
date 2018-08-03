@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { Drawer, List, NavBar, Icon, WhiteSpace } from 'antd-mobile';
+import { Drawer, List, NavBar, Icon, WhiteSpace, Toast } from 'antd-mobile';
 import { hashHistory } from 'react-router'
 
 import BottomTabBar from '../BottomTabBar/BottomTabBar'
+
+import { historyGoBack, historyReplace } from '../../utils/historyChange'
 // import SideBar from './SideBar/SideBar'
 
 // scss 用了css module, 不好覆盖ant的样式。用css部分覆盖ant的样式。
@@ -15,12 +17,12 @@ class HomePage extends Component {
     super();
     this.state = {
       open: false,
-      walletInUseName: ''
+      walletInUseName: '',
+      hidden: true
     };
   }
 
-  onOpenChange(args) {
-    console.log(args);
+  onOpenChange() {
     this.setState({ open: !this.state.open });
   }
 
@@ -31,7 +33,7 @@ class HomePage extends Component {
     };
     localStorage.setItem('lastuse', JSON.stringify(lastuse));
     this.setState({
-      lastuse: lastuse,
+      // lastuse: lastuse,
       open: !this.state.open
     });
 
@@ -39,10 +41,11 @@ class HomePage extends Component {
     let targetPath = `/assets?address=${walletInfo.address}`;
     let notSameWallet = !hashHistory.getCurrentLocation().pathname.match(targetPath);
     if (notSameWallet) {
-      console.log('notSameWallet: ', notSameWallet);
+      // historyReplace(targetPath);
+      // setTimeout(() => {
       hashHistory.replace(targetPath);
+      // }, 300);
     }
-    console.log(walletInfo);
   }
 
   // 回头研究一下...放到SideBar.jsx里面去
@@ -78,6 +81,10 @@ class HomePage extends Component {
     );
   }
 
+  componentDidUpdate() {
+    Toast.hide();
+  }
+
   render() {
     // fix in codepen
     const sidebar = this.getSideBar();
@@ -92,7 +99,11 @@ class HomePage extends Component {
 
     return (
       <div>
-        <NavBar icon={showLeftClick ? <Icon type="left" /> : ''} onLeftClick={showLeftClick ? () => hashHistory.goBack() : () => {}}
+        <NavBar icon={showLeftClick ? <Icon type="left" /> : ''} onLeftClick={
+          showLeftClick ? 
+            () => historyGoBack() : 
+            () => {}
+        }
           rightContent={[
             <Icon key="1" type="ellipsis" onClick={() => this.onOpenChange()} />,
           ]}

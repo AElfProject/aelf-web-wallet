@@ -33,5 +33,5 @@
   <script id="__bs_script__">//<![CDATA[
     document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.5'><\/script>".replace("HOST", location.hostname));
 //]]></script>
-<script type="text/javascript" src="../public/js/wallet.js.7fd48.js"></script></body>
+<script type="text/javascript" src="../public/js/wallet.8b534.js"></script></body>
 </html>

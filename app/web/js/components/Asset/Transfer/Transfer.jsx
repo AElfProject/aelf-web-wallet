@@ -3,7 +3,7 @@
  * 2018.07.27
  */
 import React, { Component } from 'react'
-import { WhiteSpace, List, InputItem, Button } from 'antd-mobile'
+import { WhiteSpace, List, InputItem, Button, Toast } from 'antd-mobile'
 import style from './Transfer.scss'
 import { hashHistory } from 'react-router'
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
@@ -48,33 +48,40 @@ class Transfer extends Component {
         // TODO:
         // check amount
         // check address
-        let password = this.state.password;
-        if (!password) {
-            this.setState({passwordError: 'wrong password'});
-            return;
-        }
+        Toast.loading('Loading...', 30);
+        // 为了能展示loading, 不惜牺牲用户50毫秒，没看源码，但是这个应该和机器有关。。。sad
+        setTimeout(() => {
+            let password = this.state.password;
+            if (!password) {
+                this.setState({passwordError: 'wrong password'});
+                return Toast.hide();
+            }
 
-        let aelf = initAelf({
-            password: password
-        });
+            let aelf = initAelf({
+                password: password
+            });
 
-        if (aelf.errormsg) {
-            this.setState({passwordError: aelf.errormsg});
-            return;
-        }
+            if (aelf.errormsg) {
+                this.setState({passwordError: aelf.errormsg});
+                return Toast.hide();
+            }
 
-        let amount = parseInt(this.state.amount);
-        let address = this.state.address;
+            let amount = parseInt(this.state.amount);
+            let address = this.state.address;
 
-        let addressReady = addressCheck(address);
-        if (!addressReady) {
-            this.setState({passwordError: 'wrong address.'});
-            return;
-        }
+            let addressReady = addressCheck(address);
+            if (!addressReady) {
+                this.setState({passwordError: 'wrong address.'});
+                return Toast.hide();
+            }
 
-        let transfer = aelf.contractMethods.Transfer(address, amount);
+            let transfer = aelf.contractMethods.Transfer(address, amount);
 
-        hashHistory.push(`/transactiondetail?txid=${transfer.hash}`);
+            Toast.hide();
+
+            hashHistory.push(`/transactiondetail?txid=${transfer.hash}`);
+            
+        }, 50);
     }
   
     render() {

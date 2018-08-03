@@ -3,6 +3,7 @@ import { Button, WhiteSpace, List, InputItem, Toast } from 'antd-mobile'
 import style from './Backup.scss'
 import { hashHistory } from 'react-router'
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
+import { historyPush } from '../../../utils/historyChange'
 
 import aelf from 'aelf-sdk'
 
@@ -75,7 +76,7 @@ class Backup extends Component {
 
                 <WhiteSpace />
                 <WhiteSpace />
-                <Button onClick={() => hashHistory.push('/assets')}>返回主页 / Back to home</Button>
+                <Button onClick={() => historyPush('/assets')}>返回主页 / Back to home</Button>
                 
             </div>
         );
