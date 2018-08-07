@@ -7,8 +7,10 @@
     "aelf-sdk": "^1.0.1",
     "antd-mobile": "^2.2.2",
     "egg": "^2.2.1",
+    "egg-mysql": "^3.0.0",
     "egg-proxy": "^1.0.6",
     "egg-scripts": "^2.5.0",
+    "egg-validate": "^1.1.0",
     "egg-view": "^2.1.0",
     "egg-view-nunjucks": "^2.2.0",
     "egg-view-react": "^1.1.0",
@@ -17,7 +19,8 @@
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-router": "^3.2.1",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
     "autod": "^3.0.1",
