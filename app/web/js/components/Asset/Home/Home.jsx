@@ -12,7 +12,7 @@ import initAelf from '../../../utils/initAelf'
 import hexToString from '../../../utils/hexToString'
 
 const Item = List.Item;
-const aelf = initAelf();
+// const aelf = initAelf();
 // const walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
 // React component
 // TODO, 这里以后考虑使用ListView
@@ -22,16 +22,17 @@ class Home extends Component {
         super();
         this.state = {
         };
+        this.aelf = initAelf();
     }
 
     // getCid from url. -> get Balance -> getTransactions
     getBalance() {
         let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
-        return aelf.contractMethods.BalanceOf(walletAddress);
+        return this.aelf.contractMethods.BalanceOf(walletAddress);
     }
 
     getTokenName() {
-        return aelf.contractMethods.TokenName();
+        return this.aelf.contractMethods.TokenName();
     }
 
     testClick() {

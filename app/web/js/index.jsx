@@ -6,7 +6,7 @@ import { mapDispatchToProps } from './actions'
 
 import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 
-import aelf from 'aelf-sdk'
+// import aelf from 'aelf-sdk'
 import store from './store'
 
 import About from './components/About/About'
@@ -27,6 +27,7 @@ import AssetTransactionDetail from './components/Asset/TransactionDetail/Transac
 import personalCenterHome from './components/personalCenter/Home/Home'
 
 import QRCode from './components/QRCode/QRCode'
+import ErrorPage from './components/ErrorPage/ErrorPage'
 
 import style from '../style/index.scss'
 
@@ -71,6 +72,10 @@ ReactDOM.render(
         <Route path="/get-wallet/create" component={getWalletCreate}/>
         <Route path="/get-wallet/import" component={getWalletImport}/>
       </Route>
+
+      <Route path="/error" component={ErrorPage}></Route>
+
+
       
     </Router>
   </Provider>,

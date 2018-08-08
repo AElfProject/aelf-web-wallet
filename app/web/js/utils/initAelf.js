@@ -5,6 +5,7 @@
  */
 import Aelf from 'aelf-sdk'
 import config from '../config/config.js'
+import { hashHistory } from 'react-router'
 
 let hasAlert = false;
 // 如果传入了password，则使用私人账户来操作。
@@ -38,7 +39,12 @@ function init (options = {}) {
 	}
 
 	let aelf = new Aelf(new Aelf.providers.HttpProvider(config.httpProvider));
-	aelf.chain.connectChain();
+
+	try {
+		aelf.chain.connectChain();
+	} catch (e) {
+		hashHistory.push('/error');
+	}
 	let contractMethods = chainOnly 
 		? {} : aelf.chain.contractAt(contractAddress || config.mainContract, wallet);
 

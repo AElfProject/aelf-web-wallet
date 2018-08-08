@@ -10,9 +10,9 @@ import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import getParam from '../../../utils/getParam' // 还有类似方法的话，合并一下。
 
 import initAelf from '../../../utils/initAelf'
-const aelf = initAelf({
-    chainOnly: true
-});
+// const aelf = initAelf({
+//     chainOnly: true
+// });
 
 // React component
 class TransactionDetail extends Component {
@@ -20,12 +20,15 @@ class TransactionDetail extends Component {
         super(props);
         this.state = {
         };
+        this.aelf = initAelf({
+            chainOnly: true
+        });
     }
 
     getTxResult() {
         let txid = getParam('txid', hashHistory.getCurrentLocation().search);
         if (txid) {
-            let txResult = aelf.aelf.chain.getTxResult(txid);
+            let txResult = this.aelf.aelf.chain.getTxResult(txid);
             return txResult;
         }
         return 'please check url, no txid!!!';

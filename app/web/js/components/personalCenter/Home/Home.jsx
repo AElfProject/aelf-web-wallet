@@ -23,6 +23,9 @@ class personalCenterHome extends Component {
 				<List>
 	                <Item onClick={() => hashHistory.push('/get-wallet/backup')}>备份助记词和私钥</Item>
 	            </List>
+	            <List>
+	                <Item onClick={() => hashHistory.push('/about')}>关于我们</Item>
+	            </List>
 			</div>
 		);
 	}
