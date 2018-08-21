@@ -26,33 +26,35 @@ nvm install < Latest LTS version >
 
 额，apt-get install 要root权限？
 
-### 5.安装egg
-
-### 6.安装tmux保证hold住程序
+### 5.安装tmux保证hold住程序
 
 apt-get install tmux
 
 tmux使用：http://louiszhai.github.io/2017/09/30/tmux/#%E5%AE%89%E8%A3%85
 
-### 7.安装redis
+### 6.安装redis
 ```
 // mac上用 brew安装
 apt-get -y install redis-server
 ```
 
-### 8.下载钱包
+### 7.下载钱包
 
 ```
 git clone https://github.com/AElfProject/aelf-web-wallet.git
 ```
 
-### 9.安装webpack
+### 8.安装webpack
 
 ```
 npm install -g webpack
 npm install -g webpack-cli
 ```
 
-### 10.启动钱包服务
-
+### 9.启动钱包服务
+```
+webpack
+npm start
+```
+默认 7001端口
 这里需要写一个脚本，包含webpack编译和egg服务启动。
