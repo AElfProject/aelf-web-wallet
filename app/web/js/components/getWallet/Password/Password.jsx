@@ -25,6 +25,12 @@ class Password extends Component {
         this.setState({password: password});
         let checkResult = passwordCheck(password);
         this.passwordInfo = checkResult;
+
+        let passwordReplay = this.state.passwordReplay;
+        if (passwordReplay) {
+            this.state.password = password;
+            this.comfirmPassword(passwordReplay);
+        }
     }
 
     comfirmPassword(passwordReplay) {

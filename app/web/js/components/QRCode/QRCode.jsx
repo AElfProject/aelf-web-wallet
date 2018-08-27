@@ -14,7 +14,7 @@ class QRCodeTemplate extends Component {
 		let id = document.getElementById('qrcodetext');
 		id.select();
 		document.execCommand("Copy");
-		Toast.info('已复制');
+		Toast.info('已复制', 3, () => {}, false);
 	}
 
 	render() {

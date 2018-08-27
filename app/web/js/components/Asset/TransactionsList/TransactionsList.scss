@@ -1,0 +1,15 @@
+.txList {
+	height: 32px;
+	border-bottom: 1px solid #eee;
+}
+.txList:last-child {
+	border: none;
+}
+
+.address {
+	float: left;
+}
+
+.quantity {
+	float: right;
+}

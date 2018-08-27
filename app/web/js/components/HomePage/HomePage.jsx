@@ -43,7 +43,7 @@ class HomePage extends Component {
     if (notSameWallet) {
       // historyReplace(targetPath);
       // setTimeout(() => {
-      hashHistory.replace(targetPath);
+      hashHistory.replace(window.location.hash.replace('#', ''));
       // }, 300);
     }
   }

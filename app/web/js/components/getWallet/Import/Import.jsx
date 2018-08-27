@@ -57,7 +57,6 @@ class Import extends Component {
             return;
         }
 
-
         let walletInfo = mnemonicWallet || privateKeyWallet; // 助记词钱包优先
         walletInfo.walletName = this.walletName;
         let result = insertWalletInfo(walletInfo, password);
@@ -97,9 +96,7 @@ class Import extends Component {
     render() {
         return (
             <div>
-                <h3 className={style.title}>导入钱包 / Import Wallet</h3>
-
-                <p className={style.title}>We will use mnemonic in preference than privateKey</p>
+                <p className={style.title}>助记词和私钥都可以，不过导入私钥将不会生成助记词</p>
 
                 <WalletName
                     setWalletName={walletName => this.setWalletName(walletName)}

@@ -13,7 +13,7 @@ export function historyPush(dir) {
 }
 
 export function historyReplace(dir) {
-	Toast.loading('Loading...', 30);
+	// Toast.loading('Loading...', 30);
     setTimeout(function () {
         hashHistory.replace(dir);
     }, 300);

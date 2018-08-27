@@ -1,5 +1,6 @@
 .text {
 	margin: 0 18px;
+	word-wrap: break-word;
 }
 
 .error {
@@ -10,3 +11,12 @@
 .title {
 	padding: 0px 15px;
 }
+
+.note {
+	background-color: #ffd74e;
+	margin: 0 15px 0 15px;
+    border-radius: 3px;
+    padding: 1px 15px 1px 15px;
+    color: #333;
+}
+

@@ -11,4 +11,13 @@
 	color: #333;
 	font-size: 14px;
     line-height: 21px;
+    overflow: scroll;
+}
+
+.agreement {
+	// color: #108ee9;
+    position: fixed;
+    top: 0;
+    background: #FFF;
+    z-index: 9999;
 }

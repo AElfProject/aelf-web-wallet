@@ -15,10 +15,10 @@ exports.nunjucks = {
 //   package: 'egg-view',
 // };
 
-exports.proxy = {
-  enable: true,
-  package: 'egg-proxy',
-};
+// exports.proxy = {
+//   enable: true,
+//   package: 'egg-proxy',
+// };
 
 exports.mysql = {
   enable: true,

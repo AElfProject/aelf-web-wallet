@@ -29,8 +29,8 @@ class Backup extends Component {
         let mnemonic = '';
 
         try {
-            privateKey = aelf.wallet.AESDecrypto(walletInfo.AESEncryptoPrivateKey, password) || 'invalid password';
-            mnemonic = aelf.wallet.AESDecrypto(walletInfo.AESEncryptoMnemonic, password) || 'invalid password';
+            privateKey = aelf.wallet.AESDecrypto(walletInfo.AESEncryptoPrivateKey, password) || '';
+            mnemonic = aelf.wallet.AESDecrypto(walletInfo.AESEncryptoMnemonic, password) || '';
         } catch (e) {
             // 因为封装了一层，解密错误时，转换成utf-8会抛出异常。
             let string = '[ERROR] Hey guy, your invalid password make the program crash.';

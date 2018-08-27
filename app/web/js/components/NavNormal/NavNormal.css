@@ -1,0 +1,10 @@
+.am-navbar {
+	color: #333;
+	background-color: #FFF;
+}
+
+.nav-normal-whitespace {
+	/*height: 11px;  +45px*/
+	height: 45px;
+	width: 10px;
+}

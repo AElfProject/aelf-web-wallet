@@ -6,6 +6,9 @@ import React, { Component } from 'react'
 import { WhiteSpace, List, InputItem, Button, Toast } from 'antd-mobile'
 import style from './Transfer.scss'
 import { hashHistory } from 'react-router'
+
+import NavNormal from '../../NavNormal/NavNormal'
+
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import initAelf from '../../../utils/initAelf'
 
@@ -91,50 +94,52 @@ class Transfer extends Component {
         }
 
         return (
-
             <div>
-                <h3>Token Name</h3>
+                <NavNormal navTitle="转账"></NavNormal>
+                <div className="aelf-content-container">
+                    <h3>Token Name</h3>
 
-                <List>
-                    <InputItem
-                        value={this.state.amount}
+                    <List>
+                        <InputItem
+                            value={this.state.amount}
 
-                        onChange={amount => this.inputAmount(amount)}
-                        moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                    >amount</InputItem>
-                </List>
+                            onChange={amount => this.inputAmount(amount)}
+                            moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                        >amount</InputItem>
+                    </List>
 
-                <WhiteSpace/>
-                <List>
-                    <InputItem
-                        value={this.state.address}
+                    <WhiteSpace/>
+                    <List>
+                        <InputItem
+                            value={this.state.address}
 
-                        onChange={address => this.inputAddress(address)}
-                        moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                    >address</InputItem>
-                </List>
+                            onChange={address => this.inputAddress(address)}
+                            moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                        >address</InputItem>
+                    </List>
 
-                <WhiteSpace/>
-                <List>
-                    <InputItem
-                        value={this.state.password}
-                        type="password"
-                        placeholder="******"
-                        onChange={password => this.inputPassword(password)}
-                        moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                    >password</InputItem>
-                </List>
-                {passwordErrorText}
+                    <WhiteSpace/>
+                    <List>
+                        <InputItem
+                            value={this.state.password}
+                            type="password"
+                            placeholder="******"
+                            onChange={password => this.inputPassword(password)}
+                            moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                        >password</InputItem>
+                    </List>
+                    {passwordErrorText}
 
-                <WhiteSpace/>
-                <WhiteSpace/>
-                <WhiteSpace/>
+                    <WhiteSpace/>
+                    <WhiteSpace/>
+                    <WhiteSpace/>
 
-                <h3>转账地址目前是没有校验的，随便输入都行，所以，请好好确认。测试币丢了也是丢了的。。。</h3>
-                <div className={style.transfer}>
-                    <Button
-                        onClick={() => this.transfer()}
-                    >确认转账</Button>
+                    <h3>转账地址目前是没有校验的，随便输入都行，所以，请好好确认。测试币丢了也是丢了的。。。</h3>
+                    <div className={style.transfer}>
+                        <Button
+                            onClick={() => this.transfer()}
+                        >确认转账</Button>
+                    </div>
                 </div>
             </div>
         );

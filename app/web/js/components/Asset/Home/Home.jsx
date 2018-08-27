@@ -3,65 +3,92 @@
  * 2018.07.26
  */
 import React, { Component } from 'react'
-import { WhiteSpace, List, Button } from 'antd-mobile'
+import ReactDOM from 'react-dom'
+import { Button, Toast } from 'antd-mobile'
+
 import style from './Home.scss'
 import { hashHistory } from 'react-router'
 import getParam from '../../../utils/getParam' // 还有类似方法的话，合并一下。
 
-import initAelf from '../../../utils/initAelf'
-import hexToString from '../../../utils/hexToString'
+import TransactionsList from '../TransactionsList/TransactionsList'
+import NavNormal from '../../NavNormal/NavNormal'
 
-const Item = List.Item;
-// const aelf = initAelf();
-// const walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
-// React component
-// TODO, 这里以后考虑使用ListView
-// https://mobile.ant.design/components/list-view-cn/#components-list-view-demo-basic
+import checkStatus from '../../../utils/checkStatus'
+
 class Home extends Component {
     constructor() {
         super();
+
         this.state = {
+            tokenName: '-',
+            balance: '-'
         };
-        this.aelf = initAelf();
+
+        // 得把作用域绑上，不然子组件里执行函数，无法执行this.setState这些。
+        this.getBalanceAndTokenName = this.getBalanceAndTokenName.bind(this);
+
+        this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+    }
+
+    componentDidUpdate() {
+        Toast.hide();
     }
 
     // getCid from url. -> get Balance -> getTransactions
-    getBalance() {
-        let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
-        return this.aelf.contractMethods.BalanceOf(walletAddress);
+    getBalanceAndTokenName() {
+        let params = {
+            address: this.walletAddress,
+            contract_address: getParam('contract', window.location.href)
+        };
+
+        let query = '';
+        for (let each in params) {
+            query += `${each}=${params[each]}&`;
+        }
+
+        fetch(`/block/api/address/balance?${query}`, {
+            credentials: 'include',
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }).then(checkStatus).then(result => {
+            result.text().then(result => {
+                let output = JSON.parse(result);
+
+                this.setState({
+                    balance: output.balance,
+                    tokenName: output.tokenDetail.name
+                });
+            })
+        }).catch(error => {
+            console.log('error:', error);
+        });
     }
 
-    getTokenName() {
-        return this.aelf.contractMethods.TokenName();
-    }
-
-    testClick() {
-        let testTxid = '0x9830bdbab7334f64e1f667068c15d439db47e26b88ff266cbf42aaa30ba6e525';
-        hashHistory.push(`/transactiondetail?txid=${testTxid}`);
+    componentDidMount() {
+        this.getBalanceAndTokenName();
     }
 
     render() {
-        let test = hashHistory.getCurrentLocation().search;
-        let balance = parseInt(this.getBalance().return, 16);
-        let tokenName = hexToString(this.getTokenName().return);
 
         return (
             <div>
-                <h3>tokenName: {tokenName}</h3>
-                <h3>balance: {balance}</h3>
-                <p>get transaction history API not ready.</p>
-                <List>
-                    <Item extra={'支出-'} onClick={() => this.testClick()}>23333</Item>
-                </List>
-                <List>
-                    <Item extra={'收入+'} onClick={() => this.testClick()}>6666</Item>
-                </List>
+                <NavNormal navTitle="交易记录"></NavNormal>
+                <div className="aelf-content-container">
+                    <h3>tokenName: {this.state.tokenName}</h3>
+                    <h3>balance: {this.state.balance}</h3>
 
-                <WhiteSpace/>
-                <div className={style.transfer}>
-                    <Button
-                        onClick={() => hashHistory.push('/assettransfer')}
-                    >转账</Button>
+                    <TransactionsList
+                        getBalanceAndTokenName={this.getBalanceAndTokenName}
+                    ></TransactionsList>
+
+                    <div className={style.transfer}>
+                        <Button
+                            onClick={() => hashHistory.push('/assettransfer')}
+                        >转账</Button>
+                    </div>
                 </div>
             </div>
         );

@@ -15,10 +15,10 @@ module.exports = appInfo => {
       '.tpl': 'nunjucks',
     },
   };
-  config.proxy = {
-    host: 'http://localhost:1234', // target host that matched path will be proxy to
-    match: /\/aelf\/api/ // path pattern.
-  };
+  // config.proxy = {
+  //   url: 'http://localhost:1234/chain', // target host that matched path will be proxy to
+  //   match: /\/aelf\/api/ // path pattern.
+  // };
 
   config.mysql = {
     clients: {
