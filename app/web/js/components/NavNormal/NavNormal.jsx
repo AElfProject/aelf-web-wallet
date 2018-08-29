@@ -14,12 +14,16 @@ class NavNormal extends Component {
 	constructor(props) {
 		super(props);
 	}
+
+	goBack() {
+		hashHistory.goBack();
+	}
 	render() {
 		return (
 			<div>
 				<NavBar 
 					icon={<Icon type="left" />} 
-					onLeftClick={() => hashHistory.goBack()}
+					onLeftClick={() => this.goBack()}
 					style={{position: 'fixed', top: '0px', left: '0px', width: '100%'}}>
 					{this.props.navTitle}
 				</NavBar>

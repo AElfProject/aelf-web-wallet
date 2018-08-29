@@ -58,11 +58,20 @@ body {
 
 .aelf-content-container {
   color: #A6A6A6;
-  text-align: center;
+  /*text-align: center;*/
   /*padding: 11px 0px 50px 0px;*/
   padding: 0px 0px 50px 0px;
   overflow-x: hidden;
 }
+
+/*.aelf-code-container {
+  word-wrap: break-word;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 8px;
+  margin: 0 0 15px 0;
+  background: #fefefe;
+}*/
 
 /**浏览器的css reset*/
 /*body, div, span {

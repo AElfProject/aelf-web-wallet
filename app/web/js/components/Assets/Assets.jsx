@@ -55,7 +55,7 @@ class Assets extends Component {
                     onClick={() => historyPush(dir)}
                     >{tokenName}</Item>
                 </List>
-                <List>
+                {/*<List>
                     <Item extra={'233'}>Click the first list</Item>
                 </List>
                 <List>
@@ -63,7 +63,7 @@ class Assets extends Component {
                 </List>
                 <List>
                     <Item extra={'666'}>skr</Item>
-                </List>
+                </List>*/}
             </div>
         );
     }

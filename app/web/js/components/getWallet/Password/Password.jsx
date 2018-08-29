@@ -59,7 +59,7 @@ class Password extends Component {
 
         return (
             <div>
-                <List renderHeader={() => 'Your password, at least 9 digits of mixed number and letter.'}>
+                {/*<List renderHeader={() => 'Your password, at least 9 digits of mixed number and letter.'}>
                     <InputItem
                         value={this.state.password}
                         type="password"
@@ -77,6 +77,25 @@ class Password extends Component {
                         onChange={password => this.comfirmPassword(password)}
                         moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                     >comfirm</InputItem>
+                </List>*/}
+                <List>
+                    <InputItem
+                        value={this.state.password}
+                        type="password"
+                        placeholder="******"
+                        onChange={password => this.inputPassword(password)}
+                        moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                    >输入密码</InputItem>
+                </List>
+                    {passwordErrorText}
+                <List>
+                    <InputItem
+                        value={this.state.passwordReplay}
+                        type="password"
+                        placeholder="******"
+                        onChange={password => this.comfirmPassword(password)}
+                        moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                    >确认密码</InputItem>
                 </List>
                     {passwordReplayErrorText}
                 <WhiteSpace />

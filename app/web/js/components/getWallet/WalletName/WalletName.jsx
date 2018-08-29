@@ -29,7 +29,15 @@ class WalletName extends Component {
         // {walletNameErrorText}
         return (
             <div>
-                <List renderHeader={() => 'Wallet Name'}>
+                <List>
+                    <InputItem
+                        value={this.state.walletName}
+                        type="text"
+                        onChange={walletName => this.inputWalletName(walletName)}
+                        moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                    >钱包名称</InputItem>
+                </List>
+                {/*<List renderHeader={() => 'Wallet Name'}>
                     <InputItem
                         value={this.state.walletName}
                         type="text"
@@ -37,7 +45,7 @@ class WalletName extends Component {
                         onChange={walletName => this.inputWalletName(walletName)}
                         moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                     >name</InputItem>
-                </List>
+                </List>*/}
                     
             </div>
         );

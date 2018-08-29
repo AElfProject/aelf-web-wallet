@@ -21,7 +21,7 @@ class WalletManage extends Component {
 				<List>
 					<Item>
 						<div>{walletName}</div>
-	            		<div>{walletAddress}</div>
+	            		<div style={{fontSize: '12px'}}>{walletAddress}</div>
 					</Item>
 				</List>
 				<WhiteSpace />

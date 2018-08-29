@@ -99,6 +99,8 @@ class Create extends Component {
                     <p>AElf钱包不会储存密码，也无法帮您找回，请无比牢记。</p>
                 </div>
 
+                <div className="aelf-white-space"></div>
+
                 <WalletName
                     setWalletName={walletName => this.setWalletName(walletName)}
                 ></WalletName>
