@@ -22,15 +22,18 @@ class Password extends Component {
     }
 
     inputPassword(password) {
-        this.setState({password: password});
-        let checkResult = passwordCheck(password);
-        this.passwordInfo = checkResult;
-
         let passwordReplay = this.state.passwordReplay;
         if (passwordReplay) {
             this.state.password = password;
             this.comfirmPassword(passwordReplay);
+        } else {
+            this.passwordReplayHasError = false;
         }
+
+        this.setState({password: password});
+
+        let checkResult = passwordCheck(password);
+        this.passwordInfo = checkResult;
     }
 
     comfirmPassword(passwordReplay) {
@@ -54,7 +57,7 @@ class Password extends Component {
 
         let passwordReplayErrorText = '';
         if (this.passwordReplayHasError) {
-            passwordReplayErrorText = <div className={style.error}>The twice input are different</div>
+            passwordReplayErrorText = <div className={style.error}>两次输入不一致</div>
         }
 
         return (
@@ -82,7 +85,7 @@ class Password extends Component {
                     <InputItem
                         value={this.state.password}
                         type="password"
-                        placeholder="******"
+                        placeholder=""
                         onChange={password => this.inputPassword(password)}
                         moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                     >输入密码</InputItem>
@@ -92,7 +95,7 @@ class Password extends Component {
                     <InputItem
                         value={this.state.passwordReplay}
                         type="password"
-                        placeholder="******"
+                        placeholder=""
                         onChange={password => this.comfirmPassword(password)}
                         moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                     >确认密码</InputItem>

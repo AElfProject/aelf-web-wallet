@@ -27,7 +27,6 @@ import personalCenterAbout from './components/personalCenter/About/About'
 import PasswordChange from './components/personalCenter/WalletList/PasswordChange/PasswordChange'
 import WalletList from './components/personalCenter/WalletList/WalletList'
 import WalletManage from './components/personalCenter/WalletList/WalletManage/WalletManage'
-import WalletNameChange from './components/personalCenter/WalletList/WalletNameChange/WalletNameChange'
 
 // 关于我们
 import Privacy from './components/personalCenter/About/pages/Privacy'
@@ -67,23 +66,23 @@ welcomePage.style.display = 'none';
 //   welcomePage.style.display = 'none';
 // }, 1000);
 
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hashHistory}>
       <Route path="/" component={HomePage}>
         <Route path="/assets" component={Assets}></Route>
-        <Route path="/transactiondetail" component={AssetTransactionDetail}></Route>
         <Route path="/qrcode" component={QRCode}></Route>
         <Route path="/personalcenter/home" component={personalCenterHome}></Route>
         <Route path="/personalcenter/walletlist" component={WalletList}></Route>
-        <Route path="/personalcenter/walletmanage" component={WalletManage}></Route>
       </Route>
 
+      <Route path="/transactiondetail" component={AssetTransactionDetail}></Route>
+      <Route path="/personalcenter/walletmanage" component={WalletManage}></Route>
 
       <Route path="/assethome" component={AssetHome}></Route>
       <Route path="/assettransfer" component={AssetTransfer}></Route>
       <Route path="/personalcenter/passwordchange" component={PasswordChange}></Route>
-      <Route path="/personalcenter/walletnamechange" component={WalletNameChange}></Route>
 
 
       <Route path="/personalcenter/about" component={personalCenterAbout}></Route>
@@ -99,9 +98,10 @@ ReactDOM.render(
       <Route path="/personalcenter/whatisaelfwallet" component={WhatIsAElfWallet}></Route>
       <Route path="/personalcenter/howtochangepassword" component={HowToChangePassword}></Route>
       
+      <Route path="/get-wallet/backup" component={getWalletBackup}/>
+      
       <Route path="/agreement" component={getWalletAgreement}/>
       <Route path="/get-wallet/nav" component={getWalletNav}>
-        <Route path="/get-wallet/backup" component={getWalletBackup}/>
         <Route path="/get-wallet/guide" component={getWalletGuide}/>
         <Route path="/get-wallet/create" component={getWalletCreate}/>
         <Route path="/get-wallet/import" component={getWalletImport}/>

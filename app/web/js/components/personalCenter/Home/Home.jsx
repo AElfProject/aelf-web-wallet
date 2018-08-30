@@ -10,8 +10,7 @@ import { List } from 'antd-mobile'
 import { hashHistory } from 'react-router'
 
 const Item = List.Item;
-class personalCenterHome extends Component {
- 
+class personalCenterHome extends Component { 
 	render() {
 		return (
 			<div>

@@ -6,6 +6,8 @@ import { hashHistory } from 'react-router'
 import Mnemonic from './pages/Mnemonic'
 
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
+import NavNormal from '../../NavNormal/NavNormal'
+
 import { historyPush } from '../../../utils/historyChange'
 
 import aelf from 'aelf-sdk'
@@ -27,7 +29,6 @@ class Backup extends Component {
     }
 
     showModal(e, key) {
-        e.persist();
         e.preventDefault(); // 修复 Android 上点击穿透
         this.setState({
             [key]: true,
@@ -115,20 +116,31 @@ class Backup extends Component {
 
         return (
             <div>
+
+                <NavNormal navTitle="导入钱包" 
+                onLeftClick={() => hashHistory.push('/personalcenter/walletManage')}></NavNormal>
+
                 <div className="aelf-white-space"></div>
-                <Button onClick={(e) => prompt(
-                    '密码',
-                    '请确保环境安全下备份私钥',
-                    [
-                        { text: '取消' },
-                        { text: '提交', onPress: password => {
-                                let boolean = this.getPrivateKeyAndMnemonic(password);
-                                boolean && this.showModal(e, 'privateKeyModal');
-                            }
-                        },
-                    ],
-                    'secure-text',
-                )}
+                <Button onClick={(e) => {
+                        // be nullified after the event callback has been invoked,
+                        // if dont e.persist(), we can't get e.preventDefault in this.showModal
+                        // https://reactjs.org/docs/events.html#event-pooling
+                        e.persist();
+                        prompt(
+                            '密码',
+                            '请确保环境安全下备份私钥',
+                            [
+                                { text: '取消' },
+                                { text: '提交', onPress: password => {
+                                        let boolean = this.getPrivateKeyAndMnemonic(password);
+                                        boolean && this.showModal(e, 'privateKeyModal');
+                                    }
+                                },
+                            ],
+                            'secure-text',
+                        );
+                    }
+                }
                 >备份私钥</Button>
 
                 <Button onClick={(e) => prompt(

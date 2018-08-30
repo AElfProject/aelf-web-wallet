@@ -19,7 +19,7 @@ function charType(num) {
 
 function check(password) {
     let level = 0;
-    let type = 'Too short, at least 9.';
+    let type = '至少九位混合大小写、数字、特殊字符等';
     let pwd = password.toString();
 
     if (pwd.length >= 9) {
@@ -37,14 +37,16 @@ function check(password) {
         }
         switch (level) {
             case 1:
-                type = "weak";
+                // type = "弱密码";
+                type = "强度不够";
                 break;
             case 2:
-                type = "medium";
+                // type = "中等强度";
+                type = "强度不够";
                 break;
             case 3:
             case 4:
-                type = "strong";
+                type = "高强度";
                 break;
         }
     }

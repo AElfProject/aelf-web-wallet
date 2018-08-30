@@ -24,8 +24,6 @@ class Create extends Component {
             password: '',
             agreementDisplay: false
         };
-
-        this.toggleAgreement = this.toggleAgreement.bind(this);
     }
 
     createAndGO() {
@@ -55,7 +53,7 @@ class Create extends Component {
                 hashHistory.push('/get-wallet/backup');
             });
         } else {
-            Toast.fail('(꒦_꒦) ...Fail, please check the form. Or call Huang Zongzhe');
+            Toast.fail('(꒦_꒦) ...额，要不去github联系下作者？');
         }
     }
 
@@ -123,7 +121,7 @@ class Create extends Component {
 
                 <Agreement
                     agreementDisplay={this.state.agreementDisplay}
-                    toggleAgreement={this.toggleAgreement}
+                    toggleAgreement={() => this.toggleAgreement()}
                 ></Agreement>
 
                 <WhiteSpace />
