@@ -9,6 +9,8 @@ import QRCode from 'qrcode.react'
 import { Button, Toast } from 'antd-mobile'
 import style from './QRCode.scss'
 
+import BackupNotice from '../BackupNotice/BackupNotice'
+
 class QRCodeTemplate extends Component {
 	copy() {
 		let id = document.getElementById('qrcodetext');
@@ -23,6 +25,7 @@ class QRCodeTemplate extends Component {
 
 		return (
 			<div>
+				<BackupNotice />
 				<p>qrcode</p>
 				<QRCode value={walletAddress} />
 				<textarea id="qrcodetext"

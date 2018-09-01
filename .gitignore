@@ -5,3 +5,4 @@
 .travis.yml
 app/public/js/*
 test.js
+test.data.js

@@ -22,6 +22,8 @@ import { NavBar, Icon, Button, Toast } from 'antd-mobile'
 import { hashHistory } from 'react-router'
 import style from './pages.scss'
 
+import backupStatusChange from '../../../BackupNotice/backupStatusChange'
+
 const selectedStyle = '#EEE';
 const unSelectedStyle = '#FFF';
 
@@ -95,6 +97,7 @@ class Mnemonic extends Component {
 			});
 
 			if (text.trim() === this.props.mnemonic) {
+				backupStatusChange();
 				Toast.success('正确', 3, () => {
 					hashHistory.push('/personalcenter/walletmanage');
 				});

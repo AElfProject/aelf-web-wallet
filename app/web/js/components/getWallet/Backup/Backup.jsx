@@ -6,6 +6,8 @@ import { hashHistory } from 'react-router'
 import Mnemonic from './pages/Mnemonic'
 
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
+import backupStatusChange from '../../BackupNotice/backupStatusChange'
+
 import NavNormal from '../../NavNormal/NavNormal'
 
 import { historyPush } from '../../../utils/historyChange'
@@ -88,6 +90,7 @@ class Backup extends Component {
         let id = document.getElementById('privateKeyBackUp');
         id.select();
         document.execCommand("Copy");
+        backupStatusChange();
         Toast.info('已复制私钥', 1, () => {}, false);
     }
 

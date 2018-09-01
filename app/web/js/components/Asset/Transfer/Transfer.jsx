@@ -8,6 +8,7 @@ import style from './Transfer.scss'
 import { hashHistory } from 'react-router'
 
 import NavNormal from '../../NavNormal/NavNormal'
+import BackupNotice from '../../BackupNotice/BackupNotice'
 
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import initAelf from '../../../utils/initAelf'
@@ -95,6 +96,7 @@ class Transfer extends Component {
 
         return (
             <div>
+                <BackupNotice/>
                 <NavNormal navTitle="转账"></NavNormal>
                 <div className="aelf-content-container">
                     <h3>Token Name</h3>

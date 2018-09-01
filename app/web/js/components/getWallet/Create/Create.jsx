@@ -44,6 +44,8 @@ class Create extends Component {
 
         let walletInfo = aelf.wallet.createNewWallet();
         walletInfo.walletName = this.state.walletName;
+        // 如果是创建的钱包，需要先备份才能使用，否则转账，获取收款二维码的操作将跳转到提示页。
+        walletInfo.hasBackup = false;
         let result = insertWalletInfo(walletInfo, password);
 
         if (result) {
