@@ -105,7 +105,7 @@ class NavWithDrawer extends Component {
 		return (
 			<div>
 				<NavBar icon={showLeftClick ? <Icon type="left" /> : ''} 
-						onLeftClick={() => this.onLeftClick()}
+						onLeftClick={showLeftClick ? () => this.onLeftClick() : () => {}}
 		          rightContent={[
 		            <Icon key="1" type="ellipsis" onClick={() => this.onOpenChange()} />,
 		          ]}

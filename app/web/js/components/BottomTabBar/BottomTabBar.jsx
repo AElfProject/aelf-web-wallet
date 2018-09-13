@@ -10,6 +10,14 @@ class BottomTabBar extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      selectedTab: this.getSelected(),
+      hidden: false,
+      fullScreen: false,
+    };
+  }
+
+  getSelected () {
     let pathname = hashHistory.getCurrentLocation().pathname;
     let selectedTab = '';
     if (pathname.match(/\/personalcenter\/home/)) {
@@ -19,12 +27,7 @@ class BottomTabBar extends Component {
     } else {
       selectedTab = 'yellowTab';
     }
-
-    this.state = {
-      selectedTab: selectedTab,
-      hidden: false,
-      fullScreen: false,
-    };
+    return selectedTab;
   }
 
   onPress(selected, dir) {
@@ -32,6 +35,10 @@ class BottomTabBar extends Component {
       selectedTab: selected
     });
     historyPush(dir);
+  }
+
+  componentWillUpdate() {
+    this.state.selectedTab = this.getSelected();
   }
 
   render() {

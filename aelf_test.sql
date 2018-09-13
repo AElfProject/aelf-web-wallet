@@ -11,7 +11,7 @@
  Target Server Version : 100309
  File Encoding         : 65001
 
- Date: 22/08/2018 10:19:55
+ Date: 13/09/2018 19:23:46
 */
 
 SET NAMES utf8mb4;
@@ -73,6 +73,7 @@ CREATE TABLE `transactions_0` (
   `block_hash` varchar(255) NOT NULL,
   `increment_id` bigint(20) NOT NULL,
   `quantity` bigint(20) NOT NULL,
+  `tx_status` varchar(255) NOT NULL,
   PRIMARY KEY (`tx_id`,`params_to`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

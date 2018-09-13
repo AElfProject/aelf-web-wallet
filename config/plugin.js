@@ -20,12 +20,12 @@ exports.nunjucks = {
 //   package: 'egg-proxy',
 // };
 
-exports.mysql = {
-  enable: true,
-  package: 'egg-mysql',
-};
+// exports.mysql = {
+//   enable: true,
+//   package: 'egg-mysql',
+// };
 
-exports.validate = {
-    enable: true,
-    package: 'egg-validate',
-};
+// exports.validate = {
+//     enable: true,
+//     package: 'egg-validate',
+// };

@@ -11,11 +11,7 @@ let hasAlert = false;
 // 如果传入了password，则使用私人账户来操作。
 // 如果传入了password, 需要在组件内方法执行initAelf
 function init (options = {}) {
-	// let options = {
-	// 	password: password,
-	// 	contractAddress: contractAddress,
-	// 	chainOnly: true / false
-	// }
+
 	let {password, contractAddress, chainOnly} = options;
 	let wallet = '';
 	if (password) {
@@ -35,7 +31,7 @@ function init (options = {}) {
         wallet = Aelf.wallet.getWalletByPrivateKey(privateKey);
 	} else {
 		// 公共账户用来进行查询操作。需要转账操作时,再使用用户的账户。
-		wallet = Aelf.wallet.getWalletByPrivateKey('f6e512a3c259e5f9af981d7f99d245aa5bc52fe448495e0b0dd56e8406be6f71');
+		wallet = Aelf.wallet.getWalletByPrivateKey(config.commonPrivateKey);
 	}
 
 	let aelf = new Aelf(new Aelf.providers.HttpProvider(config.httpProvider));

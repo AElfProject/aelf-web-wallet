@@ -99,7 +99,10 @@ class Transfer extends Component {
                 <BackupNotice/>
                 <NavNormal navTitle="转账"></NavNormal>
                 <div className="aelf-content-container">
-                    <h3>Token Name</h3>
+                
+                    <WhiteSpace/>
+                    <WhiteSpace/>
+                    {/*<h3>Token Name</h3>*/}
 
                     <List>
                         <InputItem
