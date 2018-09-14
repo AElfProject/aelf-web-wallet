@@ -30,12 +30,12 @@ class Import extends Component {
     }
 
     createAndGO() {
-        let password = this.password;
+        let password = this.state.password;
         if (!password) {
             Toast.fail('No password', 2);
             return;
         }
-        if (!this.walletName) {
+        if (!this.state.walletName) {
             Toast.fail('No walletName', 2);
             return;
         }
@@ -68,7 +68,7 @@ class Import extends Component {
         }
 
         let walletInfo = mnemonicWallet || privateKeyWallet; // 助记词钱包优先
-        walletInfo.walletName = this.walletName;
+        walletInfo.walletName = this.state.walletName;
         let result = insertWalletInfo(walletInfo, password);
 
         if (result) {
@@ -96,11 +96,15 @@ class Import extends Component {
     }
 
     setPassword(password) {
-        this.password = password;
+        this.setState({
+            password: password
+        });
     }
 
     setWalletName(walletName) {
-        this.walletName = walletName;
+        this.setState({
+            walletName: walletName
+        });
     }
 
     onTabChange(e) {
@@ -133,7 +137,7 @@ class Import extends Component {
     render() {
 
         let createButton = '';
-        if (this.password && this.state.walletName && this.state.agree) {
+        if (this.state.password && this.state.walletName && this.state.agree) {
             createButton = <Button onClick={() => this.createAndGO()}>导入钱包</Button>;
         }
 

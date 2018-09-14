@@ -31,8 +31,8 @@
   <!-- react component start -->
   <div id="root"></div>
   
-  <script id="__bs_script__">//<![CDATA[
+<!--   <script id="__bs_script__">//<![CDATA[
     document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.5'><\/script>".replace("HOST", location.hostname));
-//]]></script>
-<script type="text/javascript" src="../public/js/wallet.9ff67.js"></script></body>
+//]]></script> -->
+<script type="text/javascript" src="../public/js/wallet.d7829.js"></script></body>
 </html>
