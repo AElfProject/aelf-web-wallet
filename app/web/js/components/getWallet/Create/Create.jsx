@@ -9,6 +9,7 @@ import { hashHistory } from 'react-router'
 import passwordCheck from '../../../utils/passwordCheck'
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import insertWalletInfo from '../../../utils/walletStorage'
+import bindToken from '../../../utils/bindToken'
 
 import Agreement from '../Agreement/Agreement'
 

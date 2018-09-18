@@ -19,6 +19,13 @@ function insertWalletInfo(walletInfoInput, password) {
     if (password) {
         walletInfo.AESEncryptoPrivateKey = aelf.wallet.AESEncrypto(walletInfo.privateKey, password);
         walletInfo.AESEncryptoMnemonic = aelf.wallet.AESEncrypto(walletInfo.mnemonic, password);
+        
+        let publicKey = walletInfo.keyPair.getPublic();
+        walletInfo.publicKey = {
+            x: publicKey.x.toString('hex'),
+            y: publicKey.y.toString('hex')
+        };
+        walletInfo.signedAddress = walletInfo.keyPair.sign(walletInfo.address);
 
         delete walletInfo.privateKey;
         delete walletInfo.mnemonic;

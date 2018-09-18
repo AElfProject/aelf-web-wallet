@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <!-- set `maximum-scale` for some compatibility issues -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>AElf钱包</title>
   </head>
   <link rel="stylesheet" href="../public/style/browser_reset.css">
 <body>
@@ -34,5 +35,5 @@
 <!--   <script id="__bs_script__">//<![CDATA[
     document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.5'><\/script>".replace("HOST", location.hostname));
 //]]></script> -->
-<script type="text/javascript" src="../public/js/wallet.d7829.js"></script></body>
+<script type="text/javascript" src="../public/js/wallet.e5186.js"></script></body>
 </html>

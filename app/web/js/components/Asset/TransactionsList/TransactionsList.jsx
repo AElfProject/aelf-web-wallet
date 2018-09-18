@@ -11,8 +11,9 @@ import { hashHistory } from 'react-router'
 
 import checkStatus from '../../../utils/checkStatus'
 import addressOmit from '../../../utils/addressOmit'
+import getParam from '../../../utils/getParam'
 
-const NUM_ROWS = 10;
+const NUM_ROWS = 20;
 let pageIndex = 0;
 
 function getTxs (callback, pIndex = 0) {
@@ -23,7 +24,8 @@ function getTxs (callback, pIndex = 0) {
         limit: NUM_ROWS, // 13
         page: pIndex, // 0
         order: 'desc', // asc
-        address: walletAddress // 0x04263089a3fd878482d81d5f54f6865260d6
+        address: walletAddress, // 0x04263089a3fd878482d81d5f54f6865260d6
+        contract_address: getParam('contract_address', window.location.href)
     };
 
     let query = '';
@@ -85,6 +87,7 @@ class TransactionsList extends Component {
 
         getTxs(result => {
             this.rData = result.transactions;
+
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(this.rData),
                 height: hei,
@@ -136,12 +139,18 @@ class TransactionsList extends Component {
     };
     // PullToRefresh end
 
+    componentWillUnmount() {
+        this.WillUnmount = true;
+        this.setState = () => {};
+    }
+
     render() {
         const row = (rowData, sectionID, rowID) => {
             let item = this.rData[rowID];
             let isIncome = item.params_to === this.walletAddress ? true : false;
             let quantity = (isIncome ? '+' : '-') + item.quantity;
             let address = isIncome ? item.address_from : item.params_to;
+            let status = item.tx_status;
 
             address = addressOmit(address);
 
@@ -156,7 +165,7 @@ class TransactionsList extends Component {
                 >
                     <div>
                         <div className={style.address}>{address}</div>
-                        <div className={style.quantity}>{quantity} </div>
+                        <div className={style.quantity}>{quantity} {status}</div>
                     </div>
                 </div>
             );
@@ -166,6 +175,7 @@ class TransactionsList extends Component {
         return (
             <div>
                 <ListView
+                    initialListSize={NUM_ROWS} 
                     key={this.state.useBodyScroll ? '0' : '1'}
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}
@@ -188,7 +198,7 @@ class TransactionsList extends Component {
                       onRefresh={() => this.onRefresh()}
                     />}
                     onEndReached={() => this.onEndReached()}
-                    pageSize={5}
+                    pageSize={10}
                 />
             </div>
         );

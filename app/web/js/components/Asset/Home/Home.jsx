@@ -38,7 +38,7 @@ class Home extends Component {
     getBalanceAndTokenName() {
         let params = {
             address: this.walletAddress,
-            contract_address: getParam('contract', window.location.href)
+            contract_address: getParam('contract_address', window.location.href)
         };
 
         let query = '';
@@ -59,7 +59,8 @@ class Home extends Component {
 
                 this.setState({
                     balance: output.balance,
-                    tokenName: output.tokenDetail.name
+                    tokenName: output.tokenDetail.name,
+                    contract_address: params.contract_address
                 });
             })
         }).catch(error => {
@@ -71,7 +72,14 @@ class Home extends Component {
         this.getBalanceAndTokenName();
     }
 
+    componentWillUnmount() {
+        this.WillUnmount = true;
+        this.setState = () => {};
+    }
+
     render() {
+
+        let btnlink =  `/assettransfer?contract_address=${getParam('contract_address', window.location.href)}`;
 
         return (
             <div>
@@ -86,7 +94,7 @@ class Home extends Component {
 
                     <div className={style.transfer}>
                         <Button
-                            onClick={() => hashHistory.push('/assettransfer')}
+                            onClick={() => hashHistory.push(btnlink)}
                         >转账</Button>
                     </div>
                 </div>
