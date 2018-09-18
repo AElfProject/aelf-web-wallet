@@ -6,9 +6,11 @@
 
 export default bindToken
 
+import checkStatus from './checkStatus'
+
 function bindToken(option, callback) {
-    let csrf = document.cookie.match(/^csrfToken=[^;]*/)[0].replace('csrfToken=', '');
-    fetch(`/block/api/address/token`, {
+    let csrf = document.cookie.match(/csrfToken=[^;]*/)[0].replace('csrfToken=', '');
+    fetch(`/block/api/address/bind-token`, {
         credentials: 'include',
         method: 'POST',
         headers: {
@@ -24,8 +26,8 @@ function bindToken(option, callback) {
         body: JSON.stringify({
             address: option.address,
             contract_address: option.contract_address,
-            signed_address: option.signedAddress,
-            public_key: option.publicKey
+            signed_address: option.signed_address,
+            public_key: option.public_key
         })
     }).then(checkStatus).then(result => {
         callback(null, result);

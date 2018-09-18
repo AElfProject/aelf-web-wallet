@@ -61,7 +61,8 @@ function insertWalletInfo(walletInfoInput, password) {
         address: walletInfo.address,
         walletName: walletInfo.walletName
     }));
-    return true;
+    return walletInfo;
+    // return true;
 }
 
 export default insertWalletInfo

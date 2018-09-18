@@ -23,6 +23,7 @@ import { hashHistory } from 'react-router'
 import style from './pages.scss'
 
 import backupStatusChange from '../../../BackupNotice/backupStatusChange'
+import { historyPush } from '../../../../utils/historyChange'
 
 const selectedStyle = '#EEE';
 const unSelectedStyle = '#FFF';
@@ -99,7 +100,7 @@ class Mnemonic extends Component {
 			if (text.trim() === this.props.mnemonic) {
 				backupStatusChange();
 				Toast.success('正确', 3, () => {
-					hashHistory.push('/personalcenter/walletmanage');
+					historyPush('/personalcenter/walletmanage', false);
 				});
 				return;
 			}

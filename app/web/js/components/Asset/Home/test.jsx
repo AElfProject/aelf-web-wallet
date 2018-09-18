@@ -33,7 +33,7 @@ function checkStatus(response) {
 
 function getTxs () {
 
-    let csrf = document.cookie.match(/^csrfToken=[^;]*/)[0].replace('csrfToken=', '');
+    let csrf = document.cookie.match(/csrfToken=[^;]*/)[0].replace('csrfToken=', '');
 
     let params = {
         limit: '13', // 13

@@ -10,6 +10,7 @@ import passwordCheck from '../../../utils/passwordCheck'
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import insertWalletInfo from '../../../utils/walletStorage'
 import bindToken from '../../../utils/bindToken'
+import config from '../../../config/config'
 
 import Agreement from '../Agreement/Agreement'
 
@@ -25,12 +26,13 @@ class Create extends Component {
             password: '',
             agreementDisplay: false
         };
+        this.backpDir = '/get-wallet/backup?hash_redirect=%2Fassets'
     }
 
     createAndGO() {
         if (!!this.haveCreate) {
             Toast.info('钱包已经创建', 3, () => {
-                hashHistory.push('/get-wallet/backup');
+                hashHistory.push(this.backpDir);
             });
             return;
         }
@@ -38,6 +40,7 @@ class Create extends Component {
             Toast.info('钱包正在创建中', 3);
             return;
         }
+        Toast.info('钱包初始化中', 30);
 
         this.creating = true;
 
@@ -51,9 +54,17 @@ class Create extends Component {
 
         if (result) {
             this.haveCreate = true;
-            // Toast.info('Create success. Turn to Backup after 3s.', 3, () => {
-            Toast.success('创建成功', 3, () => {
-                hashHistory.push('/get-wallet/backup');
+
+            bindToken({
+                address: result.address,
+                contract_address: config.mainContract,
+                signed_address: result.signedAddress,
+                public_key: result.publicKey
+            }, () => {
+                Toast.hide();
+                Toast.success('创建成功', 3, () => {
+                    hashHistory.push(this.backpDir);
+                });
             });
         } else {
             Toast.fail('(꒦_꒦) ...额，要不去github联系下作者？');

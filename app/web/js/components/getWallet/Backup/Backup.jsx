@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import { Modal, Button, WhiteSpace, List, InputItem, Toast } from 'antd-mobile'
 import style from './Backup.scss'
-import { hashHistory } from 'react-router'
 
 import Mnemonic from './pages/Mnemonic'
 
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
+import { historyPush } from '../../../utils/historyChange'
 import backupStatusChange from '../../BackupNotice/backupStatusChange'
 
 import NavNormal from '../../NavNormal/NavNormal'
-
-import { historyPush } from '../../../utils/historyChange'
 
 import aelf from 'aelf-sdk'
 
@@ -121,7 +119,7 @@ class Backup extends Component {
             <div>
 
                 <NavNormal navTitle="导入钱包" 
-                onLeftClick={() => hashHistory.push('/personalcenter/walletManage')}></NavNormal>
+                onLeftClick={() => historyPush('/personalcenter/walletManage')}></NavNormal>
 
                 <div className="aelf-white-space"></div>
                 <Button onClick={(e) => {
@@ -187,36 +185,6 @@ class Backup extends Component {
                 </Modal>
                {mnemonicHtml}
  
-                {/*
-                <h3 className={style.title}>请确保环境安全下备份助记词和私钥 / Please ensure environmental safety.</h3>
-
-                <List renderHeader={() => '输入密码解密 / Password to decrypto your password and mnemonic.'}>
-                    <InputItem
-                        value={this.state.password}
-                        type="password"
-                        placeholder="******"
-                        onChange={password => this.inputPassword(password)}
-                        moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                    >password</InputItem>
-                </List>
-
-                <WhiteSpace />
-                <Button onClick={() => this.getPrivateKeyAndMnemonic()}>获取助记词和私钥 / Decrypto</Button>
-                <WhiteSpace />
-
-                <div className={style.text}>无法直接复制，需要手抄 / Can not copy directly, you need write it in somewhere.</div>
-                <List renderHeader={() => '助记词 / Mnemonic'}>
-                    <div className={style.forbidden}>{this.state.mnemonic}</div>
-                </List>
-                <WhiteSpace />
-                <List renderHeader={() => '私钥 / PrivateKey'}>
-                    <div className={style.forbidden}>{this.state.privateKey}</div>
-                </List>
-
-                <WhiteSpace />
-                <WhiteSpace />
-                <Button onClick={() => historyPush('/assets')}>返回主页 / Back to home</Button>
-                */}
             </div>
         );
     }

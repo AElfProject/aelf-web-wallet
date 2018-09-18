@@ -13,20 +13,10 @@ import config from '../../config/config.js'
 import initAelf from '../../utils/initAelf'
 import hexToString from '../../utils/hexToString'
 import { historyPush } from '../../utils/historyChange'
+import checkStatus from '../../utils/checkStatus'
 
 const NUM_ROWS = 20;
 let pageIndex = 0;
-
-function checkStatus(response) {
-    if (response.status >= 200 && response.status < 300) {
-        return response
-    } else {
-        var error = new Error(response.statusText)
-        error.response = response
-        console.log('error response: ', response);
-        throw error
-    }
-}
 
 function getTokens(callback, pIndex = 0) {
     let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;

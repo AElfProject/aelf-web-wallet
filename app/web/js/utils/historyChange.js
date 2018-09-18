@@ -5,8 +5,17 @@
 import { hashHistory } from 'react-router'
 import { Toast } from 'antd-mobile';
 
-export function historyPush(dir) {
-	Toast.loading('Loading...', 30);
+import getParam from './getParam'
+
+export function historyPush(dir, showTost = true) {
+
+    let hash_redirect = getParam('hash_redirect', window.location.href);
+    if (hash_redirect) {
+        hashHistory.push(decodeURIComponent(hash_redirect));
+        return;
+    }
+
+	showTost && Toast.loading('Loading...', 30);
     setTimeout(function () {
         hashHistory.push(dir);
     }, 50);
