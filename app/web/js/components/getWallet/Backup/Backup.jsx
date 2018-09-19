@@ -6,6 +6,7 @@ import Mnemonic from './pages/Mnemonic'
 
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import { historyPush } from '../../../utils/historyChange'
+import clipboard from '../../../utils/clipboard'
 import backupStatusChange from '../../BackupNotice/backupStatusChange'
 
 import NavNormal from '../../NavNormal/NavNormal'
@@ -26,6 +27,7 @@ class Backup extends Component {
             mnemonicDisplay: false,
             privateKeyModal: false
         };
+        clipboard('#clipboard-backup');
     }
 
     showModal(e, key) {
@@ -82,18 +84,6 @@ class Backup extends Component {
         this.setState({
             mnemonicDisplay: !this.state.mnemonicDisplay
         });
-    }
-
-    copyPrivateKey () {
-        let id = document.getElementById('privateKeyBackUp');
-        id.select();
-        document.execCommand("Copy");
-        backupStatusChange();
-        Toast.info('已复制私钥', 1, () => {}, false);
-    }
-
-    togglePrivateKey () {
-
     }
 
     componentDidUpdate() {
@@ -180,7 +170,9 @@ class Backup extends Component {
                         className={style.textarea}
                         defaultValue={this.state.privateKey}>
                     </textarea>
-                    <Button onClick={() => this.copyPrivateKey()}>复制</Button>
+                    <Button  
+                        data-clipboard-target="#privateKeyBackUp"
+                        id="clipboard-backup">复制</Button>
                   </div>
                 </Modal>
                {mnemonicHtml}

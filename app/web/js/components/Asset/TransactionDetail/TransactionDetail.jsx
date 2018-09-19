@@ -11,8 +11,8 @@ import NavNormal from '../../NavNormal/NavNormal'
 
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import getParam from '../../../utils/getParam' // 还有类似方法的话，合并一下。
-
 import initAelf from '../../../utils/initAelf'
+import clipboard from '../../../utils/clipboard'
 
 // React component
 class TransactionDetail extends Component {
@@ -23,6 +23,7 @@ class TransactionDetail extends Component {
         this.aelf = initAelf({
             chainOnly: true
         });
+        clipboard('#clipboard-transactionDetail');
     }
 
     getTxInfo() {
@@ -51,13 +52,6 @@ class TransactionDetail extends Component {
             txInfo.txResult = e;
         }
         return txInfo;
-    }
-
-    copyUrl () {
-        let id = document.getElementById('copyUrl');
-        id.select();
-        document.execCommand("Copy");
-        Toast.info('已复制', 1, () => {}, false);
     }
   
     render() {
@@ -129,7 +123,8 @@ class TransactionDetail extends Component {
                         className={style.textarea}
                         defaultValue={urlForCopy}>
                     </textarea>
-                    <Button onClick={() => this.copyUrl()}>复制Url</Button>
+                    <Button data-clipboard-target="#copyUrl"
+                        id="clipboard-transactionDetail">复制Url</Button>
                 </div>
             </div>
         );

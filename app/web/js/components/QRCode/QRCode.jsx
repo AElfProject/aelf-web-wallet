@@ -6,17 +6,16 @@ import React, {
 	Component
 } from 'react'
 import QRCode from 'qrcode.react'
-import { Button, Toast } from 'antd-mobile'
+import { Button } from 'antd-mobile'
 import style from './QRCode.scss'
 
 import BackupNotice from '../BackupNotice/BackupNotice'
+import clipboard from '../../utils/clipboard'
 
 class QRCodeTemplate extends Component {
-	copy() {
-		let id = document.getElementById('qrcodetext');
-		id.select();
-		document.execCommand("Copy");
-		Toast.info('已复制', 3, () => {}, false);
+	constructor () {
+		super();
+		clipboard('#clipboard-qrcode');
 	}
 
 	render() {
@@ -33,8 +32,8 @@ class QRCodeTemplate extends Component {
 					defaultValue={walletAddress}>
 				</textarea>
 				<p id="qrcodetext">{walletAddress}</p>
-				<Button
-                	onClick={() => this.copy()}
+				<Button data-clipboard-target="#qrcodetext"
+                	id="clipboard-qrcode"
                 >复制地址</Button>
 	    	</div>
 		);

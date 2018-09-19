@@ -10,5 +10,5 @@
   <!-- react component start -->
   <div id="root"></div>
   
-<script type="text/javascript" src="../public/js/transactionDetail.b9e0a.js"></script></body>
+<script type="text/javascript" src="../public/js/transactionDetail.bce51.js"></script></body>
 </html>
