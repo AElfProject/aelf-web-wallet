@@ -4,7 +4,7 @@ module.exports = appInfo => {
   const config = exports = {};
 
   // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + '_1532058713465_9824';
+  config.keys = appInfo.name + '';
 
   // add your config here
   config.middleware = [];
@@ -15,17 +15,9 @@ module.exports = appInfo => {
       '.tpl': 'nunjucks',
     },
   };
-  // use nginx
   // config.proxy = {
-  //   host: 'http://localhost:1234', // target host that matched path will be proxy to
+  //   url: 'http://localhost:1234/chain', // target host that matched path will be proxy to
   //   match: /\/aelf\/api/ // path pattern.
-  // }
-
-  // config.view = {
-  //   mapping: {
-  //     '.js': 'react',
-  //     '.jsx': 'react',
-  //   },
   // };
 
   return config;
