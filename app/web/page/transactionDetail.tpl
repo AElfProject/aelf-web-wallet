@@ -9,6 +9,11 @@
 <body>
   <!-- react component start -->
   <div id="root"></div>
-  
+  <script type="text/javascript">
+    window.defaultConfig = {};
+    defaultConfig.httpProvider = '{{httpProvider}}';
+    defaultConfig.mainContract = '{{mainContract}}';
+    defaultConfig.commonPrivateKey = '{{commonPrivateKey}}';
+  </script>
 </body>
 </html>

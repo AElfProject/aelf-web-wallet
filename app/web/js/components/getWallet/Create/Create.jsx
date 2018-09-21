@@ -10,7 +10,6 @@ import passwordCheck from '../../../utils/passwordCheck'
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import insertWalletInfo from '../../../utils/walletStorage'
 import bindToken from '../../../utils/bindToken'
-import config from '../../../config/config'
 
 import Agreement from '../Agreement/Agreement'
 
@@ -57,7 +56,7 @@ class Create extends Component {
 
             bindToken({
                 address: result.address,
-                contract_address: config.mainContract,
+                contract_address: window.defaultConfig.mainContract,
                 signed_address: result.signedAddress,
                 public_key: result.publicKey
             }, () => {

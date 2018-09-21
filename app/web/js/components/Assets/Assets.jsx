@@ -8,8 +8,6 @@ import { WhiteSpace, ListView, PullToRefresh, Toast } from 'antd-mobile'
 import style from './Assets.scss'
 import { hashHistory } from 'react-router'
 
-import config from '../../config/config.js'
-
 import initAelf from '../../utils/initAelf'
 import hexToString from '../../utils/hexToString'
 import { historyPush } from '../../utils/historyChange'

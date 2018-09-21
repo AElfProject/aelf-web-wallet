@@ -4,7 +4,6 @@
  * init aelf
  */
 import Aelf from 'aelf-sdk'
-import config from '../config/config.js'
 import { hashHistory } from 'react-router'
 
 let hasAlert = false;
@@ -31,10 +30,10 @@ function init (options = {}) {
         wallet = Aelf.wallet.getWalletByPrivateKey(privateKey);
 	} else {
 		// 公共账户用来进行查询操作。需要转账操作时,再使用用户的账户。
-		wallet = Aelf.wallet.getWalletByPrivateKey(config.commonPrivateKey);
+		wallet = Aelf.wallet.getWalletByPrivateKey(window.defaultConfig.commonPrivateKey);
 	}
 
-	let aelf = new Aelf(new Aelf.providers.HttpProvider(config.httpProvider));
+	let aelf = new Aelf(new Aelf.providers.HttpProvider(window.defaultConfig.httpProvider));
 
 	try {
 		aelf.chain.connectChain();
@@ -42,7 +41,7 @@ function init (options = {}) {
 		hashHistory.push('/error');
 	}
 	let contractMethods = chainOnly 
-		? {} : aelf.chain.contractAt(contractAddress || config.mainContract, wallet);
+		? {} : aelf.chain.contractAt(contractAddress || window.defaultConfig.mainContract, wallet);
 
 	// 固定合约，如果没有对应的方法，返回'非法合约'的信息。
 	if (!chainOnly && !contractMethods.TokenName && !hasAlert) {

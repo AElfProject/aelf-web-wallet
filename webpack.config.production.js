@@ -20,13 +20,20 @@ module.exports = {
 	// When mode is production or not defined, minimize is enabled. This option automatically adds Uglify plugin.
 	// production will remove the 'dead code'. Look at Tree Shaking
 	mode: 'production',
-	// mode: 'development',
-	// mode: 'development',
-	entry: './app/web/js/index.jsx',
-	output: {
-		path: path.resolve(__dirname, 'app'),
-		filename: 'public/js/wallet.[hash:5].js'
-	},
+	// entry: './app/web/js/index.jsx',
+	// output: {
+	// 	path: path.resolve(__dirname, 'app'),
+	// 	filename: 'public/js/wallet.[hash:5].js'
+	// },
+    entry: {
+        wallet: './app/web/js/index.jsx',
+        transactionDetail: './app/web/js/transactionDetail.jsx'
+    },
+    output: {
+        path: path.resolve(__dirname, 'app'), // equal to __diname + '/build'
+        filename: 'public/js/[name].[hash:5].js'
+    },
+
 	resolve: {
 		extensions: ['.js', '.jsx', '.scss']
 	},
@@ -70,26 +77,15 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
+			chunks: ['wallet'],
 			template: './app/web/page/index.tpl',
-			filename: './view/index.tpl',
+			filename: './view/index.tpl'
 		}),
-		// new LiveReloadPlugin(),
-		// ,
-		new BrowserSyncPlugin(
-			// {
-		 //      // browse to http://localhost:3000/ during development,
-		 //      // ./public directory is being served
-		 //      host: 'localhost',
-		 //      port: 7001,
-		 //      proxy: 'http://localhost:3100/'},
-		 //      // plugin options
-		 //      {
-		 //        // prevent BrowserSync from reloading the page
-		 //        // and let Webpack Dev Server take care of this
-		 //        reload: false
-		      
-		 //    }
-	    )
+		new HtmlWebpackPlugin({
+			chunks: ['transactionDetail'],
+			template: './app/web/page/transactionDetail.tpl',
+			filename: './view/transactionDetail.tpl'
+		}),
 		// ,
 		// new BundleAnalyzerPlugin({
 		// 	analyzerMode: 'server',

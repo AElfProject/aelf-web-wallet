@@ -31,6 +31,13 @@
 
   <!-- react component start -->
   <div id="root"></div>
+
+  <script type="text/javascript">
+    window.defaultConfig = {};
+    defaultConfig.httpProvider = '{{httpProvider}}';
+    defaultConfig.mainContract = '{{mainContract}}';
+    defaultConfig.commonPrivateKey = '{{commonPrivateKey}}';
+  </script>
   
 <!--   <script id="__bs_script__">//<![CDATA[
     document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.5'><\/script>".replace("HOST", location.hostname));
