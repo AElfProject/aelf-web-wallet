@@ -96,13 +96,17 @@ class Assets extends Component {
         });
     }
 
-    onRefresh() {
+    onRefresh(isSetState = true) {
         // this.props.getBalanceAndTokenName();
-
-        this.setState({
-            refreshing: true,
-            isLoading: true
-        });
+        if (isSetState) {
+            this.setState({
+                refreshing: true,
+                isLoading: true
+            });
+        } else {
+            this.state.refreshing = true;
+            this.state.isLoading = true;
+        }
 
         getTokens(result => {
             this.rData = result;
@@ -114,6 +118,8 @@ class Assets extends Component {
         });
         pageIndex = 0;
     };
+
+
 
     onEndReached(event) {
         // load new data
@@ -143,6 +149,14 @@ class Assets extends Component {
     }
   
     render() {
+        // check
+        let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+        if (this.walletAddressTemp && walletAddress !== this.walletAddressTemp) {
+            this.onRefresh(false);
+        }
+        this.walletAddressTemp = walletAddress;
+        // checked
+
         const row = (rowData, sectionID, rowID) => {
             let item = this.rData[rowID];
             let dir = `/assethome?contract_address=${item.contract_address}`;
