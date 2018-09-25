@@ -15,7 +15,7 @@ import clipboard from '../../utils/clipboard'
 class QRCodeTemplate extends Component {
 	constructor () {
 		super();
-		clipboard('#clipboard-qrcode');
+		clipboard('.clipboard-qrcode');
 	}
 
 	render() {
@@ -31,11 +31,13 @@ class QRCodeTemplate extends Component {
 				<input id="qrcodetext" 
 					type="text" 
 					className={style.textarea} 
-					defaultValue={walletAddress}/>
+					value={walletAddress}
+					readOnly/>
 
 				<p id="qrcodetext">{walletAddress}</p>
 				<Button data-clipboard-target="#qrcodetext"
                 	id="clipboard-qrcode"
+                	className="clipboard-qrcode"
                 >复制地址</Button>
 	    	</div>
 		);
