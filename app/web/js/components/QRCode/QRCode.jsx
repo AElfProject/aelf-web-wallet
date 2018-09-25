@@ -27,10 +27,12 @@ class QRCodeTemplate extends Component {
 				<BackupNotice />
 				<p>qrcode</p>
 				<QRCode value={walletAddress} />
-				<textarea id="qrcodetext"
-					className={style.textarea}
-					defaultValue={walletAddress}>
-				</textarea>
+
+				<input id="qrcodetext" 
+					type="text" 
+					className={style.textarea} 
+					defaultValue={walletAddress}/>
+
 				<p id="qrcodetext">{walletAddress}</p>
 				<Button data-clipboard-target="#qrcodetext"
                 	id="clipboard-qrcode"
