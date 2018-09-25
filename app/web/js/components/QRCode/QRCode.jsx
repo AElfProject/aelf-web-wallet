@@ -13,9 +13,9 @@ import BackupNotice from '../BackupNotice/BackupNotice'
 import clipboard from '../../utils/clipboard'
 
 class QRCodeTemplate extends Component {
-	constructor () {
-		super();
-		clipboard('.clipboard-qrcode');
+
+	componentDidMount() {
+		clipboard('#clipboard-qrcode');
 	}
 
 	render() {
@@ -37,7 +37,6 @@ class QRCodeTemplate extends Component {
 				<p id="qrcodetext">{walletAddress}</p>
 				<Button data-clipboard-target="#qrcodetext"
                 	id="clipboard-qrcode"
-                	className="clipboard-qrcode"
                 >复制地址</Button>
 	    	</div>
 		);
