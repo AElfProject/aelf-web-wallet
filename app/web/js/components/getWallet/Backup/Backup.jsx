@@ -170,9 +170,14 @@ class Backup extends Component {
                         className={style.textarea}
                         defaultValue={this.state.privateKey}>
                     </textarea>
+
                     <Button  
-                        data-clipboard-target="#privateKeyBackUp"
-                        id="clipboard-backup">复制</Button>
+                    onClick={() => {
+                        let btn = document.getElementById('clipboard-backup');
+                        btn.click();
+                    }}>复制</Button>
+                    <button id="clipboard-backup" data-clipboard-target="#privateKeyBackUp" style={{display: 'none'}}>copy</button>
+
                   </div>
                 </Modal>
                {mnemonicHtml}

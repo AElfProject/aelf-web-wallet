@@ -123,8 +123,12 @@ class TransactionDetail extends Component {
                         className={style.textarea}
                         defaultValue={urlForCopy}>
                     </textarea>
-                    <Button data-clipboard-target="#copyUrl"
-                        id="clipboard-transactionDetail">复制Url</Button>
+                    <Button
+                    onClick={() => {
+                        let btn = document.getElementById('clipboard-transactionDetail');
+                        btn.click();
+                    }}>复制Url</Button>
+                    <button id="clipboard-transactionDetail" data-clipboard-target="#copyUrl" style={{display: 'none'}}>copy</button>
                 </div>
             </div>
         );

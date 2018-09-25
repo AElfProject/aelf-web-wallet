@@ -35,9 +35,13 @@ class QRCodeTemplate extends Component {
 					readOnly/>
 
 				<p id="qrcodetext">{walletAddress}</p>
-				<Button data-clipboard-target="#qrcodetext"
-                	id="clipboard-qrcode"
+				<Button
+					onClick={() => {
+						let btn = document.getElementById('clipboard-qrcode');
+						btn.click();
+					}}
                 >复制地址</Button>
+                <button id="clipboard-qrcode" data-clipboard-target="#qrcodetext" style={{display: 'none'}}>copy</button>
 	    	</div>
 		);
 	}
