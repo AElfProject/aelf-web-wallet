@@ -20,17 +20,30 @@ import initAelf from '../../../utils/initAelf'
 
 // 需要更加完善的机制
 function addressCheck (address = '') {
+    let output = {
+        ready: true,
+        message: ''
+    };
+
     if (address.length === 38 && address.match(/^0x/)) {
-        return true
+        let addressUse = JSON.parse(localStorage.getItem('lastuse')).address;
+        if (address === addressUse) {
+            output.ready = false;
+            output.message = '转账地址和当前钱包地址一样';
+            return output;
+        }
+        output.ready = true;
+        return output;
     }
-    return false;
+    output.ready = false;
+    output.message = '错误的地址';
+    return output;
 }
 class Transfer extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
-        // console.log('this.props: ', this.props);
     }
 
     inputAmount(amount) {
@@ -73,9 +86,9 @@ class Transfer extends Component {
             let amount = parseInt(this.state.amount);
             let address = this.state.address;
 
-            let addressReady = addressCheck(address);
-            if (!addressReady) {
-                this.setState({passwordError: 'wrong address.'});
+            let addressCheckResult = addressCheck(address);
+            if (!addressCheckResult.ready) {
+                this.setState({passwordError: addressCheckResult.message});
                 return Toast.hide();
             }
 
@@ -102,7 +115,6 @@ class Transfer extends Component {
                 
                     <WhiteSpace/>
                     <WhiteSpace/>
-                    {/*<h3>Token Name</h3>*/}
 
                     <List>
                         <InputItem

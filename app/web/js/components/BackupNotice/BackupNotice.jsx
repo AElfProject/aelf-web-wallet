@@ -35,7 +35,7 @@ class BackupNotice extends Component {
 						<div>备份助记词在您丢失钱包或忘记密码时，能帮助您恢复钱包。</div>
 
 						<WhiteSpace />
-						<Button onClick={() => hashHistory.push('/get-wallet/backup')}>立即备份</Button>
+						<Button onClick={() => hashHistory.push('/get-wallet/backup')}>立即备份助记词</Button>
 						<WhiteSpace />
 						<Button onClick={() => hashHistory.push('/assets')}>返回首页</Button>
 					</div>
