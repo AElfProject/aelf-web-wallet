@@ -87,7 +87,7 @@ module.exports = {
 			chunks: ['transactionDetail'],
 			template: './app/web/page/transactionDetail.tpl',
 			filename: './view/transactionDetail.tpl'
-		}),
+		})
 		// ,
 		// new BundleAnalyzerPlugin({
 		// 	analyzerMode: 'server',

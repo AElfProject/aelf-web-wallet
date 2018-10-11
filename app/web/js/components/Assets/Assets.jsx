@@ -12,6 +12,7 @@ import initAelf from '../../utils/initAelf'
 import hexToString from '../../utils/hexToString'
 import { historyPush } from '../../utils/historyChange'
 import checkStatus from '../../utils/checkStatus'
+import Svg from '../Svg/Svg'
 
 const NUM_ROWS = 20;
 let pageIndex = 0;

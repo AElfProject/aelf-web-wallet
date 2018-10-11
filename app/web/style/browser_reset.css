@@ -1,15 +1,81 @@
+/* Test */
 html {
-  display: flex;
+  /*display: flex;*/
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  max-width: 520px;
 }
 
+body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  
+  max-width: 520px; 
+  max-width: 520px;
+  margin: auto !important;
+}
+
+#welcome-page {
+  position: absolute;
+  background-color: #108ee9;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 11px 15px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.aelf-logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 150px;
+    background: #FFF;
+    margin: 30px auto auto auto;
+    text-align: center;
+    line-height: 150px;
+}
+
+
+/* 一些elf的基础样式 */
+.aelf-blue {
+  color: #108ee9;
+}
+.aelf-bg-blue {
+  background-color: #108ee9;
+}
+
+.aelf-white-space {
+  height: 11px;
+  width: 10px;
+}
+
+.aelf-content-container {
+  color: #A6A6A6;
+  /*text-align: center;*/
+  /*padding: 11px 0px 50px 0px;*/
+  padding: 0px 0px 50px 0px;
+  overflow-x: hidden;
+}
+
+/*.aelf-code-container {
+  word-wrap: break-word;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 8px;
+  margin: 0 0 15px 0;
+  background: #fefefe;
+}*/
+
 /**浏览器的css reset*/
-body, div, span {
+/*body, div, span {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -38,4 +104,4 @@ input {
 
 img {
   box-sizing: border-box;
-}
+}*/

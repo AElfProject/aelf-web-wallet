@@ -25,9 +25,9 @@ class NavNormal extends Component {
 		return (
 			<div>
 				<NavBar 
-					icon={<Icon type="left" />} 
+					icon={<Icon type="left" />}
 					onLeftClick={() => this.goBack()}
-					style={{position: 'fixed', top: '0px', width: '100%', maxWidth:'520px'}}>
+					style={{position: 'fixed', top: '0px', width: '100%', maxWidth:'520px', backgroundColor: 'rgba(0, 0, 0, 0)', color: '#FFF'}}>
 					{this.props.navTitle}
 				</NavBar>
 				<div className="nav-normal-whitespace"></div>

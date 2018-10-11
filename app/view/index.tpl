@@ -7,14 +7,20 @@
     <title>AElf钱包</title>
   </head>
   <link rel="stylesheet" href="../public/style/browser_reset.css">
+  <!-- <link rel="stylesheet" href="../style/browser_reset.css"> -->
 <body>
-  <div id="welcome-page" class="aelf-bg-blue">
-    <div class="aelf-logo">AElf</div>
-    <p>Welcome to ELF wallet Beta.</p>
-    <p>你好，AELF, 这里是开屏页。</p>
-    <p>用来放宣传图片</p>
-    <p>等等</p>
+  <div id="welcome-page">
+      <div class="welcome-page-message">
+        <div class="aelf-logo-container">
+            <div class="aelf-logo"></div>
+        </div>
+        <p class="aelf-wallet-description">真正快速、不受限、安全、可扩容</p>
+      </div>
+      <div class="welcome-page-bg"></div>
+      <div class="welcome-page-mask"></div>
   </div>
+
+
 
   <!-- fastclick 使用有点问题... -->
   <!-- <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script> -->
@@ -38,9 +44,9 @@
     defaultConfig.mainContract = '{{mainContract}}';
     defaultConfig.commonPrivateKey = '{{commonPrivateKey}}';
   </script>
-  
+
 <!--   <script id="__bs_script__">//<![CDATA[
     document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.5'><\/script>".replace("HOST", location.hostname));
 //]]></script> -->
-<script type="text/javascript" src="../public/js/wallet.1a863.js"></script></body>
+<script type="text/javascript" src="../public/js/wallet.7f237.js"></script></body>
 </html>

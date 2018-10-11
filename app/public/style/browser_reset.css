@@ -13,16 +13,20 @@ body {
   right: 0;
   top: 0;
   bottom: 0;
-  
-  max-width: 520px; 
+
+  max-width: 520px;
   max-width: 520px;
   margin: auto !important;
 }
 
 #welcome-page {
+  opacity: 1;
+  transition: all 0.3s;
+}
+
+.welcome-page-message {
   position: absolute;
-  background-color: #108ee9;
-  z-index: 999;
+  z-index: 1001;
   top: 0;
   left: 0;
   bottom: 0;
@@ -30,16 +34,54 @@ body {
   padding: 11px 15px;
   font-size: 18px;
   line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.welcome-page-bg {
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: url("../assets/background/bg1@3x.jpg") no-repeat;
+  background-size: contain;
+  background-color: #30037a;
+}
+
+.welcome-page-mask {
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #16112e;
+  opacity: 0.8;
+}
+
+.aelf-logo-container {
+  width: 30%;
+  height: 88px;
+  margin: auto auto 0 auto;
+  text-align: center;
+  line-height: 96px;
+}
+.aelf-wallet-description {
+  margin: 0 0 50px 0;
+  text-align: center;
+  color: #FFF;
+  font-size: 12px;
 }
 
 .aelf-logo {
-    width: 150px;
-    height: 150px;
-    border-radius: 150px;
-    background: #FFF;
-    margin: 30px auto auto auto;
-    text-align: center;
-    line-height: 150px;
+  width: 100%;
+  height: 100%;
+  background: url("../assets/svg_icon/logo.svg") no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
 
@@ -64,6 +106,11 @@ body {
   overflow-x: hidden;
 }
 
+#root {
+  background: url("../assets/background/bg2@2x.jpg") no-repeat;
+  background-size: contain;
+  background-color: #200a43;
+}
 /*.aelf-code-container {
   word-wrap: break-word;
   border: 1px solid #ccc;

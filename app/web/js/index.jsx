@@ -52,14 +52,18 @@ import 'whatwg-fetch';
 let walletInfoList = localStorage.getItem('walletInfoList');
 
 if (!walletInfoList) {
-  hashHistory.replace('/get-wallet/guide');
+    hashHistory.replace('/get-wallet/guide');
 } else if (hashHistory.getCurrentLocation().pathname == '/') {
-  hashHistory.replace('/assets');
+    hashHistory.replace('/assets');
 }
 
 // remove welcome-page
 let welcomePage = document.getElementById('welcome-page');
-welcomePage.style.display = 'none';
+// welcomePage.style.display = 'none';
+welcomePage.style.opacity = 0;
+setTimeout(() => {
+    welcomePage.style.display = 'none';
+}, 300)
 
 // setTimeout(function () {
 //   let welcomePage = document.getElementById('welcome-page');
@@ -68,54 +72,54 @@ welcomePage.style.display = 'none';
 
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={hashHistory}>
-      <Route path="/" component={HomePage}>
-        <Route path="/assets" component={Assets}></Route>
-        <Route path="/qrcode" component={QRCode}></Route>
-        <Route path="/personalcenter/home" component={personalCenterHome}></Route>
-        <Route path="/personalcenter/walletlist" component={WalletList}></Route>
-      </Route>
+    <Provider store={store}>
+        <Router history={hashHistory}>
+            <Route path="/" component={HomePage}>
+                <Route path="/assets" component={Assets}></Route>
+                <Route path="/qrcode" component={QRCode}></Route>
+                <Route path="/personalcenter/home" component={personalCenterHome}></Route>
+                <Route path="/personalcenter/walletlist" component={WalletList}></Route>
+            </Route>
 
-      <Route path="/transactiondetail" component={AssetTransactionDetail}></Route>
-      <Route path="/personalcenter/walletmanage" component={WalletManage}></Route>
+            <Route path="/transactiondetail" component={AssetTransactionDetail}></Route>
+            <Route path="/personalcenter/walletmanage" component={WalletManage}></Route>
 
-      <Route path="/assethome" component={AssetHome}></Route>
-      <Route path="/assettransfer" component={AssetTransfer}></Route>
-      <Route path="/personalcenter/passwordchange" component={PasswordChange}></Route>
-
-
-      <Route path="/personalcenter/about" component={personalCenterAbout}></Route>
-      <Route path="/personalcenter/about/privacy" component={Privacy}></Route>
-      <Route path="/personalcenter/about/service" component={Service}></Route>
+            <Route path="/assethome" component={AssetHome}></Route>
+            <Route path="/assettransfer" component={AssetTransfer}></Route>
+            <Route path="/personalcenter/passwordchange" component={PasswordChange}></Route>
 
 
-
-      <Route path="/personalcenter/help" component={personalCenterHelpCenter}></Route>
-      <Route path="/personalcenter/whatismnemonic" component={WhatIsMnemonic}></Route>
-      <Route path="/personalcenter/whatiskeystore" component={WhatIsKeyStore}></Route>
-      <Route path="/personalcenter/whatisprivatepublickey" component={WhatIsPrivatePublicKey}></Route>
-      <Route path="/personalcenter/whatisaelfwallet" component={WhatIsAElfWallet}></Route>
-      <Route path="/personalcenter/howtochangepassword" component={HowToChangePassword}></Route>
-      
-      <Route path="/get-wallet/backup" component={getWalletBackup}/>
-      
-      <Route path="/agreement" component={getWalletAgreement}/>
-      <Route path="/get-wallet/nav" component={getWalletNav}>
-        <Route path="/get-wallet/guide" component={getWalletGuide}/>
-        <Route path="/get-wallet/create" component={getWalletCreate}/>
-        <Route path="/get-wallet/import" component={getWalletImport}/>
-      </Route>
+            <Route path="/personalcenter/about" component={personalCenterAbout}></Route>
+            <Route path="/personalcenter/about/privacy" component={Privacy}></Route>
+            <Route path="/personalcenter/about/service" component={Service}></Route>
 
 
 
-      <Route path="/error" component={ErrorPage}></Route>
+            <Route path="/personalcenter/help" component={personalCenterHelpCenter}></Route>
+            <Route path="/personalcenter/whatismnemonic" component={WhatIsMnemonic}></Route>
+            <Route path="/personalcenter/whatiskeystore" component={WhatIsKeyStore}></Route>
+            <Route path="/personalcenter/whatisprivatepublickey" component={WhatIsPrivatePublicKey}></Route>
+            <Route path="/personalcenter/whatisaelfwallet" component={WhatIsAElfWallet}></Route>
+            <Route path="/personalcenter/howtochangepassword" component={HowToChangePassword}></Route>
+
+            <Route path="/get-wallet/backup" component={getWalletBackup}/>
+
+            <Route path="/agreement" component={getWalletAgreement}/>
+            <Route path="/get-wallet/nav" component={getWalletNav}>
+                <Route path="/get-wallet/guide" component={getWalletGuide}/>
+                <Route path="/get-wallet/create" component={getWalletCreate}/>
+                <Route path="/get-wallet/import" component={getWalletImport}/>
+            </Route>
 
 
-      
-    </Router>
-  </Provider>,
-  document.getElementById('root')
+
+            <Route path="/error" component={ErrorPage}></Route>
+
+
+
+        </Router>
+    </Provider>,
+    document.getElementById('root')
 )
 
 // fetch demo
