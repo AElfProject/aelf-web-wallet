@@ -1,33 +1,15 @@
-# aelf-app-server
+# Quick Start
+set config/config.default.js config/config.node.js first.
 
-aelf-app-server
+npm install
 
-## QuickStart
+dev: npm run dev
+pro: npm start
 
-<!-- add docs here for user -->
+default port: 7001
 
-see [egg docs][egg] for more detail.
+# Nginx
+nginx/servers/wallet.online.conf
 
-### Development
-
-```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
-```
-
-### Deploy
-
-```bash
-$ npm start
-$ npm stop
-```
-
-### npm scripts
-
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
-
-
-[egg]: https://eggjs.org
+# Docker
+todo

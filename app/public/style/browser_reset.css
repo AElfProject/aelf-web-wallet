@@ -46,20 +46,10 @@ body {
   left: 0;
   bottom: 0;
   right: 0;
-  background: url("../assets/background/bg1@3x.jpg") no-repeat;
+  /*background: url("../assets/background/bg1@3x.jpg") no-repeat;*/
+  background: url("../assets/background/bg4.svg") no-repeat;
   background-size: contain;
   background-color: #30037a;
-}
-
-.welcome-page-mask {
-  position: absolute;
-  z-index: 1000;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: #16112e;
-  opacity: 0.8;
 }
 
 .aelf-logo-container {

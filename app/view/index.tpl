@@ -17,7 +17,6 @@
         <p class="aelf-wallet-description">真正快速、不受限、安全、可扩容</p>
       </div>
       <div class="welcome-page-bg"></div>
-      <div class="welcome-page-mask"></div>
   </div>
 
 
@@ -48,5 +47,5 @@
 <!--   <script id="__bs_script__">//<![CDATA[
     document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.5'><\/script>".replace("HOST", location.hostname));
 //]]></script> -->
-<script type="text/javascript" src="../public/js/wallet.7f237.js"></script></body>
+<script type="text/javascript" src="../public/js/wallet.012ce.js"></script></body>
 </html>

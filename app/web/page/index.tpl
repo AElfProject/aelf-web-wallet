@@ -17,7 +17,6 @@
         <p class="aelf-wallet-description">真正快速、不受限、安全、可扩容</p>
       </div>
       <div class="welcome-page-bg"></div>
-      <div class="welcome-page-mask"></div>
   </div>
 
 

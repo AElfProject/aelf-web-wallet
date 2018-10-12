@@ -59,7 +59,7 @@ if (!walletInfoList) {
 
 // remove welcome-page
 let welcomePage = document.getElementById('welcome-page');
-// welcomePage.style.display = 'none';
+
 welcomePage.style.opacity = 0;
 setTimeout(() => {
     welcomePage.style.display = 'none';
