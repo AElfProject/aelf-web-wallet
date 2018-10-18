@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
-import TransactionDetail from './components/Asset/TransactionDetail/TransactionDetail'
+import TransactionDetail from './pages/Asset/TransactionDetail/TransactionDetail'
 
 import style from '../style/index.scss'
 

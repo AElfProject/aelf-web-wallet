@@ -9,41 +9,42 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 // import aelf from 'aelf-sdk'
 import store from './store'
 
-import getWalletNav from './components/getWallet/Nav/Nav'
-import getWalletGuide from './components/getWallet/Guide/Guide'
-import getWalletAgreement from './components/getWallet/Agreement/Agreement'
-import getWalletCreate from './components/getWallet/Create/Create'
-import getWalletBackup from './components/getWallet/Backup/Backup'
-import getWalletImport from './components/getWallet/Import/Import'
+import getWalletNav from './pages/getWallet/Nav/Nav'
+import getWalletGuide from './pages/getWallet/Guide/Guide'
+import getWalletAgreement from './pages/getWallet/Agreement/Agreement'
+import getWalletCreate from './pages/getWallet/Create/Create'
+import getWalletBackup from './pages/getWallet/Backup/Backup'
+import getWalletImport from './pages/getWallet/Import/Import'
 
-import HomePage from './components/HomePage/HomePage'
-import Assets from './components/Assets/Assets'
-import AssetHome from './components/Asset/Home/Home'
-import AssetTransfer from './components/Asset/Transfer/Transfer'
-import AssetTransactionDetail from './components/Asset/TransactionDetail/TransactionDetail'
+import HomePage from './pages/HomePage/HomePage'
+import Assets from './pages/Assets/Assets'
+import AssetHome from './pages/Asset/Home/Home'
+import AssetTransfer from './pages/Asset/Transfer/Transfer'
+import AssetTransactionDetail from './pages/Asset/TransactionDetail/TransactionDetail'
 
-import personalCenterHome from './components/personalCenter/Home/Home'
-import personalCenterAbout from './components/personalCenter/About/About'
-import PasswordChange from './components/personalCenter/WalletList/PasswordChange/PasswordChange'
-import WalletList from './components/personalCenter/WalletList/WalletList'
-import WalletManage from './components/personalCenter/WalletList/WalletManage/WalletManage'
+import personalCenterHome from './pages/personalCenter/Home/Home'
+import personalCenterAbout from './pages/personalCenter/About/About'
+import PasswordChange from './pages/personalCenter/WalletList/PasswordChange/PasswordChange'
+import WalletList from './pages/personalCenter/WalletList/WalletList'
+import WalletManage from './pages/personalCenter/WalletList/WalletManage/WalletManage'
 
 // 关于我们
-import Privacy from './components/personalCenter/About/pages/Privacy'
-import Service from './components/personalCenter/About/pages/Service'
+import Privacy from './pages/personalCenter/About/pages/Privacy'
+import Service from './pages/personalCenter/About/pages/Service'
 
 // 帮助中心
-import personalCenterHelpCenter from './components/personalCenter/HelpCenter/HelpCenter'
-import WhatIsMnemonic from './components/personalCenter/HelpCenter/pages/WhatIsMnemonic'
-import WhatIsKeyStore from './components/personalCenter/HelpCenter/pages/WhatIsKeyStore'
-import WhatIsPrivatePublicKey from './components/personalCenter/HelpCenter/pages/WhatIsPrivatePublicKey'
-import WhatIsAElfWallet from './components/personalCenter/HelpCenter/pages/WhatIsAElfWallet'
-import HowToChangePassword from './components/personalCenter/HelpCenter/pages/HowToChangePassword'
+import personalCenterHelpCenter from './pages/personalCenter/HelpCenter/HelpCenter'
+import WhatIsMnemonic from './pages/personalCenter/HelpCenter/pages/WhatIsMnemonic'
+import WhatIsKeyStore from './pages/personalCenter/HelpCenter/pages/WhatIsKeyStore'
+import WhatIsPrivatePublicKey from './pages/personalCenter/HelpCenter/pages/WhatIsPrivatePublicKey'
+import WhatIsAElfWallet from './pages/personalCenter/HelpCenter/pages/WhatIsAElfWallet'
+import HowToChangePassword from './pages/personalCenter/HelpCenter/pages/HowToChangePassword'
 
-import QRCode from './components/QRCode/QRCode'
-import ErrorPage from './components/ErrorPage/ErrorPage'
+import QRCode from './pages/QRCode/QRCode'
+import ErrorPage from './pages/ErrorPage/ErrorPage'
 
 import style from '../style/index.scss'
+require('./../style/ant-mobile-aelf.css');
 
 // bind to window, fetch polyfill.
 import 'whatwg-fetch';

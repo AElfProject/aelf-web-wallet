@@ -1,0 +1,44 @@
+.myDrawer {
+  position: relative;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.myDrawer .am-drawer-sidebar {
+  background-color: #fff;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.myDrawer .am-drawer-sidebar .am-list {
+  width: 300px;
+  padding: 0;
+}
+
+.myDrawer .am-drawer-content .am-drawer-draghandle {
+	width: 0px;
+}
+
+.bottomTabBar {
+	position: fixed;
+	left: 0;
+	right: 0;
+  bottom: 0;
+  height: 50px;
+  
+  max-width: 520px;
+  margin: auto;
+}
+
+// .test {
+//   position:fixed;
+//   top: 50%;
+//   left: 50%;
+//   -webkit-transform: translate(-50%, -50%);
+//       -ms-transform: translate(-50%, -50%);
+//           transform: translate(-50%, -50%);
+//   border: 1px solid #ccc;
+//   border-radius: 3px;
+//   height: 100px;
+//   width: 100px;
+//   z-index: 100;
+//   display: none;
+// }

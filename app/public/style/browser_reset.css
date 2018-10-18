@@ -21,7 +21,7 @@ body {
 
 #welcome-page {
   opacity: 1;
-  transition: all 0.3s;
+  transition: all 0.6s;
 }
 
 .welcome-page-message {
@@ -48,8 +48,10 @@ body {
   right: 0;
   /*background: url("../assets/background/bg1@3x.jpg") no-repeat;*/
   background: url("../assets/background/bg4.svg") no-repeat;
+  /*background: url("../assets/background/bg3_long.svg") no-repeat;*/
+  /*background-size: contain;*/
   background-size: contain;
-  background-color: #30037a;
+  background-color: #1a1134;
 }
 
 .aelf-logo-container {
@@ -71,6 +73,7 @@ body {
   height: 100%;
   background: url("../assets/svg_icon/logo.svg") no-repeat;
   background-size: contain;
+  /*background-size: cover;*/
   background-position: center;
 }
 
@@ -97,47 +100,43 @@ body {
 }
 
 #root {
-  background: url("../assets/background/bg2@2x.jpg") no-repeat;
-  background-size: contain;
+  background: url("../assets/background/bg2_long.svg") no-repeat;
+  /*background-size: contain;*/
+  background-size: cover;
   background-color: #200a43;
-}
-/*.aelf-code-container {
-  word-wrap: break-word;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  padding: 8px;
-  margin: 0 0 15px 0;
-  background: #fefefe;
-}*/
-
-/**浏览器的css reset*/
-/*body, div, span {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  width: 100%;
+  /*min-height: 100%;*/
+  height: 100%;
 }
 
-body {
-  display: flex;
+.aelf-bg-light {
+  background: url("../assets/background/bg1_long.svg") no-repeat;
+  /*background-size: contain;*/
+  background-size: cover;
+  background-color: #2d0379;
+  width: 100%;
+  height: 100%;
+  /*overflow: scroll;*/
+  /*min-height: 100%;*/
+}
+.aelf-wd-100percent {
+  height: 100%;
+  /*min-height: 100%;*/
+  width: 100%;
+
+  /*display: flex;*/
+  /*flex-direction: column;*/
 }
 
-span {
-  line-height: 1.2em;
-  -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  text-size-adjust: 100%;
+.aelf-blank12 {
+  height: 12px;
+  width: 12px;
 }
 
-div, span {
-  flex-direction: column;
-  display: flex;
+/* 修改 Antd Model  */
+.am-modal-button-group-h .am-modal-button:first-child {
+  color: #260073 !important;
 }
-
-input {
-  display: flex;
+.am-modal-button-group-h .am-modal-button {
+  color: #AC00E6 !important;
 }
-
-img {
-  box-sizing: border-box;
-}*/

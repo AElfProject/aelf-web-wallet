@@ -1,0 +1,20 @@
+.container {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+
+.text {
+	margin: 0 18px;
+	word-wrap: break-word;
+}
+
+.error {
+	color: #f50;
+	padding: 0px 15px;
+}
+
+.bottom {
+	width: 80%;
+	margin: 0 0 50px 10%;
+}

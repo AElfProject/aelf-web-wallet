@@ -71,6 +71,16 @@ module.exports = {
 			// 这里用来加载ant-mobile的样式，不做处理。
 			test: /\.css$/,
 			use: ['style-loader', 'css-loader']
+		}, {
+            test: /\.(png|svg|jpg|gif)$/,
+			use: [
+				{
+                    loader: 'file-loader',
+                    options: {
+                        outputPath: './public/assets/output'
+					}
+                },
+			]
 		}]
 	},
 	node: {
