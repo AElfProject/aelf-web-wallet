@@ -100,7 +100,8 @@ body {
 }
 
 #root {
-  background: url("../assets/background/bg2_long.svg") no-repeat;
+  /*background: url("../assets/background/bg2_long.svg") no-repeat;*/
+  background: url("../assets/background/bg2.svg") no-repeat;
   /*background-size: contain;*/
   background-size: cover;
   background-color: #200a43;

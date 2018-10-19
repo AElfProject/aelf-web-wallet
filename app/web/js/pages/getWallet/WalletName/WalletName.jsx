@@ -25,7 +25,7 @@ class WalletName extends Component {
 
     render() {
         return (
-            <div className="aelf-input-container">
+            <div className="aelf-input-container aelf-dash">
                 <List>
                     <div className="aelf-input-title">钱包名称</div>
                     <InputItem

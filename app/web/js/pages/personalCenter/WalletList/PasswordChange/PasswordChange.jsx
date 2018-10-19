@@ -10,10 +10,15 @@ import { WhiteSpace, List, InputItem, Button, Toast } from 'antd-mobile'
 import { hashHistory } from 'react-router'
 
 import Password from '../../../../components/Password/Password'
+import AelfButton from '../../../../components/Button/Button'
+import NoticePanel from '../../../../components/NoticePanel/NoticePanel'
 import NavNormal from '../../../NavNormal/NavNormal'
 
 import moneyKeyboardWrapProps from '../../../../utils/moneyKeyboardWrapProps'
 import insertWalletInfo from '../../../../utils/walletStorage'
+import getPageContainerStyle from '../../../../utils/getPageContainerStyle'
+
+import style from './PasswordChange.scss'
 
 const Item = List.Item;
 class PasswordChange extends Component {
@@ -63,6 +68,7 @@ class PasswordChange extends Component {
 	        insertWalletInfo(walletInfo, this.state.newPassword);
 	        Toast.info('Password Change Success', 3, () => {
                 // hashHistory.push('/assets');
+                hashHistory.goBack();
             });
         	// console.log('change done: ', privateKey, result);
         } else {
@@ -72,41 +78,80 @@ class PasswordChange extends Component {
     }
 
 	render() {
-		let changeButton = '';
+		// let changeButton =
+         //    <AelfButton
+         //        text="修改密码"
+         //        style={{
+         //            opacity: 0.5
+         //        }}
+         //    ></AelfButton>;
+        let rightContent =
+            <div
+                style={{
+                    opacity: 0.5
+                }}
+            >完成
+            </div>;
         if (this.state.newPassword && true) {
-            changeButton = <Button onClick={() => this.changePassword()}>Change the Password</Button>;
+            // changeButton =
+            //     <AelfButton
+            //         onClick={() => this.changePassword()}
+            //         text="修改密码"
+            //         style={{
+            //             opacity: 1
+            //         }}
+            //     ></AelfButton>
+            rightContent =
+                <div
+                    onClick={() => this.changePassword()}
+                >完成
+                </div>;
         }
 
+        let containerStyle = getPageContainerStyle();
+
 		return (
-			<div>
-                <NavNormal navTitle="修改密码"></NavNormal>
-                <div className="aelf-white-space"></div>
-				<List>
-                    <InputItem
-                        value={this.state.password}
-                        type="password"
-                        placeholder="******"
-                        onChange={password => this.inputPassword(password)}
-                        moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                    >当前密码</InputItem>
-                </List>
+			<div className={'aelf-dash'}>
+                <NavNormal
+                           rightContent={rightContent}
+                ></NavNormal>
+                <div className={style.container} >
+                    <div>
+                        <NoticePanel
+                            mainTitle={'修改密码'}
+                            subTitle={[
+                                ''
+                            ]}
+                            iconHidden={true}
+                        ></NoticePanel>
+                        <List className={style.passwordContainer}>
 
-                <WhiteSpace />
+                            <div className="aelf-input-title">
+                                <div>当前密码</div>
+                            </div>
+                            <InputItem
+                                value={this.state.password}
+                                type="password"
+                                placeholder=""
+                                onChange={password => this.inputPassword(password)}
+                                moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                            ></InputItem>
+                        </List>
 
-				<Password
-                    setPassword={newPassword => this.setNewPassword(newPassword)}
-                ></Password>
 
-                <div>忘记密码？导入助记词或私钥可重置。
-                	<a href="javascript:;" 
-	                	className="aelf-blue" 
-	                	onClick={() => hashHistory.push('/get-wallet/import')}>
-	                	马上导入
-	                </a>
+                        <Password
+                            setPassword={newPassword => this.setNewPassword(newPassword)}
+                        ></Password>
+
+                        <div className={style.forget}>忘记密码？导入助记词或私钥可重置。
+                            <a href="javascript:;"
+                               className="aelf-blue"
+                               onClick={() => hashHistory.push('/get-wallet/import')}>
+                                马上导入
+                            </a>
+                        </div>
+                    </div>
                 </div>
-
-                <WhiteSpace />
-                {changeButton}
 			</div>
 		);
 	}

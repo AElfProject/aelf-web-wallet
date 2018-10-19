@@ -144,7 +144,7 @@ class Password extends Component {
         let levelInfo = getPasswordLevelInfo(this.passwordInfo);
 
         return (
-            <div className="aelf-input-container">
+            <div className="aelf-input-container aelf-dash">
                 <List>
                     <div className="aelf-input-title">
                         <div>设置密码</div>

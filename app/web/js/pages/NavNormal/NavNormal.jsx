@@ -22,11 +22,18 @@ class NavNormal extends Component {
 		hashHistory.goBack();
 	}
 	render() {
+        // rightContent={[
+        //         <div
+        //             onClick={() => this.props.rightContentClick()}
+        //         >完成</div>
+        //         ]}
+		console.log(this.props.rightContent);
 		return (
 			<div>
 				<NavBar 
 					icon={<Icon type="left" />}
 					onLeftClick={() => this.goBack()}
+                    rightContent={this.props.rightContent}
 					style={{position: 'fixed', top: '0px', width: '100%', maxWidth:'520px', backgroundColor: 'rgba(0, 0, 0, 0)', color: '#FFF'}}>
 					{this.props.navTitle}
 				</NavBar>

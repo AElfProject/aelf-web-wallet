@@ -1,3 +1,12 @@
 .container {
   color: #FFF;
 }
+
+.aelfList:active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.blank {
+  height: 35px;
+  width: 35px;
+}
