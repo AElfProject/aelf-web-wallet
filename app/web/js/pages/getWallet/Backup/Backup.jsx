@@ -245,21 +245,38 @@ class Backup extends Component {
                     onClose={() => this.onClose('privateKeyModal')}
                     animationType="slide-up"
                 >
-                    <div style={{ height: 100, wordWrap: 'break-word' }}>
-                        {this.state.privateKey}
-                        <textarea id="privateKeyBackUp"
-                                  className={style.textarea}
-                                  defaultValue={this.state.privateKey}>
-                        </textarea>
+                    <div>
+                        <div className={style.pannelTitle}>
+                            复制私钥
+                        </div>
+                        <div className={style.copyArea}>
+                            <div style={{ width: '100%' }}>
+                                {this.state.privateKey}
+                            </div>
+                            <textarea
+                                id="privateKeyBackUp"
+                                className={style.textarea}
+                                defaultValue={this.state.privateKey}>
+                            </textarea>
+                        </div>
 
-                        <Button
+                        <div
+                            className={style.pannelBtnPurple}
                             onClick={() => {
                                 let btn = document.getElementById('clipboard-backup');
                                 btn.click();
-                            }}>复制</Button>
+                            }}
+                        >
+                            复制
+                        </div>
+                        <div
+                            className={style.pannelBtnPurple + ' ' + style.pannerlBtnGrey}
+                            onClick={() => this.onClose('privateKeyModal')}
+                        >
+                            关闭
+                        </div>
                         <button id="clipboard-backup" data-clipboard-target="#privateKeyBackUp" style={{display: 'none'}}>copy</button>
                     </div>
-                    <Button onClick={() => this.onClose('privateKeyModal')}>关闭</Button>
                 </Modal>
 
 
