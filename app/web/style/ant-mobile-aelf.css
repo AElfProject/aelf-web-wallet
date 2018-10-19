@@ -8,3 +8,7 @@
 .aelf-personal-pages .am-list-item .am-list-line .am-list-content {
     color: #FFF;
 }
+
+.aelf-list:active {
+    background: rgba(255, 255, 255, 0.1);
+}

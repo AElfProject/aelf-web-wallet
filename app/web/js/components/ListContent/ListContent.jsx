@@ -20,19 +20,24 @@ export default class ListContent extends Component {
         if (this.props.type === 'small') {
             textStyle.fontSize = '14px';
         }
+        let listIconLeftHtml = '';
+        if (this.props.icon) {
+            listIconLeftHtml =
+                <div className={style.listIconLeft}>
+                    <Svg
+                        icon={this.props.icon}
+                        style={{
+                            width: 16,
+                            height: 16
+                        }}
+                    ></Svg>
+                </div>;
+        }
 
         return (
             <div className={style.listContainer}>
                 <div className={style.listLeft}>
-                    <div className={style.listIconLeft}>
-                        <Svg
-                            icon={this.props.icon}
-                            style={{
-                                width: 16,
-                                height: 16
-                            }}
-                        ></Svg>
-                    </div>
+                    {listIconLeftHtml}
                     <div style={textStyle}>{this.props.text}</div>
                 </div>
                 <div>

@@ -1,6 +1,7 @@
 /*
  * huangzongzhe
  * 2018.08.23
+ * Description: for fetch
  */
 
 export function checkStatus(response) {

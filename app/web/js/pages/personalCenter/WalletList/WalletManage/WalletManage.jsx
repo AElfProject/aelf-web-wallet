@@ -8,11 +8,20 @@ import React, {
 import { List, WhiteSpace, Modal, Toast } from 'antd-mobile'
 import { hashHistory } from 'react-router'
 
+import ListContent from '../../../../components/ListContent/ListContent'
+import NoticePanel from '../../../../components/NoticePanel/NoticePanel'
+import AelfButton from '../../../../components/Button/Button'
+
 import NavWithDrawer from '../../../NavWithDrawer/NavWithDrawer'
 import insertWalletInfo from '../../../../utils/walletStorage'
+import getPageContainerStyle from '../../../../utils/getPageContainerStyle'
+import walletStatusCheck from '../../../../utils/walletStatusCheck'
+
+import style from './WalletManage.scss'
 
 const Item = List.Item;
 const prompt = Modal.prompt;
+const alert = Modal.alert;
 
 class WalletManage extends Component {
 	constructor() {
@@ -51,43 +60,116 @@ class WalletManage extends Component {
         });
     }
 
+    deleteWallet() {
+		let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+        let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+		delete walletInfoList[walletAddress];
+
+        localStorage.setItem('walletInfoList', JSON.stringify(walletInfoList));
+
+        let count = 0;
+        let lock = false;
+        for (let each in walletInfoList) {
+            if (count) {
+                break
+            } else {
+                console.log(each);
+                localStorage.setItem('lastuse', JSON.stringify({
+                    address: walletInfoList[each].address,
+                    walletName: walletInfoList[each].walletName
+                }));
+                count++;
+                lock = true;
+                Toast.success('删除成功', 3, () => {
+                    hashHistory.push('/personalcenter/home');
+                })
+            }
+        }
+        if (!lock) {
+            localStorage.removeItem('walletInfoList');
+            localStorage.removeItem('lastuse');
+            Toast.fail('没有钱包了，请创建或导入钱包', 3, () => {
+                hashHistory.push('/get-wallet/guide');
+            }, 3);
+		}
+	}
+
 	render() {
+
 		let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
 		let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
 		let walletName = walletInfoList[walletAddress].walletName;
 
+        let containerStyle = getPageContainerStyle();
+        containerStyle.height = containerStyle.height - 61;
 		let html =
-			<div>
-				<List>
-					<Item>
-						<div>{walletName}</div>
-	            		<div style={{fontSize: '12px'}}>{walletAddress}</div>
-					</Item>
-				</List>
-				<WhiteSpace />
+			<div className={'aelf-personal-pages aelf-solid' + ' ' + style.container} style={containerStyle}>
+				<div className={style.top}>
+                    <NoticePanel
+                        mainTitle={walletName}
+                        subTitle={[
+                            walletAddress
+                        ]}
+                        subTitleStyle={{
+                            opacity: 0.5
+                        }}
+                        iconHidden={true}
+                    ></NoticePanel>
 
-				{/*// Todo: 将这种promt用Modal重写，保证 maskClosable*/}
-				<List>
-					<Item 
-						extra={walletName} 
-						onClick={
-							() => prompt('', '新的名称', [{
-								text: '取消'
-							}, {
-								text: '修改',
-								onPress: name => this.changeName(name)
-							}, ], 'default', '')
-						}>
-						钱包名称
-					</Item>
-				</List>
+                    {/*<List>*/}
+                    {/*<Item>*/}
+                    {/*<div>{walletName}</div>*/}
+                    {/*<div style={{fontSize: '12px'}}>{walletAddress}</div>*/}
+                    {/*</Item>*/}
+                    {/*</List>*/}
+                    {/*// Todo: 将这种promt用Modal重写，保证 maskClosable*/}
+                    <List className={'aelf-list'}>
+                        {/*arrow="horizontal"*/}
+                        <Item
+                            onClick={
+                                () => prompt('', '新的名称', [{
+                                    text: '取消'
+                                }, {
+                                    text: '修改',
+                                    onPress: name => this.changeName(name)
+                                }, ], 'default', '')
+                            }>
+                            <ListContent
+                                text="钱包名称"
+                            ></ListContent>
+                        </Item>
+                    </List>
 
-				<WhiteSpace />
+                    <List className={'aelf-list'}>
+                        <Item onClick={() => hashHistory.push('/get-wallet/backup')}>
+                            <ListContent
+                                text="备份钱包"
+                            ></ListContent>
+                        </Item>
+                    </List>
+                    <List className={'aelf-list'}>
+                        <Item onClick={() => hashHistory.push('/personalcenter/passwordchange')}>
+                            <ListContent
+                                text="修改密码"
+                            ></ListContent>
+                        </Item>
+                    </List>
+				</div>
 
-				<List>
-					<Item arrow="horizontal" onClick={() => hashHistory.push('/get-wallet/backup')}>备份钱包</Item>
-					<Item arrow="horizontal" onClick={() => hashHistory.push('/personalcenter/passwordchange')}>修改密码</Item>
-                </List>
+				<div className={style.bottom}>
+                    <AelfButton
+                        text="删除钱包"
+                        onClick={
+                            () => alert('删除', '确认删除钱包', [{
+                                text: '取消'
+                            }, {
+                                text: '确认',
+                                onPress: name => this.deleteWallet()
+                            }, ], 'default', '')
+                        }
+                    ></AelfButton>
+
+				</div>
 			</div>;
 
 		return (

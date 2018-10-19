@@ -89,12 +89,9 @@ ReactDOM.render(
             <Route path="/assettransfer" component={AssetTransfer}></Route>
             <Route path="/personalcenter/passwordchange" component={PasswordChange}></Route>
 
-
             <Route path="/personalcenter/about" component={personalCenterAbout}></Route>
             <Route path="/personalcenter/about/privacy" component={Privacy}></Route>
             <Route path="/personalcenter/about/service" component={Service}></Route>
-
-
 
             <Route path="/personalcenter/help" component={personalCenterHelpCenter}></Route>
             <Route path="/personalcenter/whatismnemonic" component={WhatIsMnemonic}></Route>
@@ -112,11 +109,7 @@ ReactDOM.render(
                 <Route path="/get-wallet/import" component={getWalletImport}/>
             </Route>
 
-
-
             <Route path="/error" component={ErrorPage}></Route>
-
-
 
         </Router>
     </Provider>,

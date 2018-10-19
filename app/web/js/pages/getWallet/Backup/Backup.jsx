@@ -139,6 +139,26 @@ class Backup extends Component {
                     </div>
 
                     <div className={style.bottom}>
+
+                        <AelfButton
+                            text='备份助记词'
+                            onClick={(e) => prompt(
+                                '密码',
+                                '请确保环境安全下备份助记词',
+                                [
+                                    { text: '取消' },
+                                    { text: '提交', onPress: password => {
+                                            let boolean = this.getPrivateKeyAndMnemonic(password);
+                                            boolean && this.toggleMnemonic();
+                                        }
+                                    },
+                                ],
+                                'secure-text',
+                            )}
+                        ></AelfButton>
+
+                        <div className='aelf-blank12'></div>
+
                         <AelfButton
                             text='备份私钥'
                             onClick={(e) => {
@@ -161,25 +181,6 @@ class Backup extends Component {
                                 );
                             }
                             }
-                        ></AelfButton>
-
-                        <div className='aelf-blank12'></div>
-
-                        <AelfButton
-                            text='备份助记词'
-                            onClick={(e) => prompt(
-                                '密码',
-                                '请确保环境安全下备份助记词',
-                                [
-                                    { text: '取消' },
-                                    { text: '提交', onPress: password => {
-                                            let boolean = this.getPrivateKeyAndMnemonic(password);
-                                            boolean && this.toggleMnemonic();
-                                        }
-                                    },
-                                ],
-                                'secure-text',
-                            )}
                         ></AelfButton>
                         {/*<AelfButton*/}
                             {/*text='备份助记词'*/}

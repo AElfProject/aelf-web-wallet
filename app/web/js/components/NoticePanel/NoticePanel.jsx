@@ -34,7 +34,7 @@ class NoticePanel extends Component {
     getSubTitleHtml() {
         let subTitle = '';
         if (this.props.subTitle && Array.isArray(this.props.subTitle)) {
-            subTitle = <div className={style.subTitle}>
+            subTitle = <div className={style.subTitle} style={this.props.subTitleStyle || {}}>
                 {
                     this.props.subTitle.map(item => {
                         return <p key={Math.random()}>{item}</p>;

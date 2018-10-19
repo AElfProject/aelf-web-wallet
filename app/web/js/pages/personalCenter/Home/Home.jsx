@@ -21,7 +21,7 @@ class personalCenterHome extends Component {
 		return (
 			<div className={style.container + ' ' + 'aelf-personal-pages aelf-solid'}>
 
-	            <List className={style.aelfList}>
+	            <List className={'aelf-list'}>
 	                <Item onClick={() => hashHistory.push('/personalcenter/walletmanage?title=钱包管理')}>
                         <ListContent
                             icon="wallet16"
@@ -30,7 +30,7 @@ class personalCenterHome extends Component {
                     </Item>
 	            </List>
 
-                <List className={style.aelfList}>
+                <List className={'aelf-list'}>
                     <Item onClick={() => hashHistory.push('/personalcenter/home')}>
                         <ListContent
                             icon="tx_history16"
@@ -41,7 +41,7 @@ class personalCenterHome extends Component {
 
                 <div className={style.blank}></div>
 
-                <List className={style.aelfList}>
+                <List className={'aelf-list'}>
                     <Item onClick={() => hashHistory.push('/personalcenter/home')}>
                         <ListContent
                             type="small"
@@ -50,7 +50,7 @@ class personalCenterHome extends Component {
                         ></ListContent>
                     </Item>
                 </List>
-                <List className={style.aelfList}>
+                <List className={'aelf-list'}>
                     <Item onClick={() => hashHistory.push('/personalcenter/home')}>
                         <ListContent
                             type="small"
@@ -59,7 +59,7 @@ class personalCenterHome extends Component {
                         ></ListContent>
                     </Item>
                 </List>
-                <List className={style.aelfList}>
+                <List className={'aelf-list'}>
                     <Item onClick={() => hashHistory.push('/personalcenter/help?title=帮助中心')}>
                         <ListContent
                             type="small"
@@ -68,7 +68,7 @@ class personalCenterHome extends Component {
                         ></ListContent>
                     </Item>
                 </List>
-                <List className={style.aelfList}>
+                <List className={'aelf-list'}>
                     <Item onClick={() => hashHistory.push('/personalcenter/about?title=关于我们')}>
                         <ListContent
                             type="small"

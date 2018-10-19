@@ -10,7 +10,7 @@ import { WhiteSpace, List, InputItem, Button, Toast } from 'antd-mobile'
 import { hashHistory } from 'react-router'
 
 import Password from '../../../../components/Password/Password'
-import AelfButton from '../../../../components/Button/Button'
+// import AelfButton from '../../../../components/Button/Button'
 import NoticePanel from '../../../../components/NoticePanel/NoticePanel'
 import NavNormal from '../../../NavNormal/NavNormal'
 
@@ -109,18 +109,19 @@ class PasswordChange extends Component {
         }
 
         let containerStyle = getPageContainerStyle();
+        let walletName = JSON.parse(localStorage.getItem('lastuse')).walletName;
 
 		return (
 			<div className={'aelf-dash'}>
                 <NavNormal
-                           rightContent={rightContent}
+                   rightContent={rightContent}
                 ></NavNormal>
                 <div className={style.container} >
                     <div>
                         <NoticePanel
                             mainTitle={'修改密码'}
                             subTitle={[
-                                ''
+                                walletName
                             ]}
                             iconHidden={true}
                         ></NoticePanel>
@@ -137,7 +138,6 @@ class PasswordChange extends Component {
                                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                             ></InputItem>
                         </List>
-
 
                         <Password
                             setPassword={newPassword => this.setNewPassword(newPassword)}

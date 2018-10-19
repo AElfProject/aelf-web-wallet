@@ -1,0 +1,27 @@
+//.container {
+//  color: #FFF;
+//  text-align: left;
+//}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  //margin: 100px 0 0 0;
+  color: #FFF;
+  text-align: left;
+}
+
+.top {
+  margin: 100px 0 0 0;
+}
+@media (max-height: 568px) {
+  .top {
+    margin: 50px 0 0 0;
+  }
+}
+
+.bottom {
+  width: 80%;
+  margin: 0 0 50px 10%;
+}
