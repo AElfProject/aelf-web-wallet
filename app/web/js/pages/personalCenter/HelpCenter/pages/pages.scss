@@ -1,15 +1,25 @@
+//.container {
+//    height: 100%;
+//}
+
 .textContainer {
 	line-height: 1.5;
-	padding: 11px 15px 0 15px;
-    height: 100%;
-    overflow: scroll;
+	padding: 11px 24px 24px 24px;
+    //height: 100%;
+    //overflow: scroll;
+    color: #FFF;
 }
 
 .dangerouslySetInnerHTML{
 	word-wrap: break-word;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 8px;
-    margin: 0 0 15px 0;
-    background: #fefefe;
+    //border: 1px solid #ccc;
+    //border-radius: 3px;
+    //padding: 8px;
+    //margin: 0 0 15px 0;
+    //background: #fefefe;
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+    border-radius: 4px;
+    padding: 14px;
+
 }

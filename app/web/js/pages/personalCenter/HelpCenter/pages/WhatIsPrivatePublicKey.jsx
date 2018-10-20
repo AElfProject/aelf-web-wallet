@@ -10,7 +10,8 @@ class WhatIsPrivatePublicKey extends Component {
 	render() {
 		return (
 			<div>
-				<NavNormal navTitle="帮助中心"></NavNormal>
+				{/*<NavNormal navTitle="帮助中心"></NavNormal>*/}
+				<NavNormal></NavNormal>
 				<div className={style.textContainer}>
 					<h2>什么是公钥私钥？</h2>
 					<p>钱包中资金的控制取决于相应私钥的所有权和控制权。</p>

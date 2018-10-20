@@ -64,7 +64,7 @@ class Service extends Component {
     <ul type=disc>
      <li class=MsoNormal style='text-align:left'><span lang=EN-US style='font-size:
          12.0pt;font-family:宋体'>1. aelf</span><span style='font-size:12.0pt;
-         font-family:宋体'>：<span style='color:black'>指由好扑基于<span lang=EN-US>aelf</span>公链系统（及将来陆续支持的其他系统）开发的区块链钱包，包括其他为方便用户使用相关系统而开发的辅助工具。</span></span></li>
+         font-family:宋体'>：<span style='color:#FFF'>指由好扑基于<span lang=EN-US>aelf</span>公链系统（及将来陆续支持的其他系统）开发的区块链钱包，包括其他为方便用户使用相关系统而开发的辅助工具。</span></span></li>
      <li class=MsoNormal style='text-align:left'><span lang=EN-US style='font-size:
          12.0pt;font-family:宋体'>2. </span><span style='font-size:12.0pt;font-family:
          宋体'>用户：</span></li>

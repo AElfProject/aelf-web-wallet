@@ -3,7 +3,15 @@
     background-color: #FFF;
 }
 
+.aelf-blank16 {
+    width: 10px;
+    height: 16px;
+}
 
+.aelf-blank40 {
+    width: 10px;
+    height: 40px;
+}
 
 .aelf-personal-pages .am-list-item .am-list-line .am-list-content {
     color: #FFF;

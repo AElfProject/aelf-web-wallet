@@ -10,7 +10,7 @@ class WhatIsAElfWallet extends Component {
 	render() {
 		return (
 			<div>
-				<NavNormal navTitle="帮助中心"></NavNormal>
+				<NavNormal></NavNormal>
 				<div className={style.textContainer}>
 					<h2>AElf钱包是什么？</h2>
 					<p>AElf钱包是一款全新的数字货币钱包，为用户提供更安全、高效、便捷的服务。</p>

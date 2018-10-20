@@ -10,7 +10,7 @@ class HowToChangePassword extends Component {
 	render() {
 		return (
 			<div>
-				<NavNormal navTitle="帮助中心"></NavNormal>
+				<NavNormal></NavNormal>
 				<div className={style.textContainer}>
 					<h2>如何修改密码？忘记密码怎么办？</h2>
 					<h3>修改密码</h3>
