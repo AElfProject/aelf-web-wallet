@@ -1,3 +1,41 @@
+.container {
+	overflow: scroll;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.qrcodePanel {
+	background: #FFF;
+	margin: 0 24px;
+	border-radius: 12px;
+	padding-bottom: 30px;
+	//height: 460px;
+}
+
+.qrcode {
+	width: 200px;
+	height: 200px;
+	margin: 40px 0 40px 0;
+}
+
+.titleContaienr {
+	height: 98px;
+	background: url("../../../assets/background/gradient00.svg") no-repeat;
+	background-size: cover;
+	color: #FFF;
+	border-top-right-radius: 12px;
+	border-top-left-radius: 12px;
+}
+
+.title {
+	font-size: 24px;
+	padding-top: 26px;
+}
+.subTitle {
+	font-size: 12px;
+}
+
 .textarea {
 	position: fixed;
 	top: -250px;
