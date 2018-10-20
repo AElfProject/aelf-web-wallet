@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  height: 50px;
+}
+
+.tabContainer {
+  flex: 1;
+  //background: aqua;
+  //border: 1px solid #FFF;
+  height: 50px;
+  color: #FFF;
+  font-size: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0.7;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-bottom: 4px;
+}
+
+.asset {
+  background: url('../../../assets/svg_icon/asset_on16.svg') no-repeat;
+}
+
+.my {
+  background: url('../../../assets/svg_icon/my_on16.svg') no-repeat;
+}
+
+.qrcode {
+  background: url('../../../assets/svg_icon/qrcode22.svg') no-repeat;
+}
+
+.tabShow.tabContainer {
+  opacity: 1;
+}

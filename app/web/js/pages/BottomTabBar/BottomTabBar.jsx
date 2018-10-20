@@ -1,149 +1,96 @@
+/*
+ * huangzongzhe
+ * 2018.10.20
+ */
 import React, { Component } from 'react'
-import { TabBar } from 'antd-mobile';
+
 import { hashHistory } from 'react-router'
 
+import Svg from '../../components/Svg/Svg'
+
 import { historyPush } from '../../utils/historyChange'
-// import { connect } from 'react-redux'
-// import { mapDispatchToProps } from '../../actions'
+
+import style from './BottomTabBar.scss'
 
 class BottomTabBar extends Component {
-  constructor(props) {
-    super(props);
+    constructor() {
+        super();
 
-    this.state = {
-      selectedTab: this.getSelected(),
-      hidden: false,
-      fullScreen: false,
-    };
-  }
-
-  getSelected () {
-    let pathname = hashHistory.getCurrentLocation().pathname;
-    let selectedTab = '';
-    if (pathname.match(/\/personalcenter\/home/)) {
-      selectedTab = 'greenTab';
-    } else if (pathname.match(/\/qrcode/)) {
-      selectedTab = 'blueTab';
-    } else {
-      selectedTab = 'yellowTab';
+        this.state = {
+            selectedTab: this.getSelected()
+        };
     }
-    return selectedTab;
-  }
 
-  onPress(selected, dir) {
-    this.setState({
-      selectedTab: selected
-    });
-    historyPush(dir);
-  }
+    getSelected () {
+        let pathname = hashHistory.getCurrentLocation().pathname;
+        let selectedTab = '';
+        if (pathname.match(/\/personalcenter\/home/)) {
+            selectedTab = 'my';
+        } else if (pathname.match(/\/qrcode/)) {
+            selectedTab = 'qrcode';
+        } else {
+            selectedTab = 'asset';
+        }
+        return selectedTab;
+    }
 
-  componentWillUpdate() {
-    this.state.selectedTab = this.getSelected();
-  }
+    onPress(selected, dir) {
+        this.setState({
+            selectedTab: selected
+        });
+        historyPush(dir);
+    }
 
-  render() {
-    // <TabBar.Item
-    //   icon={
-    //     <div style={{
-    //       width: '22px',
-    //       height: '22px',
-    //       background: 'url(https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg) center center /  21px 21px no-repeat' }}
-    //     />
-    //   }
-    //   selectedIcon={
-    //     <div style={{
-    //       width: '22px',
-    //       height: '22px',
-    //       background: 'url(https://gw.alipayobjects.com/zos/rmsportal/ekLecvKBnRazVLXbWOnE.svg) center center /  21px 21px no-repeat' }}
-    //     />
-    //   }
-    //   title="Koubei"
-    //   key="Koubei"
-    //   badge={'new'}
-    //   selected={this.props.selectedTab === 'redTab'}
-    //   onPress={() => {
-    //     this.setState({
-    //       selectedTab: 'redTab',
-    //     });
-    //   }}
-    //   data-seed="logId1"
-    // >
-    // </TabBar.Item>
-    // <div style={this.state.fullScreen ? { position: 'fixed', height: '100%', width: '100%', top: 0 } : { height: 400 }}>
-    return (
-      <div>
+    componentWillUpdate() {
+        this.state.selectedTab = this.getSelected();
+    }
 
-        <TabBar
-          unselectedTintColor="#949494"
-          tintColor="#33A3F4"
-          barTintColor="white"
-          hidden={this.state.hidden}
-        >
-          <TabBar.Item
-              icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
-              selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
-              title="My"
-              key="my"
-              selected={this.state.selectedTab === 'yellowTab'}
-              onPress={() => this.onPress('yellowTab', '/assets')}
-            >
-              
-          </TabBar.Item>
-
-          <TabBar.Item
-            title="Life"
-            key="Life"
-            icon={<div style={{
-              width: '22px',
-              height: '22px',
-              background: 'url(https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg) center center /  21px 21px no-repeat' }}
-            />
+    renderTab() {
+        let tabInfo = [
+            {
+                id: 'asset',
+                url: '/assets',
+            },
+            {
+                id: 'qrcode',
+                url: '/qrcode'
+            },
+            {
+                id: 'my',
+                url: '/personalcenter/home'
             }
-            selectedIcon={<div style={{
-              width: '22px',
-              height: '22px',
-              background: 'url(https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg) center center /  21px 21px no-repeat' }}
-            />
-            }
-            selected={this.state.selectedTab === 'blueTab'}
-            badge={1}
-            onPress={() => this.onPress('blueTab', '/qrcode')}
-            data-seed="logId"
-          >
-          </TabBar.Item>
+        ];
 
-          <TabBar.Item
-            icon={
-              <div style={{
-                width: '22px',
-                height: '22px',
-                background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat' }}
-              />
+        let tabHtml = tabInfo.map(item => {
+            let containerClass = style.tabContainer;
+            if (this.state.selectedTab === item.id) {
+                containerClass += ' ' + style.tabShow;
             }
-            selectedIcon={
-              <div style={{
-                width: '22px',
-                height: '22px',
-                background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat' }}
-              />
-            }
-            title="Friend"
-            key="Friend"
-            dot
-            selected={this.state.selectedTab === 'greenTab'}
-            onPress={() => this.onPress('greenTab', '/personalcenter/home')}
-          >
-          </TabBar.Item>
-        </TabBar>
-      </div>
-    );
-  }
+            return (
+              <div
+                  className={containerClass}
+                  key={item.id}
+                  onClick={() => this.onPress(item.id, item.url)}
+              >
+                  <div className={style.icon + ' ' + style[item.id]}>
+                  </div>
+                  <div className={style.name}>资产</div>
+              </div>
+            )
+        });
+        return tabHtml;
+    }
+
+    render() {
+        let tabHtml = this.renderTab();
+        return (
+            <div>
+                <div className={style.container}>
+                    {tabHtml}
+                </div>
+            </div>
+        );
+    }
 }
 
-// function mapStateToProps(state) {
-//   return {
-//     selectedBottomTab: state.selectedBottomTab
-//   }
-// }
-// export default connect(mapStateToProps, mapDispatchToProps)(BottomTabBar)
 export default BottomTabBar

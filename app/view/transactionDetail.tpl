@@ -15,5 +15,5 @@
     defaultConfig.mainContract = '{{mainContract}}';
     defaultConfig.commonPrivateKey = '{{commonPrivateKey}}';
   </script>
-<script type="text/javascript" src="../public/js/transactionDetail.2627c.js"></script></body>
+<script type="text/javascript" src="../public/js/transactionDetail.2a63c.js"></script></body>
 </html>
