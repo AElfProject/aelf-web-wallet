@@ -5,12 +5,14 @@
 import React, {
     Component
 } from 'react'
-import { Drawer, List, NavBar, Icon, WhiteSpace, Toast } from 'antd-mobile';
+import { Drawer, NavBar, Icon, Toast } from 'antd-mobile';
 import { hashHistory } from 'react-router'
+
+import BottomTabBar from './../BottomTabBar/BottomTabBar'
 
 import Svg from '../../components/Svg/Svg'
 
-import { historyGoBack, historyReplace } from '../../utils/historyChange'
+import { historyGoBack } from '../../utils/historyChange'
 import getPageContainerStyle from '../../utils/getPageContainerStyle'
 
 import style from './NavWithDrawer.scss'
@@ -173,8 +175,7 @@ class NavWithDrawer extends Component {
         let showLeftClick = this.props.showLeftClick;
 
         let isAssetsPage = hashHistory.getCurrentLocation().pathname.match('/assets');
-		let qrcodeIcon =
-			<Svg
+		let qrcodeIcon = <Svg
 				icon={'qrcode22'}
                 style={{
                     width: 22,
@@ -183,11 +184,18 @@ class NavWithDrawer extends Component {
 				onClick={() => {
 					hashHistory.push('/qrcode');
 				}}
-			></Svg>
+			></Svg>;
 
         let iconInNavBar = showLeftClick
             ? <Icon type="left" />
             : (isAssetsPage ? qrcodeIcon : '');
+
+        let bottomHtml = <div className={style.bottomTabBar}>
+            <BottomTabBar></BottomTabBar>
+        </div>;
+        if (this.props.hiddenBottom) {
+            bottomHtml = '';
+        }
 
         return (
             <div style={{ height: '100%' }} className='aelf-drawer'>
@@ -212,6 +220,7 @@ class NavWithDrawer extends Component {
                     onOpenChange={() => this.onOpenChange()}
                 >
                     {this.props.children}
+                    {bottomHtml}
                 </Drawer>
             </div>
         );

@@ -6,7 +6,8 @@ export default function getPageContainerStyle () {
     let containerStyle = {
         height: document.body.clientHeight - 45,
         overflowY: 'scroll',
-        overflowX: 'hidden'
+        overflowX: 'hidden',
+        WebkitOverflowScrolling: 'touch'
     };
 
     return containerStyle;

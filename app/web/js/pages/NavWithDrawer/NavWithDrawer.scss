@@ -3,9 +3,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
+  z-index: 111;
 }
 
 .list {
+  min-width: 92px;
   padding: 16px 17px;
   overflow: hidden;
   text-align: left;
@@ -41,6 +44,8 @@
   align-items: center;
   font-size: 14px;
   font-weight: 100;
+  position: relative;
+  z-index: 1000;
 }
 
 .addWalletIcon {
@@ -49,4 +54,17 @@
   background: url("../../../assets/svg_icon/add16.svg") no-repeat;
   background-size: cover;
   margin: 0 8px 0 24px;
+}
+
+.bottomTabBar {
+  //position: fixed;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50px;
+
+  max-width: 520px;
+  margin: auto;
+  z-index: 0;
 }

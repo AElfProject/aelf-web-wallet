@@ -21,9 +21,10 @@ class HomePage extends Component {
       <div>
         <NavWithDrawer children={this.props.children}/>
 
-        <div className={style.bottomTabBar}>
-          <BottomTabBar></BottomTabBar>
-        </div>
+        {/* 放到NavWithDrawer中去了，不然fixed定位有问题，抽屉面板无法完全覆盖 */}
+        {/*<div className={style.bottomTabBar}>*/}
+          {/*<BottomTabBar></BottomTabBar>*/}
+        {/*</div>*/}
         
       </div>
       

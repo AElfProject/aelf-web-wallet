@@ -14,18 +14,19 @@
 }
 
 .myDrawer .am-drawer-content .am-drawer-draghandle {
-	width: 0px;
+  width: 0px;
 }
 
 .bottomTabBar {
-	position: fixed;
-	left: 0;
-	right: 0;
+  position: fixed;
+  left: 0;
+  right: 0;
   bottom: 0;
   height: 50px;
-  
+
   max-width: 520px;
   margin: auto;
+  z-index: 0;
 }
 
 // .test {

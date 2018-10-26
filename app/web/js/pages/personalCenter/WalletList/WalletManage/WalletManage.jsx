@@ -176,6 +176,7 @@ class WalletManage extends Component {
 			<div>
 				<NavWithDrawer 
 				showLeftClick={true}
+                hiddenBottom={true}
 				onLeftClick={() => hashHistory.push('/personalcenter/home')}
 				children={html}/>
 	    	</div>
