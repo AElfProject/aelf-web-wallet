@@ -1,6 +1,15 @@
-.btn {
+.btn,.button {
   border-radius: 100px;
   color: #AC00E6;
   height: 50px;
   line-height: 50px;
+}
+
+.button:active {
+  opacity: 0.8;
+}
+
+.blue {
+  color: #FFF;
+  background: #26B7FF;
 }

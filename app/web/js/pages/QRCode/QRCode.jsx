@@ -8,6 +8,7 @@ import React, {
 import QRCode from 'qrcode.react'
 import { Button } from 'antd-mobile'
 import AelfButton from '../../components/Button/Button'
+import NavNormal from '../NavNormal/NavNormal'
 
 import style from './QRCode.scss'
 
@@ -29,11 +30,12 @@ class QRCodeTemplate extends Component {
         containerStyle.height -= 100;
 		return (
 			<div style={containerStyle} className={style.container}>
+				<NavNormal></NavNormal>
 				<BackupNotice />
 				<div className={style.qrcodePanel}>
 					<div className={style.titleContaienr}>
 						<div className={style.title}>钱包收账</div>
-                        <p id="qrcodetext" className={style.subTitle}>{walletAddress}</p>
+                        <p className={style.subTitle}>{walletAddress}</p>
 					</div>
                     {/*<p>qrcode</p>*/}
                     <QRCode value={walletAddress} className={style.qrcode}/>

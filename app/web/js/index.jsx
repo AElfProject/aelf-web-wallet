@@ -77,10 +77,12 @@ ReactDOM.render(
         <Router history={hashHistory}>
             <Route path="/" component={HomePage}>
                 <Route path="/assets" component={Assets}></Route>
-                <Route path="/qrcode" component={QRCode}></Route>
+                {/*<Route path="/qrcode" component={QRCode}></Route>*/}
                 <Route path="/personalcenter/home" component={personalCenterHome}></Route>
                 <Route path="/personalcenter/walletlist" component={WalletList}></Route>
             </Route>
+
+            <Route path="/qrcode" component={QRCode}></Route>
 
             <Route path="/transactiondetail" component={AssetTransactionDetail}></Route>
             <Route path="/personalcenter/walletmanage" component={WalletManage}></Route>

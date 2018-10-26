@@ -107,7 +107,7 @@ class Password extends Component {
     }
 
     inputPassword(password) {
-        console.log('password: ', password);
+        // console.log('password: ', password);
         let passwordReplay = this.state.passwordReplay;
         if (passwordReplay) {
             this.state.password = password;

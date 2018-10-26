@@ -1,10 +1,49 @@
+.container {
+	color: #FFF;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.banner {
+	display: flex;
+	margin-top: 27px;
+	align-items: center;
+}
+
+.balance {
+	font-size: 24px;
+}
+
+.tenderValuation {
+	font-size: 12px;
+	font-weight: 100;
+}
+
 .list {
-	padding: 5px 15px;
+	padding: 5px 24px;
+}
+
+.icon {
+	height: 48px;
+	width: 48px;
+	margin-right: 16px;
+}
+.in {
+	background: url("../../../../assets/svg_icon/in20.svg") no-repeat;
+	background-size: cover;
+}
+.out {
+	background: url("../../../../assets/svg_icon/out20.svg") no-repeat;
+	background-size: cover;
 }
 
 .title {
-	font-size: 16px;
+	font-size: 12px;
+	color: rgba(255, 255, 255, 0.5);
 	line-height: 1.5;
+	margin-top: 20px;
+	margin-bottom: 3px;
 }
 
 .text {
@@ -15,4 +54,9 @@
 .textarea {
     position: fixed;
     top: -250px;
+}
+
+.bottom {
+	width: 80%;
+	margin: 0 0 50px 10%;
 }

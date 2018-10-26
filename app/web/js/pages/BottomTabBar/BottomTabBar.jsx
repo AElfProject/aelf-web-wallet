@@ -50,14 +50,17 @@ class BottomTabBar extends Component {
             {
                 id: 'asset',
                 url: '/assets',
+                text: '资产'
             },
-            {
-                id: 'qrcode',
-                url: '/qrcode'
-            },
+            // {
+            //     id: 'qrcode',
+            //     url: '/qrcode',
+            //     text: '二维码'
+            // },
             {
                 id: 'my',
-                url: '/personalcenter/home'
+                url: '/personalcenter/home',
+                text: '我的'
             }
         ];
 
@@ -74,7 +77,7 @@ class BottomTabBar extends Component {
               >
                   <div className={style.icon + ' ' + style[item.id]}>
                   </div>
-                  <div className={style.name}>资产</div>
+                  <div className={style.name}>{item.text}</div>
               </div>
             )
         });

@@ -1,3 +1,90 @@
 .transfer {
 	padding: 0 15px;
 }
+
+.container {
+	display: flex;
+	flex-direction: column;
+}
+.txListContainer {
+	flex: 1;
+	background: #1f1230;
+}
+
+.assetsInfoContainer {
+	height: 164px;
+	//height: 130px;
+	margin: 10px 24px 0 24px;
+	/* Rectangle 2: */
+	background: linear-gradient(to right bottom, #D649F2, #3D9CCC);
+	box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.30), inset 0 -1px 1px 0 rgba(0,0,0,0.20);
+	border-radius: 8px 8px 0 0;
+	text-align: left;
+	text-indent: 24px;
+	color: #FFF;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.assetName {
+	padding: 24px 0 0 0;
+	font-size: 14px;
+}
+.assetDescription {
+	font-size: 12px;
+	font-weight: 100;
+	margin: 2px 0 0 0;
+}
+
+.assetBalanceContainer {
+	padding: 0 0 20px 0;
+}
+
+.balance {
+	font-size: 36px;
+}
+.tenderValuation {
+	margin: 12px 0 0 0;
+	font-size: 14px;
+	font-weight: 100;
+}
+
+.txBtnContainer {
+	//height: 100px;
+	//background: #FFF;
+	border-top: 4px solid #7ED321;
+	margin: 24px 0 0 0;
+	padding: 20px 0 0 0;
+	background: #1f1230;
+	display: flex;
+	justify-content: center;
+}
+
+.button {
+	width: 140px;
+	height: 44px;
+	border: 1px dashed rgba(172, 0, 230, 0.6);
+	//opacity: 0.5;
+	//background: #260073;
+	background: rgba(38, 0, 115, 0.5);
+	border-radius: 22px;
+	margin: 0 8px 32px 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	//flex-direction: column;
+	color: #FFF;
+	font-size: 16px;
+	//width: 50%;
+	//padding: 0 24px;
+}
+
+.button:active {
+	opacity: 0.7;
+}
+
+.icon {
+	margin: 0 8px 0 0;
+}

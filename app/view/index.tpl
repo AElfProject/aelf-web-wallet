@@ -22,17 +22,17 @@
 
 
   <!-- fastclick 使用有点问题... -->
-  <!-- <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script> -->
-  <!-- <script>
-    if ('addEventListener' in document) {
-      document.addEventListener('DOMContentLoaded', function() {
-        FastClick.attach(document.body);
-      }, false);
-    }
-    if(!window.Promise) {
-      document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
-    }
-  </script> -->
+<!--<script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>-->
+<!--<script>-->
+    <!--if ('addEventListener' in document) {-->
+      <!--document.addEventListener('DOMContentLoaded', function() {-->
+        <!--FastClick.attach(document.body);-->
+      <!--}, false);-->
+    <!--}-->
+    <!--if(!window.Promise) {-->
+      <!--document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');-->
+    <!--}-->
+  <!--</script>-->
 
   <!-- react component start -->
   <div id="root"></div>
@@ -47,5 +47,5 @@
 <!--   <script id="__bs_script__">//<![CDATA[
     document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.5'><\/script>".replace("HOST", location.hostname));
 //]]></script> -->
-<script type="text/javascript" src="../public/js/wallet.2a63c.js"></script></body>
+<script type="text/javascript" src="../public/js/wallet.ea7e0.js"></script></body>
 </html>

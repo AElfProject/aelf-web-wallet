@@ -7,11 +7,17 @@ import { WhiteSpace, List, InputItem, Button, Toast } from 'antd-mobile'
 import style from './Transfer.scss'
 import { hashHistory } from 'react-router'
 
+import AelfButton from './../../../components/Button/Button'
+
 import NavNormal from '../../NavNormal/NavNormal'
 import BackupNotice from '../../BackupNotice/BackupNotice'
 
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import initAelf from '../../../utils/initAelf'
+import getPageContainerStyle from '../../../utils/getPageContainerStyle'
+
+import getParam from '../../../utils/getParam' // 还有类似方法的话，合并一下。
+import getBalanceAndTokenName from '../../../utils/getBalanceAndTokenName'
 
 // React component
 // TODO
@@ -44,6 +50,7 @@ class Transfer extends Component {
         super(props);
         this.state = {
         };
+        this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
     }
 
     inputAmount(amount) {
@@ -51,7 +58,10 @@ class Transfer extends Component {
     }
 
     inputAddress(address) {
-        this.setState({address: address});
+        this.setState({
+            address: address,
+            addressError: false
+        });
     }
 
     inputPassword(password) {
@@ -61,17 +71,50 @@ class Transfer extends Component {
         });
     }
 
+    componentDidMount() {
+        let address = this.walletAddress;
+        let contractAddress = getParam('contract_address', window.location.href);
+
+        getBalanceAndTokenName(address, contractAddress, output => {
+            this.setState({
+                balance: output.balance,
+                tokenName: output.tokenDetail.name,
+                contract_address: contractAddress
+            });
+        });
+    }
+
+    componentWillUnmount() {
+        this.WillUnmount = true;
+        this.setState = () => {};
+    }
+
     transfer() {
         // TODO:
         // check amount
-        // check address
         Toast.loading('Loading...', 30);
         // 为了能展示loading, 不惜牺牲用户50毫秒，没看源码，但是这个应该和机器有关。。。sad
         setTimeout(() => {
+            console.log('password: ', this.state.password);
             let password = this.state.password;
-            if (!password) {
-                this.setState({passwordError: 'wrong password'});
-                return Toast.hide();
+
+
+            // checkAddress
+            let address = this.state.address;
+            let addressCheckResult = addressCheck(address);
+            if (!addressCheckResult.ready) {
+                this.setState({addressError: addressCheckResult.message});
+                Toast.hide();
+                Toast.fail(addressCheckResult.message, 3, () => {}, false);
+                return;
+            }
+
+            // check balance
+            let amount = parseInt(this.state.amount);
+            if (amount > this.state.balance) {
+                Toast.hide();
+                Toast.fail('insufficient', 3, () => {}, false);
+                return;
             }
 
             let aelf = initAelf({
@@ -80,16 +123,9 @@ class Transfer extends Component {
 
             if (aelf.errormsg) {
                 this.setState({passwordError: aelf.errormsg});
-                return Toast.hide();
-            }
-
-            let amount = parseInt(this.state.amount);
-            let address = this.state.address;
-
-            let addressCheckResult = addressCheck(address);
-            if (!addressCheckResult.ready) {
-                this.setState({passwordError: addressCheckResult.message});
-                return Toast.hide();
+                Toast.hide();
+                Toast.fail(aelf.errormsg, 3, () => {}, false);
+                return;
             }
 
             let transfer = aelf.contractMethods.Transfer(address, amount);
@@ -102,60 +138,103 @@ class Transfer extends Component {
     }
   
     render() {
+        let addressErrorText;
+        if (this.state.addressError) {
+            addressErrorText = <div className={style.error}>{this.state.addressError}</div>
+        }
+
         let passwordErrorText;
         if (this.state.passwordError) {
             passwordErrorText = <div className={style.error}>{this.state.passwordError}</div>
         }
 
+        let createButton =
+            <AelfButton
+                text="确认转账"
+                style={{
+                    opacity: 0.5
+                }}
+            ></AelfButton>;
+        if (this.state.address && this.state.amount && this.state.password) {
+            createButton =
+                <AelfButton
+                    text="确认转账"
+                    onClick={() => this.transfer()}
+                ></AelfButton>;
+        }
+
+        let containerStyle = getPageContainerStyle();
+
         return (
             <div>
                 <BackupNotice/>
-                <NavNormal navTitle="转账"></NavNormal>
-                <div className="aelf-content-container">
-                
-                    <WhiteSpace/>
-                    <WhiteSpace/>
+                <NavNormal></NavNormal>
+                <div className={style.container} style={containerStyle}>
+                    <div className="aelf-input-container aelf-dash-light">
+                        <div className={style.title}>{this.state.tokenName} 转账</div>
+                        <List>
+                            <div className="aelf-input-title" style={{
+                                marginTop: 28
+                            }}>
+                                <div>收款人钱包地址</div>
+                                {addressErrorText}
+                            </div>
+                            <InputItem
+                                value={this.state.address}
+                                placeholder=""
+                                style={{
+                                    fontSize: 14
+                                }}
+                                onChange={address => this.inputAddress(address)}
+                                moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                            ></InputItem>
+                        </List>
 
-                    <List>
-                        <InputItem
-                            value={this.state.amount}
+                        <List>
+                            <div className="aelf-input-title">
+                                <div>转账额度</div>
+                                <div>
+                                    余额：{this.state.balance}
+                                </div>
+                            </div>
+                            <InputItem
+                                value={this.state.amount}
+                                placeholder=""
+                                onChange={amount => this.inputAmount(amount)}
+                                moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                            ></InputItem>
+                        </List>
 
-                            onChange={amount => this.inputAmount(amount)}
-                            moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                        >amount</InputItem>
-                    </List>
+                        <List>
+                            <div className="aelf-input-title">
+                                <div>钱包密码</div>
+                                {passwordErrorText}
+                            </div>
+                            <InputItem
+                                value={this.state.password}
+                                type="password"
+                                placeholder=""
+                                onChange={password => this.inputPassword(password)}
+                                moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                            ></InputItem>
+                        </List>
 
-                    <WhiteSpace/>
-                    <List>
-                        <InputItem
-                            value={this.state.address}
+                        {/*<List>*/}
+                            {/*<div className="aelf-input-title">*/}
+                                {/*<div>备注</div>*/}
+                            {/*</div>*/}
+                            {/*<InputItem*/}
+                                {/*value={this.state.password}*/}
+                                {/*onChange={password => this.inputPassword(password)}*/}
+                                {/*moneyKeyboardWrapProps={moneyKeyboardWrapProps}*/}
+                            {/*></InputItem>*/}
+                        {/*</List>*/}
 
-                            onChange={address => this.inputAddress(address)}
-                            moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                        >address</InputItem>
-                    </List>
+                        {/*<div>TODO: 矿工费组件</div>*/}
+                    </div>
 
-                    <WhiteSpace/>
-                    <List>
-                        <InputItem
-                            value={this.state.password}
-                            type="password"
-                            placeholder="******"
-                            onChange={password => this.inputPassword(password)}
-                            moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                        >password</InputItem>
-                    </List>
-                    {passwordErrorText}
-
-                    <WhiteSpace/>
-                    <WhiteSpace/>
-                    <WhiteSpace/>
-
-                    <h3>转账地址目前是没有校验的，随便输入都行，所以，请好好确认。测试币丢了也是丢了的。。。</h3>
-                    <div className={style.transfer}>
-                        <Button
-                            onClick={() => this.transfer()}
-                        >确认转账</Button>
+                    <div className={style.bottom}>
+                        {createButton}
                     </div>
                 </div>
             </div>

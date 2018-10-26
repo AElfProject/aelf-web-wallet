@@ -11,8 +11,10 @@ import { hashHistory } from 'react-router'
 import Svg from '../../components/Svg/Svg'
 
 import { historyGoBack, historyReplace } from '../../utils/historyChange'
+import getPageContainerStyle from '../../utils/getPageContainerStyle'
 
-// require('./NavWithDrawer.css'); // 样式调整在HomePage/HomePage.css中
+import style from './NavWithDrawer.scss'
+require('./NavWithDrawer.css'); // 样式调整在HomePage/HomePage.css中
 
 class NavWithDrawer extends Component {
     constructor(props) {
@@ -22,7 +24,6 @@ class NavWithDrawer extends Component {
         }
         this.state = {
             open: false,
-            walletInUseName: '',
             hidden: true
         };
     }
@@ -61,29 +62,96 @@ class NavWithDrawer extends Component {
         // TODO, 从storage获取数据并拼接。
         let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
         let listItems = [];
+        let walletInUse = JSON.parse(localStorage.getItem('lastuse')).walletName;
         for (let address in walletInfoList) {
+            let walletName = walletInfoList[address].walletName;
+            console.log(walletName, walletInUse);
+            let isSelected = walletName === walletInUse;
             listItems.push(
                 (
-                    <List.Item key={address}
-                               multipleLine
-                               onClick={(e) => this.siderbarClick(walletInfoList[address], e)}
-                    >{walletInfoList[address].walletName}</List.Item>
+                    <div
+                        className={style.list + ' ' + (isSelected ? style.selected : '')}
+                        key={address}
+                        onClick={(e) => this.siderbarClick(walletInfoList[address], e)}
+                    >
+                        <div className={style.icon}></div>
+                        <div>{walletName}</div>
+                    </div>
                 )
             );
+
+            // 测试用
+            // listItems.push(
+            //     (
+            //         <div
+            //             className={style.list + ' ' + (isSelected ? style.selected : '')}
+            //             key={address + '1'}
+            //             onClick={(e) => this.siderbarClick(walletInfoList[address], e)}
+            //         >
+            //             <div className={style.icon}></div>
+            //             <div>{walletName}</div>
+            //         </div>
+            //     )
+            // );
+            //
+            // listItems.push(
+            //     (
+            //         <div
+            //             className={style.list + ' ' + (isSelected ? style.selected : '')}
+            //             key={address + '2'}
+            //             onClick={(e) => this.siderbarClick(walletInfoList[address], e)}
+            //         >
+            //             <div className={style.icon}></div>
+            //             <div>{walletName}</div>
+            //         </div>
+            //     )
+            // );
+            //
+            // listItems.push(
+            //     (
+            //         <div
+            //             className={style.list + ' ' + (isSelected ? style.selected : '')}
+            //             key={address + '3'}
+            //             onClick={(e) => this.siderbarClick(walletInfoList[address], e)}
+            //         >
+            //             <div className={style.icon}></div>
+            //             <div>{walletName}</div>
+            //         </div>
+            //     )
+            // );
+            //
+            // listItems.push(
+            //     (
+            //         <div
+            //             className={style.list + ' ' + (isSelected ? style.selected : '')}
+            //             key={address + '4'}
+            //             onClick={(e) => this.siderbarClick(walletInfoList[address], e)}
+            //         >
+            //             <div className={style.icon}></div>
+            //             <div>{walletName}</div>
+            //         </div>
+            //     )
+            // );
         }
-        listItems.push(
-            (
-                <List.Item key='getWallet'
-                           multipleLine
-                           className='get-wallet'
-                           onClick={() => hashHistory.push('/get-wallet/guide')}
-                > + </List.Item>
-            )
-        );
+
+        let listContainerStyle = getPageContainerStyle();
+        listContainerStyle.height -= 80;
+
         return (
-            <List>
-                {listItems}
-            </List>
+            <div className={style.sideContainer}>
+                <div style={listContainerStyle}>
+                    {listItems}
+                </div>
+                <div className={style.addWallet}
+                     onClick={() => hashHistory.push('/get-wallet/guide')}
+                    >
+                    {/*<div>扫一扫</div>*/}
+                    <div className={style.addWalletIcon}></div>
+                    <div
+                    >创建钱包</div>
+                </div>
+            </div>
+
         );
     }
 
@@ -104,19 +172,26 @@ class NavWithDrawer extends Component {
 
         let showLeftClick = this.props.showLeftClick;
 
-        // let showQrcode = this.props.showQrcode;
-        //
-		// let qrcodeIcon =
-		// 	<Svg
-		// 		icon={'qrcode22'}
-		// 		onClick={() => {
-		// 			hashHistory.push('/qrcode');
-		// 		}}
-		// 	></Svg>
+        let isAssetsPage = hashHistory.getCurrentLocation().pathname.match('/assets');
+		let qrcodeIcon =
+			<Svg
+				icon={'qrcode22'}
+                style={{
+                    width: 22,
+                    height: 22
+                }}
+				onClick={() => {
+					hashHistory.push('/qrcode');
+				}}
+			></Svg>
+
+        let iconInNavBar = showLeftClick
+            ? <Icon type="left" />
+            : (isAssetsPage ? qrcodeIcon : '');
 
         return (
-            <div style={{ height: '100%' }}>
-                <NavBar icon={showLeftClick ? <Icon type="left" /> : ''}
+            <div style={{ height: '100%' }} className='aelf-drawer'>
+                <NavBar icon={iconInNavBar}
                         onLeftClick={showLeftClick ? () => this.onLeftClick() : () => {}}
                         rightContent={[
                             <Svg key="1"
@@ -124,8 +199,6 @@ class NavWithDrawer extends Component {
 								 onClick={() => this.onOpenChange()}
 								 style={{width: 22, height: 22}}
 							></Svg>
-							// <div key="2">Test</div>,
-
                         ]}
                 >{walletInUseName}</NavBar>
                 <Drawer

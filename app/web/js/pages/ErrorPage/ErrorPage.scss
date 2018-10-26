@@ -1,0 +1,19 @@
+.contaienr {
+  color: #FFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.contaienr h1{
+  margin: 0;
+}
+
+.error {
+  padding: 24px;
+}
+
+.button {
+  margin: 24px;
+}

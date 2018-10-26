@@ -5,6 +5,7 @@
  */
 import Aelf from 'aelf-sdk'
 import { hashHistory } from 'react-router'
+import { Toast } from 'antd-mobile'
 
 let hasAlert = false;
 // 如果传入了password，则使用私人账户来操作。
@@ -38,6 +39,7 @@ function init (options = {}) {
 	try {
 		aelf.chain.connectChain();
 	} catch (e) {
+        Toast.hide();
 		hashHistory.push('/error');
 	}
 	let contractMethods = chainOnly 

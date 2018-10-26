@@ -7,6 +7,8 @@ import ReactDOM from 'react-dom'
 import { PullToRefresh, ListView } from 'antd-mobile'
 
 import style from './TransactionsList.scss'
+require('./TransactionsList.css')
+
 import { hashHistory } from 'react-router'
 
 import checkStatus from '../../../utils/checkStatus'
@@ -148,7 +150,10 @@ class TransactionsList extends Component {
         const row = (rowData, sectionID, rowID) => {
             let item = this.rData[rowID];
             let isIncome = item.params_to === this.walletAddress ? true : false;
+
             let quantity = (isIncome ? '+' : '-') + item.quantity;
+            let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
+
             let address = isIncome ? item.address_from : item.params_to;
             let status = item.tx_status;
 
@@ -156,46 +161,53 @@ class TransactionsList extends Component {
 
             return (
                 <div key={rowID}
-                    className={style.txList}
-                    style={{
-                        margin: '0 15px',
-                        backgroundColor: 'white',
-                    }}
-                    onClick={() => hashHistory.push(`/transactiondetail?txid=${item.tx_id}`)}
+                     className={style.txList}
+                     onClick={() => hashHistory.push(`/transactiondetail?txid=${item.tx_id}`)}
                 >
-                    <div>
-                        <div className={style.address}>{address}</div>
-                        <div className={style.quantity}>{quantity} {status}</div>
+                    <div className={style.leftContainer}>
+                        <div className={iconClass}>
+
+                        </div>
+                        <div>
+                            <div className={style.address}>
+                                {address}
+                            </div>
+                            {/*<div className={style.time}>2018-09-08</div>*/}
+                        </div>
+                    </div>
+                    <div className={style.rightContainer}>
+                        <div className={style.balance}>{quantity} {status}</div>
+                        {/*<div className={style.tenderValuation}>法币价值</div>*/}
                     </div>
                 </div>
             );
         };
+
         // pull-to-refresh end
 
         return (
-            <div>
+            <div className={style.transactionContainer + ' ' + 'transaction-list-container'}>
                 <ListView
-                    initialListSize={NUM_ROWS} 
+                    initialListSize={NUM_ROWS}
                     key={this.state.useBodyScroll ? '0' : '1'}
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}
-                   
-                    renderFooter={() => (<div style={{ padding: 6, textAlign: 'center' }}>
-                      {this.state.isLoading ? 'Loading...' : (this.state.hasMore ? 'Loaded' : '没有更多记录了o((⊙﹏⊙))o')}
+
+                    renderFooter={() => (<div style={{ textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
+                        {this.state.isLoading ? 'Loading...' : (this.state.hasMore ? 'Loaded' : '没有更多记录了o((⊙﹏⊙))o')}
                     </div>)}
 
                     renderRow={row}
 
                     useBodyScroll={this.state.useBodyScroll}
                     style={this.state.useBodyScroll ? {} : {
-                      height: this.state.height - 150,
-                      // border: '1px solid #ddd',
-                      margin: '5px 0',
+                        height: '100%',
+                        margin: '5px 0',
                     }}
 
                     pullToRefresh={<PullToRefresh
-                      refreshing={this.state.refreshing}
-                      onRefresh={() => this.onRefresh()}
+                        refreshing={this.state.refreshing}
+                        onRefresh={() => this.onRefresh()}
                     />}
                     onEndReached={() => this.onEndReached()}
                     pageSize={10}

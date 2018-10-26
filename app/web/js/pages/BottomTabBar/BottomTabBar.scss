@@ -15,7 +15,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  opacity: 0.7;
+  //opacity: 0.7;
 }
 
 .icon {
@@ -25,17 +25,38 @@
 }
 
 .asset {
-  background: url('../../../assets/svg_icon/asset_on16.svg') no-repeat;
+  background: url('../../../assets/svg_icon/asset16.svg') no-repeat;
 }
 
 .my {
-  background: url('../../../assets/svg_icon/my_on16.svg') no-repeat;
+  background: url('../../../assets/svg_icon/my16.svg') no-repeat;
 }
 
 .qrcode {
   background: url('../../../assets/svg_icon/qrcode22.svg') no-repeat;
+  opacity: 0.4;
+}
+
+.name {
+  opacity: 0.7;
 }
 
 .tabShow.tabContainer {
+  opacity: 1;
+}
+
+.tabShow .asset {
+  background: url('../../../assets/svg_icon/asset_on16.svg') no-repeat;
+}
+
+.tabShow .my {
+  background: url('../../../assets/svg_icon/my_on16.svg') no-repeat;
+}
+
+.tabShow .qrcode {
+  opacity: 1;
+}
+
+.tabShow .name {
   opacity: 1;
 }

@@ -5,7 +5,10 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { WhiteSpace, ListView, PullToRefresh, Toast } from 'antd-mobile'
+
 import style from './Assets.scss'
+require('./Assets.css')
+
 import { hashHistory } from 'react-router'
 
 import initAelf from '../../utils/initAelf'
@@ -13,6 +16,7 @@ import hexToString from '../../utils/hexToString'
 import { historyPush } from '../../utils/historyChange'
 import checkStatus from '../../utils/checkStatus'
 import walletStatusCheck from '../../utils/walletStatusCheck'
+import getPageContainerStyle from '../../utils/getPageContainerStyle'
 
 const NUM_ROWS = 20;
 let pageIndex = 0;
@@ -148,7 +152,8 @@ class Assets extends Component {
         this.WillUnmount = true;
         this.setState = () => {};
     }
-  
+
+    // TODO: 刷新该页面，下拉，快去点击资产进入到交易列表页，会报错，有内存泄漏的可能。暂无思路。
     render() {
         // check
         let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
@@ -164,50 +169,99 @@ class Assets extends Component {
             return (
                 <div key={rowID}
                     className={style.txList}
-                    style={{
-                        margin: '0 15px',
-                        backgroundColor: 'white',
-                    }}
+
                     onClick={() => historyPush(dir)}
                 >
-                        <div>{item.name}</div>
-                        <div>{item.balance}</div>
+                        <div className={style.txListMask}></div>
+                        <div className={style.listLeft}>
+                            {/*<div className={style.logoContainer}>*/}
+                                {/*<img src="https://pbs.twimg.com/profile_images/933992260680552448/tkxR4vpn_400x400.jpg" alt=""/>*/}
+                            {/*</div>*/}
+                            <div>
+                                <div className={style.name}>{item.name}</div>
+                                {/*<div className={style.description}>subTitle</div>*/}
+                            </div>
+                        </div>
+                        <div className={style.listRight}>
+                            <div className={style.balance}>{item.balance}</div>
+                            {/*<div className={style.tenderValuation}>≈法币价值</div>*/}
+                        </div>
 
+                    {/*<div className={style.tailContainer}>*/}
+                        {/*<div className={style.tailLeft}></div>*/}
+                        {/*<div className={style.tailRight}></div>*/}
+                    {/*</div>*/}
                 </div>
             );
         };
         // pull-to-refresh end
 
+        let pageContainerStyle = getPageContainerStyle();
+        pageContainerStyle.height -= 90;
+
+        let backgroundStyle = Object.assign({}, pageContainerStyle);
+        backgroundStyle.height -= 14; // remove padding 7px * 2
+
+        let containerStyle = Object.assign({}, backgroundStyle)
+        containerStyle.height -= 2; // remove border 2px
+
         return (
-            <div>
-                <ListView
-                    initialListSize={NUM_ROWS} 
-                    key={this.state.useBodyScroll ? '0' : '1'}
-                    ref={el => this.lv = el}
-                    dataSource={this.state.dataSource}
-                   
-                    renderFooter={() => (<div style={{ padding: 6, textAlign: 'center' }}>
-                      {this.state.isLoading ? 'Loading...' : (this.state.hasMore ? 'Loaded' : '没有更多记录了o((⊙﹏⊙))o')}
-                    </div>)}
+            <div style={pageContainerStyle} className='asstes-container'>
+                <div className={style.background} style={backgroundStyle}>
+                    <div className={style.backgroundMask}></div>
+                    <div className={style.container} style={containerStyle}>
+                        <div className={style.walletInfo}>
+                            <div className={style.balance}>
+                                <div className={style.aelfValuation}>99,999,999.99</div>
+                                <div className={style.tenderValuation}>
+                                    ≈999,999,999【暂无】
+                                    <span className={style.tenderUnit}> CNY</span>
+                                </div>
+                            </div>
 
-                    renderRow={row}
+                            <div className={style.addressContainer}>
+                                <div className={style.address}>{walletAddress.slice(0, 18) + '...'}</div>
+                                <div className={style.copyBtn}></div>
+                            </div>
+                        </div>
 
-                    useBodyScroll={this.state.useBodyScroll}
-                    style={this.state.useBodyScroll ? {} : {
-                      height: this.state.height - 100,
-                      // top nav 45px, bottom bar 50px, margin-top 5px; 合计 100px
-                      // border: '1px solid #ddd',
-                      margin: '5px 0',
-                    }}
+                        <div className={style.transactionList}>
+                            <ListView
+                                initialListSize={NUM_ROWS}
+                                key={this.state.useBodyScroll ? '0' : '1'}
+                                ref={el => this.lv = el}
+                                dataSource={this.state.dataSource}
 
-                    pullToRefresh={<PullToRefresh
-                      refreshing={this.state.refreshing}
-                      onRefresh={() => this.onRefresh()}
-                    />}
-                    onEndReached={() => this.onEndReached()}
-                    pageSize={10}
-                />
+                                renderFooter={() => (<div style={{ padding: 6, textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
+                                    {this.state.isLoading ? 'Loading...' : (this.state.hasMore ? 'Loaded' : '没有更多记录了o((⊙﹏⊙))o')}
+                                </div>)}
 
+                                renderRow={row}
+
+                                useBodyScroll={this.state.useBodyScroll}
+                                style={this.state.useBodyScroll ? {} : {
+                                    // height: this.state.height - 100,
+                                    height: '100%',
+                                    // background: '#FFF'
+                                    // top nav 45px, bottom bar 50px, margin-top 5px; 合计 100px
+                                    // border: '1px solid #ddd',
+                                    // margin: '5px 0',
+                                }}
+
+                                pullToRefresh={<PullToRefresh
+                                    refreshing={this.state.refreshing}
+                                    onRefresh={() => this.onRefresh()}
+                                />}
+                                onEndReached={() => this.onEndReached()}
+                                pageSize={10}
+                            />
+                        </div>
+
+                        {/*<div className={style.addBtnContainer}>*/}
+                            {/*<div className={style.addBtn}></div>*/}
+                        {/*</div>*/}
+                    </div>
+                </div>
             </div>
         );
     }
