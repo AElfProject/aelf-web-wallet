@@ -27,7 +27,7 @@ class QRCodeTemplate extends Component {
 
 		let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
         let containerStyle = getPageContainerStyle();
-        containerStyle.height -= 100;
+        // containerStyle.height -= 100;
 		return (
 			<div style={containerStyle} className={style.container}>
 				<NavNormal></NavNormal>

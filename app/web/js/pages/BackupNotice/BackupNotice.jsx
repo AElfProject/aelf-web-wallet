@@ -45,6 +45,7 @@ class BackupNotice extends Component {
 			// 		</div>
 			// 	</div>;
 
+
             html =
                 <div className={style.container}>
                     <NavNormal></NavNormal>

@@ -7,3 +7,4 @@ config/config*
 app/public/js/*
 test.js
 test.data.js
+app/view/
