@@ -17,6 +17,7 @@ import { historyPush } from '../../utils/historyChange'
 import checkStatus from '../../utils/checkStatus'
 import walletStatusCheck from '../../utils/walletStatusCheck'
 import getPageContainerStyle from '../../utils/getPageContainerStyle'
+import clipboard from '../../utils/clipboard'
 
 const NUM_ROWS = 20;
 let pageIndex = 0;
@@ -87,6 +88,8 @@ class Assets extends Component {
     }
 
     componentDidMount() {
+        clipboard('#clipboard-assets');
+
         const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
         
         getTokens(result => {
@@ -212,16 +215,31 @@ class Assets extends Component {
                     <div className={style.container} style={containerStyle}>
                         <div className={style.walletInfo}>
                             <div className={style.balance}>
-                                <div className={style.aelfValuation}>99,999,999.99</div>
+                                <div className={style.aelfValuation}>ELF价值</div>
                                 <div className={style.tenderValuation}>
-                                    ≈999,999,999【暂无】
+                                    ≈RMB价值【暂无】
                                     <span className={style.tenderUnit}> CNY</span>
                                 </div>
                             </div>
 
                             <div className={style.addressContainer}>
                                 <div className={style.address}>{walletAddress.slice(0, 18) + '...'}</div>
-                                <div className={style.copyBtn}></div>
+                                <div
+                                    className={style.copyBtn}
+                                    onClick={() => {
+                                        let btn = document.getElementById('clipboard-assets');
+                                        btn.click();
+                                    }}
+                                ></div>
+
+                                <button id="clipboard-assets"
+                                        data-clipboard-target="#assets-address-text"
+                                        className={style.textarea}>copy</button>
+                                <input id="assets-address-text"
+                                       type="text"
+                                       className={style.textarea}
+                                       value={walletAddress}
+                                       readOnly/>
                             </div>
                         </div>
 

@@ -31,7 +31,8 @@ function addressCheck (address = '') {
         message: ''
     };
 
-    if (address.length === 38 && address.match(/^0x/)) {
+    // if (address.length === 38 && address.match(/^0x/)) {
+    if (address.length === 36) {
         let addressUse = JSON.parse(localStorage.getItem('lastuse')).address;
         if (address === addressUse) {
             output.ready = false;

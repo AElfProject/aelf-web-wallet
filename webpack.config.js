@@ -20,8 +20,8 @@ module.exports = {
 	// When mode is production or not defined, minimize is enabled. This option automatically adds Uglify plugin.
 	// production will remove the 'dead code'. Look at Tree Shaking
 	// mode: 'production',
-	// mode: 'development',
 	mode: 'development',
+	// mode: 'development',
 	// entry: './app/web/js/index.jsx',
 	// output: {
 	// 	path: path.resolve(__dirname, 'app'),

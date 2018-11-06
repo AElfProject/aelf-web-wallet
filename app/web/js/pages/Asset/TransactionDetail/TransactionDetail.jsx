@@ -83,7 +83,7 @@ class TransactionDetail extends Component {
 
     renderTransfer(txResult) {
         let { tx_info, tx_status, block_number } = txResult.result;
-        let params = tx_info.params.split(',');
+        let params = tx_info.params && tx_info.params.split(',') || [];
         let to = params[0];
         let amount = params[1];
 
