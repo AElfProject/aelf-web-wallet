@@ -113,6 +113,22 @@ body {
   top: 0;
 }
 
+@media (min-width: 768px) {
+  #root {
+    /*background: url("../assets/background/bg2_long.svg") no-repeat;*/
+    background: url("../assets/background/bg2.svg") no-repeat;
+    /*background-size: contain;*/
+    background-size: cover;
+    background-color: #200a43;
+    width: 100%;
+    /*min-height: 100%;*/
+    height: 100%;
+    position: relative;
+    left: 0;
+    top: 0;
+  }
+}
+
 .aelf-bg-light {
   background: url("../assets/background/bg1_long.svg") no-repeat;
   /*background-size: contain;*/

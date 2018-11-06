@@ -8,3 +8,4 @@ app/public/js/*
 test.js
 test.data.js
 app/view/
+app/public/assets/output/

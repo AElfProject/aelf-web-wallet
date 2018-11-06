@@ -8,6 +8,14 @@
 	//background: #FFF;
 	background: url("../../../../../assets/background/bg1_long.svg") no-repeat;
 }
+@media (min-width: 768px) {
+	.page {
+		position: absolute;
+		top: 0;
+		z-index: 999;
+		background-size: cover;
+	}
+}
 
 .container {
 	display: flex;
