@@ -1,6 +1,8 @@
 /*
  * huangzongzhe
- * 2018.10.15
+ * 2018.11.07
+ * 从Taro复制修改，兼容性并不好。还需要再研究。
+ * https://github.com/NervJS/taro/blob/master/packages/taro-components/src/components/camera/index.js
  */
 import React, {
     Component
@@ -42,7 +44,7 @@ class Camera extends Component {
         if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
             // 调用用户媒体设备，访问摄像头
             this.getUserMedia({
-                audio: true,
+                audio: false,
                 video: { facingMode: device }
             }, (stream) => {
                 // 兼容webkit内核浏览器
