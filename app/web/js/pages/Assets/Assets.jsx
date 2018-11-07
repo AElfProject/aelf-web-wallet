@@ -11,6 +11,8 @@ require('./Assets.css')
 
 import { hashHistory } from 'react-router'
 
+import Camera from '../../components/Camera/Camera'
+
 import initAelf from '../../utils/initAelf'
 import hexToString from '../../utils/hexToString'
 import { historyPush } from '../../utils/historyChange'
@@ -210,6 +212,9 @@ class Assets extends Component {
 
         return (
             <div style={pageContainerStyle} className='asstes-container'>
+
+                <Camera/>
+
                 <div className={style.background} style={backgroundStyle}>
                     <div className={style.backgroundMask}></div>
                     <div className={style.container} style={containerStyle}>
