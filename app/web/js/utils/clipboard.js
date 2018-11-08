@@ -11,13 +11,13 @@ function clipboard (selector) {
 	var clipboard = new ClipboardJS(selector);
 
 	clipboard.on('success', function(e) {
-		Toast.info('已复制', 3, () => {}, false);
+		Toast.info('Copied', 3, () => {}, false);
 
 	    e.clearSelection();
 	});
 
 	clipboard.on('error', function(e) {
-		Toast.fail('复制失败，请手动选中复制。', 3, () => {}, false);
+		Toast.fail('Copy Failed. Please manually select the text and copy it.', 6, () => {}, false);
 	});
 }
 

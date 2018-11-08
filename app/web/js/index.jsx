@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 // import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import { mapDispatchToProps } from './actions'
+import { LocaleProvider } from 'antd-mobile'
+// import { Provider } from 'react-redux'
+// import { mapDispatchToProps } from './actions'
 
-import { Router, Route, IndexRoute, hashHistory } from 'react-router'
+import { Router, Route, hashHistory } from 'react-router'
+import enUS from 'antd-mobile/lib/locale-provider/en_US';
 
-// import aelf from 'aelf-sdk'
-import store from './store'
+// import store from './store'
 
 import getWalletNav from './pages/getWallet/Nav/Nav'
 import getWalletGuide from './pages/getWallet/Guide/Guide'
@@ -43,7 +44,7 @@ import HowToChangePassword from './pages/personalCenter/HelpCenter/pages/HowToCh
 import QRCode from './pages/QRCode/QRCode'
 import ErrorPage from './pages/ErrorPage/ErrorPage'
 
-import style from '../style/index.scss'
+// import style from '../style/index.scss'
 require('./../style/ant-mobile-aelf.css');
 
 // bind to window, fetch polyfill.
@@ -64,16 +65,11 @@ let welcomePage = document.getElementById('welcome-page');
 welcomePage.style.opacity = 0;
 setTimeout(() => {
     welcomePage.style.display = 'none';
-}, 300)
-
-// setTimeout(function () {
-//   let welcomePage = document.getElementById('welcome-page');
-//   welcomePage.style.display = 'none';
-// }, 1000);
-
+}, 600);
 
 ReactDOM.render(
-    <Provider store={store}>
+    <LocaleProvider locale={enUS}>
+        {/*<Provider store={store}>*/}
         <Router history={hashHistory}>
             <Route path="/" component={HomePage}>
                 <Route path="/assets" component={Assets}></Route>
@@ -114,43 +110,7 @@ ReactDOM.render(
             <Route path="/error" component={ErrorPage}></Route>
 
         </Router>
-    </Provider>,
+        {/*</Provider>*/}
+    </LocaleProvider>,
     document.getElementById('root')
-)
-
-// fetch demo
-// https://www.npmjs.com/package/whatwg-fetch#sending-cookies
-// use demo
-// 需要自己配置错误处理
-// function checkStatus(response) {
-//     if (response.status >= 200 && response.status < 300) {
-//         return response
-//     } else {
-//         var error = new Error(response.statusText)
-//         error.response = response
-//         console.log('error response: ', response);
-//         throw error
-//     }
-// }
-//
-// fetch('/api/transactions', {
-//     credentials: 'include',
-//     method: 'POST',
-//     headers: {
-//         // 使用post的时候，egg需要配套加上这个，从cookie中获取,
-//         // csrf token方案
-//         // csrf: https://github.com/pillarjs/understanding-csrf/blob/master/README_zh.md
-//         // csrf: https://www.ibm.com/developerworks/cn/web/1102_niugang_csrf/index.html
-//         // let csrf = document.cookie.match(/^csrfToken=[^;]*/)[0].replace('csrfToken=', '')
-//         'x-csrf-token': 'mLIWWXSe1YFH0awM31IkL6X5',
-//         'Content-Type': 'application/json'
-//     },
-//
-//     body: JSON.stringify({
-//         address: 'hzz233',
-//         limit: 'aaa1',
-//         page: '0'
-//     })
-// }).then(checkStatus).then(result => {
-//     console.log(result);
-// }).catch(error => {console.log('error:', error)});
+);

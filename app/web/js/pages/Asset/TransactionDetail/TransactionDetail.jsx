@@ -3,7 +3,7 @@
  * 2018.07.27
  */
 import React, { Component } from 'react'
-import { WhiteSpace, List, InputItem, Button, Toast } from 'antd-mobile'
+import { Toast} from 'antd-mobile'
 import style from './TransactionDetail.scss'
 import { hashHistory } from 'react-router'
 
@@ -11,7 +11,6 @@ import NavNormal from '../../NavNormal/NavNormal'
 
 import AelfButton from './../../../components/Button/Button'
 
-import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import getParam from '../../../utils/getParam' // 还有类似方法的话，合并一下。
 import initAelf from '../../../utils/initAelf'
 import clipboard from '../../../utils/clipboard'
@@ -41,7 +40,6 @@ class TransactionDetail extends Component {
         try {
             if (txid) {
                 let result = this.aelf.aelf.chain.getTxResult(txid);
-
                 if (result.error) {
                     txInfo.txResult = result.error;
                 } else {
@@ -52,6 +50,7 @@ class TransactionDetail extends Component {
                 txInfo.txResult = '没有交易id';
             }
         } catch (e) {
+            Toast.fail(e.message, 10);
             txInfo.txResult = e;
         }
         return txInfo;
@@ -82,7 +81,7 @@ class TransactionDetail extends Component {
     }
 
     renderTransfer(txResult) {
-        let { tx_info, tx_status, block_number } = txResult.result;
+        let { tx_info } = txResult.result;
         let params = tx_info.params && tx_info.params.split(',') || [];
         let to = params[0];
         let amount = params[1];
@@ -119,11 +118,31 @@ class TransactionDetail extends Component {
         </div>;
     }
 
+    renderNavHtml() {
+        // 这里有点针对业务定制了。。。233
+        let pathname = window.location.pathname;
+        let NavHtml = pathname.match(/^\/transactiondetail/)
+            ?
+            <NavNormal
+                navTitle="交易详情"
+                hideLeft={true}
+                rightContent={
+                    <div
+                        onClick={() => {
+                            window.location.href = window.location.protocol + '//'+ window.location.host;
+                        }}
+                    >回到首页</div>
+                }
+            />
+            : <NavNormal navTitle="交易详情"/>;
+        return NavHtml;
+    }
+
     render() {
         // 这个交易能拿到所有交易，非transfer交易也需要处理。
         let txInfo = this.getTxInfo();
 
-        let { txResult, txid, txState}  = txInfo;
+        let { txResult, txid, txState} = txInfo;
 
         if (!txState) {
             return (
@@ -144,9 +163,7 @@ class TransactionDetail extends Component {
             notTransferHtml = this.renderNotTransfer(txResult);
         }
 
-        // 这里有点针对业务定制了。。。233
-        let pathname = window.location.pathname;
-        let NavHtml = pathname.match(/^\/transactiondetail/) ? '' : <NavNormal navTitle="交易详情"/>;
+        let NavHtml = this.renderNavHtml();
 
         let urlForCopy = window.location.host + '/transactiondetail?txid=' + txid;
 
@@ -184,6 +201,7 @@ class TransactionDetail extends Component {
                                    defaultValue={urlForCopy}>
                          </textarea>
                         <button id="clipboard-transactionDetail" data-clipboard-target="#copyUrl" style={{display: 'none'}}>copy</button>
+
                         <AelfButton
                             onClick={() => {
                                 let btn = document.getElementById('clipboard-transactionDetail');

@@ -4,12 +4,12 @@
  * Description: for fetch
  */
 
-export function checkStatus(response) {
+export default function (response) {
     if (response.status >= 200 && response.status < 300) {
-        return response
+        return response;
     } else {
-        var error = new Error(response.statusText)
-        error.response = response
-        throw error
+        var error = new Error(response.statusText);
+        error.response = response;
+        throw error;
     }
 }

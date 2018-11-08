@@ -40,7 +40,8 @@ function init (options = {}) {
 		aelf.chain.connectChain();
 	} catch (e) {
         Toast.hide();
-		hashHistory.push('/error');
+        window.location.href = window.location.protocol + '//' + window.location.host + '#/error';
+		// hashHistory.push('/error');
 	}
 	let contractMethods = chainOnly 
 		? {} : aelf.chain.contractAt(contractAddress || window.defaultConfig.mainContract, wallet);

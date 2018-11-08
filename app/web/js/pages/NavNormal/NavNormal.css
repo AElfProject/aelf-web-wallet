@@ -10,3 +10,12 @@
 	height: 45px;
 	width: 10px;
 }
+
+.aelf-normal-navbar-container .aelf-normal-navbar {
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	maxWidth:520px;
+	backgroundColor: rgba(0, 0, 0, 0);
+	color: #FFF;
+}

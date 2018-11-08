@@ -4,18 +4,13 @@
  */
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { WhiteSpace, ListView, PullToRefresh, Toast } from 'antd-mobile'
+import { ListView, PullToRefresh, Toast } from 'antd-mobile'
 
 import style from './Assets.scss'
 require('./Assets.css')
 
-import { hashHistory } from 'react-router'
-
-import initAelf from '../../utils/initAelf'
-import hexToString from '../../utils/hexToString'
 import { historyPush } from '../../utils/historyChange'
 import checkStatus from '../../utils/checkStatus'
-import walletStatusCheck from '../../utils/walletStatusCheck'
 import getPageContainerStyle from '../../utils/getPageContainerStyle'
 import clipboard from '../../utils/clipboard'
 
@@ -51,6 +46,7 @@ function getTokens(callback, pIndex = 0) {
             callback(output);
         });
     }).catch(error => {
+        Toast.fail(error.message, 6);
         console.log('error:', error)
     });
 
@@ -73,9 +69,41 @@ class Assets extends Component {
             isLoading: true,
             height: document.documentElement.clientHeight,
             useBodyScroll: false,
+            ELFValue: 'loading',
+            tenderValue: 'loading'
         };
 
-        let setStateTemp = this.setState;
+        this.renderRow = (rowData, sectionID, rowID) => {
+            let item = this.rData[rowID];
+            let dir = `/assethome?contract_address=${item.contract_address}`;
+            return (
+                <div key={rowID}
+                     className={style.txList}
+
+                     onClick={() => historyPush(dir)}
+                >
+                    <div className={style.txListMask}></div>
+                    <div className={style.listLeft}>
+                        {/*<div className={style.logoContainer}>*/}
+                        {/*<img src="https://pbs.twimg.com/profile_images/933992260680552448/tkxR4vpn_400x400.jpg" alt=""/>*/}
+                        {/*</div>*/}
+                        <div>
+                            <div className={style.name}>{item.name}</div>
+                            {/*<div className={style.description}>subTitle</div>*/}
+                        </div>
+                    </div>
+                    <div className={style.listRight}>
+                        <div className={style.balance}>{item.balance}</div>
+                        {/*<div className={style.tenderValuation}>≈法币价值</div>*/}
+                    </div>
+
+                    {/*<div className={style.tailContainer}>*/}
+                    {/*<div className={style.tailLeft}></div>*/}
+                    {/*<div className={style.tailRight}></div>*/}
+                    {/*</div>*/}
+                </div>
+            );
+        }
     }
 
     // PullToRefresh start
@@ -85,6 +113,28 @@ class Assets extends Component {
         } else {
             document.body.style.overflow = 'hidden';
         }
+    }
+
+    getELFValue(result) {
+        let ELFValue = 0;
+        result.map(item => {
+            ELFValue += parseInt(item.balance, 10);
+        });
+
+        fetch('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(checkStatus).then(result => {
+            result.text().then(result => {
+                console.log(result, this.setState);
+                const { USD } = JSON.parse(result);
+                const tenderValue = parseFloat(USD) * ELFValue;
+                this.setState({
+                    tenderValue
+                });
+            });
+        }).catch(error => {
+            Toast.fail(error.message, 6);
+        });
+
+        return ELFValue;
     }
 
     componentDidMount() {
@@ -100,6 +150,7 @@ class Assets extends Component {
                 height: hei,
                 refreshing: false,
                 isLoading: false,
+                ELFValue: this.getELFValue(result)
             });
         });
     }
@@ -122,6 +173,7 @@ class Assets extends Component {
                 dataSource: this.state.dataSource.cloneWithRows(this.rData),
                 refreshing: false,
                 isLoading: false,
+                ELFValue: this.getELFValue(result)
             });
         });
         pageIndex = 0;
@@ -146,6 +198,7 @@ class Assets extends Component {
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(this.rData),
                 isLoading: false,
+                ELFValue: this.getELFValue(result)
             });
         }, ++pageIndex);
     };
@@ -166,39 +219,6 @@ class Assets extends Component {
         this.walletAddressTemp = walletAddress;
         // checked
 
-        const row = (rowData, sectionID, rowID) => {
-            let item = this.rData[rowID];
-            let dir = `/assethome?contract_address=${item.contract_address}`;
-            return (
-                <div key={rowID}
-                    className={style.txList}
-
-                    onClick={() => historyPush(dir)}
-                >
-                        <div className={style.txListMask}></div>
-                        <div className={style.listLeft}>
-                            {/*<div className={style.logoContainer}>*/}
-                                {/*<img src="https://pbs.twimg.com/profile_images/933992260680552448/tkxR4vpn_400x400.jpg" alt=""/>*/}
-                            {/*</div>*/}
-                            <div>
-                                <div className={style.name}>{item.name}</div>
-                                {/*<div className={style.description}>subTitle</div>*/}
-                            </div>
-                        </div>
-                        <div className={style.listRight}>
-                            <div className={style.balance}>{item.balance}</div>
-                            {/*<div className={style.tenderValuation}>≈法币价值</div>*/}
-                        </div>
-
-                    {/*<div className={style.tailContainer}>*/}
-                        {/*<div className={style.tailLeft}></div>*/}
-                        {/*<div className={style.tailRight}></div>*/}
-                    {/*</div>*/}
-                </div>
-            );
-        };
-        // pull-to-refresh end
-
         let pageContainerStyle = getPageContainerStyle();
         pageContainerStyle.height -= 90;
 
@@ -215,10 +235,10 @@ class Assets extends Component {
                     <div className={style.container} style={containerStyle}>
                         <div className={style.walletInfo}>
                             <div className={style.balance}>
-                                <div className={style.aelfValuation}>ELF价值</div>
+                                <div className={style.aelfValuation}>{this.state.ELFValue}</div>
                                 <div className={style.tenderValuation}>
-                                    ≈RMB价值【暂无】
-                                    <span className={style.tenderUnit}> CNY</span>
+                                    ≈{this.state.tenderValue}
+                                    <span className={style.tenderUnit}> USD</span>
                                 </div>
                             </div>
 
@@ -250,20 +270,19 @@ class Assets extends Component {
                                 ref={el => this.lv = el}
                                 dataSource={this.state.dataSource}
 
-                                renderFooter={() => (<div style={{ padding: 6, textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
-                                    {this.state.isLoading ? 'Loading...' : (this.state.hasMore ? 'Loaded' : '没有更多记录了o((⊙﹏⊙))o')}
-                                </div>)}
+                                renderFooter={
+                                    () => (
+                                        <div style={{ padding: 6, textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
+                                            {this.state.isLoading ? 'Loading...' : (this.state.hasMore ? 'Loaded' : 'No More o((⊙﹏⊙))o')}
+                                        </div>
+                                )}
 
-                                renderRow={row}
+                                renderRow={this.renderRow}
 
                                 useBodyScroll={this.state.useBodyScroll}
                                 style={this.state.useBodyScroll ? {} : {
                                     // height: this.state.height - 100,
                                     height: '100%',
-                                    // background: '#FFF'
-                                    // top nav 45px, bottom bar 50px, margin-top 5px; 合计 100px
-                                    // border: '1px solid #ddd',
-                                    // margin: '5px 0',
                                 }}
 
                                 pullToRefresh={<PullToRefresh

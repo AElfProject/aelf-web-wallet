@@ -160,3 +160,7 @@ body {
 .am-modal-button-group-h .am-modal-button {
   color: #AC00E6 !important;
 }
+
+.am-pull-to-refresh-indicator {
+  color: rgba(255, 255, 255, 0.7) !important;
+}

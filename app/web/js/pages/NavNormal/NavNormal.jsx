@@ -27,14 +27,14 @@ class NavNormal extends Component {
         //             onClick={() => this.props.rightContentClick()}
         //         >完成</div>
         //         ]}
-		console.log(this.props.rightContent);
+        // console.log(this.props.rightContent);
 		return (
-			<div>
+			<div className='aelf-normal-navbar-container'>
 				<NavBar 
-					icon={<Icon type="left" />}
+					icon={this.props.hideLeft ? '' : <Icon type="left" />}
 					onLeftClick={() => this.goBack()}
                     rightContent={this.props.rightContent}
-					style={{position: 'fixed', top: '0px', width: '100%', maxWidth:'520px', backgroundColor: 'rgba(0, 0, 0, 0)', color: '#FFF'}}>
+					className='aelf-normal-navbar'>
 					{this.props.navTitle}
 				</NavBar>
 				<div className="nav-normal-whitespace"></div>
