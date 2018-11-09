@@ -34,7 +34,7 @@ class QRCodeTemplate extends Component {
 				<BackupNotice />
 				<div className={style.qrcodePanel}>
 					<div className={style.titleContaienr}>
-						<div className={style.title}>钱包收账</div>
+						<div className={style.title}>Receive</div>
                         <p className={style.subTitle}>{walletAddress}</p>
 					</div>
                     {/*<p>qrcode</p>*/}
@@ -52,7 +52,7 @@ class QRCodeTemplate extends Component {
                             let btn = document.getElementById('clipboard-qrcode');
                             btn.click();
                         }}
-						text='点击复制地址'
+						text='Copy Address'
 					></AelfButton>
 
                     <button id="clipboard-qrcode" data-clipboard-target="#qrcodetext" style={{display: 'none'}}>copy</button>

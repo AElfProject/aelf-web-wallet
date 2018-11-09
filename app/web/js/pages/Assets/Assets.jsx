@@ -14,6 +14,11 @@ import checkStatus from '../../utils/checkStatus'
 import getPageContainerStyle from '../../utils/getPageContainerStyle'
 import clipboard from '../../utils/clipboard'
 
+import {
+    SCROLLLIST,
+    SCROLLFOOTER
+} from '../../constants'
+
 const NUM_ROWS = 20;
 let pageIndex = 0;
 
@@ -69,8 +74,8 @@ class Assets extends Component {
             isLoading: true,
             height: document.documentElement.clientHeight,
             useBodyScroll: false,
-            ELFValue: 'loading',
-            tenderValue: 'loading'
+            ELFValue: '-',
+            tenderValue: '-'
         };
 
         this.renderRow = (rowData, sectionID, rowID) => {
@@ -125,7 +130,7 @@ class Assets extends Component {
             result.text().then(result => {
                 console.log(result, this.setState);
                 const { USD } = JSON.parse(result);
-                const tenderValue = parseFloat(USD) * ELFValue;
+                const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
                 this.setState({
                     tenderValue
                 });
@@ -134,7 +139,7 @@ class Assets extends Component {
             Toast.fail(error.message, 6);
         });
 
-        return ELFValue;
+        return ELFValue.toLocaleString();
     }
 
     componentDidMount() {
@@ -270,12 +275,7 @@ class Assets extends Component {
                                 ref={el => this.lv = el}
                                 dataSource={this.state.dataSource}
 
-                                renderFooter={
-                                    () => (
-                                        <div style={{ padding: 6, textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
-                                            {this.state.isLoading ? 'Loading...' : (this.state.hasMore ? 'Loaded' : 'No More o((⊙﹏⊙))o')}
-                                        </div>
-                                )}
+                                renderFooter={() => SCROLLFOOTER(this.state.isLoading, this.state.hasMore)}
 
                                 renderRow={this.renderRow}
 

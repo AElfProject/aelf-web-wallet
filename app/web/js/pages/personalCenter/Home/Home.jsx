@@ -22,10 +22,10 @@ class personalCenterHome extends Component {
 			<div className={style.container + ' ' + 'aelf-personal-pages aelf-solid'}>
 
 	            <List className={'aelf-list'}>
-	                <Item onClick={() => hashHistory.push('/personalcenter/walletmanage?title=钱包管理')}>
+	                <Item onClick={() => hashHistory.push('/personalcenter/walletmanage?title=WalletManagement')}>
                         <ListContent
                             icon="wallet16"
-                            text="钱包管理"
+                            text="Wallet Record"
                         ></ListContent>
                     </Item>
 	            </List>
@@ -34,7 +34,7 @@ class personalCenterHome extends Component {
                     <Item onClick={() => hashHistory.push('/personalcenter/home')}>
                         <ListContent
                             icon="tx_history16"
-                            text="交易记录【暂无】"
+                            text="Transaction List【TODO】"
                         ></ListContent>
                     </Item>
                 </List>
@@ -46,7 +46,7 @@ class personalCenterHome extends Component {
                         <ListContent
                             type="small"
                             icon="contact16"
-                            text="联系人【暂无】"
+                            text="Address Book【TODO】"
                         ></ListContent>
                     </Item>
                 </List>
@@ -55,25 +55,25 @@ class personalCenterHome extends Component {
                         <ListContent
                             type="small"
                             icon="setting16"
-                            text="系统设置【暂无】"
+                            text="System Setting【TODO】"
                         ></ListContent>
                     </Item>
                 </List>
                 <List className={'aelf-list'}>
-                    <Item onClick={() => hashHistory.push('/personalcenter/help?title=帮助中心')}>
+                    <Item onClick={() => hashHistory.push('/personalcenter/help?title=HelpCenter')}>
                         <ListContent
                             type="small"
                             icon="help16"
-                            text="帮助中心"
+                            text="Help Center"
                         ></ListContent>
                     </Item>
                 </List>
                 <List className={'aelf-list'}>
-                    <Item onClick={() => hashHistory.push('/personalcenter/about?title=关于我们')}>
+                    <Item onClick={() => hashHistory.push('/personalcenter/about?title=AboutELFWallet')}>
                         <ListContent
                             type="small"
                             icon="about16"
-                            text="关于我们"
+                            text="About ELF Official Wallet"
                         ></ListContent>
                     </Item>
                 </List>

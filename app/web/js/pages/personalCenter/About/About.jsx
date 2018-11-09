@@ -19,12 +19,12 @@ class About extends Component {
         let lists = [
             {
                 url: '/personalcenter/about/service',
-                text: '使用协议',
+                text: 'Use Agreement',
                 type: type
             },
             {
                 url: '/personalcenter/about/privacy',
-                text: '隐私条款',
+                text: 'Privacy Policy',
                 type: type
             }
         ];
@@ -48,7 +48,7 @@ class About extends Component {
                 <NavNormal></NavNormal>
                 <div className='aelf-blank40'></div>
                 <NoticePanel
-                    mainTitle='关于我们'
+                    mainTitle='About AElf Official Wallet'
                     iconHidden={true}
                 ></NoticePanel>
                 <div className='aelf-blank16'></div>

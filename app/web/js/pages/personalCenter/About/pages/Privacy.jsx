@@ -17,7 +17,7 @@ class Privacy extends Component {
 
 		return (
 			<div>
-				<NavNormal navTitle="隐私条款"></NavNormal>
+				<NavNormal navTitle="Privacy Policy"></NavNormal>
 				<div className={style.textContainer} style={containerStyle}>
 					<PrivacyText></PrivacyText>
 				</div>

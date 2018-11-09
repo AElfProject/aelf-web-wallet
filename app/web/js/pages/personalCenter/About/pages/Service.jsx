@@ -18,7 +18,7 @@ class Service extends Component {
 
 		return (
 			<div>
-				<NavNormal navTitle="使用协议"></NavNormal>
+				<NavNormal navTitle="Terms of Service"></NavNormal>
 				<div className={style.textContainer} style={containerStyle}>
 					<ServiceText></ServiceText>
 				</div>

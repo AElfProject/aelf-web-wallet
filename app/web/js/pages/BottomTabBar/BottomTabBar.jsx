@@ -50,7 +50,7 @@ class BottomTabBar extends Component {
             {
                 id: 'asset',
                 url: '/assets',
-                text: '资产'
+                text: 'Home'
             },
             // {
             //     id: 'qrcode',
@@ -60,7 +60,7 @@ class BottomTabBar extends Component {
             {
                 id: 'my',
                 url: '/personalcenter/home',
-                text: '我的'
+                text: 'Settings'
             }
         ];
 

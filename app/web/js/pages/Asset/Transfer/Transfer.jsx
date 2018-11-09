@@ -36,14 +36,14 @@ function addressCheck (address = '') {
         let addressUse = JSON.parse(localStorage.getItem('lastuse')).address;
         if (address === addressUse) {
             output.ready = false;
-            output.message = '转账地址和当前钱包地址一样';
+            output.message = 'Address and current wallet are the same.';
             return output;
         }
         output.ready = true;
         return output;
     }
     output.ready = false;
-    output.message = '错误的地址';
+    output.message = 'error address';
     return output;
 }
 class Transfer extends Component {
@@ -151,7 +151,7 @@ class Transfer extends Component {
 
         let createButton =
             <AelfButton
-                text="确认转账"
+                text="Send"
                 style={{
                     opacity: 0.5
                 }}
@@ -159,7 +159,7 @@ class Transfer extends Component {
         if (this.state.address && this.state.amount && this.state.password) {
             createButton =
                 <AelfButton
-                    text="确认转账"
+                    text="Send"
                     onClick={() => this.transfer()}
                 ></AelfButton>;
         }
@@ -172,12 +172,12 @@ class Transfer extends Component {
                 <NavNormal></NavNormal>
                 <div className={style.container} style={containerStyle}>
                     <div className="aelf-input-container aelf-dash-light">
-                        <div className={style.title}>{this.state.tokenName} 转账</div>
+                        <div className={style.title}>{this.state.tokenName} Transaction</div>
                         <List>
                             <div className="aelf-input-title" style={{
                                 marginTop: 28
                             }}>
-                                <div>收款人钱包地址</div>
+                                <div>To Address</div>
                                 {addressErrorText}
                             </div>
                             <InputItem
@@ -193,9 +193,9 @@ class Transfer extends Component {
 
                         <List>
                             <div className="aelf-input-title">
-                                <div>转账额度</div>
+                                <div>Value / Amount to Send</div>
                                 <div>
-                                    余额：{this.state.balance}
+                                    Balance：{this.state.balance}
                                 </div>
                             </div>
                             <InputItem
@@ -208,7 +208,7 @@ class Transfer extends Component {
 
                         <List>
                             <div className="aelf-input-title">
-                                <div>钱包密码</div>
+                                <div>Password</div>
                                 {passwordErrorText}
                             </div>
                             <InputItem

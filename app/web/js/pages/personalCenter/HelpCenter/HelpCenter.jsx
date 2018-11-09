@@ -18,29 +18,39 @@ class HelpCenter extends Component {
 	renderList () {
 		let type = 'small';
 		let lists = [
-			{
-				url: '/personalcenter/whatismnemonic',
-				text: '什么是助记词',
-				type: type
-			},
+            {
+                url: '/personalcenter/whatismnemonic',
+                text: 'What is a mnemonic?',
+                // text: '什么是助记词',
+                type: type
+            },
             {
                 url: '/personalcenter/whatiskeystore',
-                text: '什么是keyStore',
+                text: 'What is a keystore?',
+                //     text: '什么是keyStore',
                 type: type
             },
             {
                 url: '/personalcenter/whatisprivatepublickey',
-                text: '什么是公钥私钥',
+                text: 'What are public key and private key?',
+                //     text: '什么是公钥私钥',
                 type: type
             },
             {
                 url: '/personalcenter/whatisaelfwallet',
-                text: 'AElf钱包介绍',
+                text: 'What is the AElf Wallet?',
+                //     text: 'AElf钱包介绍',
                 type: type
             },
             {
                 url: '/personalcenter/howtochangepassword',
-                text: '如何修改密码？忘记密码怎么办？',
+                text: 'How to change the password? ',
+                //     text: '如何修改密码？忘记密码怎么办？',
+                type: type
+            },
+            {
+                url: '/personalcenter/forget',
+                text: 'What if I forget my password?',
                 type: type
             }
 		];
@@ -64,7 +74,7 @@ class HelpCenter extends Component {
 				<NavNormal></NavNormal>
 				<div className='aelf-blank40'></div>
                 <NoticePanel
-                    mainTitle='帮助中心'
+                    mainTitle='Help Center'
                     iconHidden={true}
                 ></NoticePanel>
                 <div className='aelf-blank16'></div>

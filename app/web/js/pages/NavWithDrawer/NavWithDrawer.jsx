@@ -150,7 +150,7 @@ class NavWithDrawer extends Component {
                     {/*<div>扫一扫</div>*/}
                     <div className={style.addWalletIcon}></div>
                     <div
-                    >创建钱包</div>
+                    >Create</div>
                 </div>
             </div>
 
@@ -170,7 +170,7 @@ class NavWithDrawer extends Component {
         const sidebar = this.getSideBar();
 
         const lastuse = localStorage.getItem('lastuse');
-        const walletInUseName = lastuse ? JSON.parse(localStorage.getItem('lastuse')).walletName : '请选择钱包';
+        const walletInUseName = lastuse ? JSON.parse(localStorage.getItem('lastuse')).walletName : 'Please select wallet';
 
         let showLeftClick = this.props.showLeftClick;
 

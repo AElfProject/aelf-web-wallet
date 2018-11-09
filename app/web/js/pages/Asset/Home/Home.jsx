@@ -21,7 +21,6 @@ import getPageContainerStyle from '../../../utils/getPageContainerStyle'
 import getParam from '../../../utils/getParam' // 还有类似方法的话，合并一下。
 import getBalanceAndTokenName from '../../../utils/getBalanceAndTokenName'
 
-
 class Home extends Component {
     constructor() {
         super();
@@ -46,12 +45,36 @@ class Home extends Component {
         let contractAddress = getParam('contract_address', window.location.href);
 
         getBalanceAndTokenName(address, contractAddress, output => {
+            const { balance = 0 } = output;
+            this.getELFValue(balance);
             this.setState({
-                balance: output.balance,
+                balance: output.balance.toLocaleString(),
                 tokenName: output.tokenDetail.name,
                 contract_address: contractAddress
             });
         });
+    }
+
+    getELFValue(ELFValue) {
+        // let ELFValue = 0;
+        // result.map(item => {
+        //     ELFValue += parseInt(item.balance, 10);
+        // });
+
+        fetch('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(checkStatus).then(result => {
+            result.text().then(result => {
+                console.log(result, this.setState);
+                const { USD } = JSON.parse(result);
+                const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
+                this.setState({
+                    tenderValue
+                });
+            });
+        }).catch(error => {
+            Toast.fail(error.message, 6);
+        });
+
+        // return ELFValue.toLocaleString();
     }
 
     componentDidMount() {
@@ -74,7 +97,7 @@ class Home extends Component {
 
         return (
             <div>
-                <NavNormal navTitle="交易记录"></NavNormal>
+                <NavNormal navTitle="Transaction Record"></NavNormal>
                 <div style={pageContainerStyle} className={style.container}>
                     <div>
                         <div className={style.assetsInfoContainer}>
@@ -82,17 +105,18 @@ class Home extends Component {
                                 <div className={style.assetName}>
                                     {this.state.tokenName}
                                 </div>
-                                <div className={style.assetDescription}>
-                                    描述【暂无】
-                                </div>
+                                {/*<div className={style.assetDescription}>*/}
+                                    {/*描述【暂无】*/}
+                                {/*</div>*/}
                             </div>
                             <div className={style.assetBalanceContainer}>
                                 <div className={style.balance}>
                                     {this.state.balance}
                                 </div>
                                 <div className={style.tenderValuation}>
-                                    法币价值【暂无】
-                                    <span className={style.tenderUnit}> CNY</span>
+                                    {this.state.tenderValue}
+                                    {/*法币价值【暂无】*/}
+                                    <span className={style.tenderUnit}> USD</span>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +130,7 @@ class Home extends Component {
                                     <Svg icon='out20'
                                          style={{ display: 'inline-block', height: 20, width: 20}}></Svg>
                                 </div>
-                                <div>转账</div>
+                                <div>Send</div>
                             </div>
                             <div
                                 className={style.button}
@@ -116,7 +140,7 @@ class Home extends Component {
                                     <Svg icon='in20'
                                          style={{ display: 'inline-block', height: 20, width: 20}}></Svg>
                                 </div>
-                                <div>收款</div>
+                                <div>Receive</div>
                             </div>
                         </div>
                     </div>

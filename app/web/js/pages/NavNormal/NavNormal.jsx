@@ -19,6 +19,10 @@ class NavNormal extends Component {
 	}
 
 	goBack() {
+		if (history.length === 1) {
+            window.location.href = window.location.protocol + '//'+ window.location.host;
+			return;
+		}
 		hashHistory.goBack();
 	}
 	render() {

@@ -22,7 +22,8 @@ class Agreement extends Component {
             <div>
                 <div style={ argeementStyle } className={ style.agreement }>
                     <div className={style.center}>
-                        <h3>AELF钱包服务协议与隐私政策</h3>
+                        {/*<h3>AELF钱包服务协议与隐私政策</h3>*/}
+                        <h3>AElf Privacy Policy</h3>
                     </div>
                     <WhiteSpace />
                     <div className={style.textContainer} style={{
@@ -44,7 +45,7 @@ class Agreement extends Component {
                             color: '#AC00E6'
                         }}
                         onClick={this.props.toggleAgreement}>
-                        朕已阅
+                        Agree
                     </Button>
                 </div>
             </div>

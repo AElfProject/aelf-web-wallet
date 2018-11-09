@@ -15,6 +15,11 @@ import checkStatus from '../../../utils/checkStatus'
 import addressOmit from '../../../utils/addressOmit'
 import getParam from '../../../utils/getParam'
 
+import {
+    SCROLLLIST,
+    SCROLLFOOTER
+} from '../../../constants'
+
 const NUM_ROWS = 20;
 let pageIndex = 0;
 
@@ -193,9 +198,7 @@ class TransactionsList extends Component {
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}
 
-                    renderFooter={() => (<div style={{ textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
-                        {this.state.isLoading ? 'Loading...' : (this.state.hasMore ? 'Loaded' : '没有更多记录了o((⊙﹏⊙))o')}
-                    </div>)}
+                    renderFooter={() => SCROLLFOOTER(this.state.isLoading, this.state.hasMore)}
 
                     renderRow={row}
 

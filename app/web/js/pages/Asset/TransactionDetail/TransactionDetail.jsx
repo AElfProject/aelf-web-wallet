@@ -47,7 +47,7 @@ class TransactionDetail extends Component {
                     txInfo.txState = true;
                 }
             } else {
-                txInfo.txResult = '没有交易id';
+                txInfo.txResult = 'No Transaction ID';
             }
         } catch (e) {
             Toast.fail(e.message, 10);
@@ -92,11 +92,11 @@ class TransactionDetail extends Component {
                 {amounHtml}
 
                 <div className={style.list}>
-                    <div className={style.title}>发款方</div>
+                    <div className={style.title}>From</div>
                     <div className={style.text}>{tx_info.From}</div>
                 </div>
                 <div className={style.list}>
-                    <div className={style.title}>收款方</div>
+                    <div className={style.title}>To</div>
                     <div className={style.text}>{to}</div>
                 </div>
             </div>;
@@ -108,11 +108,11 @@ class TransactionDetail extends Component {
 
         return <div>
             <div className={style.list}>
-                <div className={style.title}>交易类型</div>
+                <div className={style.title}>Transaction Type</div>
                 <div className={style.text}>{method}</div>
             </div>
             <div className={style.list}>
-                <div className={style.title}>非转账交易，暂无法解析，以下为交易原始数据</div>
+                <div className={style.title}>Not assets transfer. Raw data FYI</div>
                 <div className={style.text}>{JSON.stringify(txResult)}</div>
             </div>
         </div>;
@@ -124,17 +124,17 @@ class TransactionDetail extends Component {
         let NavHtml = pathname.match(/^\/transactiondetail/)
             ?
             <NavNormal
-                navTitle="交易详情"
+                navTitle="Transaction Details"
                 hideLeft={true}
                 rightContent={
                     <div
                         onClick={() => {
                             window.location.href = window.location.protocol + '//'+ window.location.host;
                         }}
-                    >回到首页</div>
+                    >Home</div>
                 }
             />
-            : <NavNormal navTitle="交易详情"/>;
+            : <NavNormal navTitle="Transaction Details"/>;
         return NavHtml;
     }
 
@@ -180,15 +180,15 @@ class TransactionDetail extends Component {
                         <div style={{ wordWrap: 'break-word', lineHeight: 1.5 }}>
                             {html}
                             <div className={style.list}>
-                                <div className={style.title}>状态</div>
+                                <div className={style.title}>Status</div>
                                 <div className={style.text}>{tx_status}</div>
                             </div>
                             <div className={style.list}>
-                                <div className={style.title}>交易Id</div>
+                                <div className={style.title}>Transaction ID</div>
                                 <div className={style.text}>{tx_info.TxId}</div>
                             </div>
                             <div className={style.list}>
-                                <div className={style.title}>区块</div>
+                                <div className={style.title}>Block Height</div>
                                 <div className={style.text}>{block_number}</div>
                             </div>
                             {notTransferHtml}
@@ -207,7 +207,7 @@ class TransactionDetail extends Component {
                                 let btn = document.getElementById('clipboard-transactionDetail');
                                 btn.click();
                             }}
-                        >复制URL</AelfButton>
+                        >Copy URL</AelfButton>
                     </div>
                 </div>
             </div>
