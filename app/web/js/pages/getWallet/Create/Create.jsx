@@ -34,16 +34,16 @@ class Create extends Component {
 
     createAndGO() {
         if (!!this.haveCreate) {
-            Toast.info('钱包已经创建', 3, () => {
+            Toast.info('Wallet Created', 3, () => {
                 hashHistory.push(this.backpDir);
             });
             return;
         }
         if (!!this.creating) {
-            Toast.info('钱包正在创建中', 3);
+            Toast.info('Wallet Creating', 3);
             return;
         }
-        Toast.info('钱包初始化中', 30);
+        Toast.info('Wallet Initializing', 30);
 
         this.creating = true;
 
@@ -65,12 +65,12 @@ class Create extends Component {
                 public_key: result.publicKey
             }, () => {
                 Toast.hide();
-                Toast.success('创建成功', 3, () => {
+                Toast.success('Create Success', 3, () => {
                     hashHistory.push(this.backpDir);
                 });
             });
         } else {
-            Toast.fail('(꒦_꒦) ...额，要不去github联系下作者？');
+            Toast.fail('(꒦_꒦) ...emmmm，please call the monkey.');
         }
     }
 
@@ -99,7 +99,7 @@ class Create extends Component {
     render() {
         let createButton =
             <AelfButton
-                text="创建"
+                text="Create"
                 style={{
                     opacity: 0.5
                 }}
@@ -107,7 +107,7 @@ class Create extends Component {
         if (this.state.password && this.state.walletName && this.state.agree) {
             createButton =
                 <AelfButton
-                    text="创建"
+                    text="Create"
                     onClick={() => this.createAndGO()}
                 ></AelfButton>;
         }
@@ -127,10 +127,12 @@ class Create extends Component {
                     margin: '24px 0 0 0'
                 }}>
                     <NoticePanel
-                        mainTitle={'创建钱包'}
+                        mainTitle={'Create Wallet'}
                         content={[
-                            '密码用于加密私钥和助记词, 至少9位混合大小写和数字。',
-                            'AElf钱包不会储存密码，也无法帮您找回，请务必牢记！'
+                            // '密码用于加密私钥和助记词, 至少9位混合大小写和数字。',
+                            'Password is used to encrypt private keys and mnemonic words. At least 9 bits are mixed uppercase and numeric.',
+                            // 'AElf钱包不会储存密码，也无法帮您找回，请务必牢记！'
+                            'AElf wallet will not store the password, nor can it help you find it. Please bear in mind!'
                         ]}
                     ></NoticePanel>
 
@@ -145,13 +147,13 @@ class Create extends Component {
                     <Flex style={{ padding: '0 24px 0 24px' }}>
 
                         <Flex.Item style={{ padding: '15px 0', color: '#FFF', flex: 'none', opacity: 0.5 }}>
-                            我已仔细阅读并同意<span
+                            Agree <span
                             className="aelf-blue"
                             style={{
                                 color: '#26B7FF'
                             }}
                             onClick={() => this.toggleAgreement()}
-                        >《服务及隐私条款》</span>
+                        >《Service and privacy clause》</span>
                         </Flex.Item>
                         <Flex.Item>
                             <div onClick={() => this.setAgreement()}>

@@ -74,7 +74,7 @@ class Backup extends Component {
             this.setState({'mnemonic': mnemonic});
             return true
         } else {
-            Toast.fail('密码错误', 1, () => {}, false);
+            Toast.fail('Wrong Password', 1, () => {}, false);
         }
         return false;
 

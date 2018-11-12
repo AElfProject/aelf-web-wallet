@@ -65,7 +65,7 @@ function getPasswordLevelInfo (passwordInfo) {
         level3: {
             opacity: 0.5
         },
-        text: '至少9位'
+        text: 'At least 9 bits'
     };
 
     if (passwordInfo && passwordInfo.type) {
@@ -86,9 +86,9 @@ function getPasswordLevelInfo (passwordInfo) {
         }
 
         if (passwordInfo.level > 2) {
-            level.text = '强';
+            level.text = 'Strong';
         } else {
-            level.text = '强度不够';
+            level.text = 'Not Enough';
         }
     }
     return level;
@@ -138,7 +138,7 @@ class Password extends Component {
 
         let passwordReplayErrorText = '';
         if (this.passwordReplayHasError) {
-            passwordReplayErrorText = <div className={style.error}>两次输入不一致</div>
+            passwordReplayErrorText = <div className={style.error}>The passwords confirmed error.</div>
         }
 
         let levelInfo = getPasswordLevelInfo(this.passwordInfo);
@@ -147,7 +147,7 @@ class Password extends Component {
             <div className="aelf-input-container aelf-dash">
                 <List>
                     <div className="aelf-input-title">
-                        <div>设置密码</div>
+                        <div>Password</div>
                         <div className={style.passwordLevel}>
                             <div className={`${style.level1}  ${style.list}`} style={levelInfo.level1}></div>
                             <div className={`${style.level2}  ${style.list}`} style={levelInfo.level2}></div>
@@ -166,7 +166,7 @@ class Password extends Component {
 
                 <List>
                     <div className="aelf-input-title">
-                        <div>再次输入密码</div>
+                        <div>Confirm Password</div>
                         {passwordReplayErrorText}
                     </div>
                     <InputItem

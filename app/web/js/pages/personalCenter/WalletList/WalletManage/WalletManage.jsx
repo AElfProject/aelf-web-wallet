@@ -52,7 +52,7 @@ class WalletManage extends Component {
         walletInfo.walletName = name;
 
         insertWalletInfo(walletInfo, false);
-        Toast.success('修改成功', 1.5, () => {
+        Toast.success('Change success', 1.5, () => {
             // hashHistory.goBack();
         }, false)
         this.setState({
@@ -80,7 +80,7 @@ class WalletManage extends Component {
                 }));
                 count++;
                 lock = true;
-                Toast.success('删除成功', 3, () => {
+                Toast.success('Deleted', 3, () => {
                     hashHistory.push('/personalcenter/home');
                 })
             }
@@ -88,7 +88,7 @@ class WalletManage extends Component {
         if (!lock) {
             localStorage.removeItem('walletInfoList');
             localStorage.removeItem('lastuse');
-            Toast.fail('没有钱包了，请创建或导入钱包', 3, () => {
+            Toast.fail('No wallet now，please create or insert a wallet.', 3, () => {
                 hashHistory.push('/get-wallet/guide');
             }, 3);
 		}
@@ -127,15 +127,15 @@ class WalletManage extends Component {
                         {/*arrow="horizontal"*/}
                         <Item
                             onClick={
-                                () => prompt('', '新的名称', [{
-                                    text: '取消'
+                                () => prompt('', 'New Name', [{
+                                    text: 'Cancel'
                                 }, {
-                                    text: '修改',
+                                    text: 'Submit',
                                     onPress: name => this.changeName(name)
                                 }, ], 'default', '')
                             }>
                             <ListContent
-                                text="钱包名称"
+                                text="Wallet Name"
                             ></ListContent>
                         </Item>
                     </List>
@@ -143,14 +143,14 @@ class WalletManage extends Component {
                     <List className={'aelf-list'}>
                         <Item onClick={() => hashHistory.push('/get-wallet/backup')}>
                             <ListContent
-                                text="备份钱包"
+                                text="Backup"
                             ></ListContent>
                         </Item>
                     </List>
                     <List className={'aelf-list'}>
                         <Item onClick={() => hashHistory.push('/personalcenter/passwordchange')}>
                             <ListContent
-                                text="修改密码"
+                                text="Change Password"
                             ></ListContent>
                         </Item>
                     </List>
@@ -158,12 +158,12 @@ class WalletManage extends Component {
 
 				<div className={style.bottom}>
                     <AelfButton
-                        text="删除钱包"
+                        text="Delete Wallet"
                         onClick={
-                            () => alert('删除', '确认删除钱包', [{
-                                text: '取消'
+                            () => alert('Delete', 'Are you sure?', [{
+                                text: 'Cancel'
                             }, {
-                                text: '确认',
+                                text: 'Submit',
                                 onPress: name => this.deleteWallet()
                             }, ], 'default', '')
                         }

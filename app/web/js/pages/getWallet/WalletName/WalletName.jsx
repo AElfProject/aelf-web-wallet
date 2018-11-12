@@ -27,11 +27,11 @@ class WalletName extends Component {
         return (
             <div className="aelf-input-container aelf-dash">
                 <List>
-                    <div className="aelf-input-title">钱包名称</div>
+                    <div className="aelf-input-title">Wallet Name</div>
                     <InputItem
                         value={this.state.walletName}
                         type="text"
-                        placeholder="不超过12个字符"
+                        placeholder=""
                         onChange={walletName => this.inputWalletName(walletName)}
                         moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                     ></InputItem>

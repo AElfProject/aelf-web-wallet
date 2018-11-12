@@ -90,7 +90,7 @@ class PasswordChange extends Component {
                 style={{
                     opacity: 0.5
                 }}
-            >完成
+            >Submit
             </div>;
         if (this.state.newPassword && true) {
             // changeButton =
@@ -104,7 +104,7 @@ class PasswordChange extends Component {
             rightContent =
                 <div
                     onClick={() => this.changePassword()}
-                >完成
+                >Submit
                 </div>;
         }
 
@@ -119,7 +119,7 @@ class PasswordChange extends Component {
                 <div className={style.container} >
                     <div>
                         <NoticePanel
-                            mainTitle={'修改密码'}
+                            mainTitle={'Change Password'}
                             subTitle={[
                                 walletName
                             ]}
@@ -128,7 +128,7 @@ class PasswordChange extends Component {
                         <List className={style.passwordContainer}>
 
                             <div className="aelf-input-title">
-                                <div>当前密码</div>
+                                <div>Old password</div>
                             </div>
                             <InputItem
                                 value={this.state.password}
@@ -143,11 +143,12 @@ class PasswordChange extends Component {
                             setPassword={newPassword => this.setNewPassword(newPassword)}
                         ></Password>
 
-                        <div className={style.forget}>忘记密码？导入助记词或私钥可重置。
+                        {/*<div className={style.forget}>忘记密码？导入助记词或私钥可重置。*/}
+                        <div className={style.forget}>Forget your password? Importing mnemonic or private key can be reset.
                             <a href="javascript:;"
                                className="aelf-blue"
                                onClick={() => hashHistory.push('/get-wallet/import')}>
-                                马上导入
+                                Immediately import
                             </a>
                         </div>
                     </div>
