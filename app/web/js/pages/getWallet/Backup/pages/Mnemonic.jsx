@@ -31,7 +31,8 @@ import getPageContainerStyle from '../../../../utils/getPageContainerStyle'
 
 const selectedStyle = '#AC00E6';
 const unSelectedStyle = '#FFF';
-const confirmSubTitle = '请按顺序点击助记词，以确认您正确备份。';
+// const confirmSubTitle = '请按顺序点击助记词，以确认您正确备份。';
+const confirmSubTitle = 'To confirm your backup, please click on the Mnemonic in order.';
 
 class Mnemonic extends Component {
 	constructor(props) {
@@ -109,13 +110,14 @@ class Mnemonic extends Component {
 
 			if (text.trim() === this.props.mnemonic) {
 				backupStatusChange();
-				Toast.success('正确', 3, () => {
+				Toast.success('Success', 3, () => {
 					historyPush('/personalcenter/walletmanage', false);
 				});
 				return;
 			}
 		}
-		Toast.fail('请重新温习助记词。', 2, () => {}, false);
+		// Toast.fail('请重新温习助记词。', 2, () => {}, false);
+		Toast.fail('Please review the Mnemonic again.', 2, () => {}, false);
 		this.setState({
             confirmSubNoticeShow: true,
             confirmSubTitle: ''
@@ -194,12 +196,16 @@ class Mnemonic extends Component {
 						<div className={style.container} style={pageContainerStyle}>
                             <div className={style.top}>
                                 <NoticePanel
-                                    mainTitle={'备份助记词'}
+                                    mainTitle={'Backup Mnemonic'}
                                     content={[
-                                        '助记词用于恢复钱包或者重置钱包密码，',
-                                        '仔细抄写下助记词并放在安全的地方！',
-                                        '请勿截图!',
-                                        '如果有他人获取你的助记词，他将直接获取你的资产!'
+                                        // '助记词用于恢复钱包或者重置钱包密码，',
+                                        // '仔细抄写下助记词并放在安全的地方！',
+                                        // '请勿截图!',
+                                        // '如果有他人获取你的助记词，他将直接获取你的资产!'
+                                        'Mnemonic is used to restore your wallet or reset your password',
+                                        'Please write them down carefully and keep them in a secure location',
+                                        'Please DO NOT use screen capture!',
+										'If anyone obtains your Mnemonic, they WILL obtain your digital assets!',
                                     ]}
                                 ></NoticePanel>
                                 <div className={style.privateContainer}>
@@ -209,7 +215,7 @@ class Mnemonic extends Component {
 
                             <div className={style.bottom}>
                                 <AelfButton
-                                    text='下一步'
+                                    text='Next'
                                     onClick={() => this.toggleConfirm()}
                                 ></AelfButton>
                             </div>
@@ -227,11 +233,12 @@ class Mnemonic extends Component {
                         <div className={style.container} style={pageContainerStyle}>
 							<div className={style.top}>
                                 <NoticePanel
-                                    mainTitle={'确认助记词'}
+                                    mainTitle={'Confirm Mnemonic'}
                                     subTitle={this.state.confirmSubTitle ? [this.state.confirmSubTitle] : ''}
                                     subNoticeShow={this.state.confirmSubNoticeShow}
                                     subNotice={
-                                    	'顺序不对，请校对！'
+                                    	// '顺序不对，请校对！'
+										'Mnemonic is not in the right sequence, please rearrange!'
 									}
                                     iconHidden={true}
                                 ></NoticePanel>
@@ -245,7 +252,7 @@ class Mnemonic extends Component {
 
                             <div className={style.bottom}>
                                 <AelfButton
-                                    text='确认'
+                                    text='Submit'
                                     onClick={() => this.confirm()}
                                 ></AelfButton>
                             </div>

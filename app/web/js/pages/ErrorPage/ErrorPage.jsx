@@ -22,7 +22,7 @@ class ErrorPage extends Component {
                         margin: '0 24px 50px 24px'
                     }}
                     onClick={() => hashHistory.push('/assets')}
-                >返回首页</AelfButton>
+                >Back Home</AelfButton>
 			</div>
 		);
 	}

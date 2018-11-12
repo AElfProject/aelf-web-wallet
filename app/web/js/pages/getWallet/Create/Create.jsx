@@ -153,7 +153,7 @@ class Create extends Component {
                                 color: '#26B7FF'
                             }}
                             onClick={() => this.toggleAgreement()}
-                        >《Service and privacy clause》</span>
+                        >《Service and Privacy Policy》</span>
                         </Flex.Item>
                         <Flex.Item>
                             <div onClick={() => this.setAgreement()}>

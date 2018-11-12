@@ -95,7 +95,8 @@ class Backup extends Component {
     componentDidUpdate() {
         if (this.state.mnemonicDisplay && !this.state.mnemonic) {
             this.state.mnemonicDisplay = false;
-            Toast.fail('该钱包是由私钥导入，无助记词', 2, () => {}, false);
+            // Toast.fail('该钱包是由私钥导入，无助记词', 2, () => {}, false);
+            Toast.fail('There is no Mnemonic because the wallet import by Private Key.', 2, () => {}, false);
         }
     }
   
@@ -104,7 +105,7 @@ class Backup extends Component {
         let mnemonicHtml = '';
         if (this.state.mnemonic) {
             mnemonicHtml =  <Mnemonic
-                                navTitle="备份助记词"
+                                navTitle="Mnemonic"
                                 mnemonic={this.state.mnemonic}
                                 display={this.state.mnemonicDisplay}
                                 onLeftClick={() => this.toggleMnemonic()}>
@@ -124,16 +125,20 @@ class Backup extends Component {
                 <div className={style.container} style={containerStyle}>
                     <div className={style.textContainer}>
                         <NoticePanel
-                            mainTitle={'备份钱包'}
+                            mainTitle={'Backup Wallet'}
                             subTitle={[
-                                '去中心化的aelf钱包，支持一套助记词',
-                                '管理您的钱包地址'
+                                'AElf Wallet',
+                                'Manage your wallet addresses'
                             ]}
                             content={[
-                                '请在安全的环境下备份助记词！',
-                                '没有妥善备份就无法保障资产安全；',
-                                '删除程序或钱包后，',
-                                '您需要通过备份的助记词来会恢复钱包！'
+                                // '请在安全的环境下备份助记词！',
+                                // '没有妥善备份就无法保障资产安全；',
+                                // '删除程序或钱包后，',
+                                // '您需要通过备份的助记词来会恢复钱包！'
+                                'Please backup your Mnemonic in a secure environment!',
+                                'No secure Mnemonic backup means no secure wallet.',
+                                'In the case of wallet or App deletion,',
+                                'you will need your Mnemonic to recover your wallet.'
                             ]}
                         ></NoticePanel>
                     </div>
@@ -141,13 +146,13 @@ class Backup extends Component {
                     <div className={style.bottom}>
 
                         <AelfButton
-                            text='备份助记词'
+                            text='Mnemonic'
                             onClick={(e) => prompt(
-                                '密码',
-                                '请确保环境安全下备份助记词',
+                                'Password',
+                                'Please make sure you are under safe enviroment.',
                                 [
-                                    { text: '取消' },
-                                    { text: '提交', onPress: password => {
+                                    { text: 'Cancel' },
+                                    { text: 'Submit', onPress: password => {
                                             let boolean = this.getPrivateKeyAndMnemonic(password);
                                             boolean && this.toggleMnemonic();
                                         }
@@ -160,18 +165,18 @@ class Backup extends Component {
                         <div className='aelf-blank12'></div>
 
                         <AelfButton
-                            text='备份私钥'
+                            text='Private Key'
                             onClick={(e) => {
                                 // be nullified after the event callback has been invoked,
                                 // if dont e.persist(), we can't get e.preventDefault in this.showModal
                                 // https://reactjs.org/docs/events.html#event-pooling
                                 e.persist();
                                 prompt(
-                                    '密码',
-                                    '请确保环境安全下备份私钥',
+                                    'Password',
+                                    'Please make sure you are under safe enviroment.',
                                     [
-                                        { text: '取消' },
-                                        { text: '提交', onPress: password => {
+                                        { text: 'Cancel' },
+                                        { text: 'Submit', onPress: password => {
                                                 let boolean = this.getPrivateKeyAndMnemonic(password);
                                                 boolean && this.showModal(e, 'privateKeyModal');
                                             }
@@ -248,7 +253,7 @@ class Backup extends Component {
                 >
                     <div>
                         <div className={style.pannelTitle}>
-                            复制私钥
+                            Copy Private Key
                         </div>
                         <div className={style.copyArea}>
                             <div style={{ width: '100%' }}>
@@ -268,13 +273,13 @@ class Backup extends Component {
                                 btn.click();
                             }}
                         >
-                            复制
+                            Copy
                         </div>
                         <div
                             className={style.pannelBtnPurple + ' ' + style.pannerlBtnGrey}
                             onClick={() => this.onClose('privateKeyModal')}
                         >
-                            关闭
+                            Close
                         </div>
                         <button id="clipboard-backup" data-clipboard-target="#privateKeyBackUp" style={{display: 'none'}}>copy</button>
                     </div>

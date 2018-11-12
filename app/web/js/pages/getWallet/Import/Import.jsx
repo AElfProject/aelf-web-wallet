@@ -19,8 +19,10 @@ import aelf from 'aelf-sdk'
 
 
 const tabs = [
-  { title: '助记词' },
-  { title: '私钥' }
+  // { title: '助记词' },
+  { title: 'mnemonic' },
+  // { title: '私钥' }
+  { title: 'private' }
 ];
 // React component
 class Import extends Component {
@@ -35,7 +37,7 @@ class Import extends Component {
             textNClass: style.textareaContainer + ' ' + style.textSelected,
             textPClass: style.textareaContainer
         };
-        this.failMessage = '请填入助记词或者私钥';
+        this.failMessage = 'Please input your privateKey or mnemonic'; // 请填入助记词或者私钥
     }
 
     createAndGO() {
@@ -72,7 +74,7 @@ class Import extends Component {
         }
 
         if (!privateKeyWallet && !mnemonicWallet) {
-            Toast.fail('导入失败');
+            Toast.fail('Import Failed');
             return;
         }
 
@@ -81,7 +83,7 @@ class Import extends Component {
         let result = insertWalletInfo(walletInfo, password);
 
         if (result) {
-            Toast.info('导入成功，跳转到首页中', 3, () => {
+            Toast.info('Import Success，turn to Home Page.', 3, () => {
                 hashHistory.push('/assets');
             });
         } else {
@@ -124,7 +126,7 @@ class Import extends Component {
             textPClass: style.textareaContainer,
             privateKey: ''
         });
-        this.failMessage = '请填入助记词';
+        this.failMessage = 'Please input Mnemonic'; // 请填入助记词';
     }
 
     tabClickP () {
@@ -135,7 +137,7 @@ class Import extends Component {
             textNClass: style.textareaContainer,
             mnemonic: ''
         });
-        this.failMessage = '请填入私钥';
+        this.failMessage = 'Please input Private Key'; // '请填入私钥';
     }
 
     setAgreement() {
@@ -149,7 +151,7 @@ class Import extends Component {
     }
   
     render() {
-        let createButtonText = '开始导入';
+        let createButtonText = 'Submit';
         let createButton =
             <AelfButton
                 text={createButtonText}
@@ -184,7 +186,7 @@ class Import extends Component {
                                 className={this.state.tabNClass}
                                 onClick={() => this.tabClickN()}
                             >
-                                <div>助记词</div>
+                                <div>Mnemonic</div>
                                 <div className={style.tabSelectedLine}></div>
                             </div>
 
@@ -192,7 +194,7 @@ class Import extends Component {
                                 className={this.state.tabPClass}
                                 onClick={() => this.tabClickP()}
                             >
-                                <div>私钥</div>
+                                <div>Private Key</div>
                                 <div className={style.tabSelectedLine}></div>
                             </div>
                         </div>
@@ -201,7 +203,7 @@ class Import extends Component {
                                 <textarea name="" id="" rows="6"
                                           value={this.state.mnemonic}
                                           onChange={mnemonic => this.inputMnemonic(mnemonic)}
-                                          placeholder="此处填写助记词, 用空格分隔"
+                                          // placeholder="此处填写助记词, 用空格分隔"
                                           className={style.textarea}>
                                 </textarea>
                             </div>
@@ -210,14 +212,14 @@ class Import extends Component {
                                 <textarea name="" id="" rows="6"
                                           value={this.state.privateKey}
                                           onChange={privateKey => this.inputPrivateKey(privateKey)}
-                                          placeholder="此处填写私钥"
+                                          // placeholder="此处填写私钥"
                                           className={style.textarea}>
                                 </textarea>
                             </div>
                         </div>
 
                     </div>
-                    <p className={style.title}>助记词和私钥都可以，不过导入私钥将不会生成助记词</p>
+                    <p className={style.title}>In this wallet, there is no Mnemonic when import Private Key. But we can get Private Key when we import Mnemonic.</p>
 
                     <WalletName
                         setWalletName={walletName => this.setWalletName(walletName)}
@@ -232,13 +234,13 @@ class Import extends Component {
                     <Flex style={{ padding: '0 24px 0 24px' }}>
 
                         <Flex.Item style={{ padding: '15px 0', color: '#FFF', flex: 'none', opacity: 0.5 }}>
-                            我已仔细阅读并同意<span
+                            Agreee<span
                             className="aelf-blue"
                             style={{
                                 color: '#26B7FF'
                             }}
                             onClick={() => this.toggleAgreement()}
-                        >《服务及隐私条款》</span>
+                        >《Service and Privacy Policy》</span>
                         </Flex.Item>
                         <Flex.Item>
                             <div onClick={() => this.setAgreement()}>

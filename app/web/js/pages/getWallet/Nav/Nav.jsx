@@ -21,8 +21,8 @@ class GetWalletsNav extends Component {
 		let isBackup = pathname.match(/\/get-wallet\/backup/);
 		let isGuide = pathname.match(/\/get-wallet\/guide/);
 		// console.log('hashHistory: ', hashHistory);
-		let title = isCreate ? '' : '导入钱包';
-		title = isBackup ? '备份钱包' : title;
+		let title = isCreate ? '' : 'Import';
+		title = isBackup ? 'Backup' : title;
         title = isGuide ? '' : title;
 
         let leftHtml =
