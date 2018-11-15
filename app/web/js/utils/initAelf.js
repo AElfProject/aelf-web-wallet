@@ -7,6 +7,10 @@ import Aelf from 'aelf-sdk'
 import { hashHistory } from 'react-router'
 import { Toast } from 'antd-mobile'
 
+import {
+	serviceProvider
+} from '../utils/utils'
+
 let hasAlert = false;
 // 如果传入了password，则使用私人账户来操作。
 // 如果传入了password, 需要在组件内方法执行initAelf
@@ -34,7 +38,7 @@ function init (options = {}) {
 		wallet = Aelf.wallet.getWalletByPrivateKey(window.defaultConfig.commonPrivateKey);
 	}
 
-	let aelf = new Aelf(new Aelf.providers.HttpProvider(window.defaultConfig.httpProvider));
+	let aelf = new Aelf(new Aelf.providers.HttpProvider(serviceProvider.getProvider()));
 
 	try {
 		aelf.chain.connectChain();

@@ -51,11 +51,11 @@ class personalCenterHome extends Component {
                     </Item>
                 </List>
                 <List className={'aelf-list'}>
-                    <Item onClick={() => hashHistory.push('/personalcenter/home')}>
+                    <Item onClick={() => hashHistory.push('/personalcenter/systemsetting')}>
                         <ListContent
                             type="small"
                             icon="setting16"
-                            text="System Setting【TODO】"
+                            text="System Setting"
                         ></ListContent>
                     </Item>
                 </List>

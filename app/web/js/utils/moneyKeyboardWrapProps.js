@@ -4,9 +4,9 @@
 const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
 let moneyKeyboardWrapProps;
 if (isIPhone) {
-  moneyKeyboardWrapProps = {
-    onTouchStart: e => e.preventDefault(),
-  };
+    moneyKeyboardWrapProps = {
+        onTouchStart: e => e.preventDefault(),
+    };
 }
 
 export default moneyKeyboardWrapProps;

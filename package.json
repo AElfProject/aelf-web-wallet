@@ -4,7 +4,7 @@
   "description": "aelf-web-wallet",
   "private": true,
   "dependencies": {
-    "aelf-sdk": "^1.0.9",
+    "aelf-sdk": "^1.0.10",
     "antd-mobile": "^2.2.2",
     "clipboard": "^2.0.1",
     "egg": "^2.2.1",

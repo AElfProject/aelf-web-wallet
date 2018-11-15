@@ -25,6 +25,7 @@ import AssetTransactionDetail from './pages/Asset/TransactionDetail/TransactionD
 
 import personalCenterHome from './pages/personalCenter/Home/Home'
 import personalCenterAbout from './pages/personalCenter/About/About'
+
 import PasswordChange from './pages/personalCenter/WalletList/PasswordChange/PasswordChange'
 import WalletList from './pages/personalCenter/WalletList/WalletList'
 import WalletManage from './pages/personalCenter/WalletList/WalletManage/WalletManage'
@@ -40,6 +41,11 @@ import WhatIsKeyStore from './pages/personalCenter/HelpCenter/pages/WhatIsKeySto
 import WhatIsPrivatePublicKey from './pages/personalCenter/HelpCenter/pages/WhatIsPrivatePublicKey'
 import WhatIsAElfWallet from './pages/personalCenter/HelpCenter/pages/WhatIsAElfWallet'
 import HowToChangePassword from './pages/personalCenter/HelpCenter/pages/HowToChangePassword'
+
+// 系统设置
+import personalCenterSystemSetting from './pages/personalCenter/systemSetting/SystemSetting'
+import systemSettingNetwork from './pages/personalCenter/systemSetting/pages/Network'
+
 
 import QRCode from './pages/QRCode/QRCode'
 import ErrorPage from './pages/ErrorPage/ErrorPage'
@@ -67,50 +73,55 @@ setTimeout(() => {
     welcomePage.style.display = 'none';
 }, 600);
 
-ReactDOM.render(
-    <LocaleProvider locale={enUS}>
-        {/*<Provider store={store}>*/}
-        <Router history={hashHistory}>
-            <Route path="/" component={HomePage}>
-                <Route path="/assets" component={Assets}></Route>
-                {/*<Route path="/qrcode" component={QRCode}></Route>*/}
-                <Route path="/personalcenter/home" component={personalCenterHome}></Route>
-                <Route path="/personalcenter/walletlist" component={WalletList}></Route>
-            </Route>
+setTimeout(() => {
+    ReactDOM.render(
+        <LocaleProvider locale={enUS}>
+            {/*<Provider store={store}>*/}
+            <Router history={hashHistory}>
+                <Route path="/" component={HomePage}>
+                    <Route path="/assets" component={Assets}></Route>
+                    {/*<Route path="/qrcode" component={QRCode}></Route>*/}
+                    <Route path="/personalcenter/home" component={personalCenterHome}></Route>
+                    <Route path="/personalcenter/walletlist" component={WalletList}></Route>
+                </Route>
 
-            <Route path="/qrcode" component={QRCode}></Route>
+                <Route path="/qrcode" component={QRCode}></Route>
 
-            <Route path="/transactiondetail" component={AssetTransactionDetail}></Route>
-            <Route path="/personalcenter/walletmanage" component={WalletManage}></Route>
+                <Route path="/transactiondetail" component={AssetTransactionDetail}></Route>
+                <Route path="/personalcenter/walletmanage" component={WalletManage}></Route>
 
-            <Route path="/assethome" component={AssetHome}></Route>
-            <Route path="/assettransfer" component={AssetTransfer}></Route>
-            <Route path="/personalcenter/passwordchange" component={PasswordChange}></Route>
+                <Route path="/assethome" component={AssetHome}></Route>
+                <Route path="/assettransfer" component={AssetTransfer}></Route>
+                <Route path="/personalcenter/passwordchange" component={PasswordChange}></Route>
 
-            <Route path="/personalcenter/about" component={personalCenterAbout}></Route>
-            <Route path="/personalcenter/about/privacy" component={Privacy}></Route>
-            <Route path="/personalcenter/about/service" component={Service}></Route>
+                <Route path="/personalcenter/about" component={personalCenterAbout}></Route>
+                <Route path="/personalcenter/about/privacy" component={Privacy}></Route>
+                <Route path="/personalcenter/about/service" component={Service}></Route>
 
-            <Route path="/personalcenter/help" component={personalCenterHelpCenter}></Route>
-            <Route path="/personalcenter/whatismnemonic" component={WhatIsMnemonic}></Route>
-            <Route path="/personalcenter/whatiskeystore" component={WhatIsKeyStore}></Route>
-            <Route path="/personalcenter/whatisprivatepublickey" component={WhatIsPrivatePublicKey}></Route>
-            <Route path="/personalcenter/whatisaelfwallet" component={WhatIsAElfWallet}></Route>
-            <Route path="/personalcenter/howtochangepassword" component={HowToChangePassword}></Route>
+                <Route path="/personalcenter/help" component={personalCenterHelpCenter}></Route>
+                <Route path="/personalcenter/whatismnemonic" component={WhatIsMnemonic}></Route>
+                <Route path="/personalcenter/whatiskeystore" component={WhatIsKeyStore}></Route>
+                <Route path="/personalcenter/whatisprivatepublickey" component={WhatIsPrivatePublicKey}></Route>
+                <Route path="/personalcenter/whatisaelfwallet" component={WhatIsAElfWallet}></Route>
+                <Route path="/personalcenter/howtochangepassword" component={HowToChangePassword}></Route>
 
-            <Route path="/get-wallet/backup" component={getWalletBackup}/>
+                <Route path="/personalcenter/systemsetting" component={personalCenterSystemSetting}></Route>
+                <Route path="/personalcenter/systemsetting/network" component={systemSettingNetwork}></Route>
 
-            <Route path="/agreement" component={getWalletAgreement}/>
-            <Route path="/get-wallet/nav" component={getWalletNav}>
-                <Route path="/get-wallet/guide" component={getWalletGuide}/>
-                <Route path="/get-wallet/create" component={getWalletCreate}/>
-                <Route path="/get-wallet/import" component={getWalletImport}/>
-            </Route>
+                <Route path="/get-wallet/backup" component={getWalletBackup}/>
 
-            <Route path="/error" component={ErrorPage}></Route>
+                <Route path="/agreement" component={getWalletAgreement}/>
+                <Route path="/get-wallet/nav" component={getWalletNav}>
+                    <Route path="/get-wallet/guide" component={getWalletGuide}/>
+                    <Route path="/get-wallet/create" component={getWalletCreate}/>
+                    <Route path="/get-wallet/import" component={getWalletImport}/>
+                </Route>
 
-        </Router>
-        {/*</Provider>*/}
-    </LocaleProvider>,
-    document.getElementById('root')
-);
+                <Route path="/error" component={ErrorPage}></Route>
+
+            </Router>
+            {/*</Provider>*/}
+        </LocaleProvider>,
+        document.getElementById('root')
+    );
+}, 0);

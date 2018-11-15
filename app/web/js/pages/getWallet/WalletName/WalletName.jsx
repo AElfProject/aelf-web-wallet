@@ -6,7 +6,9 @@
 import React, { Component } from 'react'
 import { WhiteSpace, List, InputItem } from 'antd-mobile'
 import style from './WalletName.scss'
-import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
+import {
+    moneyKeyboardWrapProps
+} from '../../../utils/utils'
 
 // 目前重写antd-mobile inputItem的样式在Password.css里面
 
