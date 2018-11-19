@@ -19,13 +19,11 @@ class Svg extends Component {
         let icon = this.props.icon;
         let svg = svgslist[icon];
         return (
-            <div style={this.props.containerStyle}>
-                <div
-                    style={{height: 18, width: 18}}
-                    dangerouslySetInnerHTML={{__html: svg}}
-                    {...this.props}
-                ></div>
-            </div>
+            <div
+                style={{height: 18, width: 18}}
+                dangerouslySetInnerHTML={{__html: svg}}
+                {...this.props}
+            ></div>
         );
     }
 }

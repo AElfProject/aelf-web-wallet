@@ -128,7 +128,8 @@ class Home extends Component {
                             >
                                 <div className={style.icon}>
                                     <Svg icon='out20'
-                                         style={{ display: 'inline-block', height: 20, width: 20}}></Svg>
+                                         style={{ display: 'inline-block', height: 20, width: 20}}
+                                    ></Svg>
                                 </div>
                                 <div>Send</div>
                             </div>
