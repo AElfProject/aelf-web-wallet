@@ -118,7 +118,7 @@ setTimeout(() => {
                 </Route>
 
                 <Route path="/error" component={ErrorPage}></Route>
-
+                
             </Router>
             {/*</Provider>*/}
         </LocaleProvider>,
