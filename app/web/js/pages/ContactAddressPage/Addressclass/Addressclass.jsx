@@ -206,7 +206,7 @@ class Addressclass extends React.Component{
     
     render(){
         return(
-            <div>
+            <div className = "addresslist">
                 <Addresslist list = {this.state.newcontent} father = {this} />
             </div>
         )

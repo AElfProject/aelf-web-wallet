@@ -6,18 +6,18 @@
     padding-left: 16px;
     background-color:rgba(20,17,26,.3);
 }
-.am-swipe, .am-swipe-content{
+.addresslist .am-swipe, .am-swipe-content{
     height: 66px;
     border-bottom: 1px solid rgba(255,255,255,.1);
     background:#420b5E;
     color: #FFFFFF;
 }
 
-.am-swipe{
+.addresslist .am-swipe{
     padding-left:16px;
 }
 
-.am-swipe .am-swipe-content, .am-swipe .am-swipe-actions{
+.addresslist .am-swipe .am-swipe-content, .am-swipe .am-swipe-actions{
     color: #FFFFFF;
 }
 
