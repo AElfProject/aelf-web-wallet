@@ -50,6 +50,11 @@ import systemSettingNetwork from './pages/personalCenter/systemSetting/pages/Net
 import QRCode from './pages/QRCode/QRCode'
 import ErrorPage from './pages/ErrorPage/ErrorPage'
 
+// 联系人
+import ContactAddressPage from './pages/ContactAddressPage/ContactAddressPage'
+import NewContactAddressPage from './pages/ContactAddressPage/NewContactAddressPage/NewContactAddressPage'
+
+
 // import style from '../style/index.scss'
 require('./../style/ant-mobile-aelf.css');
 
@@ -119,7 +124,9 @@ setTimeout(() => {
 
                 <Route path="/error" component={ErrorPage}></Route>
                 
-            </Router>
+                <Route path="/contactaddress" component={ContactAddressPage}></Route>
+                <Route path="/contactaddress/newcontactaddress" component = {NewContactAddressPage}></Route>
+                </Router>
             {/*</Provider>*/}
         </LocaleProvider>,
         document.getElementById('root')

@@ -4,7 +4,6 @@ import { hashHistory } from 'react-router'
 import AelfButton from '../../components/Button/Button'
 
 
-
 import style from './ErrorPage.scss'
 
 // TODO: 错误页通用化

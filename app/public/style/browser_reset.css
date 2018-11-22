@@ -13,9 +13,6 @@ body {
   right: 0;
   top: 0;
   bottom: 0;
-
-  max-width: 520px;
-  max-width: 520px;
   margin: auto !important;
 }
 
@@ -109,6 +106,8 @@ body {
   /*min-height: 100%;*/
   height: 100%;
   position: fixed;
+  overflow-x:hidden;
+  overflow-y:scroll;
   left: 0;
   top: 0;
 }

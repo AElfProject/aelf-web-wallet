@@ -1,0 +1,27 @@
+.content{
+    margin:80px 24px 0 24px;
+}
+
+.content .new-con-title{
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 61px;
+}
+
+.content .new-con-input-title{
+    font-size: 12px;
+    color: #d8d8d8;
+    opacity:.3;
+}
+
+/* 客制化antd */
+.am-list-body{
+   background: transparent; 
+}
+.am-list .am-list-body .am-list-item{
+    margin-bottom:39.75px;
+    background:transparent;
+    border-bottom: 1px dashed #D8D8D8;
+    opacity: .3;
+}
+
