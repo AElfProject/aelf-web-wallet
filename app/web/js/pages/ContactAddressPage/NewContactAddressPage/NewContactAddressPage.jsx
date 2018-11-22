@@ -38,7 +38,7 @@ class Newcontactaddress extends React.Component{
     }
     render(){
         return(
-            <div>
+            <div className = "newcontact" >
                 <NavNormal rightContent = {<div onClick={this.handleClick.bind(this)}>Commit</div>} /> 
                 <div className = "content" >
                     <div className = "new-con-title" >New contacts</div>
@@ -48,7 +48,7 @@ class Newcontactaddress extends React.Component{
                         	<InputItem
                         		clear
                         		placeholder=""
-                                ref = "name"
+                            ref = "name"
                         	></InputItem>
                         </List>
                         <div className = 'new-con-input-title'>Payee wallet address</div>

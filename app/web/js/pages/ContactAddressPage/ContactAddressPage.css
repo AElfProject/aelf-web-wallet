@@ -11,4 +11,5 @@
 .aelf-normal-navbar.am-navbar.am-navbar-dark{
     z-index: 999;
     background: #420b5E;
+    max-width: 100%;
 }

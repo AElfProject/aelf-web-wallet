@@ -14,14 +14,17 @@
     opacity:.3;
 }
 
-/* 客制化antd */
-.am-list-body{
+
+.newcontact .am-list-body{
    background: transparent; 
 }
-.am-list .am-list-body .am-list-item{
+
+.newcontact .am-list-item{
     margin-bottom:39.75px;
     background:transparent;
     border-bottom: 1px dashed #D8D8D8;
     opacity: .3;
 }
+
+
 
