@@ -87,7 +87,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow-wrap: break-word;
+    //overflow-wrap: break-word;
+    word-break: break-all;
     text-align: left;
     color: #14111A;
     font-size: 12px;
