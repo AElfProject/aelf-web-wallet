@@ -80,6 +80,7 @@ class Assets extends Component {
 
         this.renderRow = (rowData, sectionID, rowID) => {
             let item = this.rData[rowID];
+            console.log(item);
             let dir = `/assethome?contract_address=${item.contract_address}`;
             return (
                 <div key={rowID}

@@ -31,10 +31,10 @@ class personalCenterHome extends Component {
 	            </List>
 
                 <List className={'aelf-list'}>
-                    <Item onClick={() => hashHistory.push('/personalcenter/home')}>
+                    <Item onClick={() => hashHistory.push('/transactions')}>
                         <ListContent
                             icon="tx_history16"
-                            text="Transaction List【TODO】"
+                            text="Transaction List"
                         ></ListContent>
                     </Item>
                 </List>
@@ -42,11 +42,11 @@ class personalCenterHome extends Component {
                 <div className={style.blank}></div>
 
                 <List className={'aelf-list'}>
-                    <Item onClick={() => hashHistory.push('/personalcenter/home')}>
+                    <Item onClick={() => hashHistory.push('/contactaddress')}>
                         <ListContent
                             type="small"
                             icon="contact16"
-                            text="Address Book【TODO】"
+                            text="Address Book"
                         ></ListContent>
                     </Item>
                 </List>

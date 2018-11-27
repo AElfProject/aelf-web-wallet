@@ -203,10 +203,10 @@ class NavWithDrawer extends Component {
                         onLeftClick={showLeftClick ? () => this.onLeftClick() : () => {}}
                         rightContent={[
                             <Svg key="1"
-								 icon={'menu22'}
-								 onClick={() => this.onOpenChange()}
-								 style={{width: 22, height: 22}}
-							></Svg>
+                               icon={'menu22'}
+                               onClick={() => this.onOpenChange()}
+                               style={{width: 22, height: 22}}
+                            ></Svg>
                         ]}
                 >{walletInUseName}</NavBar>
                 <Drawer

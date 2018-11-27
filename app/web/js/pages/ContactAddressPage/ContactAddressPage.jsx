@@ -15,11 +15,16 @@ require('./ContactAddressPage.css');
 class Contactaddress extends React.Component{
     constructor(props){
         super(props);
+        
         if(localStorage.content == undefined){
             let Content = {
             	"content":[]
             }
             localStorage.setItem("content",JSON.stringify(Content));
+        }
+        
+        this.state = {
+            height:0
         }
     }
     
@@ -27,17 +32,26 @@ class Contactaddress extends React.Component{
         historyPush('/contactaddress/newcontactaddress',false);
     }
     
+    componentDidMount () {
+        let screenH = window.innerHeight - 45;
+        this.setState({
+            height:screenH
+        })
+    }
+    
     render(){
         return(
-            <div>
+            <div className = "navbar">
                 <NavNormal  navTitle = "Contact" rightContent = { 
                     <Svg icon={"add_purple20"}  
                          style={{ display: 'inline-block', height: 22, width: 22}}
                          onClick = {this.handleClick.bind(this)}
                     >
                     </Svg> 
-                } />
-                <div className = "List">
+                } 
+                ref = "Nav"
+                />
+                <div className = "List" style={{height:this.state.height}} >
                     <Addressclass />
                 </div>
             </div>

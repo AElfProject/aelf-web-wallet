@@ -54,6 +54,9 @@ import ErrorPage from './pages/ErrorPage/ErrorPage'
 import ContactAddressPage from './pages/ContactAddressPage/ContactAddressPage'
 import NewContactAddressPage from './pages/ContactAddressPage/NewContactAddressPage/NewContactAddressPage'
 
+// 交易列表
+import Transactions from './pages/Transactions/Transactions'
+
 
 // import style from '../style/index.scss'
 require('./../style/ant-mobile-aelf.css');
@@ -126,7 +129,10 @@ setTimeout(() => {
                 
                 <Route path="/contactaddress" component={ContactAddressPage}></Route>
                 <Route path="/contactaddress/newcontactaddress" component = {NewContactAddressPage}></Route>
-                </Router>
+                
+                <Route path="/transactions" component = {Transactions} ></Route>
+                
+            </Router>
             {/*</Provider>*/}
         </LocaleProvider>,
         document.getElementById('root')

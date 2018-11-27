@@ -1,0 +1,85 @@
+.txList {
+	//height: 32px;
+	//border-bottom: 1px solid #eee;
+    overflow: hidden;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 24px 20px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1)
+	//height: 88px;
+}
+.txList:active {
+	background: rgba(255, 255, 255, 0.2);
+}
+
+.address {
+	font-size: 9px;
+	color: rgba(255, 255, 255, 0.7)
+	//float: left;
+}
+
+.balance {
+	font-size: 16px;
+}
+
+.quantity {
+	//float: right;
+}
+
+.transactionContainer {
+	//background: #FFF;
+	height: 100%;
+	border-top:1px solid rgba(255, 255, 255, 0.1);
+}
+
+.transactionContainer .am-list-body {
+	border: none;
+	margin: 0;
+	background: none;
+}
+
+.leftContainer {
+	display: flex;
+	align-items: center;
+	font-size: 10px;
+}
+
+.icon {
+	//background: url("../../../../assets/svg_icon/in20.svg") no-repeat;
+	background: url("../../../../assets/svg_icon/out20.svg") no-repeat;
+	width: 20px;
+	height: 20px;
+	margin: 0 8px 0 0;
+}
+
+.iconIn {
+	background: url("../../../../assets/svg_icon/in20.svg") no-repeat;
+}
+
+.rightContainer {
+	text-align: right;
+}
+
+.balance {
+	font-size: 16px;
+}
+.tenderValuation {
+	font-size: 10px;
+}
+
+.time{
+	text-align: left;
+	margin-top: 10px;
+	color: rgba(255, 255, 255, 0.7)
+}
+.tenderValuation{
+	margin-top: 10px;
+	color: rgba(255, 255, 255, 0.7)
+}
+
+.defeated{
+	text-align: left;
+	margin-top: 8px;
+	color: #ff0080
+}
