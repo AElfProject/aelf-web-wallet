@@ -11,21 +11,21 @@ cat << EOT
 
 EOT
 
-#git checkout package.json
-#git checkout package-lock.json
+git checkout package.json
+git checkout package-lock.json
 
-#git pull origin master
+git pull origin master
 
 if [ $2 == 'reinstall' ]
 then
     echo 'rm -rf node_modules';
-    #rm -rf node_modules;
+    rm -rf node_modules;
     echo 'npm install';
-    #npm install;
+    npm install;
 fi
 
-#npm stop
+npm stop
 
-#npm start
+npm start
 
 
