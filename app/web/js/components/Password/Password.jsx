@@ -8,6 +8,7 @@ import { WhiteSpace, List, InputItem } from 'antd-mobile'
 import style from './Password.scss'
 import passwordCheck from '../../utils/passwordCheck'
 import moneyKeyboardWrapProps from '../../utils/moneyKeyboardWrapProps'
+import { FormattedMessage } from 'react-intl'
 
 // 用于覆盖antd的样式
 require('./Password.css');
@@ -147,12 +148,22 @@ class Password extends Component {
             <div className="aelf-input-container aelf-dash">
                 <List>
                     <div className="aelf-input-title">
-                        <div>Password</div>
+                        <div>
+                            <FormattedMessage 
+                                id = 'aelf.Password'
+                                defaultMessage = 'Password'
+                            />
+                        </div>
                         <div className={style.passwordLevel}>
                             <div className={`${style.level1}  ${style.list}`} style={levelInfo.level1}></div>
                             <div className={`${style.level2}  ${style.list}`} style={levelInfo.level2}></div>
                             <div className={`${style.level3}  ${style.list}`} style={levelInfo.level3}></div>
-                            <div className={style.levelText}>{levelInfo.text}</div>
+                            <div className={style.levelText}>
+                                <FormattedMessage 
+                                    id = {"aelf." + levelInfo.text }
+                                    defaultMessage = {levelInfo.text}
+                                />
+                            </div>
                         </div>
                     </div>
                     <InputItem
@@ -166,7 +177,12 @@ class Password extends Component {
 
                 <List>
                     <div className="aelf-input-title">
-                        <div>Confirm Password</div>
+                        <div>
+                            <FormattedMessage 
+                                id = 'aelf.Confirm Password'
+                                defaultMessage = 'Confirm Password'
+                            />
+                        </div>
                         {passwordReplayErrorText}
                     </div>
                     <InputItem

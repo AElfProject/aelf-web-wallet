@@ -15,6 +15,8 @@ import Svg from '../../components/Svg/Svg'
 import { historyGoBack } from '../../utils/historyChange'
 import getPageContainerStyle from '../../utils/getPageContainerStyle'
 
+import { FormattedMessage } from 'react-intl'
+
 import style from './NavWithDrawer.scss'
 require('./NavWithDrawer.css'); // 样式调整在HomePage/HomePage.css中
 
@@ -150,7 +152,12 @@ class NavWithDrawer extends Component {
                     {/*<div>扫一扫</div>*/}
                     <div className={style.addWalletIcon}></div>
                     <div
-                    >Create</div>
+                    >
+                    <FormattedMessage
+                        id = 'aelf.Create'
+                        defaultMessage = 'Create'
+                    />
+                    </div>
                 </div>
             </div>
 

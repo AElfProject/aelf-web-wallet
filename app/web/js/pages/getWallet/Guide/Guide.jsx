@@ -7,6 +7,8 @@ import Svg from '../../../components/Svg/Svg'
 
 import getPageContainerStyle from '../../../utils/getPageContainerStyle'
 
+import { FormattedMessage } from 'react-intl'
+
 // React component
 class Guide extends Component {
     render() {
@@ -24,10 +26,16 @@ class Guide extends Component {
                 </div>
 
                 <div className={style.bottom}>
-                    <AelfButton text={'Create Wallet'} aelficon='add_purple20' onClick={() => hashHistory.push('/get-wallet/create')}></AelfButton>
+                    <AelfButton 
+                        text='CreateWallets'
+                        aelficon='add_purple20' 
+                        onClick={() => hashHistory.push('/get-wallet/create')}>
+                    </AelfButton>
                     <div className='aelf-blank12'></div>
-                    <AelfButton text={'Import Wallet'} aelficon='in_white20' onClick={() => hashHistory.push('/get-wallet/import')}
-                            style={{ border: '1px dashed #fff', backgroundColor: 'rgba(255, 255, 255, 0)', color: '#FFF' }}>
+                    <AelfButton 
+                        text='ImprotWallets'
+                        aelficon='in_white20' onClick={() => hashHistory.push('/get-wallet/import')}
+                        style={{ border: '1px dashed #fff', backgroundColor: 'rgba(255, 255, 255, 0)', color: '#FFF' }}>
                     </AelfButton>
                 </div>
             </div>

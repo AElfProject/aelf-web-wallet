@@ -9,6 +9,7 @@ import { Button } from 'antd-mobile';
 import Svg from '../Svg/Svg';
 import style from './Button.scss';
 
+import { FormattedMessage } from 'react-intl'
 /*
     demo
     <AelfButton
@@ -61,7 +62,11 @@ class AelfButton extends Component {
                         <Svg icon={this.props.aelficon}
                              style={{ display: 'inline-block', height: 20, width: 20}}></Svg>
                     </div>
-                    <div>{this.props.text || this.props.children || ''}</div>
+                    <div>
+                        <FormattedMessage 
+                            id = {'aelf.' + this.props.text || this.props.children || '' }
+                        />
+                    </div>
                 </div>
             </Button>
         );

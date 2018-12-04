@@ -16,6 +16,8 @@ import initAelf from '../../../utils/initAelf'
 import clipboard from '../../../utils/clipboard'
 import getPageContainerStyle from '../../../utils/getPageContainerStyle'
 
+import { FormattedMessage } from 'react-intl'
+
 // React component
 class TransactionDetail extends Component {
     constructor(props) {
@@ -124,17 +126,17 @@ class TransactionDetail extends Component {
         let NavHtml = pathname.match(/^\/transactiondetail/)
             ?
             <NavNormal
-                navTitle="Transaction Details"
+                navTitle={<FormattedMessage id = 'aelf.Transaction Details' />}
                 hideLeft={true}
                 rightContent={
                     <div
                         onClick={() => {
                             window.location.href = window.location.protocol + '//'+ window.location.host;
                         }}
-                    >Home</div>
+                    ><FormattedMessage id = 'aelf.Home' /></div>
                 }
             />
-            : <NavNormal navTitle="Transaction Details"/>;
+            : <NavNormal navTitle={<FormattedMessage id = 'aelf.Transaction Details' />}/>;
         return NavHtml;
     }
 
@@ -207,7 +209,8 @@ class TransactionDetail extends Component {
                                 let btn = document.getElementById('clipboard-transactionDetail');
                                 btn.click();
                             }}
-                        >Copy URL</AelfButton>
+                            text = 'Copy URL'
+                        ></AelfButton>
                     </div>
                 </div>
             </div>

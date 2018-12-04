@@ -37,7 +37,7 @@ class NavNormal extends Component {
 				<NavBar 
 					icon={this.props.hideLeft ? '' : <Icon type="left" />}
 					onLeftClick={() => this.goBack()}
-                    rightContent={this.props.rightContent}
+					rightContent={this.props.rightContent}
 					className='aelf-normal-navbar'>
 					{this.props.navTitle}
 				</NavBar>

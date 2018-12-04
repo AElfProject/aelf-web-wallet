@@ -12,6 +12,7 @@ import NavNormal from '../NavNormal/NavNormal'
 
 import style from './QRCode.scss'
 
+import { FormattedMessage } from 'react-intl'
 
 import BackupNotice from '../BackupNotice/BackupNotice'
 import clipboard from '../../utils/clipboard'
@@ -34,7 +35,12 @@ class QRCodeTemplate extends Component {
 				<BackupNotice />
 				<div className={style.qrcodePanel}>
 					<div className={style.titleContaienr}>
-						<div className={style.title}>Receive</div>
+						<div className={style.title}>
+							<FormattedMessage 
+								id = 'aelf.Receive'
+								defaultMessage = 'Receive'
+							/>
+						</div>
                         <p className={style.subTitle}>{walletAddress}</p>
 					</div>
                     {/*<p>qrcode</p>*/}

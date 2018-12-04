@@ -27,9 +27,8 @@ class ErrorPage extends Component {
                     onClick={() => hashHistory.push('/assets')}
                 >Back Home</AelfButton>
 			</div>
-            <Aelfpassword tip='钱包密码' aelficon = 'notice32' />
 		);
 	}
 }
 
-export default ErrorPage 
+export default ErrorPage

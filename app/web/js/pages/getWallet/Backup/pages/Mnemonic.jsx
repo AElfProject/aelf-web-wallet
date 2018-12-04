@@ -29,10 +29,13 @@ import backupStatusChange from '../../../BackupNotice/backupStatusChange'
 import { historyPush } from '../../../../utils/historyChange'
 import getPageContainerStyle from '../../../../utils/getPageContainerStyle'
 
+import { FormattedMessage } from 'react-intl'
+
 const selectedStyle = '#AC00E6';
 const unSelectedStyle = '#FFF';
 // const confirmSubTitle = '请按顺序点击助记词，以确认您正确备份。';
-const confirmSubTitle = 'To confirm your backup, please click on the Mnemonic in order.';
+// const confirmSubTitle = 'To confirm your backup, please click on the Mnemonic in order.';
+const confirmSubTitle = <FormattedMessage id = 'aelf.hint02' defaultMessage = 'To confirm your backup, please click on the Mnemonic in order.' />
 
 class Mnemonic extends Component {
 	constructor(props) {
@@ -196,16 +199,32 @@ class Mnemonic extends Component {
 						<div className={style.container} style={pageContainerStyle}>
                             <div className={style.top}>
                                 <NoticePanel
-                                    mainTitle={'Backup Mnemonic'}
+                                    mainTitle={
+										<FormattedMessage 
+											id = 'aelf.Backup Mnemonic'
+										/>
+									}
                                     content={[
                                         // '助记词用于恢复钱包或者重置钱包密码，',
                                         // '仔细抄写下助记词并放在安全的地方！',
                                         // '请勿截图!',
                                         // '如果有他人获取你的助记词，他将直接获取你的资产!'
-                                        'Mnemonic is used to restore your wallet or reset your password',
-                                        'Please write them down carefully and keep them in a secure location',
-                                        'Please DO NOT use screen capture!',
-										'If anyone obtains your Mnemonic, they WILL obtain your digital assets!',
+                                        // 'Mnemonic is used to restore your wallet or reset your password',
+                                        // 'Please write them down carefully and keep them in a secure location',
+                                        // 'Please DO NOT use screen capture!',
+										// 'If anyone obtains your Mnemonic, they WILL obtain your digital assets!',
+										<FormattedMessage 
+											id = 'aelf.Becareful07'
+										/>,
+										<FormattedMessage 
+											id = 'aelf.Becareful08'
+										/>,
+										<FormattedMessage 
+											id = 'aelf.Becareful09'
+										/>,
+										<FormattedMessage 
+											id = 'aelf.Becareful010'
+										/>,
                                     ]}
                                 ></NoticePanel>
                                 <div className={style.privateContainer}>
@@ -233,12 +252,20 @@ class Mnemonic extends Component {
                         <div className={style.container} style={pageContainerStyle}>
 							<div className={style.top}>
                                 <NoticePanel
-                                    mainTitle={'Confirm Mnemonic'}
+                                    mainTitle={
+										<FormattedMessage 
+											id = 'aelf.ConfirmMnemonic'
+											defaultMessage = 'Confirm Mnemonic'
+										/>
+									}
                                     subTitle={this.state.confirmSubTitle ? [this.state.confirmSubTitle] : ''}
                                     subNoticeShow={this.state.confirmSubNoticeShow}
                                     subNotice={
                                     	// '顺序不对，请校对！'
-										'Mnemonic is not in the right sequence, please rearrange!'
+										<FormattedMessage 
+											id = 'aelf.hint01'
+											defaultMessage = 'Mnemonic is not in the right sequence, please rearrange!'
+										/>
 									}
                                     iconHidden={true}
                                 ></NoticePanel>

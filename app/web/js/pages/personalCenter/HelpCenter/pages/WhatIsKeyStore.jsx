@@ -8,6 +8,8 @@ import NoticePanel from '../../../../components/NoticePanel/NoticePanel'
 
 import getPageContainerStyle from '../../../../utils/getPageContainerStyle'
 
+import { FormattedMessage } from 'react-intl'
+
 import style from './pages.scss'
 // React component
 class WhatIsKeyStore extends Component {
@@ -35,12 +37,14 @@ class WhatIsKeyStore extends Component {
                         {/*<div className={style.dangerouslySetInnerHTML} dangerouslySetInnerHTML={{__html: `{'version':3,'id':'b7467fcb-3c8b-41be-bccf-73d43a08c1b7','address':'540f18196da5a533fa36577a81de55f0a2f4e751','Crypto':{'ciphertext':'78ed11b8b6bf29b00f52b42b8542df0e4a6ac078e626af7edcf885c3b68154a4','cipherparams':{'iv':'4516579601d96695fe30ace985a9066f'},'cipher':'aes-128-ctr','kdf':'scrypt','kdfparams':{'dklen':32,'salt':'6276cfda7d40872352c801db5871e5a3368a8d0994cea39ed936760db78d1cdc','n':1024,'r':8,'p':1},'mac':'d889a5dc609c3f312a41394cc47640676d2612501a6f8c837ed55598158336db'}}`}}></div>*/}
                     {/*</div>*/}
                     <div className={style.textContainer}>
-                        <h2>What is a keystore?？</h2>
-                        <p>The Keystore file is a file format (JSON) for storing the private key. It uses user-defined password encryption to protect the wallet to a certain extent, and the degree of protection depends on the password strength of the wallet. If the password is similar to 123456, it is extremely unsafe.</p>
-                        <p>So users must pay attention to three points when backing up Keystore:</p>
-                        <p>1. use encrypted Keystore files that are not commonly used and as complex as possible.</p>
-                        <p>2. Be sure to remember the password to encrypt Keystore. Once you forget the password, you lose the right to use Keystore, and aelf can't help you retrieve the password. So please keep it safe.</p>
-                        <p>Keystore Demo:</p>
+                        <h2>
+                            <FormattedMessage id = 'aelf.HelpTitle02' />
+                        </h2>
+                        <p><FormattedMessage id = 'aelf.keystoreCon01' /></p>
+                        <p><FormattedMessage id = 'aelf.keystoreCon02' /></p>
+                        <p><FormattedMessage id = 'aelf.keystoreCon03' /></p>
+                        <p><FormattedMessage id = 'aelf.keystoreCon04' /></p>
+                        <p><FormattedMessage id = 'aelf.keystoreCon05' /></p>
                         <div className={style.dangerouslySetInnerHTML} dangerouslySetInnerHTML={{__html: `{'version':3,'id':'b7467fcb-3c8b-41be-bccf-73d43a08c1b7','address':'540f18196da5a533fa36577a81de55f0a2f4e751','Crypto':{'ciphertext':'78ed11b8b6bf29b00f52b42b8542df0e4a6ac078e626af7edcf885c3b68154a4','cipherparams':{'iv':'4516579601d96695fe30ace985a9066f'},'cipher':'aes-128-ctr','kdf':'scrypt','kdfparams':{'dklen':32,'salt':'6276cfda7d40872352c801db5871e5a3368a8d0994cea39ed936760db78d1cdc','n':1024,'r':8,'p':1},'mac':'d889a5dc609c3f312a41394cc47640676d2612501a6f8c837ed55598158336db'}}`}}></div>
                     </div>
                 </div>

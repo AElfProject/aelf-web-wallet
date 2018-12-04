@@ -18,6 +18,8 @@ import NavNormal from '../../NavNormal/NavNormal'
 
 import aelf from 'aelf-sdk'
 
+import { FormattedMessage } from 'react-intl'
+
 const prompt = Modal.prompt;
 
 // React component
@@ -125,20 +127,43 @@ class Backup extends Component {
                 <div className={style.container} style={containerStyle}>
                     <div className={style.textContainer}>
                         <NoticePanel
-                            mainTitle={'Backup Wallet'}
+                            mainTitle={
+                                <FormattedMessage 
+                                    id = 'aelf.Backup Wallet'
+                                    defaultMessage = 'Backup Wallet'
+                                />
+                            }
                             subTitle={[
-                                'AElf Wallet',
-                                'Manage your wallet addresses'
+                                <FormattedMessage 
+                                    id = 'aelf.AElf Wallet'
+                                    defaultMessage = 'AElf Wallet'
+                                />,
+                                <FormattedMessage 
+                                    id = 'aelf.Manage your wallet addresses'
+                                    defaultMessage = 'Manage your wallet addresses'
+                                />
                             ]}
                             content={[
                                 // '请在安全的环境下备份助记词！',
                                 // '没有妥善备份就无法保障资产安全；',
                                 // '删除程序或钱包后，',
                                 // '您需要通过备份的助记词来会恢复钱包！'
-                                'Please backup your Mnemonic in a secure environment!',
-                                'No secure Mnemonic backup means no secure wallet.',
-                                'In the case of wallet or App deletion,',
-                                'you will need your Mnemonic to recover your wallet.'
+                                <FormattedMessage 
+                                    id = 'aelf.Becareful03'
+                                    defaultMessage = 'Please backup your Mnemonic in a secure environment!'
+                                />,
+                                <FormattedMessage 
+                                    id = 'aelf.Becareful04'
+                                    defaultMessage = 'No secure Mnemonic backup means no secure wallet.'
+                                />,
+                                <FormattedMessage 
+                                    id = 'aelf.Becareful05'
+                                    defaultMessage = 'In the case of wallet or App deletion,'
+                                />,
+                                <FormattedMessage 
+                                    id = 'aelf.Becareful06'
+                                    defaultMessage = 'you will need your Mnemonic to recover your wallet.'
+                                />
                             ]}
                         ></NoticePanel>
                     </div>
@@ -160,6 +185,19 @@ class Backup extends Component {
                                 ],
                                 'secure-text',
                             )}
+                            // onClick={(e) => prompt(
+                            //     '密码',
+                            //     '请确保您处于安全的环境中',
+                            //     [
+                            //         { text: '取消' },
+                            //         { text: '提交', onPress: password => {
+                            //                 let boolean = this.getPrivateKeyAndMnemonic(password);
+                            //                 boolean && this.toggleMnemonic();
+                            //             }
+                            //         },
+                            //     ],
+                            //     'secure-text',
+                            // )}
                         ></AelfButton>
 
                         <div className='aelf-blank12'></div>
@@ -253,7 +291,10 @@ class Backup extends Component {
                 >
                     <div>
                         <div className={style.pannelTitle}>
-                            Copy Private Key
+                            <FormattedMessage 
+                                id = 'aelf.Copy Private Key'
+                                defaultMessage = 'Copy Private Key'
+                            />
                         </div>
                         <div className={style.copyArea}>
                             <div style={{ width: '100%' }}>
@@ -273,13 +314,19 @@ class Backup extends Component {
                                 btn.click();
                             }}
                         >
-                            Copy
+                            <FormattedMessage 
+                                id = 'aelf.Copy'
+                                defaultMessage = 'Copy'
+                            />
                         </div>
                         <div
                             className={style.pannelBtnPurple + ' ' + style.pannerlBtnGrey}
                             onClick={() => this.onClose('privateKeyModal')}
                         >
-                            Close
+                            <FormattedMessage 
+                                id = 'aelf.Close'
+                                defaultMessage = 'Close'
+                            />
                         </div>
                         <button id="clipboard-backup" data-clipboard-target="#privateKeyBackUp" style={{display: 'none'}}>copy</button>
                     </div>

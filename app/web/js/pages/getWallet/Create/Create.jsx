@@ -19,6 +19,8 @@ import Agreement from '../Agreement/Agreement'
 
 import aelf from 'aelf-sdk'
 
+import { FormattedMessage } from 'react-intl'
+
 // React component
 class Create extends Component {
     constructor() {
@@ -127,12 +129,23 @@ class Create extends Component {
                     margin: '24px 0 0 0'
                 }}>
                     <NoticePanel
-                        mainTitle={'Create Wallet'}
+                        mainTitle={
+                            <FormattedMessage 
+                                id = 'aelf.CreateWallet'
+                                defaultMessage = 'Create Wallet'
+                            />
+                        }
                         content={[
                             // '密码用于加密私钥和助记词, 至少9位混合大小写和数字。',
-                            'Password is used to encrypt private keys and mnemonic words. At least 9 bits are mixed uppercase and numeric.',
+                            <FormattedMessage 
+                                id = 'aelf.Becareful01'
+                                defaultMessage = 'Password is used to encrypt private keys and mnemonic words. At least 9 bits are mixed uppercase and numeric.'
+                            />,
                             // 'AElf钱包不会储存密码，也无法帮您找回，请务必牢记！'
-                            'AElf wallet will not store the password, nor can it help you find it. Please bear in mind!'
+                            <FormattedMessage 
+                                id = 'aelf.Becareful02'
+                                defaultMessage = 'AElf wallet will not store the password, nor can it help you find it. Please bear in mind!'
+                            />
                         ]}
                     ></NoticePanel>
 
@@ -147,13 +160,17 @@ class Create extends Component {
                     <Flex style={{ padding: '0 24px 0 24px' }}>
 
                         <Flex.Item style={{ padding: '15px 0', color: '#FFF', flex: 'none', opacity: 0.5 }}>
-                            Agree <span
-                            className="aelf-blue"
-                            style={{
-                                color: '#26B7FF'
-                            }}
-                            onClick={() => this.toggleAgreement()}
-                        >《Service and Privacy Policy》</span>
+                            <FormattedMessage 
+                                id = 'aelf.Agree'
+                                defaultMessage = 'Agree'
+                            />
+                            <span
+                                className="aelf-blue"
+                                style={{
+                                    color: '#26B7FF'
+                                }}
+                                onClick={() => this.toggleAgreement()}
+                            >《<FormattedMessage id = 'aelf.Service and Privacy Policy' defaultMessage = 'Service and Privacy Policy' />》</span>
                         </Flex.Item>
                         <Flex.Item>
                             <div onClick={() => this.setAgreement()}>

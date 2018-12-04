@@ -10,6 +10,8 @@ import Service from '../../getWallet/Agreement/Service'
 import Privacy from '../../getWallet/Agreement/Privacy'
 import style from './About.scss'
 
+import { FormattedMessage } from 'react-intl'
+
 const Item = List.Item;
 // React component
 class About extends Component {
@@ -33,7 +35,7 @@ class About extends Component {
             return <AelfList
                 key={item.text}
                 onClick={() => hashHistory.push(item.url)}
-                text={item.text}
+                text={<FormattedMessage id = {'aelf.' + item.text} />}
                 type={item.type}
             ></AelfList>
         });
@@ -48,7 +50,7 @@ class About extends Component {
                 <NavNormal></NavNormal>
                 <div className='aelf-blank40'></div>
                 <NoticePanel
-                    mainTitle='About AElf Official Wallet'
+                    mainTitle={<FormattedMessage id = 'aelf.About AElf Official Wallet' />}
                     iconHidden={true}
                 ></NoticePanel>
                 <div className='aelf-blank16'></div>
