@@ -24,6 +24,8 @@ then
     echo 'npm install'
     npm install && echo 'install done'
     sleep 3
+    npm install && echo 'install check done'
+    sleep 3
 fi
 
 echo 'running webpack'
