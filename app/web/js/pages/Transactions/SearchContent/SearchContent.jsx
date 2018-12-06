@@ -1,99 +1,96 @@
-/*
-*  zhouminghui 
-*  2018.12.4
+/** @file
+*  @author zhouminghui
+*  2018.12.6
 *  页面逻辑其实就是各种父类传递过来的状态各种更新 状态大多是从Search组件传递到父类在传进来。
 *  通过父类的方法传递两个子组件之间的状态
 */
 
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 
-import { PullToRefresh, ListView } from 'antd-mobile';
+import {ListView} from 'antd-mobile';
 
-import checkStatus from '../../../utils/checkStatus';
-import getParam from '../../../utils/getParam';
 import addressOmit from '../../../utils/addressOmit';
-import { hashHistory } from 'react-router';
+import {hashHistory} from 'react-router';
 
 import style from '../TransactionsContent/TransactionsContent.scss';
 
-class SearchContent extends React.Component{
-    constructor(props){
+export default class SearchContent extends React.Component {
+    constructor(props) {
         super(props);
 
         const dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
+            rowHasChanged: (row1, row2) => row1 !== row2
         });
 
         this.hide = {
-            display:'none'
-        }
+            display: 'none'
+        };
 
         this.show = {
-            display:'block'
-        }
+            display: 'block'
+        };
 
         this.state = {
-            SearchValue:null,
-            SearchShow:false,
+            SearchValue: null,
+            SearchShow: false,
             dataSource,
-            walletAddress:this.props.address,
+            walletAddress: this.props.address,
             height: document.documentElement.clientHeight
-        }
+        };
 
     }
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps.SearchValue !== this.props.SearchValue){
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.SearchValue !== this.props.SearchValue) {
             let result = nextProps.SearchValue;
             // 重新定义了 dataSource 是因为 这方法传了值他就一直认为要有值。。
             const dataSource = new ListView.DataSource({
-                rowHasChanged: (row1, row2) => row1 !== row2,
+                rowHasChanged: (row1, row2) => row1 !== row2
             });
-            console.log(result.result.tx_status)
-            if(result.result.tx_status === 'NotExisted'){
+
+            if (result.result.tx_status === 'NotExisted') {
                 this.setState({
-                    SearchValue:null,
+                    SearchValue: null,
                     dataSource
                 });
-            }else{
+            }
+            else {
                 this.setState({
-                    SearchValue:result,
-                    dataSource:this.state.dataSource.cloneWithRows(result)
+                    SearchValue: result,
+                    dataSource: this.state.dataSource.cloneWithRows(result)
                 });
             }
-            
+
         }
 
-        if(nextProps.ShowSearch !== this.props.ShowSearch){
+        if (nextProps.searchShow !== this.props.searchShow) {
             this.setState({
-                SearchShow:nextProps.ShowSearch
-            })
+                SearchShow: nextProps.searchShow
+            });
         }
 
-        if(nextProps.address !== this.props.address){
+        if (nextProps.address !== this.props.address) {
             this.setState({
-                walletAddress:nextProps.address
-            })
+                walletAddress: nextProps.address
+            });
         }
     }
 
-    render(){
+    render() {
         const row = (rowData, sectionID, rowID) => {
             let item = this.state.SearchValue.result;
-            let params = item.tx_info.params.split(',')
+            let params = item.tx_info.params.split(',');
             let isIncome = params[0] === this.state.walletAddress ? true : false;
             let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
             let address = isIncome ? item.tx_info.From : params[0];
-            let status = item.tx_status;
-            item.tx_id = item.tx_info.TxId;
+            item.txId = item.tx_info.TxId;
             address = addressOmit(address);
             let quantity = params[1];
 
             return (
                 <div key={rowID}
-                     className={style.txList}
-                     onClick={() => hashHistory.push(`/transactiondetail?txid=${item.tx_id}`)}
+                    className={style.txList}
+                    onClick={() => hashHistory.push(`/transactiondetail?txid=${item.txId}`)}
                 >
                     <div className={style.leftContainer}>
                         <div className={iconClass}>
@@ -114,9 +111,12 @@ class SearchContent extends React.Component{
             );
 
         };
-        
-        return(
-            <div className={style.transactionContainer + ' ' + 'transaction-list-container'} style = {this.state.SearchShow?this.show:this.hide} >
+
+        return (
+            <div
+                className={style.transactionContainer + ' ' + 'transaction-list-container'}
+                style={this.state.SearchShow ? this.show : this.hide}
+            >
                 <ListView
                     initialListSize={1}
                     key={'1'}
@@ -125,13 +125,11 @@ class SearchContent extends React.Component{
                     renderRow={row}
                     style={{
                         height: '100%',
-                        margin: '5px 0',
+                        margin: '5px 0'
                     }}
                 />
             </div>
-        )
+        );
     }
 
 }
-
-export default SearchContent

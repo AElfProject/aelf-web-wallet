@@ -1,31 +1,25 @@
-/*
-    zhouminghui 
-    2018.11.28
-    找时间把search做成一个component使用
-*/
+/** @file
+ *  @author zhouminghui
+ *  2018.12.5
+ *  查询搜索框组件
+ */
 
+import React from 'react';
 
-import React, {Component} from 'react'
+import {Toast} from 'antd-mobile';
 
-import ReactDOM from 'react-dom'
+import Svg from '../../../components/Svg/Svg';
 
-import { Toast, WhiteSpace, List, InputItem } from 'antd-mobile'
+import initAelf from '../../../utils/initAelf';
 
-import { hashHistory } from 'react-router'
+require('./Search.css');
 
-import Svg from '../../../components/Svg/Svg'
-
-import initAelf from '../../../utils/initAelf'
-
-require("./Search.css")
-
-
-class Search extends React.Component{    
-    constructor(props){
+export default class Search extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
-            key:""
-        }
+            key: ''
+        };
 
         this.aelf = initAelf({
             chainOnly: true
@@ -33,60 +27,58 @@ class Search extends React.Component{
 
     }
 
-    handleClick(e){
-        //判断字符串是否为数字和字母组合     
-        //判断正整数 /^[1-9]+[0-9]*]*$/  
-        let re =  /^[0-9a-zA-Z]*$/g;
+    handleClick(e) {
+        // 判断字符串是否为数字和字母组合
+        // 判断正整数 /^[1-9]+[0-9]*]*$/
+        let re = /^[0-9a-zA-Z]*$/g;
         if (e.which === 13) {
-            if (re.test(this.state.key) && this.state.key.length === 64){
+            if (re.test(this.state.key) && this.state.key.length === 64) {
                 let result = this.aelf.aelf.chain.getTxResult(this.state.key);
-                if(result.tx_trc !== null){
+                if (result.tx_trc !== null) {
                     this.props.setValue(result);
-                    this.props.SearchOnShow();
-                }else{
+                    this.props.searchShow();
+                }
+                else {
                     Toast.fail('No deal !!!', 3);
                 }
-            }else{
+            }
+            else {
                 Toast.fail('Format error !!!', 3);
             }
         }
     }
 
-    handleChange(){
+    handleChange() {
         this.setState({
-            key:this.refs.search.value
-        })
+            key: this.refs.search.value
+        });
     }
 
-    render(){
-        return(
-            <div className = "TransactionsSearch" >
-                <Svg key="1"
+    render() {
+        return (
+            <div className='TransactionsSearch' >
+                <Svg key='1'
                     icon={'search16'}
                     style={{width: 16, height: 16}}
                 ></Svg>
-                <input 
-                    className = "searchinput"
-                    placeholder = "Please enter the full transaction ID"
-                    type = "text"
-                    onKeyPress = {this.handleClick.bind(this)}
-                    onChange = {this.handleChange.bind(this)}
-                    ref = "search"
+                <input
+                    className='searchinput'
+                    placeholder='Please enter the full transaction ID'
+                    type='text'
+                    onKeyPress={this.handleClick.bind(this)}
+                    onChange={this.handleChange.bind(this)}
+                    ref='search'
                 />
-                <Svg key="2"
-                    icon={'up12'}
+                <span className='clearBtn'
                     onClick={() => {
                         this.refs.search.value = '';
                         this.setState({
-                            key:''
+                            key: ''
                         });
-                        this.props.SearchOnHide();
+                        this.props.searchHide();
                     }}
-                    style={{width: 16, height: 16}}
-                ></Svg>
+                >&Chi;</span>
             </div>
-        )
+        );
     }
 }
-
-export default Search

@@ -1,34 +1,45 @@
-.TransactionsSearch{
+.TransactionsSearch {
     position: relative;
     margin: 0 16px;
     height: 32px;
-    background:#4d1a66;
-    border-radius:16px;
+    background: #4d1a66;
+    border-radius: 16px;
     padding: 0 12px;
     display: flex;
     align-items: center;
 }
 
-.searchinput{
+.searchinput {
     width: 92%;
     margin-left: 1%;
-    background:transparent;
-    border:  none;
-    color: #FFFFFF;
+    background: transparent;
+    border: none;
+    color: #fff;
     font-size: 14px;
     opacity: .3;
 }
 
-.TransactionsSearch .am-list{
+.TransactionsSearch .am-list {
     width: 90%;
     margin-left: 1%;
 }
 
-.TransactionsSearch .am-list-body{
+.TransactionsSearch .am-list-body {
     background: transparent;
 }
 
-.TransactionsSearch .am-list-item .am-input-control input{
-    font-size:14px;
-    color: rgba(255,255,255,.3);
+.TransactionsSearch .am-input-control input {
+    font-size: 14px;
+    color: rgba(255, 255, 255, .3);
+}
+
+.clearBtn {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    line-height: 16px;
 }

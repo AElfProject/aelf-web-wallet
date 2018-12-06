@@ -1,35 +1,33 @@
-/*
-* 2018.11.23
-* zhouminghui
-* dataSource 可能是导致大批量渲染的主谋
-*/
+/** @file
+ *  @author zhouminghui
+ *  2018.12.5
+ *  整理页面可读性
+ *  NUM_ROWS 显示行数
+ */
 
-import React, {Component} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { PullToRefresh, ListView } from 'antd-mobile';
+import {PullToRefresh, ListView} from 'antd-mobile';
 
 import checkStatus from '../../../utils/checkStatus';
-import getParam from '../../../utils/getParam';
 import addressOmit from '../../../utils/addressOmit';
-import { hashHistory } from 'react-router';
+import {hashHistory} from 'react-router';
 
 import style from './TransactionsContent.scss';
 
-// 交易失败 TODO 暂时不知道交易失败返回的是什么值
+// 交易失败 失败的交易不会上链
 // 偶发  列表下拉后数据无法切换  刷新即可切换  待查看原因 【已修复】
 
 let pageIndex = 0;
 const NUM_ROWS = 20;
 
-function getTxs(callback,walletAddress,pIndex = 0,){
+function getTxs(callback, walletAddress, pageIndex) {
     let params = {
         limit: NUM_ROWS, // 13
-        page: pIndex, // 0
+        page: pageIndex, // 0
         order: 'desc', // asc
-        address: walletAddress, // 0x04263089a3fd878482d81d5f54f6865260d6
-        // contract_address: getParam('contract_address', window.location.href)
-        // contract_address:"b531339ea1548b447dd2144f59358b75c095"
+        address: walletAddress
     };
 
     let query = '';
@@ -47,33 +45,29 @@ function getTxs(callback,walletAddress,pIndex = 0,){
     }).then(checkStatus).then(result => {
         result.text().then(result => {
             let output = JSON.parse(result);
-
-            let length = output.total;
-            let transactions = output.transactions;
-
             callback(output);
-        })
+        });
     }).catch(error => {
         console.log('error:', error);
     });
 }
 
-class TransactionsContent extends React.Component{
-    constructor(props){
+export default class TransactionsContent extends React.Component {
+    constructor(props) {
         super(props);
 
 
         const dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
+            rowHasChanged: (row1, row2) => row1 !== row2
         });
 
         this.hide = {
-            display:'none'
-        }
+            display: 'none'
+        };
 
         this.show = {
-            display:'block'
-        }
+            display: 'block'
+        };
 
         this.state = {
             open: false,
@@ -82,24 +76,25 @@ class TransactionsContent extends React.Component{
             isLoading: true,
             height: document.documentElement.clientHeight,
             useBodyScroll: false,
-            walletAddress:this.props.address,
-            walletData:null,
+            walletAddress: this.props.address,
+            walletData: null
         };
     }
-    
+
     componentDidUpdate() {
         if (this.state.useBodyScroll) {
             document.body.style.overflow = 'auto';
-        } else {
+        }
+        else {
             document.body.style.overflow = 'hidden';
         }
     }
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps.address !== this.props.address ){
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.address !== this.props.address) {
             this.setState({
-                walletAddress:nextProps.address
-            })
+                walletAddress: nextProps.address
+            });
             const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
             getTxs(result => {
                 this.rData = result.transactions;
@@ -108,26 +103,19 @@ class TransactionsContent extends React.Component{
                     height: hei,
                     refreshing: false,
                     isLoading: false,
-                    walletData:result.transactions
+                    walletData: result.transactions
                 });
-            },nextProps.address);
+            }, nextProps.address, pageIndex);
         }
 
-        // if(nextProps.SearchValue !== this.props.SearchValue){
-        //     let result = nextProps.SearchValue
-        //     this.setState({
-        //         SearchValue:result
-        //     })
-        // }
-
-        if(nextProps.ShowSearch !== this.props.ShowSearch){
+        if (nextProps.searchShow !== this.props.searchShow) {
             this.setState({
-                SearchShow:nextProps.ShowSearch
-            })
+                SearchShow: nextProps.searchShow
+            });
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
         getTxs(result => {
             this.rData = result.transactions;
@@ -136,10 +124,14 @@ class TransactionsContent extends React.Component{
                 height: hei,
                 refreshing: false,
                 isLoading: false,
-                walletData:result.transactions
+                walletData: result.transactions
             });
-        },this.state.walletAddress);
+        }, this.state.walletAddress, pageIndex);
 
+    }
+
+    componentWillUnmount() {
+        this.setState = {};
     }
 
     onRefresh() {
@@ -158,9 +150,8 @@ class TransactionsContent extends React.Component{
                 isLoading: false,
                 walletData: result.transactions
             });
-        },this.state.walletAddress)
-        
-    };
+        }, this.state.walletAddress, pageIndex);
+    }
 
     onEndReached(event) {
         // load new data
@@ -182,20 +173,19 @@ class TransactionsContent extends React.Component{
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(this.rData),
                 isLoading: false,
-                walletData:this.rData
+                walletData: this.rData
             });
-        },this.state.walletAddress,++pageIndex);
-    };
+        }, this.state.walletAddress, ++pageIndex);
+    }
 
-    render(){
+    render() {
         const row = (rowData, sectionID, rowID) => {
-            let  item = this.state.walletData[rowID];
-            let  isIncome = item.params_to === this.state.walletAddress ? true : false;
-            let  quantity = item.quantity;
-            let  iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
-            let  address = isIncome ? item.address_from : item.params_to;
-            let  status = item.tx_status;
-                address = addressOmit(address);
+            let item = this.state.walletData[rowID];
+            let isIncome = item.params_to === this.state.walletAddress ? true : false;
+            let quantity = item.quantity;
+            let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
+            let address = isIncome ? item.address_from : item.params_to;
+            address = addressOmit(address);
 
             return (
                 <div key={rowID}
@@ -221,9 +211,12 @@ class TransactionsContent extends React.Component{
             );
 
         };
-        
-        return(
-            <div className={style.transactionContainer + ' ' + 'transaction-list-container'} style = {this.state.SearchShow?this.hide:this.show} >
+
+        return (
+            <div
+                className={style.transactionContainer + ' ' + 'transaction-list-container'}
+                style = {this.state.SearchShow ? this.hide : this.show}
+            >
                 <ListView
                     initialListSize={NUM_ROWS}
                     key={this.state.useBodyScroll ? '0' : '1'}
@@ -233,7 +226,7 @@ class TransactionsContent extends React.Component{
                     useBodyScroll={this.state.useBodyScroll}
                     style={this.state.useBodyScroll ? {} : {
                         height: '100%',
-                        margin: '5px 0',
+                        margin: '5px 0'
                     }}
 
                     pullToRefresh={<PullToRefresh
@@ -244,9 +237,7 @@ class TransactionsContent extends React.Component{
                     pageSize={10}
                 />
             </div>
-        )
+        );
     }
 
 }
-
-export default TransactionsContent

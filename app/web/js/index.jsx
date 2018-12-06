@@ -1,109 +1,92 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+/** @file
+ *  @author huangzongzhe
+ */
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
 // import { createStore } from 'redux'
-import { LocaleProvider } from 'antd-mobile'
+import {LocaleProvider} from 'antd-mobile';
 // import { Provider } from 'react-redux'
 // import { mapDispatchToProps } from './actions'
 
-import { Router, Route, hashHistory } from 'react-router'
-import enUS from 'antd-mobile/lib/locale-provider/en_US';
+import {Router, Route, hashHistory} from 'react-router';
 // import store from './store'
 
-import getWalletNav from './pages/getWallet/Nav/Nav'
-import getWalletGuide from './pages/getWallet/Guide/Guide'
-import getWalletAgreement from './pages/getWallet/Agreement/Agreement'
-import getWalletCreate from './pages/getWallet/Create/Create'
-import getWalletBackup from './pages/getWallet/Backup/Backup'
-import getWalletImport from './pages/getWallet/Import/Import'
+import getWalletNav from './pages/getWallet/Nav/Nav';
+import getWalletGuide from './pages/getWallet/Guide/Guide';
+import getWalletAgreement from './pages/getWallet/Agreement/Agreement';
+import getWalletCreate from './pages/getWallet/Create/Create';
+import getWalletBackup from './pages/getWallet/Backup/Backup';
+import getWalletImport from './pages/getWallet/Import/Import';
 
-import HomePage from './pages/HomePage/HomePage'
-import Assets from './pages/Assets/Assets'
-import AssetHome from './pages/Asset/Home/Home'
-import AssetTransfer from './pages/Asset/Transfer/Transfer'
-import AssetTransactionDetail from './pages/Asset/TransactionDetail/TransactionDetail'
+import HomePage from './pages/HomePage/HomePage';
+import Assets from './pages/Assets/Assets';
+import AssetHome from './pages/Asset/Home/Home';
+import AssetTransfer from './pages/Asset/Transfer/Transfer';
+import AssetTransactionDetail from './pages/Asset/TransactionDetail/TransactionDetail';
 
-import personalCenterHome from './pages/personalCenter/Home/Home'
-import personalCenterAbout from './pages/personalCenter/About/About'
+import personalCenterHome from './pages/personalCenter/Home/Home';
+import personalCenterAbout from './pages/personalCenter/About/About';
 
-import PasswordChange from './pages/personalCenter/WalletList/PasswordChange/PasswordChange'
-import WalletList from './pages/personalCenter/WalletList/WalletList'
-import WalletManage from './pages/personalCenter/WalletList/WalletManage/WalletManage'
+import PasswordChange from './pages/personalCenter/WalletList/PasswordChange/PasswordChange';
+import WalletList from './pages/personalCenter/WalletList/WalletList';
+import WalletManage from './pages/personalCenter/WalletList/WalletManage/WalletManage';
 
 // 关于我们
-import Privacy from './pages/personalCenter/About/pages/Privacy'
-import Service from './pages/personalCenter/About/pages/Service'
+import Privacy from './pages/personalCenter/About/pages/Privacy';
+import Service from './pages/personalCenter/About/pages/Service';
 
 // 帮助中心
-import personalCenterHelpCenter from './pages/personalCenter/HelpCenter/HelpCenter'
-import WhatIsMnemonic from './pages/personalCenter/HelpCenter/pages/WhatIsMnemonic'
-import WhatIsKeyStore from './pages/personalCenter/HelpCenter/pages/WhatIsKeyStore'
-import WhatIsPrivatePublicKey from './pages/personalCenter/HelpCenter/pages/WhatIsPrivatePublicKey'
-import WhatIsAElfWallet from './pages/personalCenter/HelpCenter/pages/WhatIsAElfWallet'
-import HowToChangePassword from './pages/personalCenter/HelpCenter/pages/HowToChangePassword'
-import ForgetPassword from './pages/personalCenter/HelpCenter/pages/ForgetPassword'
+import personalCenterHelpCenter from './pages/personalCenter/HelpCenter/HelpCenter';
+import WhatIsMnemonic from './pages/personalCenter/HelpCenter/pages/WhatIsMnemonic';
+import WhatIsKeyStore from './pages/personalCenter/HelpCenter/pages/WhatIsKeyStore';
+import WhatIsPrivatePublicKey from './pages/personalCenter/HelpCenter/pages/WhatIsPrivatePublicKey';
+import WhatIsAElfWallet from './pages/personalCenter/HelpCenter/pages/WhatIsAElfWallet';
+import HowToChangePassword from './pages/personalCenter/HelpCenter/pages/HowToChangePassword';
+import ForgetPassword from './pages/personalCenter/HelpCenter/pages/ForgetPassword';
 // 系统设置
-import personalCenterSystemSetting from './pages/personalCenter/systemSetting/SystemSetting'
-import systemSettingNetwork from './pages/personalCenter/systemSetting/pages/Network'
+import personalCenterSystemSetting from './pages/personalCenter/systemSetting/SystemSetting';
+import systemSettingNetwork from './pages/personalCenter/systemSetting/pages/Network';
 
 // 联系人列表
-import ContactAddressPage from './pages/ContactAddressPage/ContactAddressPage'
-import NewContactAddressPage from './pages/ContactAddressPage/NewContactAddressPage/NewContactAddressPage'
+import ContactAddressPage from './pages/ContactAddressPage/ContactAddressPage';
+import NewContactAddressPage from './pages/ContactAddressPage/NewContactAddressPage/NewContactAddressPage';
 
 // 交易列表
-import Transactions from './pages/Transactions/Transactions'
+import Transactions from './pages/Transactions/Transactions';
 
 
-import QRCode from './pages/QRCode/QRCode'
-import ErrorPage from './pages/ErrorPage/ErrorPage'
-
-
-import AddToken from './pages/AddToken/AddToken'
-
-// test react-intl 测试国际化
-import { IntlProvider, addLocaleData } from 'react-intl'
-import zh_CN from './langConfig/zh-CN.js'  //导入 i18n 配置文件,需要手动创建并填入语言转换信息
-import en_US from './langConfig/en-US.js'
-import intl from 'intl'
-import zh from 'react-intl/locale-data/zh'
-import en from 'react-intl/locale-data/en'
-addLocaleData([...zh,...en])
-
-// import style from '../style/index.scss'
-require('./../style/ant-mobile-aelf.css');
+import QRCode from './pages/QRCode/QRCode';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
 
 // bind to window, fetch polyfill.
 import 'whatwg-fetch';
 
+import AddToken from './pages/AddToken/AddToken';
+
+// test react-intl 测试国际化
+// 导入 i18n 配置文件,需要手动创建并填入语言转换信息
+import {IntlProvider, addLocaleData} from 'react-intl';
+import zh from 'react-intl/locale-data/zh';
+import en from 'react-intl/locale-data/en';
+import enUS from 'antd-mobile/lib/locale-provider/en_US';
+import zh_CN from './langConfig/zh-CN';
+import en_US from './langConfig/en-US';
+addLocaleData([...zh, ...en]);
+
+// import style from '../style/index.scss'
+require('./../style/ant-mobile-aelf.css');
 
 // TODO: localStorage file, asyncStorage统一成一个方法。
 let walletInfoList = localStorage.getItem('walletInfoList');
 
-
-//TODO: 通过localStorage 判断所选语言
-function chooseLocale(){
-    let Languge = null;
-    if(localStorage.language == undefined ){
-        localStorage.setItem('language','zh-CN');
-        Languge = localStorage.language;
-    }else{
-        Languge = localStorage.language;
-    }
-    
-
-    switch(Languge){
-        case 'zh-CN':
-            return zh_CN;
-            break;
-        default:
-            return en_US;
-            break;
-    }
-
-}
+// TODO: 通过localStorage 判断所选语言
 
 if (!walletInfoList) {
     hashHistory.replace('/get-wallet/guide');
-} else if (hashHistory.getCurrentLocation().pathname == '/') {
+}
+else if (hashHistory.getCurrentLocation().pathname === '/') {
     hashHistory.replace('/assets');
 }
 
@@ -115,10 +98,48 @@ setTimeout(() => {
     welcomePage.style.display = 'none';
 }, 600);
 
+
+// 做成单独Util文件时会报错 带查看。。。。
+function chooseLocale() {
+    let Languge = null;
+    if (localStorage.language === undefined) {
+        localStorage.setItem('language', 'zh-CN');
+        Languge = localStorage.language;
+    }
+    else {
+        Languge = localStorage.language;
+    }
+
+    switch (Languge) {
+        case 'zh-CN':
+            return zh_CN;
+        default:
+            return en_US;
+    }
+}
+
+function antdChooseLocale() {
+    let Languge = null;
+    if (localStorage.language === undefined) {
+        localStorage.setItem('language', 'zh-CN');
+        Languge = localStorage.language;
+    }
+    else {
+        Languge = localStorage.language;
+    }
+
+    switch (Languge) {
+        case 'zh-CN':
+            return undefined;
+        default:
+            return enUS;
+    }
+}
+
 setTimeout(() => {
     ReactDOM.render(
         <IntlProvider locale={navigator.language} messages={chooseLocale()} >
-            <LocaleProvider locale={undefined} >
+            <LocaleProvider locale={antdChooseLocale()} >
                 {/*<Provider store={store}>*/}
                 <Router history={hashHistory}>
                     <Route path="/" component={HomePage}>
@@ -151,24 +172,24 @@ setTimeout(() => {
                     <Route path="/personalcenter/systemsetting" component={personalCenterSystemSetting}></Route>
                     <Route path="/personalcenter/systemsetting/network" component={systemSettingNetwork}></Route>
 
-                    <Route path="/get-wallet/backup" component={getWalletBackup}/>
+                    <Route path="/get-wallet/backup" component={getWalletBackup} />
 
-                    <Route path="/agreement" component={getWalletAgreement}/>
+                    <Route path="/agreement" component={getWalletAgreement} />
                     <Route path="/get-wallet/nav" component={getWalletNav}>
-                        <Route path="/get-wallet/guide" component={getWalletGuide}/>
-                        <Route path="/get-wallet/create" component={getWalletCreate}/>
-                        <Route path="/get-wallet/import" component={getWalletImport}/>
+                        <Route path="/get-wallet/guide" component={getWalletGuide} />
+                        <Route path="/get-wallet/create" component={getWalletCreate} />
+                        <Route path="/get-wallet/import" component={getWalletImport} />
                     </Route>
 
                     <Route path="/error" component={ErrorPage}></Route>
-                    
+
                     <Route path='/contactaddress' component={ContactAddressPage}></Route>
                     <Route path='/contactaddress/newcontactaddress' component={NewContactAddressPage}></Route>
 
                     <Route path='/transactions' component={Transactions} ></Route>
 
-                    <Route path='/addtoken' component = {AddToken} ></Route>
-                
+                    <Route path='/addtoken' component={AddToken} ></Route>
+
                 </Router>
                 {/*</Provider>*/}
             </LocaleProvider>

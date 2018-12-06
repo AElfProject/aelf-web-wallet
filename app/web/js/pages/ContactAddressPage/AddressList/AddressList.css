@@ -1,0 +1,28 @@
+.addresslist .am-swipe,
+.am-swipe-content {
+    height: 66px;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    background: rgba(88, 39, 112, 1);
+    color: #FFF;
+}
+
+.addresslist .am-swipe {
+    padding-left: 16px;
+}
+
+.addresslist .am-swipe .am-swipe-content,
+.am-swipe .am-swipe-actions {
+    color: #FFF;
+}
+
+.listname {
+    font-size: 14px;
+    padding-top: 16.5px;
+}
+
+.listaddress {
+    font-size: 12px;
+    color: #FFF;
+    opacity: .5;
+    margin-top: 8px;
+}

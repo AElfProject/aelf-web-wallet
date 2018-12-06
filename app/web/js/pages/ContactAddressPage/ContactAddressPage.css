@@ -1,15 +1,14 @@
-.List{
+.List {
     position: relative;
-    overflow-y:scroll;
+    overflow-y: scroll;
 }
 
-.navbar .aelf-normal-navbar-container{
+.navbar .aelf-normal-navbar-container {
     position: relative;
     z-index: 999;
 }
 
-.navbar .aelf-normal-navbar.am-navbar.am-navbar-dark{
+.navbar .aelf-normal-navbar.am-navbar.am-navbar-dark {
     z-index: 999;
-    background: #420b5E;
     max-width: 100%;
 }

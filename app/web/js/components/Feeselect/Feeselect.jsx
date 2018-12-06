@@ -1,29 +1,20 @@
-/*
- * zhouminghui
- * 2018.11.17
+/** @file
+ *  @author zhouminghui
+ *  2018.11.20
+ *  Code formatting completed
  */
 
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
+import RollBar from './RollBar/RollBar';
+import style from './FeeSelect.scss';
 
-import Rollbar from './Rollbar/Rollbar';
-
-import style from './Feeselect.scss';
-
-class Feeselect extends React.Component{
-    
-    constructor(props){
-        super(props)
-    }
-    
-    render(){
-        return(
-            <div className = {style.Touchbar}>
-                <div className = {style.Touchbar_title} >{this.props.title}</div>
-                <Rollbar />
+export default class FeeSelect extends React.Component {
+    render() {
+        return (
+            <div className={style.touchbar}>
+                <div className={style.touchbar_title} >{this.props.title}</div>
+                <RollBar rate={0.001} />
             </div>
-        )
+        );
     }
 }
-
-export default Feeselect

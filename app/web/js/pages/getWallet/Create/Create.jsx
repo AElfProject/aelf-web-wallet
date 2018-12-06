@@ -130,19 +130,19 @@ class Create extends Component {
                 }}>
                     <NoticePanel
                         mainTitle={
-                            <FormattedMessage 
+                            <FormattedMessage
                                 id = 'aelf.CreateWallet'
                                 defaultMessage = 'Create Wallet'
                             />
                         }
                         content={[
                             // '密码用于加密私钥和助记词, 至少9位混合大小写和数字。',
-                            <FormattedMessage 
+                            <FormattedMessage
                                 id = 'aelf.Becareful01'
                                 defaultMessage = 'Password is used to encrypt private keys and mnemonic words. At least 9 bits are mixed uppercase and numeric.'
                             />,
                             // 'AElf钱包不会储存密码，也无法帮您找回，请务必牢记！'
-                            <FormattedMessage 
+                            <FormattedMessage
                                 id = 'aelf.Becareful02'
                                 defaultMessage = 'AElf wallet will not store the password, nor can it help you find it. Please bear in mind!'
                             />
@@ -157,10 +157,10 @@ class Create extends Component {
                         setPassword={password => this.setPassword(password)}
                     ></Password>
 
-                    <Flex style={{ padding: '0 24px 0 24px' }}>
+                    <Flex style={{padding: '0 24px 0 24px'}}>
 
-                        <Flex.Item style={{ padding: '15px 0', color: '#FFF', flex: 'none', opacity: 0.5 }}>
-                            <FormattedMessage 
+                        <Flex.Item style={{padding: '15px 0', color: '#FFF', flex: 'none', opacity: 0.5}}>
+                            <FormattedMessage
                                 id = 'aelf.Agree'
                                 defaultMessage = 'Agree'
                             />

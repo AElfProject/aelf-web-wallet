@@ -1,29 +1,22 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+/** @file
+ *  @author zhouminghui
+ *  列表与搜索包含在该页面
+ */
 
-import { PullToRefresh, ListView } from 'antd-mobile'
+import React from 'react';
 
-import NavToken from './NavToken/NavToken'
+import NavToken from './NavToken/NavToken';
+import TokenList from './TokenList/TokenList';
 
-import Tokenlist from './Tokenlist/Tokenlist'
+require('./AddToken.css');
 
-require('./AddToken.css')
-
-class AddToken extends React.Component{
-
-    constructor(props){
-        super(props);
-
-    }
-
-    render(){
-        return(
+export default class AddToken extends React.Component {
+    render() {
+        return (
             <div className = 'Tokenlist' >
                 <NavToken />
-                <Tokenlist />
+                <TokenList />
             </div>
-        )
+        );
     }
 }
-
-export default AddToken

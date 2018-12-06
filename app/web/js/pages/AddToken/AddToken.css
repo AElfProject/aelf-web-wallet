@@ -1,37 +1,37 @@
-.Tokenlist{
-    height:100%;
+.Tokenlist {
+    height: 100%;
 }
 
-.addtoken-list-con{
+.addtoken-list-con {
     padding: 17px;
-    border-bottom: 1px solid rgba(255, 255, 255, .1)
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
 }
 
-.addtoken-list-tokenaddress{
+.addtoken-list-tokenaddress {
     font-size: 9px;
-    color: rgba(255, 255, 255, .3)
+    color: rgba(255, 255, 255, .3);
 }
 
-.addtoken-list-name{
-    font-size:10px;
+.addtoken-list-name {
+    font-size: 10px;
     color: #fff;
     margin-bottom: 8px;
 }
 
-.addtoken-list-tokenname{
+.addtoken-list-tokenname {
     font-size: 14px;
     color: #fff;
     margin-bottom: 6px;
 }
 
-.Tokenlist .am-list-item .am-list-line .am-list-content{
+.Tokenlist .am-list-item .am-list-line .am-list-content {
     overflow: initial;
 }
 
-.Tokenlist .am-list-item .am-list-line{
-    padding: 0px;
+.Tokenlist .am-list-item .am-list-line {
+    padding: 0;
 }
 
-.Tokenlist .am-list-line::after{
-    height:0px !important;
+.Tokenlist .am-list-line::after {
+    height: 0 !important;
 }
