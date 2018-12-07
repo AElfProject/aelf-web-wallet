@@ -9,8 +9,8 @@ If you meet some permission problem, please use 'sudo'.
 ```shell
 bash build.sh < type|optional > < node_moduels|optinal >
 // if you only want to use the second param, you must set the type=""
-bash build.sh devpro
-bash build.sh devpro reinstall
+bash build.sh dev
+bash build.sh dev reinstall
 bash build.sh "" reinstall
 
 bash build.sh === bash build.sh pro
