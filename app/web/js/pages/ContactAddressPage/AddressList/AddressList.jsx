@@ -1,4 +1,5 @@
-/** @file
+/**
+ *  @file
  *  @author zhouminghui
  *  2018.12.5
  *  重构联系人列表
@@ -7,7 +8,7 @@
  */
 
 import React from 'react';
-import pySegSort from '../../../utils/pySegSort';
+import pinyinSegSort from '../../../utils/pinyinSegSort';
 import ListItem from '../ListItem/ListItem';
 
 require('./AddressList.css');
@@ -25,7 +26,7 @@ export default class AddressList extends React.Component {
     }
 
     componentDidMount() {
-        let newAddress = pySegSort(this.state.content);
+        let newAddress = pinyinSegSort(this.state.content);
         let Message = newAddress;
         let Content = {
             CONTENT: Message

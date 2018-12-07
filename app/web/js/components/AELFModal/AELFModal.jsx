@@ -1,4 +1,5 @@
-/** @file
+/**
+ *  @file AElfModal
  *  @author zhouminghui
  *  2018.11.20
  *  Code formatting completed
@@ -12,18 +13,17 @@ import PursTip from './tips/PursTip';
 import AelfButton from '../Button/Button';
 import {List, InputItem} from 'antd-mobile';
 
-import style from './AELFModal.scss';
+import style from './AElfModal.scss';
 import {FormattedMessage} from 'react-intl';
 
-export default class AELFModal extends React.Component {
+export default class AElfModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             password: '',
             key: '1234',
-            times: null,
-            passwordopacity: false,
-            CheckCompletion: false
+            passwordTrypasswordTryTimes: null,
+            checkCompletion: false
         };
     }
 
@@ -34,32 +34,33 @@ export default class AELFModal extends React.Component {
     }
 
     checkPassword(password) {
-        if (this.state.times !== 0) {
+        if (this.state.passwordTryTimes !== 0) {
             if (this.state.key === this.state.password) {
                 this.setState({
-                    CheckCompletion: false
+                    checkCompletion: false
                 });
+                localStorage.setItem('passwordTryTimes', 5);
             }
             else {
                 this.setState({
-                    CheckCompletion: true
+                    checkCompletion: true
                 });
-                this.state.times--;
-                localStorage.setItem('times', this.state.times);
+                this.state.passwordTryTimes--;
+                localStorage.setItem('passwordTryTimes', this.state.passwordTryTimes);
             }
         }
     }
 
     componentDidMount() {
-        if (localStorage.times === undefined) {
-            localStorage.setItem('times', 5);
+        if (localStorage.passwordTryTimes === undefined) {
+            localStorage.setItem('passwordTryTimes', 5);
             this.setState({
-                times: 5
+                passwordTryTimes: 5
             });
         }
         else {
             this.setState({
-                times: localStorage.times
+                passwordTryTimes: localStorage.passwordTryTimes
             });
         }
     }
@@ -106,15 +107,15 @@ export default class AELFModal extends React.Component {
                 </div>
                 <div
                     className={style.passwordtip}
-                    style={(this.state.CheckCompletion) ? CheckState.SHOW : CheckState.HIDE}
+                    style={(this.state.checkCompletion) ? CheckState.SHOW : CheckState.HIDE}
                 >
                     <Svg icon={this.props.aelficon}
                         style={{display: 'inline-block', height: 16, width: 16}}>
                     </Svg>
                     <span>
                         <FormattedMessage id='aelf.Modaltips' />
-                        {this.state.times}
-                        <FormattedMessage id='aelf.Modaltimes' />
+                        {this.state.passwordTryTimes}
+                        <FormattedMessage id='aelf.ModalpasswordTryTimes' />
                     </span>
                 </div>
                 <div className={style.nextButton}>

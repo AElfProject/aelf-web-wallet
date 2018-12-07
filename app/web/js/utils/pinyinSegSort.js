@@ -4,9 +4,9 @@
  *  中文的分类并返回心的列表
  */
 
-import compare from './compare';
+import contactCompare from './contactCompare';
 
-function pySegSort(arry) {
+function pinyinSegSort(arry) {
     let addressclass = arry;
     if (addressclass === undefined) {
         return;
@@ -14,9 +14,9 @@ function pySegSort(arry) {
     else if (addressclass.lenght === 0) {
         return;
     }
-    let newAddressclass = addressclass.sort(compare('srt'));
+    let newAddressclass = addressclass.sort(contactCompare('srt'));
     return newAddressclass;
 }
 
-export default pySegSort;
+export default pinyinSegSort;
 

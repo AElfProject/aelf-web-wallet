@@ -1,0 +1,9 @@
+.Tokenlist .am-list-body {
+    width: 92%;
+    margin-left: 1%;
+    background: transparent;
+    border:  none;
+    color: #fff;
+    font-size: 14px;
+    opacity: .3;
+}

@@ -1,4 +1,5 @@
-/** @file
+/**
+ *  @file
  *  @author zhouminghui
  *  2018.11.20
  *  Code formatting completed
@@ -30,9 +31,9 @@ export default class DefaultBar extends React.Component {
 
     render() {
 
-        let abc = this.listItem();
+        let listCollection = this.listItem();
         return (
-            <div className={style.defaultbar} >{abc}</div>
+            <div className={style.defaultbar} >{listCollection}</div>
         );
     }
 }

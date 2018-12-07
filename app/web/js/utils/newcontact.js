@@ -1,10 +1,11 @@
-/** @file
- *   @author zhouminghui
- *   2018.10.20
+/**
+ *  @file
+ *  @author zhouminghui
+ *  2018.10.20
  */
 import pinyin from 'pinyin';
 
-export default function newcontact(name, address) {
+export default function newContact(name, address) {
     let Name = name;
     let Address = address;
     let srt = pinyin(Name, {

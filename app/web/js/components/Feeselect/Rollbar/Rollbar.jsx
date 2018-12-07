@@ -1,4 +1,5 @@
-/** @file
+/**
+ *  @file
  *  @author zhouminghui
  *  2018.11.20
  *  Code formatting completed
@@ -37,7 +38,7 @@ export default class RollBar extends React.Component {
         });
     }
 
-    Clickhotsport(e) {
+    clickHotspot(e) {
         let touchList = e.touches[0];
         let touchClientX = touchList.clientX - this.refs.selectbar.offsetLeft;
         if (touchClientX != null && touchClientX > 0 && touchClientX < this.state.initialize) {
@@ -56,9 +57,9 @@ export default class RollBar extends React.Component {
             <div>
                 <div
                     className={style.barbox}
-                    onTouchStart={this.Clickhotsport.bind(this)}
+                    onTouchStart={this.clickHotspot.bind(this)}
                     ref='selectbar'
-                    onTouchMove={this.Clickhotsport.bind(this)}
+                    onTouchMove={this.clickHotspot.bind(this)}
                 >
                     <DefaultBar marginLeft={this.state.marginLeft} />
                     <div

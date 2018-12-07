@@ -1,4 +1,5 @@
-/** @file
+/**
+ *  @file
  *  @author zhouminghui
  *  2018.12.5
  *  多拆分出了一个可复用组件，减少了一个无用的组件层级，感觉不错！
@@ -14,7 +15,7 @@ import {historyPush} from '../../utils/historyChange';
 
 require('./ContactAddressPage.css');
 
-export default class Contactaddress extends React.Component {
+export default class ContactAddressPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -34,7 +35,7 @@ export default class Contactaddress extends React.Component {
         historyPush('/contactaddress/newcontactaddress', false);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         let screenH = window.innerHeight - 45;
         this.setState({
             height: screenH

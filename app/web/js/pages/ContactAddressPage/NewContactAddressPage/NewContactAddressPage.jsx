@@ -1,4 +1,5 @@
-/** @file
+/**
+ *  @file
  *  @author zhouminghui
  *  2018.11.20
  *  Code formatting completed
@@ -9,8 +10,7 @@ import {Toast, List, InputItem} from 'antd-mobile';
 
 import NavNormal from '../.././NavNormal/NavNormal';
 
-import newcontact from '../../.././utils/newcontact';
-
+import newContact from '../../../utils/newContact';
 import {historyReplace} from '../../../utils/historyChange';
 import {FormattedMessage} from 'react-intl';
 
@@ -31,7 +31,7 @@ export default class NewContactAddress extends React.Component {
         let re = /^[0-9a-zA-Z]*$/g;
         if (this.state.name !== '' && this.state.address !== '') {
             if (re.test(this.state.address) && this.state.address.length === 36) {
-                newcontact(this.state.name, this.state.address);
+                newContact(this.state.name, this.state.address);
                 historyReplace('/contactaddress');
             }
             else {

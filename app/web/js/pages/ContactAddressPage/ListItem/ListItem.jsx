@@ -1,4 +1,5 @@
-/** @file
+/**
+ *  @file
  *  @author zhouminghui
  *  2018.12.5
  *  拆分出可复用的部分，爽歪歪 真的多。。。
@@ -10,10 +11,6 @@ require('./ListItem.css');
 
 
 export default class ListItem extends React.Component {
-
-    // constructor(props) {
-    //     super(props);
-    // }
 
     // 词汇分类
     firstHtml(letter) {

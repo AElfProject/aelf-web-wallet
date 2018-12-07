@@ -1,9 +1,10 @@
-/** @file
+/**
+ * @file
  * @author zhouminghui
  * 检测是否已经绑定过的token
  */
 
-export default function mergeArr(json1, json2) {
+export default function contactMergeArr(json1, json2) {
     let keyArr = Array(json1.length);
     for (let i = 0; i < json1.length; i++) {
         keyArr[i] = false;

@@ -1,4 +1,5 @@
-/** @file
+/**
+ *  @file
  *  @author zhouminghui
  *  token 搜索组件
  */
@@ -7,7 +8,25 @@ import React from 'react';
 import Svg from '../../../components/Svg/Svg';
 import style from './Navtoken.scss';
 
-export default class Navtoken extends React.Component {
+export default class NavToken extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: ''
+        };
+    }
+
+    handleChange() {
+        this.setState({
+            value: this.refs.search.value
+        });
+    }
+
+    handleClick() {
+
+    }
+
     render() {
         return (
             <div className={style.Navtoken}>
@@ -27,8 +46,8 @@ export default class Navtoken extends React.Component {
                         className={style.searchinput}
                         placeholder='Please input token name.'
                         type='text'
-                        // onKeyPress = {this.handleClick.bind(this)}
-                        // onChange = {this.handleChange.bind(this)}
+                        onKeyPress = {this.handleClick.bind(this)}
+                        onChange = {value => this.handleChange(value)}
                         ref='search'
                     />
                 </div>

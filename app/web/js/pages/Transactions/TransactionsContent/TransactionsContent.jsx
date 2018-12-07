@@ -131,7 +131,7 @@ export default class TransactionsContent extends React.Component {
     }
 
     componentWillUnmount() {
-        this.setState = {};
+        this.setState = function () {};
     }
 
     onRefresh() {

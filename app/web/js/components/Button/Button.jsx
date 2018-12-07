@@ -1,4 +1,5 @@
-/** @file
+/**
+ * @file
  * @author huangzongzhe
  * 2018.10.15
  */
@@ -12,7 +13,29 @@ import style from './Button.scss';
 
 import {FormattedMessage} from 'react-intl';
 
+//     demo
+//     <AelfButton
+//         text='备份助记词'
+//         aelficon='xxx'
+//         style={Object}
+//         onClick={(e) => prompt(
+//             '密码',
+//             '请确保环境安全下备份助记词',
+//             [
+//                 { text: '取消' },
+//                 { text: '提交', onPress: password => {
+//                         let boolean = this.getPrivateKeyAndMnemonic(password);
+//                         boolean && this.toggleMnemonic();
+//                     }
+//                 },
+//             ],
+//             'secure-text',
+//         )}
+//     ></AelfButton>
+//
+
 export default class AelfButton extends Component {
+
     renderBlue() {
         return (
             <div {...this.props} className={style.button + ' ' + style.blue + ' ' + this.props.className}>

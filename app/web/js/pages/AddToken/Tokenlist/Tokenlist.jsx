@@ -1,5 +1,6 @@
 
-/** @file
+/**
+ *  @file
  *  @author zhouminghui
  *  token  绑定与解绑 以及列表渲染
  */
@@ -11,7 +12,7 @@ import {PullToRefresh, ListView, List, Switch, Toast} from 'antd-mobile';
 
 import bindToken from '../../../utils/bindToken';
 import unbindToken from '../../../utils/unbindToken';
-import mergeArr from '../../../utils/mergeArr';
+import contactMergeArr from '../../../utils/contactMergeArr';
 import getContracts from '../../../utils/getContracts';
 import getTokens from '../../../utils/getTokens';
 
@@ -70,7 +71,7 @@ export default class TokenList extends React.Component {
 
             let compare = null;
             if (this.state.tokenData !== null) {
-                compare = mergeArr(this.state.tokenData, this.state.bindToken);
+                compare = contactMergeArr(this.state.tokenData, this.state.bindToken);
                 this.setState({
                     compare
                 });
@@ -79,7 +80,7 @@ export default class TokenList extends React.Component {
     }
 
     componentWillUnmount() {
-        this.setState = {};
+        this.setState = function () {};
     }
 
     onRefresh() {
