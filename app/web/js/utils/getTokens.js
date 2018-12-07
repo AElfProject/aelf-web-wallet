@@ -1,4 +1,5 @@
-/** @file 获取已绑定token列表
+/**
+ * @file 获取已绑定token列表
  * @author zhouminghui
 */
 

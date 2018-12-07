@@ -1,14 +1,13 @@
-/*
- * zhouminghui
- * 2018.12.03
- * unbindToken
+/**
+ *  @file
+ *  @author zhouminghui
+ *  2018.11.20
+ *  Code formatting completed
  */
 
-export default unbindToken
+import checkStatus from './checkStatus';
 
-import checkStatus from './checkStatus'
-
-function unbindToken(option, callback) {
+export default function unbindToken(option, callback) {
     console.log(option)
     let csrf = document.cookie.match(/csrfToken=[^;]*/)[0].replace('csrfToken=', '');
     fetch(`/block/api/address/unbind-token`, {

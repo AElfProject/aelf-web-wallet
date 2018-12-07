@@ -1,4 +1,5 @@
-/** @file
+/**
+* @file
 * @author huangzongzhe
 * 增加了国际化
 */

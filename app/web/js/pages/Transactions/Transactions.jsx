@@ -1,14 +1,15 @@
-/** @file
+/**
+ *  @file
  *  @author zhouminghui
  *  2018.12.5
- *  需要更改一下 抽屉的逻辑 按照地址来寻找高亮 而非name
+ *  已经改成通过address来寻找高亮了
  */
 
 import React from 'react';
 import {hashHistory} from 'react-router';
 import {FormattedMessage} from 'react-intl';
 
-import {Drawer, NavBar, Icon,  WhiteSpace} from 'antd-mobile';
+import {Drawer, NavBar, Icon, WhiteSpace} from 'antd-mobile';
 
 import getPageContainerStyle from '../../utils/getPageContainerStyle';
 import TransactionsContent from './TransactionsContent/TransactionsContent';
