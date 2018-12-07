@@ -41,7 +41,9 @@ cp config/demo.config.node.js config./config.node.js
 
 ### 2.Nginx
 
-Please set your own rpc url of the wallet.conf.
+Please set your own RPC URL.
+
+Please ser your own server_name.
 
 online(https): nginx/servers/wallet.online.conf
 
