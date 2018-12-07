@@ -2,7 +2,21 @@
 
 ## Quick Start
 
-### 0.Dependecies
+Please ensure your dependencies are ready.
+
+If you meet some permission problem, please use 'sudo'.
+
+```shell
+bash build.sh < type|optional > < node_moduels|optinal >
+// if you only want to use the second param, you must set the type=""
+bash build.sh devpro
+bash build.sh devpro reinstall
+bash build.sh "" reinstall
+
+bash build.sh === bash build.sh pro
+```
+
+### 0.Dependencies
 
 1.The RPC URL of AElf Node.
 
@@ -12,12 +26,28 @@
 
 4.Nginx (or others) // Use SSL for Secure, And Use Proxy for cross-origin.
 
+5.Correct config.
+
 ### 1.Change config
-1. Set config.default.js // set your own config.keys
 
-2. Set config/config.node.js // set you own rpc url.
+```shell
+cp config/demo.config.default.js config/config.default.js 
+// set your own config.keys
 
-### 2.Start the node server
+cp config/demo.config.node.js config./config.node.js
+// set you own httpProvider
+// set your own default mainContract
+```
+
+### 2.Nginx
+
+Please set your own rpc url of the wallet.conf.
+
+online(https): nginx/servers/wallet.online.conf
+
+dev(http): nginx/servers/wallet.conf
+
+### 3.Start the node server
 
 npm install
 
@@ -27,11 +57,4 @@ pro: npm start
 
 default port: 7001
 
-### 3.Nginx
-
-online: nginx/servers/wallet.online.conf
-
-dev: nginx/servers/wallet.conf
-
-# Docker
-todo
+# Docker[TODO]
