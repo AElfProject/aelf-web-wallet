@@ -57,7 +57,6 @@ export default class TransactionsContent extends React.Component {
     constructor(props) {
         super(props);
 
-
         const dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2
         });
@@ -118,6 +117,7 @@ export default class TransactionsContent extends React.Component {
 
     componentDidMount() {
         const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
+        pageIndex = 0;
         getTxs(result => {
             this.rData = result.transactions;
             this.setState({
