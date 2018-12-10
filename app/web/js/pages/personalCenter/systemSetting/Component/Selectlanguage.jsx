@@ -1,7 +1,7 @@
 /**
 * @file
 * @author zhouminghui
-* 2018.12.1  
+* 2018.12.1
 * 未解之谜   为何突然显示了select的内容 待研究！
 */
 import React from 'react';
@@ -33,19 +33,19 @@ class Selectlang extends React.Component {
         }
         this.state = {
             language: [defaultlanguage]
-        }
+        };
     }
 
     onChangelang(label) {
 
         let defaultlanguage = null;
         if (label === 'zh-CN') {
-            defaultlanguage = '简体中文'
+            defaultlanguage = '简体中文';
         } else {
-            defaultlanguage = 'English'
+            defaultlanguage = 'English';
         }
         this.setState({
-            language: [defaultlanguage],
+            language: [defaultlanguage]
         });
 
 

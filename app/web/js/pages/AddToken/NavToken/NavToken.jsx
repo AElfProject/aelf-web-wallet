@@ -23,8 +23,10 @@ export default class NavToken extends React.Component {
         });
     }
 
-    handleClick() {
-
+    handleClick(e) {
+        if (e.which === 13) {
+            this.props.getTokenName(this.state.value);
+        }
     }
 
     render() {

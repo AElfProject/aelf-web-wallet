@@ -1,10 +1,11 @@
-
 /**
  *  @file
  *  @author zhouminghui
  *  token  绑定与解绑 以及列表渲染
  */
 
+/* eslint-disable new-cap */
+/* eslint-disable fecs-camelcase */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -148,26 +149,22 @@ export default class TokenList extends React.Component {
                                     compare
                                 });
 
-                                let address = JSON.parse(localStorage.lastuse).address;
                                 let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+                                let address = JSON.parse(localStorage.lastuse).address;
+                                let TokenMessage = {
+                                    address: address,
+                                    contract_address: Toeknaddress,
+                                    signed_address: walletInfoList[address].signedAddress,
+                                    public_key: walletInfoList[address].publicKey
+                                };
 
                                 if (compare[rowID]) {
-                                    bindToken({
-                                        address: address,
-                                        contract_address: Toeknaddress,
-                                        signed_address: walletInfoList[address].signedAddress,
-                                        public_key: walletInfoList[address].publicKey
-                                    }, () => {
+                                    bindToken(TokenMessage, () => {
                                         Toast.success('bind Success', 3);
                                     });
                                 }
                                 else {
-                                    unbindToken({
-                                        address: JSON.parse(localStorage.lastuse).address,
-                                        contract_address: Toeknaddress,
-                                        signed_address: walletInfoList[address].signedAddress,
-                                        public_key: walletInfoList[address].publicKey
-                                    }, () => {
+                                    unbindToken(TokenMessage, () => {
                                         Toast.success('unbind Success', 3);
                                     });
                                 }

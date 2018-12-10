@@ -66,14 +66,15 @@ import 'whatwg-fetch';
 
 import AddToken from './pages/AddToken/AddToken';
 
-// test react-intl 测试国际化
+// react-intl 国际化
+// 有可能是当时书写有问题
 // 导入 i18n 配置文件,需要手动创建并填入语言转换信息
+import {antdChooseLocale, chooseLocale} from './utils/utils';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import zh from 'react-intl/locale-data/zh';
 import en from 'react-intl/locale-data/en';
-import enUS from 'antd-mobile/lib/locale-provider/en_US';
-import zh_CN from './langConfig/zh-CN';
-import en_US from './langConfig/en-US';
+// import enUS from 'antd-mobile/lib/locale-provider/en_US';
+
 addLocaleData([...zh, ...en]);
 
 // import style from '../style/index.scss'
@@ -98,44 +99,6 @@ welcomePage.style.opacity = 0;
 setTimeout(() => {
     welcomePage.style.display = 'none';
 }, 600);
-
-
-// 做成单独Util文件时会报错 带查看。。。。
-function chooseLocale() {
-    let Languge = null;
-    if (localStorage.language === undefined) {
-        localStorage.setItem('language', 'zh-CN');
-        Languge = localStorage.language;
-    }
-    else {
-        Languge = localStorage.language;
-    }
-
-    switch (Languge) {
-        case 'zh-CN':
-            return zh_CN;
-        default:
-            return en_US;
-    }
-}
-
-function antdChooseLocale() {
-    let Languge = null;
-    if (localStorage.language === undefined) {
-        localStorage.setItem('language', 'zh-CN');
-        Languge = localStorage.language;
-    }
-    else {
-        Languge = localStorage.language;
-    }
-
-    switch (Languge) {
-        case 'zh-CN':
-            return undefined;
-        default:
-            return enUS;
-    }
-}
 
 setTimeout(() => {
     ReactDOM.render(

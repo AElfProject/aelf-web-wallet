@@ -2,7 +2,8 @@
  *  @file
  *  @author zhouminghui
  *  2018.12.5
- *  已经改成通过address来寻找高亮了
+ *  updata
+ *  2018.12.07 抽屉菜单高亮 从name修改为address控制
  */
 
 import React from 'react';

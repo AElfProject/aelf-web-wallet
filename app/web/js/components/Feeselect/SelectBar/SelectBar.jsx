@@ -11,7 +11,7 @@ import {GradientColor} from '../../../utils/GradientColor';
 
 import style from './SelectBar.scss';
 
-export default class SlelectBar extends React.Component {
+export default class SelectBar extends React.Component {
     constructor(props) {
         super(props);
         this.colorlist = new GradientColor('#2b0081', '#ac00e6', 40);

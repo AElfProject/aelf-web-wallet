@@ -22,7 +22,7 @@ export default class AElfModal extends React.Component {
         this.state = {
             password: '',
             key: '1234',
-            passwordTrypasswordTryTimes: null,
+            passwordTryTimes: null,
             checkCompletion: false
         };
     }
