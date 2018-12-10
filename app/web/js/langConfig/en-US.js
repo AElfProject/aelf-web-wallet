@@ -120,7 +120,7 @@ const en_US = {
     'aelf.About AElf Official Wallet': 'About AElf Official Wallet',
     'aelf.Use Agreement': 'Use Agreement',
     'aelf.Privacy Policy': 'Privacy Policy',
-    'aelf.changelanguage': 'select language',
+    'aelf.changelanguage': 'Language change',
     'aelf.languageSelect': 'Select',
     'aelf.Transaction Record': 'Transaction Record',
     'aelf.Receive': 'Receive',

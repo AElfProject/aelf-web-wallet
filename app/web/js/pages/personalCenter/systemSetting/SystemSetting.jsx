@@ -14,21 +14,21 @@ import NavNormal from '../../NavNormal/NavNormal'
 import AelfList from '../../../components/List/List'
 import NoticePanel from '../../../components/NoticePanel/NoticePanel'
 
-import Selectlanguage from './Component/Selectlanguage'
+import SelectLanguage from './Component/SelectLanguage';
 
-import { FormattedMessage } from  'react-intl'
+import { FormattedMessage } from 'react-intl';
 
-require('./SystemSetting.css')
+require('./SystemSetting.css');
 
 const Item = List.Item;
 class SystemSetting extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            language:[localStorage.language]
+            language: [localStorage.language]
         }
     }
-    renderList () {
+    renderList() {
         let type = 'small';
         let lists = [
             {
@@ -42,7 +42,7 @@ class SystemSetting extends Component {
             return <AelfList
                 key={item.text}
                 onClick={() => hashHistory.push(item.url)}
-                text={<FormattedMessage id = {'aelf.'+item.text} defaultMessage = {item.text} />}
+                text={<FormattedMessage id={'aelf.' + item.text} defaultMessage={item.text} />}
                 type={item.type}
             ></AelfList>
         });
@@ -58,12 +58,12 @@ class SystemSetting extends Component {
                 <NavNormal></NavNormal>
                 <div className='aelf-blank40'></div>
                 <NoticePanel
-                    mainTitle={<FormattedMessage id = 'aelf.System Setting' defaultMessage = 'System Setting' />}
+                    mainTitle={<FormattedMessage id='aelf.System Setting' defaultMessage='System Setting' />}
                     iconHidden={true}
                 ></NoticePanel>
                 <div className='aelf-blank16'></div>
                 {listHtml}
-                <Selectlanguage />
+                <SelectLanguage />
             </div>
         );
     }
