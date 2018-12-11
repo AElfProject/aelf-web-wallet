@@ -76,6 +76,7 @@ export default class TransactionsContent extends React.Component {
             isLoading: true,
             height: document.documentElement.clientHeight,
             useBodyScroll: false,
+            SearchShow: null,
             walletAddress: this.props.address,
             walletData: null
         };

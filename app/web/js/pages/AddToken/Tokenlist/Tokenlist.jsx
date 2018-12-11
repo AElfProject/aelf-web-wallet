@@ -10,7 +10,7 @@ import {PullToRefresh, ListView, List, Switch, Toast} from 'antd-mobile';
 
 import bindToken from '../../../utils/bindToken';
 import unbindToken from '../../../utils/unbindToken';
-import contactMergeArr from '../../../utils/contactMergeArr';
+import contractMergeArr from '../../../utils/contractMergeArr';
 import getContracts from '../../../utils/getContracts';
 import getTokens from '../../../utils/getTokens';
 
@@ -27,6 +27,14 @@ export default class TokenList extends React.Component {
             rowHasChanged: (row1, row2) => row1 !== row2
         });
 
+        this.hide = {
+            display: 'none'
+        };
+
+        this.show = {
+            display: 'block'
+        };
+
         this.state = {
             open: false,
             dataSource,
@@ -36,14 +44,16 @@ export default class TokenList extends React.Component {
             useBodyScroll: false,
             tokenData: null,
             bindToken: null,
-            compare: null
+            compare: null,
+            SearchShow: this.props.searchShow
         };
     }
 
     componentDidUpdate() {
         if (this.state.useBodyScroll) {
             document.body.style.overflow = 'auto';
-        } else {
+        }
+        else {
             document.body.style.overflow = 'hidden';
         }
     }
@@ -69,7 +79,7 @@ export default class TokenList extends React.Component {
 
             let compare = null;
             if (this.state.tokenData !== null) {
-                compare = contactMergeArr(this.state.tokenData, this.state.bindToken);
+                compare = contractMergeArr(this.state.tokenData, this.state.bindToken);
                 this.setState({
                     compare
                 });
@@ -80,6 +90,29 @@ export default class TokenList extends React.Component {
     componentWillUnmount() {
         this.setState = function () {};
     }
+
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.searchShow !== this.props.searchShow) {
+            this.setState({
+                SearchShow: nextProps.searchShow
+            });
+
+            getTokens(result => {
+                this.setState({
+                    bindToken: result
+                });
+                let compare = null;
+                if (this.state.tokenData !== null) {
+                    compare = contractMergeArr(this.state.tokenData, this.state.bindToken);
+                    this.setState({
+                        compare
+                    });
+                }
+            });
+        }
+    }
+
 
     onRefresh() {
         const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
@@ -129,8 +162,8 @@ export default class TokenList extends React.Component {
     render() {
         const row = (rowData, sectionID, rowID) => {
             let item = this.state.tokenData[rowID];
-            let Tokenname = item.name;
-            let Toeknaddress = item.contract_address;
+            let TokenName = item.name;
+            let TokenAddress = item.contract_address;
             return (
                 <div key={rowID}
                     className='addtoken-list-con'
@@ -150,7 +183,7 @@ export default class TokenList extends React.Component {
                                 let address = JSON.parse(localStorage.lastuse).address;
                                 let TokenMessage = {
                                     address: address,
-                                    contract_address: Toeknaddress,
+                                    contract_address: TokenAddress,
                                     signed_address: walletInfoList[address].signedAddress,
                                     public_key: walletInfoList[address].publicKey
                                 };
@@ -168,16 +201,18 @@ export default class TokenList extends React.Component {
                             }}
                         />}
                     >
-                        <div className='addtoken-list-tokenname' >{Tokenname}</div>
-                        <div className='addtoken-list-name' >{Tokenname} Chain</div>
-                        <div className='addtoken-list-tokenaddress' >{Toeknaddress}</div>
+                        <div className='addtoken-list-tokenname' >{TokenName}</div>
+                        <div className='addtoken-list-name' >{TokenName} Chain</div>
+                        <div className='addtoken-list-tokenaddress' >{TokenAddress}</div>
                     </List.Item>
                 </div>
             );
         };
 
         return (
-            <div className='transaction-list-container' >
+            <div className='transaction-list-container'
+                style = {this.state.SearchShow ? this.hide : this.show}
+            >
                 <ListView
                     initialListSize={NUM_ROWS}
                     key={this.state.useBodyScroll ? '0' : '1'}

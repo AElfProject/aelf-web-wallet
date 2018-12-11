@@ -6,9 +6,9 @@
 
 import checkStatus from './checkStatus';
 
-export default function getSearchToken(callback, name){
+export default function getSearchToken(callback, name) {
     let params = {
-        name: name
+        name
     };
 
     let query = '';
