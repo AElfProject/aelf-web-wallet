@@ -34,7 +34,8 @@ export default class SearchTokenList extends React.Component {
             searchTokens: null,
             bindToken: null,
             compare: null,
-            SearchShow: false
+            SearchShow: false,
+            useBodyScroll: false
         };
     }
 
