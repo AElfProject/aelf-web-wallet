@@ -13,6 +13,8 @@ import NavNormal from '../../NavNormal/NavNormal'
 import AelfList from '../../../components/List/List'
 import NoticePanel from '../../../components/NoticePanel/NoticePanel'
 
+import { FormattedMessage } from 'react-intl'
+
 const Item = List.Item;
 class HelpCenter extends Component {
 	renderList () {
@@ -20,44 +22,44 @@ class HelpCenter extends Component {
 		let lists = [
             {
                 url: '/personalcenter/whatismnemonic',
-                text: 'What is a mnemonic?',
+                text: <FormattedMessage id = 'aelf.HelpTitle01' defaultMessage = 'What is a mnemonic?' />,
                 // text: '什么是助记词',
                 type: type
             },
             {
                 url: '/personalcenter/whatiskeystore',
-                text: 'What is a keystore?',
+                text: <FormattedMessage id = 'aelf.HelpTitle02' defaultMessage = 'What is a keystore?' />,
                 //     text: '什么是keyStore',
                 type: type
             },
             {
                 url: '/personalcenter/whatisprivatepublickey',
-                text: 'What are public key and private key?',
+                text: <FormattedMessage id = 'aelf.HelpTitle03' defaultMessage = 'What are public key and private key?' />,
                 //     text: '什么是公钥私钥',
                 type: type
             },
             {
                 url: '/personalcenter/whatisaelfwallet',
-                text: 'What is the AElf Wallet?',
+                text: <FormattedMessage id = 'aelf.HelpTitle04' defaultMessage = 'What is the AElf Wallet?' />,
                 //     text: 'AElf钱包介绍',
                 type: type
             },
             {
                 url: '/personalcenter/howtochangepassword',
-                text: 'How to change the password? ',
+                text: <FormattedMessage id = 'aelf.HelpTitle05' defaultMessage = 'How to change the password?' />,
                 //     text: '如何修改密码？忘记密码怎么办？',
                 type: type
             },
             {
                 url: '/personalcenter/forget',
-                text: 'What if I forget my password?',
+                text: <FormattedMessage id = 'aelf.HelpTitle06' defaultMessage = 'What if I forget my password?' />,
                 type: type
             }
 		];
 
-		let listHtml = lists.map(item => {
+		let listHtml = lists.map((item,index) => {
 			return <AelfList
-				key={item.text}
+				key={index}
                 onClick={() => hashHistory.push(item.url)}
                 text={item.text}
                 type={item.type}
@@ -74,7 +76,7 @@ class HelpCenter extends Component {
 				<NavNormal></NavNormal>
 				<div className='aelf-blank40'></div>
                 <NoticePanel
-                    mainTitle='Help Center'
+                    mainTitle={<FormattedMessage id = 'aelf.Help Center'/>}
                     iconHidden={true}
                 ></NoticePanel>
                 <div className='aelf-blank16'></div>

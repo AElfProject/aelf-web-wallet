@@ -10,6 +10,8 @@ import {
     moneyKeyboardWrapProps
 } from '../../../utils/utils'
 
+import { FormattedMessage } from 'react-intl'
+
 // 目前重写antd-mobile inputItem的样式在Password.css里面
 
 class WalletName extends Component {
@@ -29,7 +31,12 @@ class WalletName extends Component {
         return (
             <div className="aelf-input-container aelf-dash">
                 <List>
-                    <div className="aelf-input-title">Wallet Name</div>
+                    <div className="aelf-input-title">
+                        <FormattedMessage 
+                            id = 'aelf.WalletName'
+                            defaultMessage = 'Wallet Name'
+                        />
+                    </div>
                     <InputItem
                         value={this.state.walletName}
                         type="text"

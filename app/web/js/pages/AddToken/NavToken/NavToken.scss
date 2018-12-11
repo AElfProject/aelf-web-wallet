@@ -1,0 +1,37 @@
+.Navtoken{
+    height: 45px;
+    line-height: 45px;
+    padding: 0px 24px;
+    border-bottom: 1px solid rgba( 255, 255, 255, .1 );
+    display:flex;
+    align-items: center
+}
+
+.goBackBtn{
+    width: 40px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.search{
+    width:88%;
+    height: 32px;
+    background: rgba(255, 255, 255, .1);
+    border-radius:16px;
+    display:flex;
+    align-items: center;
+    svg{
+        display: block;
+    }
+}
+
+.searchinput{
+    width: 80%;
+    margin-left: 1%;
+    background:transparent;
+    border:  none;
+    color: #FFFFFF;
+    font-size: 14px;
+    opacity: .3;
+}

@@ -17,7 +17,10 @@ import insertWalletInfo from '../../../../utils/walletStorage'
 import getPageContainerStyle from '../../../../utils/getPageContainerStyle'
 import walletStatusCheck from '../../../../utils/walletStatusCheck'
 
+import { FormattedMessage } from 'react-intl'
+
 import style from './WalletManage.scss'
+
 
 const Item = List.Item;
 const prompt = Modal.prompt;
@@ -135,7 +138,12 @@ class WalletManage extends Component {
                                 }, ], 'default', '')
                             }>
                             <ListContent
-                                text="Wallet Name"
+                                text={
+                                    <FormattedMessage 
+                                        id = 'aelf.Wallet Name'
+                                        defaultMessage = 'Wallet Name'
+                                    />
+                                }
                             ></ListContent>
                         </Item>
                     </List>
@@ -143,14 +151,24 @@ class WalletManage extends Component {
                     <List className={'aelf-list'}>
                         <Item onClick={() => hashHistory.push('/get-wallet/backup')}>
                             <ListContent
-                                text="Backup"
+                                text={
+                                    <FormattedMessage 
+                                        id = 'aelf.Backup'
+                                        defaultMessage = 'Backup'
+                                    />
+                                }
                             ></ListContent>
                         </Item>
                     </List>
                     <List className={'aelf-list'}>
                         <Item onClick={() => hashHistory.push('/personalcenter/passwordchange')}>
                             <ListContent
-                                text="Change Password"
+                                text={
+                                    <FormattedMessage 
+                                        id = 'aelf.Change Password'
+                                        defaultMessage = 'Change Password'
+                                    />
+                                }
                             ></ListContent>
                         </Item>
                     </List>

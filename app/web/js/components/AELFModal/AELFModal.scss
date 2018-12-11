@@ -1,0 +1,45 @@
+.TranderPassword{
+    padding-top: 24px;
+    height: 208px;
+    width:100%;
+    background:#fff;
+    .am-list-item .am-input-control input{
+        color:#000;
+    }
+    .am-list-body::before{
+        display: none !important;
+    }
+
+    .am-list-body::after{
+        display: none !important;
+    }
+}
+
+.nextButton{
+    width: 80%;
+    margin: 20px auto 0 auto;
+}
+
+.passwordbox{
+    margin: 0 24px;
+    margin-top: 36.75px;
+    border-bottom: 1px dashed #d8d8d8;
+}
+
+.passwordinput{
+    height: 48px;
+    opacity: .08;
+    line-height: 48px;
+    border: none;
+    font-size: 24px;
+    width: 100%;
+    outline:none;
+    color:#000;
+}
+
+.passwordtip{
+    margin: 0 24px;
+    margin-top:5.75px;
+    color: #ffaa00;
+    display: flex;
+}

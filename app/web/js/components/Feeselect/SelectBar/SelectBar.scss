@@ -1,0 +1,23 @@
+.selectbar{
+    width: 100%;
+    height: 24px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+}
+
+.unbar{
+    height: 12px;
+    margin-top:6px;
+    width: 2px;
+    background:#fff;
+    opacity:.1;
+    border-radius: 1px;
+    display: inline-block;
+    margin-left:8px;
+}
+
+.unbar:nth-child(1){
+    margin-left: 0 !important;
+}

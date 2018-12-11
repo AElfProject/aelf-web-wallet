@@ -17,6 +17,7 @@ import Agreement from '../Agreement/Agreement'
 
 import aelf from 'aelf-sdk'
 
+import { FormattedMessage } from 'react-intl'
 
 const tabs = [
   // { title: '助记词' },
@@ -186,7 +187,12 @@ class Import extends Component {
                                 className={this.state.tabNClass}
                                 onClick={() => this.tabClickN()}
                             >
-                                <div>Mnemonic</div>
+                                <div>
+                                    <FormattedMessage 
+                                        id = 'aelf.Mnemonic'
+                                        defaultMessage = 'Mnemonic'
+                                    />
+                                </div>
                                 <div className={style.tabSelectedLine}></div>
                             </div>
 
@@ -194,7 +200,12 @@ class Import extends Component {
                                 className={this.state.tabPClass}
                                 onClick={() => this.tabClickP()}
                             >
-                                <div>Private Key</div>
+                                <div>
+                                    <FormattedMessage 
+                                        id = 'aelf.Private Key'
+                                        defaultMessage = 'Private Key'
+                                    />
+                                </div>
                                 <div className={style.tabSelectedLine}></div>
                             </div>
                         </div>
@@ -219,7 +230,12 @@ class Import extends Component {
                         </div>
 
                     </div>
-                    <p className={style.title}>In this wallet, there is no Mnemonic when import Private Key. But we can get Private Key when we import Mnemonic.</p>
+                    <p className={style.title}>
+                        <FormattedMessage 
+                            id = 'aelf.hint03'
+                            defaultMessage = 'In this wallet, there is no Mnemonic when import Private Key. But we can get Private Key when we import Mnemonic.'
+                        />
+                    </p>
 
                     <WalletName
                         setWalletName={walletName => this.setWalletName(walletName)}
@@ -234,13 +250,17 @@ class Import extends Component {
                     <Flex style={{ padding: '0 24px 0 24px' }}>
 
                         <Flex.Item style={{ padding: '15px 0', color: '#FFF', flex: 'none', opacity: 0.5 }}>
-                            Agreee<span
+                            <FormattedMessage 
+                                id = 'aelf.Agree'
+                                defaultMessage = 'Agree'
+                            />
+                            <span
                             className="aelf-blue"
                             style={{
                                 color: '#26B7FF'
                             }}
                             onClick={() => this.toggleAgreement()}
-                        >《Service and Privacy Policy》</span>
+                        >《<FormattedMessage id = 'aelf.Service and Privacy Policy' defaultMessage = 'Service and Privacy Policy' />》</span>
                         </Flex.Item>
                         <Flex.Item>
                             <div onClick={() => this.setAgreement()}>

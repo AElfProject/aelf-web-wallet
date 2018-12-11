@@ -21,6 +21,8 @@ import getPageContainerStyle from '../../../utils/getPageContainerStyle'
 import getParam from '../../../utils/getParam' // 还有类似方法的话，合并一下。
 import getBalanceAndTokenName from '../../../utils/getBalanceAndTokenName'
 
+import { FormattedMessage } from 'react-intl'
+
 class Home extends Component {
     constructor() {
         super();
@@ -97,7 +99,7 @@ class Home extends Component {
 
         return (
             <div>
-                <NavNormal navTitle="Transaction Record"></NavNormal>
+                <NavNormal navTitle={<FormattedMessage id = 'aelf.Transaction Record' />}></NavNormal>
                 <div style={pageContainerStyle} className={style.container}>
                     <div>
                         <div className={style.assetsInfoContainer}>
@@ -131,7 +133,7 @@ class Home extends Component {
                                          style={{ display: 'inline-block', height: 20, width: 20}}
                                     ></Svg>
                                 </div>
-                                <div>Send</div>
+                                <div><FormattedMessage id = 'aelf.Send' /></div>
                             </div>
                             <div
                                 className={style.button}
@@ -141,7 +143,7 @@ class Home extends Component {
                                     <Svg icon='in20'
                                          style={{ display: 'inline-block', height: 20, width: 20}}></Svg>
                                 </div>
-                                <div>Receive</div>
+                                <div><FormattedMessage id = 'aelf.Receive' /></div>
                             </div>
                         </div>
                     </div>

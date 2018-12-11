@@ -18,6 +18,8 @@ import moneyKeyboardWrapProps from '../../../../utils/moneyKeyboardWrapProps'
 import insertWalletInfo from '../../../../utils/walletStorage'
 import getPageContainerStyle from '../../../../utils/getPageContainerStyle'
 
+import { FormattedMessage } from 'react-intl'
+
 import style from './PasswordChange.scss'
 
 const Item = List.Item;
@@ -90,7 +92,11 @@ class PasswordChange extends Component {
                 style={{
                     opacity: 0.5
                 }}
-            >Submit
+            >
+            <FormattedMessage 
+                id = 'aelf.Submit'
+                defaultMessage = 'Submit'
+            />
             </div>;
         if (this.state.newPassword && true) {
             // changeButton =
@@ -104,7 +110,11 @@ class PasswordChange extends Component {
             rightContent =
                 <div
                     onClick={() => this.changePassword()}
-                >Submit
+                >
+                <FormattedMessage 
+                    id = 'aelf.Submit'
+                    defaultMessage = 'Submit'
+                />
                 </div>;
         }
 
@@ -119,7 +129,12 @@ class PasswordChange extends Component {
                 <div className={style.container} >
                     <div>
                         <NoticePanel
-                            mainTitle={'Change Password'}
+                            mainTitle={
+                                <FormattedMessage 
+                                    id = 'aelf.Change Password'
+                                    defaultMessage = 'Change Password'
+                                />
+                            }
                             subTitle={[
                                 walletName
                             ]}
@@ -128,7 +143,12 @@ class PasswordChange extends Component {
                         <List className={style.passwordContainer}>
 
                             <div className="aelf-input-title">
-                                <div>Old password</div>
+                                <div>
+                                    <FormattedMessage 
+                                        id = 'aelf.Old password'
+                                        defaultMessage = 'Old password'
+                                    />
+                                </div>
                             </div>
                             <InputItem
                                 value={this.state.password}
@@ -144,11 +164,17 @@ class PasswordChange extends Component {
                         ></Password>
 
                         {/*<div className={style.forget}>忘记密码？导入助记词或私钥可重置。*/}
-                        <div className={style.forget}>Forget your password? Importing mnemonic or private key can be reset.
+                        <div className={style.forget}>
+                            <FormattedMessage 
+                                id = 'aelf.Forget your password'
+                            />
                             <a href="javascript:;"
                                className="aelf-blue"
                                onClick={() => hashHistory.push('/get-wallet/import')}>
-                                Immediately import
+                                <FormattedMessage 
+                                    id = 'aelf.Immediately import'
+                                    defaultMessage = 'Immediately import'
+                                />
                             </a>
                         </div>
                     </div>

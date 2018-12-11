@@ -1,0 +1,12 @@
+.AELFModal-password .am-list-body::before {
+    display: none !important;
+}
+
+.AELFModal-password .am-list-body::after {
+    display: none !important;
+}
+
+.AELFModal-password .am-list-item .am-input-control input {
+    color: #000 !important;
+    font-size: 24px;
+}

@@ -12,6 +12,8 @@ import { historyPush } from '../../utils/historyChange'
 
 import style from './BottomTabBar.scss'
 
+import { FormattedMessage } from 'react-intl'
+
 class BottomTabBar extends Component {
     constructor() {
         super();
@@ -77,7 +79,12 @@ class BottomTabBar extends Component {
               >
                   <div className={style.icon + ' ' + style[item.id]}>
                   </div>
-                  <div className={style.name}>{item.text}</div>
+                  <div className={style.name}>
+                    <FormattedMessage 
+                        id  = {"aelf." + item.text}
+                        value = {item.text}
+                    />
+                  </div>
               </div>
             )
         });

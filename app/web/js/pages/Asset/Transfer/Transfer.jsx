@@ -19,6 +19,8 @@ import getPageContainerStyle from '../../../utils/getPageContainerStyle'
 import getParam from '../../../utils/getParam' // 还有类似方法的话，合并一下。
 import getBalanceAndTokenName from '../../../utils/getBalanceAndTokenName'
 
+import { FormattedMessage } from 'react-intl'
+
 // React component
 // TODO
 // 1.function addressCheck() {}
@@ -172,12 +174,12 @@ class Transfer extends Component {
                 <NavNormal></NavNormal>
                 <div className={style.container} style={containerStyle}>
                     <div className="aelf-input-container aelf-dash-light">
-                        <div className={style.title}>{this.state.tokenName} Transaction</div>
+                        <div className={style.title}>{this.state.tokenName} <FormattedMessage id = 'aelf.Transaction' /></div>
                         <List>
                             <div className="aelf-input-title" style={{
                                 marginTop: 28
                             }}>
-                                <div>To Address</div>
+                                <div><FormattedMessage id = 'aelf.To Address' /></div>
                                 {addressErrorText}
                             </div>
                             <InputItem
@@ -193,9 +195,9 @@ class Transfer extends Component {
 
                         <List>
                             <div className="aelf-input-title">
-                                <div>Value / Amount to Send</div>
+                                <div><FormattedMessage id = 'aelf.Amount to send' /></div>
                                 <div>
-                                    Balance：{this.state.balance}
+                                    <FormattedMessage id = 'aelf.Balance' />：{this.state.balance}
                                 </div>
                             </div>
                             <InputItem
@@ -208,7 +210,7 @@ class Transfer extends Component {
 
                         <List>
                             <div className="aelf-input-title">
-                                <div>Password</div>
+                                <div><FormattedMessage id = 'aelf.Password' /></div>
                                 {passwordErrorText}
                             </div>
                             <InputItem

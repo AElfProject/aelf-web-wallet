@@ -1,0 +1,43 @@
+.barbox{
+    position: relative;
+    height: 24px;
+    margin-top: 24px;
+    overflow: hidden;
+}
+
+.SelectbarContainer{
+    width: 100%;
+    height: 24px;
+    overflow: hidden;
+    position: absolute;
+    z-index: 10;
+}
+
+.Selectmv{
+    background: #fff;
+    width:0px;
+    height: 22px;
+    border-radius: 1px;
+    border:1px solid #fff;
+    box-shadow:0 0 10px #000;
+    position: absolute;
+    left:0%;
+    top:0;
+    z-index: 11;
+}
+
+.speed{
+    margin-top: 14px;
+    color: #d8d8d8;
+    opacity: .5;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.fee{
+    text-align: center;
+    color: #FFFFFF;
+    margin-top: 8px;
+    font-size: 14px;
+}

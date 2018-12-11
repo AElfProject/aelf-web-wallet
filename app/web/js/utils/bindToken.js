@@ -1,16 +1,15 @@
-/*
- * huangzongzhe,hzz780
+/**
+ * @file
+ * @author huangzongzhe,hzz780
  * 2018.07.30
  * init aelf
  */
 
-export default bindToken
+import checkStatus from './checkStatus';
 
-import checkStatus from './checkStatus'
-
-function bindToken(option, callback) {
+export default function bindToken(option, callback) {
     let csrf = document.cookie.match(/csrfToken=[^;]*/)[0].replace('csrfToken=', '');
-    fetch(`/block/api/address/bind-token`, {
+    fetch('/block/api/address/bind-token', {
         credentials: 'include',
         method: 'POST',
         headers: {

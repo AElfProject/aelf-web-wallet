@@ -1,0 +1,14 @@
+.List {
+    position: relative;
+    overflow-y: scroll;
+}
+
+.navbar .aelf-normal-navbar-container {
+    position: relative;
+    z-index: 999;
+}
+
+.navbar .aelf-normal-navbar.am-navbar.am-navbar-dark {
+    z-index: 999;
+    max-width: 100%;
+}

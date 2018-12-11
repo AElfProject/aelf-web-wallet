@@ -14,6 +14,9 @@ import style from './Home.scss'
 import Svg from '../../../components/Svg/Svg'
 import ListContent from '../../../components/ListContent/ListContent'
 
+// react-intl 国际化测试
+import { FormattedMessage } from 'react-intl'
+
 const Item = List.Item;
 
 class personalCenterHome extends Component { 
@@ -25,16 +28,26 @@ class personalCenterHome extends Component {
 	                <Item onClick={() => hashHistory.push('/personalcenter/walletmanage?title=WalletManagement')}>
                         <ListContent
                             icon="wallet16"
-                            text="Wallet Record"
+                            text={
+                                <FormattedMessage 
+                                    id = 'aelf.WalletRecord'
+                                    defaultMessage = 'Wallet Record'
+                                />
+                            }
                         ></ListContent>
                     </Item>
 	            </List>
 
                 <List className={'aelf-list'}>
-                    <Item onClick={() => hashHistory.push('/personalcenter/home')}>
+                    <Item onClick={() => hashHistory.push('/transactions')}>
                         <ListContent
                             icon="tx_history16"
-                            text="Transaction List【TODO】"
+                            text={
+                                <FormattedMessage 
+                                    id = 'aelf.TransactionList'
+                                    defaultMessage = 'Transaction List'
+                                />
+                            }
                         ></ListContent>
                     </Item>
                 </List>
@@ -42,11 +55,16 @@ class personalCenterHome extends Component {
                 <div className={style.blank}></div>
 
                 <List className={'aelf-list'}>
-                    <Item onClick={() => hashHistory.push('/personalcenter/home')}>
+                    <Item onClick={() => hashHistory.push('/contactaddress')}>
                         <ListContent
                             type="small"
                             icon="contact16"
-                            text="Address Book【TODO】"
+                            text={
+                                <FormattedMessage 
+                                    id = 'aelf.AddressBook'
+                                    defaultMessage = 'Address Book'
+                                />
+                            }
                         ></ListContent>
                     </Item>
                 </List>
@@ -55,7 +73,12 @@ class personalCenterHome extends Component {
                         <ListContent
                             type="small"
                             icon="setting16"
-                            text="System Setting"
+                            text={
+                                <FormattedMessage 
+                                    id = 'aelf.SystemSetting'
+                                    defaultMessage = 'System Setting'
+                                />
+                            }
                         ></ListContent>
                     </Item>
                 </List>
@@ -64,7 +87,12 @@ class personalCenterHome extends Component {
                         <ListContent
                             type="small"
                             icon="help16"
-                            text="Help Center"
+                            text={
+                                <FormattedMessage 
+                                    id = 'aelf.HelpCenter'
+                                    defaultMessage = 'Help Center'
+                                />
+                            }
                         ></ListContent>
                     </Item>
                 </List>
@@ -73,7 +101,12 @@ class personalCenterHome extends Component {
                         <ListContent
                             type="small"
                             icon="about16"
-                            text="About ELF Official Wallet"
+                            text={
+                                <FormattedMessage 
+                                    id = 'aelf.About'
+                                    defaultMessage = "About ELF Official Wallet"
+                                />
+                            }
                         ></ListContent>
                     </Item>
                 </List>

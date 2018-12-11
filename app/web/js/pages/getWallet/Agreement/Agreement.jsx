@@ -5,6 +5,8 @@ import { hashHistory } from 'react-router'
 
 import Service from './Service'
 import Privacy from './Privacy'
+import { FormattedMessage } from 'react-intl';
+import AelfButton from '../../../components/Button/Button';
 
 // React component
 class Agreement extends Component {
@@ -45,7 +47,10 @@ class Agreement extends Component {
                             color: '#AC00E6'
                         }}
                         onClick={this.props.toggleAgreement}>
-                        Agree
+                        <FormattedMessage 
+                            id = 'aelf.Agree'
+                            defaultMessage = 'Agree'
+                        />
                     </Button>
                 </div>
             </div>

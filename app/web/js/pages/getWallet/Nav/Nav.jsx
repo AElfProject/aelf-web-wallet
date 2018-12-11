@@ -8,6 +8,7 @@ import React, {
 import { NavBar, Icon } from 'antd-mobile'
 import { hashHistory } from 'react-router'
 import walletStatusCheck from '../../../utils/walletStatusCheck'
+import { FormattedMessage } from 'react-intl';
 // import style from './QRCode.scss'
 require('./Nav.css');
 
@@ -21,8 +22,8 @@ class GetWalletsNav extends Component {
 		let isBackup = pathname.match(/\/get-wallet\/backup/);
 		let isGuide = pathname.match(/\/get-wallet\/guide/);
 		// console.log('hashHistory: ', hashHistory);
-		let title = isCreate ? '' : 'Import';
-		title = isBackup ? 'Backup' : title;
+		let title = isCreate ? '' : <FormattedMessage id = 'aelf.Import' defaultMessage = 'Import' />;
+		title = isBackup ? <FormattedMessage id = 'aelf.Backup' defaultMessage = 'Backup' /> : title;
         title = isGuide ? '' : title;
 
         let leftHtml =
