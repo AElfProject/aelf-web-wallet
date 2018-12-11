@@ -6,6 +6,29 @@
 
 import checkStatus from './checkStatus';
 
-export default function getSearchToken(){
+export default function getSearchToken(callback, name){
+    let params = {
+        name: name
+    };
 
+    let query = '';
+    for (let each in params) {
+        query += `${each}=${params[each]}&`;
+    }
+
+    fetch(`block/api/contract/searchtoken?${query}`, {
+        credentials: 'include',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    }).then(checkStatus).then(result => {
+        result.text().then(result => {
+            let output = JSON.parse(result);
+            callback(output);
+        });
+    }).catch(error => {
+        console.log('error:', error);
+    });
 }

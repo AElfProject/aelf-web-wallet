@@ -4,9 +4,6 @@
  *  token  绑定与解绑 以及列表渲染
  */
 
-/* eslint-disable new-cap */
-/* eslint-disable fecs-camelcase */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {PullToRefresh, ListView, List, Switch, Toast} from 'antd-mobile';
