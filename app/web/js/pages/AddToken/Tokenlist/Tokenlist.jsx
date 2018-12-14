@@ -13,6 +13,7 @@ import unbindToken from '../../../utils/unbindToken';
 import contractMergeArr from '../../../utils/contractMergeArr';
 import getContracts from '../../../utils/getContracts';
 import getTokens from '../../../utils/getTokens';
+import {SCROLLFOOTER} from '../../../constants';
 
 require('./TokenList.css');
 
@@ -45,7 +46,7 @@ export default class TokenList extends React.Component {
             tokenData: null,
             bindToken: null,
             compare: null,
-            SearchShow: this.props.searchShow
+            searchShow: this.props.searchShow
         };
     }
 
@@ -58,32 +59,36 @@ export default class TokenList extends React.Component {
         }
     }
 
+    getTokenList() {
+        return new Promise((resolve, reject) => {
+            getContracts(result => {
+                resolve(result.transactions);
+            }, pIndex, NUM_ROWS);
+        });
+    }
+
+    getBindTokenList() {
+        return new Promise((resolve, reject) => {
+            getTokens(result => {
+                resolve(result);
+            });
+        });
+    }
+
     componentDidMount() {
         const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
-        getContracts(result => {
-            this.rData = result.transactions;
+        Promise.all([this.getTokenList(), this.getBindTokenList()]).then(value => {
+            this.rData = value[0];
+            this.tData = value[1];
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(this.rData),
-                height: hei,
                 refreshing: false,
                 isLoading: false,
-                tokenData: result.transactions,
-                compare: Array(result.transactions.length)
+                height: hei,
+                tokenData: this.rData,
+                bindToken: this.tData,
+                compare: contractMergeArr(this.rData, this.tData)
             });
-        }, pIndex, NUM_ROWS);
-
-        getTokens(result => {
-            this.setState({
-                bindToken: result
-            });
-
-            let compare = null;
-            if (this.state.tokenData !== null) {
-                compare = contractMergeArr(this.state.tokenData, this.state.bindToken);
-                this.setState({
-                    compare
-                });
-            }
         });
     }
 
@@ -91,28 +96,21 @@ export default class TokenList extends React.Component {
         this.setState = function () {};
     }
 
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.searchShow !== this.props.searchShow) {
-            this.setState({
-                SearchShow: nextProps.searchShow
-            });
-
-            getTokens(result => {
-                this.setState({
-                    bindToken: result
-                });
-                let compare = null;
-                if (this.state.tokenData !== null) {
-                    compare = contractMergeArr(this.state.tokenData, this.state.bindToken);
-                    this.setState({
-                        compare
-                    });
-                }
-            });
+    static getDerivedStateFromProps(props, state) {
+        if (props.searchShow !== state.searchShow) {
+            return {
+                searchShow: props.searchShow
+            };
         }
-    }
 
+        if (props.value !== state.value) {
+            return {
+                value: props.value
+            };
+        }
+
+        return null;
+    }
 
     onRefresh() {
         const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
@@ -121,16 +119,20 @@ export default class TokenList extends React.Component {
             isLoading: true
         });
 
-        getContracts(result => {
-            this.rData = result.transactions;
+        pIndex = 0;
+        Promise.all([this.getTokenList(), this.getBindTokenList()]).then(value => {
+            this.rData = value[0];
+            this.tData = value[1];
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(this.rData),
-                height: hei,
                 refreshing: false,
                 isLoading: false,
-                tokenData: result.transactions
+                height: hei,
+                tokenData: this.rData,
+                bindToken: this.tData,
+                compare: contractMergeArr(this.rData, this.tData)
             });
-        }, pIndex = 0, NUM_ROWS);
+        });
 
     }
 
@@ -149,21 +151,22 @@ export default class TokenList extends React.Component {
         getContracts(result => {
             // 测试上千条数据
             // this.rData = [...this.rData, ...this.rData];
-            this.rData = [...this.state.walletData, ...result.transactions];
-
-            this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(this.rData),
-                isLoading: false,
-                tokenData: this.rData
-            });
+            this.rData = [...this.rData, ...result.transactions];
+            if (result.transactions.lenght !== undefined) {
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(this.rData),
+                    isLoading: false,
+                    tokenData: this.rData,
+                    compare: contractMergeArr(this.rData, this.state.bindToken)
+                });
+            }
         }, ++pIndex, NUM_ROWS);
     }
 
     render() {
         const row = (rowData, sectionID, rowID) => {
-            let item = this.state.tokenData[rowID];
-            let TokenName = item.name;
-            let TokenAddress = item.contract_address;
+            let TokenName = rowData.name;
+            let TokenAddress = rowData.contract_address;
             return (
                 <div key={rowID}
                     className='addtoken-list-con'
@@ -178,7 +181,7 @@ export default class TokenList extends React.Component {
                                 this.setState({
                                     compare
                                 });
-
+                                this.forceUpdate();
                                 let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
                                 let address = JSON.parse(localStorage.lastuse).address;
                                 let TokenMessage = {
@@ -211,13 +214,14 @@ export default class TokenList extends React.Component {
 
         return (
             <div className='transaction-list-container'
-                style = {this.state.SearchShow ? this.hide : this.show}
+                style = {this.state.searchShow ? this.hide : this.show}
             >
                 <ListView
                     initialListSize={NUM_ROWS}
                     key={this.state.useBodyScroll ? '0' : '1'}
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}
+                    renderFooter={() => SCROLLFOOTER(this.state.isLoading, this.state.hasMore)}
                     renderRow={row}
                     useBodyScroll={this.state.useBodyScroll}
                     style={this.state.useBodyScroll ? {} : {

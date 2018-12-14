@@ -12,8 +12,9 @@ import ReactDOM from 'react-dom';
 import {PullToRefresh, ListView} from 'antd-mobile';
 
 import checkStatus from '../../../utils/checkStatus';
-import addressOmit from '../../../utils/addressOmit';
+import {txIdOmit} from '../../../utils/utils';
 import {hashHistory} from 'react-router';
+import {SCROLLFOOTER} from '../../../constants';
 
 import style from './TransactionsContent.scss';
 
@@ -76,7 +77,7 @@ export default class TransactionsContent extends React.Component {
             isLoading: true,
             height: document.documentElement.clientHeight,
             useBodyScroll: false,
-            SearchShow: null,
+            searchShow: this.props.searchShow,
             walletAddress: this.props.address,
             walletData: null
         };
@@ -91,29 +92,20 @@ export default class TransactionsContent extends React.Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.address !== this.props.address) {
-            this.setState({
-                walletAddress: nextProps.address
-            });
-            const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
-            getTxs(result => {
-                this.rData = result.transactions;
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(this.rData),
-                    height: hei,
-                    refreshing: false,
-                    isLoading: false,
-                    walletData: result.transactions
-                });
-            }, nextProps.address, pageIndex);
+    static getDerivedStateFromProps(props, state) {
+        if (props.address !== state.walletAddress) {
+            return {
+                walletAddress: props.address
+            };
         }
 
-        if (nextProps.searchShow !== this.props.searchShow) {
-            this.setState({
-                SearchShow: nextProps.searchShow
-            });
+        if (props.searchShow !== state.searchShow) {
+            return {
+                searchShow: props.searchShow
+            };
         }
+
+        return null;
     }
 
     componentDidMount() {
@@ -129,7 +121,6 @@ export default class TransactionsContent extends React.Component {
                 walletData: result.transactions
             });
         }, this.state.walletAddress, pageIndex);
-
     }
 
     componentWillUnmount() {
@@ -142,7 +133,7 @@ export default class TransactionsContent extends React.Component {
             refreshing: true,
             isLoading: true
         });
-
+        pageIndex = 0;
         getTxs(result => {
             this.rData = result.transactions;
             this.setState({
@@ -186,8 +177,8 @@ export default class TransactionsContent extends React.Component {
             let isIncome = item.params_to === this.state.walletAddress ? true : false;
             let quantity = item.quantity;
             let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
-            let address = isIncome ? item.address_from : item.params_to;
-            address = addressOmit(address);
+            let txId = item.tx_id;
+            txId = txIdOmit(txId);
 
             return (
                 <div key={rowID}
@@ -199,7 +190,7 @@ export default class TransactionsContent extends React.Component {
                         </div>
                         <div>
                             <div className={style.address}>
-                                {address}
+                                {txId}
                             </div>
                             {/* <div className={style.time}>2018-09-08</div> */}
                             {/* <div className = {style.defeated} >交易失败</div> */}
@@ -217,13 +208,14 @@ export default class TransactionsContent extends React.Component {
         return (
             <div
                 className={style.transactionContainer + ' ' + 'transaction-list-container'}
-                style = {this.state.SearchShow ? this.hide : this.show}
+                style = {this.state.searchShow ? this.hide : this.show}
             >
                 <ListView
                     initialListSize={NUM_ROWS}
                     key={this.state.useBodyScroll ? '0' : '1'}
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}
+                    renderFooter={() => SCROLLFOOTER(this.state.isLoading, this.state.hasMore)}
                     renderRow={row}
                     useBodyScroll={this.state.useBodyScroll}
                     style={this.state.useBodyScroll ? {} : {

@@ -5,12 +5,14 @@
 */
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {List, Switch, ListView, Toast} from 'antd-mobile';
 import getSearchToken from '../../../utils/getSearchToken';
 import getTokens from '../../../utils/getTokens';
 import contractMergeArr from '../../../utils/contractMergeArr';
 import bindToken from '../../../utils/bindToken';
 import unbindToken from '../../../utils/unbindToken';
+import {SCROLLFOOTER} from '../../../constants';
 
 export default class SearchTokenList extends React.Component {
     constructor(props) {
@@ -30,68 +32,74 @@ export default class SearchTokenList extends React.Component {
 
         this.state = {
             value: this.props.value,
+            searchShow: this.props.searchShow,
             dataSource,
+            height: document.documentElement.clientHeight,
             searchTokens: null,
+            isLoading: false,
             bindToken: null,
             compare: null,
-            SearchShow: false,
             useBodyScroll: false
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.searchShow !== this.props.searchShow) {
-            this.setState({
-                SearchShow: nextProps.searchShow
-            });
+    getSearchTokenList(name) {
+        return new Promise((resolve, reject) => {
+            getSearchToken(result => {
+                resolve(result);
+            }, name);
+        });
+    }
 
+    getBindTokenList() {
+        return new Promise((resolve, reject) => {
             getTokens(result => {
-                this.setState({
-                    bindToken: result
-                });
-
-                let compare = null;
-                if (this.state.searchTokens !== null) {
-                    compare = contractMergeArr(this.state.searchTokens, this.state.bindToken);
-                    this.setState({
-                        compare
-                    });
-                }
+                resolve(result);
             });
+        });
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.value !== state.value) {
+            return {
+                value: props.value
+            };
         }
 
-        if (nextProps.value !== this.props.value) {
-            getSearchToken(result => {
-                this.setState({
-                    value: nextProps.value,
-                    searchTokens: result,
-                    dataSource: this.state.dataSource.cloneWithRows(result),
-                    compare: Array(result.length)
-                });
-            }, nextProps.value);
+        if (props.searchShow !== state.searchShow) {
+            return {
+                searchShow: props.searchShow
+            };
+        }
 
-            getTokens(result => {
-                this.setState({
-                    bindToken: result
-                });
+        return null;
+    }
 
-                let compare = null;
-                if (this.state.searchTokens !== null) {
-                    compare = contractMergeArr(this.state.searchTokens, this.state.bindToken);
-                    this.setState({
-                        compare
-                    });
-                }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.value !== this.props.value) {
+            this.setState({
+                isLoading: true
+            });
+            const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
+            Promise.all([this.getSearchTokenList(this.props.value), this.getBindTokenList()]).then(value => {
+                this.sData = value[0];
+                this.tData = value[1];
+                this.setState({
+                    searchTokens: this.sData,
+                    bindToken: this.tData,
+                    isLoading: false,
+                    height: hei,
+                    dataSource: this.state.dataSource.cloneWithRows(this.sData),
+                    compare: contractMergeArr(this.sData, this.tData)
+                });
             });
         }
     }
 
     render() {
         const row = (rowData, sectionID, rowID) => {
-            let item = this.state.searchTokens[rowID];
-            console.log(this.state.compare[rowID]);
-            let TokenName = item.name;
-            let TokenAddress = item.contract_address;
+            let TokenName = rowData.name;
+            let TokenAddress = rowData.contract_address;
             return (
                 <div key={rowID}
                     className='addtoken-list-con'
@@ -138,13 +146,14 @@ export default class SearchTokenList extends React.Component {
         };
         return (
             <div className='transaction-list-container'
-                style={this.state.SearchShow ? this.show : this.hide}
+                style={this.state.searchShow ? this.show : this.hide}
             >
                 <ListView
                     initialListSize={1000}
                     key={this.state.useBodyScroll ? '0' : '1'}
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}
+                    renderFooter={() => SCROLLFOOTER(this.state.isLoading, this.state.hasMore)}
                     renderRow={row}
                     useBodyScroll={this.state.useBodyScroll}
                     style={this.state.useBodyScroll ? {} : {

@@ -7,7 +7,7 @@
 import React from 'react';
 import Svg from '../../../components/Svg/Svg';
 import style from './Navtoken.scss';
-import {hashHistory} from 'react-router';
+import {historyReplace} from '../../../utils/historyChange';
 
 export default class NavToken extends React.Component {
 
@@ -31,19 +31,11 @@ export default class NavToken extends React.Component {
         }
     }
 
-    goBack() {
-        if (history.length === 1) {
-            window.location.href = window.location.protocol + '//' + window.location.host;
-            return;
-        }
-        hashHistory.goBack();
-    }
-
     render() {
         return (
             <div className={style.Navtoken}>
                 <div className={style.goBackBtn}
-                    onClick={this.goBack}
+                    onClick={() => historyReplace('/assets')}
                 >
                     <Svg icon={'back22'}
                         style={{display: 'inline-block', height: 36, width: 16}}

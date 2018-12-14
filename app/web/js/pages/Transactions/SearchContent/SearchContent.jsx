@@ -10,9 +10,8 @@ import React from 'react';
 
 import {ListView} from 'antd-mobile';
 
-import addressOmit from '../../../utils/addressOmit';
+import {txIdOmit} from '../../../utils/utils';
 import {hashHistory} from 'react-router';
-
 import style from '../TransactionsContent/TransactionsContent.scss';
 
 export default class SearchContent extends React.Component {
@@ -32,8 +31,8 @@ export default class SearchContent extends React.Component {
         };
 
         this.state = {
-            SearchValue: null,
-            SearchShow: false,
+            searchValue: null,
+            searchShow: this.props.searchShow,
             dataSource,
             walletAddress: this.props.address,
             height: document.documentElement.clientHeight
@@ -41,51 +40,71 @@ export default class SearchContent extends React.Component {
 
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.SearchValue !== this.props.SearchValue) {
-            let result = nextProps.SearchValue;
-            // 重新定义了 dataSource 是因为 这方法传了值他就一直认为要有值。。
+    static getDerivedStateFromProps(props, state) {
+        if (props.searchValue !== state.searchValue) {
+            return {
+                searchValue: props.searchValue.result
+            };
+        }
+
+        if (props.searchShow !== state.searchShow) {
+            return {
+                searchShow: props.searchShow
+            };
+        }
+
+        if (props.address !== state.walletAddress) {
+            return {
+                walletAddress: props.address
+            };
+        }
+
+        return null;
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.searchValue !== this.props.searchValue) {
+            let result = this.state.searchValue;
+        // 重新定义了 dataSource 是因为 这方法传了值他就一直认为要有值。。
             const dataSource = new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2
             });
 
-            if (result.result.tx_status === 'NotExisted') {
+            if (result.tx_status === 'NotExisted') {
                 this.setState({
-                    SearchValue: null,
+                    searchValue: null,
                     dataSource
                 });
             }
             else {
                 this.setState({
-                    SearchValue: result,
                     dataSource: this.state.dataSource.cloneWithRows(result)
                 });
             }
-
         }
 
-        if (nextProps.searchShow !== this.props.searchShow) {
+        if (prevProps.searchShow !== this.props.searchShow) {
             this.setState({
-                SearchShow: nextProps.searchShow
+                searchShow: this.props.searchShow
             });
         }
 
-        if (nextProps.address !== this.props.address) {
+        if (prevProps.address !== this.props.address) {
             this.setState({
-                walletAddress: nextProps.address
+                walletAddress: this.props.address
             });
         }
     }
 
     render() {
         const row = (rowData, sectionID, rowID) => {
-            let item = this.state.SearchValue.result;
+            let item = this.state.searchValue;
             let params = item.tx_info.params.split(',');
             let isIncome = params[0] === this.state.walletAddress ? true : false;
             let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
-            let address = isIncome ? item.tx_info.From : params[0];
             item.txId = item.tx_info.TxId;
-            address = addressOmit(address);
+            let txId = item.tx_info.TxId;
+            txId = txIdOmit(txId);
             let quantity = params[1];
 
             return (
@@ -98,7 +117,7 @@ export default class SearchContent extends React.Component {
                         </div>
                         <div>
                             <div className={style.address}>
-                                {address}
+                                {txId}
                             </div>
                             {/* <div className={style.time}>2018-09-08</div> */}
                             {/* <div className = {style.defeated} >交易失败</div> */}
@@ -116,7 +135,7 @@ export default class SearchContent extends React.Component {
         return (
             <div
                 className={style.transactionContainer + ' ' + 'transaction-list-container'}
-                style={this.state.SearchShow ? this.show : this.hide}
+                style={this.state.searchShow ? this.show : this.hide}
             >
                 <ListView
                     initialListSize={1}

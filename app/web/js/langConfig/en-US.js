@@ -138,7 +138,13 @@ const en_US = {
     'aelf.Modaltimes': 'more chances',
     'aelf.Back Home': 'Back Home',
     'aelf.error page': 'error page',
-    'aelf.cannot connect chain': 'cannot connect chain'
+    'aelf.cannot connect chain': 'cannot connect chain',
+    'aelf.PleaseBackUp': 'NOTE! Please Back Up!',
+    'aelf.BackUpCon01':'Aelf reminds you again that the blockchain wallet is different from the traditional website account, which is a cryptographic-based decentralized account system.',
+    'aelf.BackUpCon02':"You must save the wallet's private key and transaction password, and any accidents will result in the loss of assets.",
+    'aelf.BackUpCon03':'Aelf prompts you to make a backup, conduct a small transaction test, and start the journey of use.',
+    'aelf.BackUpCon04':'Backup your wallet recovery phrase is extremely important when your wallet is lost or forgotten.',
+    'aelf.Backup now':'Backup now'
 
 };
 

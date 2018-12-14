@@ -180,11 +180,13 @@
 }
 
 .addBtn {
+	display: inline-block;
+	float: right;
 	height: 40px;
 	width: 40px;
 	background: url("../../../assets/svg_icon/add40.svg") no-repeat;
 	background-size: cover;
-	margin: 10px auto auto auto;
+	margin-right: 20px;
 }
 
 .addBtn:active {
