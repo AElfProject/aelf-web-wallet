@@ -2,17 +2,21 @@
  * huangzongzhe
  * 2018.07.26
  */
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { ListView, PullToRefresh, Toast } from 'antd-mobile'
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import {Link} from 'react-router';
+import { ListView, PullToRefresh, Toast } from 'antd-mobile';
 
 import style from './Assets.scss'
 require('./Assets.css')
 
 import { historyPush } from '../../utils/historyChange'
-import checkStatus from '../../utils/checkStatus'
-import getPageContainerStyle from '../../utils/getPageContainerStyle'
-import clipboard from '../../utils/clipboard'
+import {
+    checkStatus,
+    getPageContainerStyle,
+    clipboard,
+    whetherBackupCheck
+} from '../../utils/utils';
 
 import {
     SCROLLLIST,
@@ -214,6 +218,40 @@ class Assets extends Component {
         this.setState = () => {};
     }
 
+    renderAddress() {
+        if (whetherBackupCheck()) {
+            let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+            return (
+                <div className={style.addressContainer}>
+                    <div className={style.address}>{walletAddress.slice(0, 18) + '...'}</div>
+                    <div
+                        className={style.copyBtn}
+                        onClick={() => {
+                            let btn = document.getElementById('clipboard-assets');
+                            btn.click();
+                        }}
+                    ></div>
+
+                    <button id="clipboard-assets"
+                            data-clipboard-target="#assets-address-text"
+                            className={style.textarea}>copy
+                    </button>
+                    <input id="assets-address-text"
+                           type="text"
+                           className={style.textarea}
+                           value={walletAddress}
+                           readOnly/>
+                </div>
+            );
+        } else {
+            return (
+                <div className={style.addressContainer}>
+                    <Link to={'/get-wallet/backup'}>Click to backup your wallet.</Link>
+                </div>
+            );
+        }
+    }
+
     // TODO: 刷新该页面，下拉，快去点击资产进入到交易列表页，会报错，有内存泄漏的可能。暂无思路。
     render() {
         // check
@@ -247,25 +285,7 @@ class Assets extends Component {
                                 </div>
                             </div>
 
-                            <div className={style.addressContainer}>
-                                <div className={style.address}>{walletAddress.slice(0, 18) + '...'}</div>
-                                <div
-                                    className={style.copyBtn}
-                                    onClick={() => {
-                                        let btn = document.getElementById('clipboard-assets');
-                                        btn.click();
-                                    }}
-                                ></div>
-
-                                <button id="clipboard-assets"
-                                        data-clipboard-target="#assets-address-text"
-                                        className={style.textarea}>copy</button>
-                                <input id="assets-address-text"
-                                       type="text"
-                                       className={style.textarea}
-                                       value={walletAddress}
-                                       readOnly/>
-                            </div>
+                            {this.renderAddress()}
                         </div>
 
                         <div className={style.transactionList}>

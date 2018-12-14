@@ -1,5 +1,6 @@
-/*
- * huangzongzhe
+/**
+ * @file Home.jsx
+ * @author huangzongzhe
  * 2018.07.26
  */
 import React, { Component } from 'react'
@@ -15,11 +16,12 @@ import NavNormal from '../../NavNormal/NavNormal'
 import AelfButton from '../../../components/Button/Button'
 import Svg from '../../../components/Svg/Svg'
 
-import checkStatus from '../../../utils/checkStatus'
-import getPageContainerStyle from '../../../utils/getPageContainerStyle'
-
-import getParam from '../../../utils/getParam' // 还有类似方法的话，合并一下。
-import getBalanceAndTokenName from '../../../utils/getBalanceAndTokenName'
+import {
+    checkStatus,
+    getPageContainerStyle,
+    getParam,
+    getBalanceAndTokenName
+} from '../../../utils/utils';
 
 import { FormattedMessage } from 'react-intl'
 

@@ -7,7 +7,7 @@ import React from "react";
 
 const SCROLLLIST = {
     loading: 'Loading...',
-    loading: 'Loaded',
+    loaded: 'Loaded',
     end: 'No More o((⊙﹏⊙))o',
 }
 const SCROLLFOOTER = (isLoading, hasMore) => {
@@ -16,7 +16,7 @@ const SCROLLFOOTER = (isLoading, hasMore) => {
             {
                 isLoading
                     ? SCROLLLIST.loading
-                    : (hasMore ? SCROLLLIST.loaded : SCROLLLIST.end)
+                    : (hasMore ? SCROLLLIST.loading : SCROLLLIST.end)
             }
         </div>
     );

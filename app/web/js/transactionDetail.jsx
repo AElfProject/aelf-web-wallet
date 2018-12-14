@@ -1,11 +1,24 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import {LocaleProvider} from 'antd-mobile';
+
+import {IntlProvider, addLocaleData} from 'react-intl';
+import zh from 'react-intl/locale-data/zh';
+import en from 'react-intl/locale-data/en';
+
+import {antdChooseLocale, chooseLocale} from './utils/utils';
 
 import TransactionDetail from './pages/Asset/TransactionDetail/TransactionDetail'
 
 import style from '../style/index.scss'
 
+addLocaleData([...zh, ...en]);
+
 ReactDOM.render(
-  <TransactionDetail/>,
-  document.getElementById('root')
+    <IntlProvider locale={navigator.language} messages={chooseLocale()} >
+        <LocaleProvider locale={antdChooseLocale()} >
+            <TransactionDetail/>
+        </LocaleProvider>
+    </IntlProvider>,
+    document.getElementById('root')
 )

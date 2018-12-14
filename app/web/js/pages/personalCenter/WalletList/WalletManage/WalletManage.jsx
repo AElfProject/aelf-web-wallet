@@ -13,9 +13,13 @@ import NoticePanel from '../../../../components/NoticePanel/NoticePanel'
 import AelfButton from '../../../../components/Button/Button'
 
 import NavWithDrawer from '../../../NavWithDrawer/NavWithDrawer'
-import insertWalletInfo from '../../../../utils/walletStorage'
-import getPageContainerStyle from '../../../../utils/getPageContainerStyle'
-import walletStatusCheck from '../../../../utils/walletStatusCheck'
+
+import {
+    insertWalletInfo,
+    getPageContainerStyle,
+    walletStatusCheck,
+    whetherBackupCheck
+} from '../../../../utils/utils';
 
 import { FormattedMessage } from 'react-intl'
 
@@ -102,6 +106,10 @@ class WalletManage extends Component {
 		let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
 		let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
 		let walletName = walletInfoList[walletAddress].walletName;
+
+        if (!whetherBackupCheck()) {
+            walletAddress = 'Please backup your wallet';
+        }
 
         let containerStyle = getPageContainerStyle();
         containerStyle.height = containerStyle.height - 61;

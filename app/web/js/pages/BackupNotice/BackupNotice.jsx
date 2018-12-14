@@ -11,19 +11,11 @@ import style from './BackupNotice.scss'
 import NavNormal from './../NavNormal/NavNormal'
 
 import AelfButton from './../../components/Button/Button'
+import {whetherBackupCheck} from '../../utils/utils'
 
 class BackupNotice extends Component {
-	needBackup () {
-		let walletId = JSON.parse(localStorage.getItem('lastuse')).address;
-        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
-        let walletInfo = walletInfoList[walletId];
-
-        return walletInfo.hasBackup === undefined
-        	? false : !walletInfo.hasBackup;
-	}
-
 	render() {
-		let needBackup = this.needBackup();
+		let needBackup = !whetherBackupCheck();
 
 		let html = '';
 		if (needBackup) {
@@ -67,7 +59,7 @@ class BackupNotice extends Component {
 							type='blue'
 							className={style.button}
                             onClick={() => hashHistory.push('/get-wallet/backup')}
-                        >Backup now</AelfButton>
+                        >BackupNow</AelfButton>
                         <WhiteSpace />
 
 					</div>

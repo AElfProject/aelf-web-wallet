@@ -1,5 +1,6 @@
-/*
- * huangzongzhe
+/**
+ * @file TransactionDetail.js
+ * @author huangzongzhe
  * 2018.07.27
  */
 import React, { Component } from 'react'
@@ -11,10 +12,12 @@ import NavNormal from '../../NavNormal/NavNormal'
 
 import AelfButton from './../../../components/Button/Button'
 
-import getParam from '../../../utils/getParam' // 还有类似方法的话，合并一下。
-import initAelf from '../../../utils/initAelf'
-import clipboard from '../../../utils/clipboard'
-import getPageContainerStyle from '../../../utils/getPageContainerStyle'
+import {
+    getParam,
+    initAelf,
+    clipboard,
+    getPageContainerStyle
+} from '../../../utils/utils';
 
 import { FormattedMessage } from 'react-intl'
 
@@ -121,13 +124,11 @@ class TransactionDetail extends Component {
     }
 
     renderNavHtml() {
-        // 这里有点针对业务定制了。。。233
-        let pathname = window.location.pathname;
-        let NavHtml = pathname.match(/^\/transactiondetail/)
-            ?
+        let hideLeft = window.location.pathname.match(/^\/transactiondetail/) ? true : false;
+        let NavHtml = (
             <NavNormal
                 navTitle={<FormattedMessage id = 'aelf.Transaction Details' />}
-                hideLeft={true}
+                hideLeft={hideLeft}
                 rightContent={
                     <div
                         onClick={() => {
@@ -136,7 +137,8 @@ class TransactionDetail extends Component {
                     ><FormattedMessage id = 'aelf.Home' /></div>
                 }
             />
-            : <NavNormal navTitle={<FormattedMessage id = 'aelf.Transaction Details' />}/>;
+        );
+
         return NavHtml;
     }
 
