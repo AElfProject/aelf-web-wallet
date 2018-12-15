@@ -34,7 +34,7 @@ bash build.sh === bash build.sh pro
 cp config/demo.config.default.js config/config.default.js 
 // set your own config.keys
 
-cp config/demo.config.node.js config./config.node.js
+cp config/demo.config.node.js config/config.node.js
 // set you own httpProvider
 // set your own default mainContract
 ```
