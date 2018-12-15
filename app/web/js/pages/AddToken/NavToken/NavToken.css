@@ -7,3 +7,14 @@
     font-size: 14px;
     opacity: .3;
 }
+
+.clearBtn {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    line-height: 16px;
+}

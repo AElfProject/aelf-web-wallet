@@ -30,27 +30,27 @@ export default class Transactions extends React.Component {
         super(props);
         this.state = {
             open: false,
-            walletaddress: JSON.parse(localStorage.lastuse).address,
-            SearchValue: null,
-            SearchShow: false
+            walletAddress: JSON.parse(localStorage.lastuse).address,
+            searchValue: null,
+            searchShow: false
         };
     }
 
     setValue(val) {
         this.setState({
-            SearchValue: val
+            searchValue: val
         });
     }
 
     searchShow() {
         this.setState({
-            SearchShow: true
+            searchShow: true
         });
     }
 
     searchHide() {
         this.setState({
-            SearchShow: false
+            searchShow: false
         });
     }
 
@@ -77,7 +77,7 @@ export default class Transactions extends React.Component {
         this.setState({
             // lastuse: lastuse,
             open: !this.state.open,
-            walletaddress: walletInfo.address
+            walletAddress: walletInfo.address
         });
 
         // 艹，这代码好恶心。
@@ -169,7 +169,7 @@ export default class Transactions extends React.Component {
                     />
                 </NavBar>
                 <Search
-                    address={this.state.walletaddress}
+                    address={this.state.walletAddress}
                     setValue={this.setValue.bind(this)}
                     searchShow={this.searchShow.bind(this)}
                     searchHide={this.searchHide.bind(this)}
@@ -193,13 +193,13 @@ export default class Transactions extends React.Component {
                 >
                     <WhiteSpace />
                     <TransactionsContent
-                        address={this.state.walletaddress}
-                        searchShow={this.state.SearchShow}
+                        address={this.state.walletAddress}
+                        searchShow={this.state.searchShow}
                     />
                     <SearchContent
-                        SearchValue={this.state.SearchValue}
-                        searchShow={this.state.SearchShow}
-                        address={this.state.walletaddress}
+                        searchValue={this.state.searchValue}
+                        searchShow={this.state.searchShow}
+                        address={this.state.walletAddress}
                     />
                 </Drawer>
             </div>

@@ -8,7 +8,6 @@
 import checkStatus from './checkStatus';
 
 export default function unbindToken(option, callback) {
-    console.log(option)
     let csrf = document.cookie.match(/csrfToken=[^;]*/)[0].replace('csrfToken=', '');
     fetch(`/block/api/address/unbind-token`, {
         credentials: 'include',

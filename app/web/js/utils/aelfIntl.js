@@ -9,7 +9,14 @@ import en_US from '../langConfig/en-US';
 export default function chooseLocale() {
     let Languge = null;
     if (localStorage.language === undefined) {
-        localStorage.setItem('language', 'zh-CN');
+        let lang = (navigator.language || navigator.browserLanguage).toLowerCase();
+        if (lang.includes('zh')) {
+            localStorage.setItem('language', 'zh-CN');
+        }
+        else {
+            localStorage.setItem('language', 'en-US');
+        }
+
         Languge = localStorage.language;
     }
     else {

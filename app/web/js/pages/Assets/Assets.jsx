@@ -1,23 +1,23 @@
-/*
- * huangzongzhe
+/**
+ * @file
+ * @author huangzongzhe
  * 2018.07.26
  */
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { ListView, PullToRefresh, Toast } from 'antd-mobile'
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+import {ListView, PullToRefresh, Toast} from 'antd-mobile';
 
-import style from './Assets.scss'
-require('./Assets.css')
-
-import { historyPush } from '../../utils/historyChange'
-import checkStatus from '../../utils/checkStatus'
-import getPageContainerStyle from '../../utils/getPageContainerStyle'
-import clipboard from '../../utils/clipboard'
+import style from './Assets.scss';
+import {historyPush, historyReplace} from '../../utils/historyChange';
+import checkStatus from '../../utils/checkStatus';
+import getPageContainerStyle from '../../utils/getPageContainerStyle';
+import clipboard from '../../utils/clipboard';
 
 import {
     SCROLLLIST,
     SCROLLFOOTER
-} from '../../constants'
+} from '../../constants';
+require('./Assets.css');
 
 const NUM_ROWS = 20;
 let pageIndex = 0;
@@ -52,7 +52,7 @@ function getTokens(callback, pIndex = 0) {
         });
     }).catch(error => {
         Toast.fail(error.message, 6);
-        console.log('error:', error)
+        console.log('error:', error);
     });
 
 }
@@ -83,9 +83,9 @@ class Assets extends Component {
             let dir = `/assethome?contract_address=${item.contract_address}`;
             return (
                 <div key={rowID}
-                     className={style.txList}
+                    className={style.txList}
 
-                     onClick={() => historyPush(dir)}
+                    onClick={() => historyPush(dir)}
                 >
                     <div className={style.txListMask}></div>
                     <div className={style.listLeft}>
@@ -146,7 +146,7 @@ class Assets extends Component {
         clipboard('#clipboard-assets');
 
         const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
-        
+
         getTokens(result => {
             this.rData = result;
 
@@ -211,7 +211,7 @@ class Assets extends Component {
 
     componentWillUnmount() {
         this.WillUnmount = true;
-        this.setState = () => {};
+        this.setState = () => { };
     }
 
     // TODO: 刷新该页面，下拉，快去点击资产进入到交易列表页，会报错，有内存泄漏的可能。暂无思路。
@@ -244,6 +244,10 @@ class Assets extends Component {
                                 <div className={style.tenderValuation}>
                                     ≈{this.state.tenderValue}
                                     <span className={style.tenderUnit}> USD</span>
+                                    <div
+                                        className={style.addBtn}
+                                        onClick={() => historyReplace('/addtoken')}
+                                    ></div>
                                 </div>
                             </div>
 
@@ -258,13 +262,13 @@ class Assets extends Component {
                                 ></div>
 
                                 <button id="clipboard-assets"
-                                        data-clipboard-target="#assets-address-text"
-                                        className={style.textarea}>copy</button>
+                                    data-clipboard-target="#assets-address-text"
+                                    className={style.textarea}>copy</button>
                                 <input id="assets-address-text"
-                                       type="text"
-                                       className={style.textarea}
-                                       value={walletAddress}
-                                       readOnly/>
+                                    type="text"
+                                    className={style.textarea}
+                                    value={walletAddress}
+                                    readOnly />
                             </div>
                         </div>
 
@@ -282,7 +286,7 @@ class Assets extends Component {
                                 useBodyScroll={this.state.useBodyScroll}
                                 style={this.state.useBodyScroll ? {} : {
                                     // height: this.state.height - 100,
-                                    height: '100%',
+                                    height: '100%'
                                 }}
 
                                 pullToRefresh={<PullToRefresh
@@ -295,7 +299,7 @@ class Assets extends Component {
                         </div>
 
                         {/*<div className={style.addBtnContainer}>*/}
-                            {/*<div className={style.addBtn}></div>*/}
+                        {/*<div className={style.addBtn}></div>*/}
                         {/*</div>*/}
                     </div>
                 </div>
