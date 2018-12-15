@@ -29,6 +29,7 @@ class Transfer extends Component {
         this.state = {
         };
         this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+        this.tokenName = getParam('token', window.location.href);
     }
 
     inputAmount(amount) {
@@ -56,7 +57,7 @@ class Transfer extends Component {
         getBalanceAndTokenName(address, contractAddress, output => {
             this.setState({
                 balance: output.balance,
-                tokenName: output.tokenDetail.name,
+                tokenName: this.tokenName || output.tokenDetail.name,
                 contract_address: contractAddress
             });
         });
@@ -94,9 +95,10 @@ class Transfer extends Component {
                 Toast.fail('insufficient', 3, () => {}, false);
                 return;
             }
-
+            const tokenName = this.tokenName;
             let aelf = initAelf({
-                password: password
+                password: password,
+                tokenName
             });
 
             if (aelf.errormsg) {
@@ -110,7 +112,7 @@ class Transfer extends Component {
 
             Toast.hide();
 
-            hashHistory.push(`/transactiondetail?txid=${transfer.hash}`);
+            hashHistory.push(`/transactiondetail?txid=${transfer.hash}&token=${tokenName}`);
             
         }, 50);
     }

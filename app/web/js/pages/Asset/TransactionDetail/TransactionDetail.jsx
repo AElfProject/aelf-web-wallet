@@ -3,14 +3,14 @@
  * @author huangzongzhe
  * 2018.07.27
  */
-import React, { Component } from 'react'
-import { Toast} from 'antd-mobile'
-import style from './TransactionDetail.scss'
-import { hashHistory } from 'react-router'
+import React, {Component} from 'react';
+import {Toast} from 'antd-mobile';
+import style from './TransactionDetail.scss';
+import {hashHistory} from 'react-router';
 
-import NavNormal from '../../NavNormal/NavNormal'
+import NavNormal from '../../NavNormal/NavNormal';
 
-import AelfButton from './../../../components/Button/Button'
+import AelfButton from './../../../components/Button/Button';
 
 import {
     getParam,
@@ -19,7 +19,7 @@ import {
     getPageContainerStyle
 } from '../../../utils/utils';
 
-import { FormattedMessage } from 'react-intl'
+import {FormattedMessage} from 'react-intl';
 
 // React component
 class TransactionDetail extends Component {
@@ -27,32 +27,42 @@ class TransactionDetail extends Component {
         super(props);
         this.state = {
         };
+        this.txid = getParam('txid',
+            hashHistory.getCurrentLocation().search || window.location.href);
+        this.tokenName = getParam('token',
+            hashHistory.getCurrentLocation().search || window.location.href);
+
         this.aelf = initAelf({
-            chainOnly: true
+            chainOnly: true,
+            tokenName: this.tokenName
         });
+
         clipboard('#clipboard-transactionDetail');
     }
 
     getTxInfo() {
-        let txid = getParam('txid',
-            hashHistory.getCurrentLocation().search || window.location.href);
+        let txid = this.txid;
+        let tokenName = this.tokenName;
 
         let txInfo = {
             txState: false,
             txResult: null,
-            txid: txid
+            txid,
+            tokenName
         };
         try {
-            if (txid) {
+            if (txid && tokenName) {
                 let result = this.aelf.aelf.chain.getTxResult(txid);
                 if (result.error) {
                     txInfo.txResult = result.error;
-                } else {
+                }
+                else {
                     txInfo.txResult = result;
                     txInfo.txState = true;
                 }
             } else {
-                txInfo.txResult = 'No Transaction ID';
+                const URL = window.location.href;
+                txInfo.txResult = 'No (txid=xxx) or No (token=xxx), Please check your URL： ' + URL;
             }
         } catch (e) {
             Toast.fail(e.message, 10);
@@ -94,17 +104,17 @@ class TransactionDetail extends Component {
         let amounHtml = this.renderAmount(tx_info.From, to, amount);
 
         return <div>
-                {amounHtml}
+            {amounHtml}
 
-                <div className={style.list}>
-                    <div className={style.title}>From</div>
-                    <div className={style.text}>{tx_info.From}</div>
-                </div>
-                <div className={style.list}>
-                    <div className={style.title}>To</div>
-                    <div className={style.text}>{to}</div>
-                </div>
-            </div>;
+            <div className={style.list}>
+                <div className={style.title}>From</div>
+                <div className={style.text}>{tx_info.From}</div>
+            </div>
+            <div className={style.list}>
+                <div className={style.title}>To</div>
+                <div className={style.text}>{to}</div>
+            </div>
+        </div>;
     }
 
     renderNotTransfer(txResult) {
@@ -143,33 +153,37 @@ class TransactionDetail extends Component {
     }
 
     render() {
+        let NavHtml = this.renderNavHtml();
         // 这个交易能拿到所有交易，非transfer交易也需要处理。
         let txInfo = this.getTxInfo();
-
-        let { txResult, txid, txState} = txInfo;
+        let {txResult, txid, txState, tokenName} = txInfo;
 
         if (!txState) {
+            if (typeof txResult !== 'string') {
+                txResult = JSON.stringify(txResult);
+            }
             return (
                 <div>
-                    <h2>{JSON.stringify(txResult)}</h2>
+                    {NavHtml}
+                    <h2 className={style.stateError}>{txResult}</h2>
                 </div>
             );
         }
 
-        let { tx_info, tx_status, block_number } = txResult.result;
+        let {tx_info, tx_status, block_number} = txResult.result;
 
         let html = this.renderTransfer(txResult);
 
         let notTransferHtml = '';
         let method = tx_info.Method;
-        if (method != 'Transfer') {
+        if (method !== 'Transfer') {
             html = '';
             notTransferHtml = this.renderNotTransfer(txResult);
         }
 
-        let NavHtml = this.renderNavHtml();
-
-        let urlForCopy = window.location.host + '/transactiondetail?txid=' + txid;
+        let urlForCopy = window.location.host
+            + '/transactiondetail?txid=' + txid
+            + '&token=' + tokenName;
 
         let containerStyle = getPageContainerStyle();
 

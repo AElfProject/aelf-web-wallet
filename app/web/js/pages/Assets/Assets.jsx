@@ -58,7 +58,7 @@ function getTokens(callback, pIndex = 0) {
         });
     }).catch(error => {
         Toast.fail(error.message, 6);
-        console.log('error:', error);
+        // console.log('error:', error);
     });
 
 }
@@ -86,7 +86,7 @@ class Assets extends Component {
 
         this.renderRow = (rowData, sectionID, rowID) => {
             let item = this.rData[rowID];
-            let dir = `/assethome?contract_address=${item.contract_address}`;
+            let dir = `/assethome?contract_address=${item.contract_address}&token=${item.symbol}`;
             return (
                 <div key={rowID}
                     className={style.txList}
@@ -134,7 +134,6 @@ class Assets extends Component {
 
         fetch('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(checkStatus).then(result => {
             result.text().then(result => {
-                console.log(result, this.setState);
                 const { USD } = JSON.parse(result);
                 const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
                 this.setState({

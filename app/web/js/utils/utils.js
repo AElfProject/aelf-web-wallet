@@ -3,7 +3,9 @@
 * @author huangzongzhe zhouminghui
 */
 
+import addressOmit from './addressOmit';
 import addressCheck from './addressCheck';
+import apisauce from './apisauce';
 import serviceProvider from './serviceProvider';
 import moneyKeyboardWrapProps from './moneyKeyboardWrapProps';
 import antdChooseLocale from './antdIntl';
@@ -20,7 +22,9 @@ import walletStatusCheck from './walletStatusCheck'
 import txIdOmit from './txIdOmit';
 
 export {
+    addressOmit,
     addressCheck,
+    apisauce,
     serviceProvider,
     moneyKeyboardWrapProps,
     antdChooseLocale,
