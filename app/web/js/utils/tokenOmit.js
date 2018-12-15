@@ -1,7 +1,7 @@
 /**
  * @file
  * @author zhouminghui
- * tokenOmit()
+ * tokenOmit() Shortening token
 */
 
 export default function tokenOmit(token) {
