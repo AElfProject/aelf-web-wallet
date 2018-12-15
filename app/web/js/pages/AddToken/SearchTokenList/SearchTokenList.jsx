@@ -12,6 +12,8 @@ import getTokens from '../../../utils/getTokens';
 import contractMergeArr from '../../../utils/contractMergeArr';
 import bindToken from '../../../utils/bindToken';
 import unbindToken from '../../../utils/unbindToken';
+import addressOmit from '../../../utils/addressOmit';
+import {tokenOmit} from '../../../utils/utils';
 import {SCROLLFOOTER} from '../../../constants';
 
 export default class SearchTokenList extends React.Component {
@@ -100,6 +102,7 @@ export default class SearchTokenList extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             let tokenName = rowData.name;
             let tokenAddress = rowData.contract_address;
+            tokenAddress = tokenOmit(tokenAddress);
             return (
                 <div key={rowID}
                     className='addtoken-list-con'

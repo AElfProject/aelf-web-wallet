@@ -14,6 +14,7 @@ import contractMergeArr from '../../../utils/contractMergeArr';
 import getContracts from '../../../utils/getContracts';
 import getTokens from '../../../utils/getTokens';
 import {SCROLLFOOTER} from '../../../constants';
+import {tokenOmit} from '../../../utils/utils';
 
 require('./TokenList.css');
 
@@ -167,6 +168,7 @@ export default class TokenList extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             let tokenName = rowData.name;
             let tokenAddress = rowData.contract_address;
+            tokenAddress = tokenOmit(tokenAddress);
             return (
                 <div key={rowID}
                     className='addtoken-list-con'
