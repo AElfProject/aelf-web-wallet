@@ -12,7 +12,6 @@ import getTokens from '../../../utils/getTokens';
 import contractMergeArr from '../../../utils/contractMergeArr';
 import bindToken from '../../../utils/bindToken';
 import unbindToken from '../../../utils/unbindToken';
-import addressOmit from '../../../utils/addressOmit';
 import {tokenOmit} from '../../../utils/utils';
 import {SCROLLFOOTER} from '../../../constants';
 
