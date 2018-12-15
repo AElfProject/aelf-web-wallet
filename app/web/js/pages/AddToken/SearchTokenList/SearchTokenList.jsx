@@ -98,8 +98,8 @@ export default class SearchTokenList extends React.Component {
 
     render() {
         const row = (rowData, sectionID, rowID) => {
-            let TokenName = rowData.name;
-            let TokenAddress = rowData.contract_address;
+            let tokenName = rowData.name;
+            let tokenAddress = rowData.contract_address;
             return (
                 <div key={rowID}
                     className='addtoken-list-con'
@@ -119,7 +119,7 @@ export default class SearchTokenList extends React.Component {
                                 let address = JSON.parse(localStorage.lastuse).address;
                                 let TokenMessage = {
                                     address: address,
-                                    contract_address: TokenAddress,
+                                    contract_address: tokenAddress,
                                     signed_address: walletInfoList[address].signedAddress,
                                     public_key: walletInfoList[address].publicKey
                                 };
@@ -137,9 +137,9 @@ export default class SearchTokenList extends React.Component {
                             }}
                         />}
                     >
-                        <div className='addtoken-list-tokenname' >{TokenName}</div>
-                        <div className='addtoken-list-name' >{TokenName} Chain</div>
-                        <div className='addtoken-list-tokenaddress' >{TokenAddress}</div>
+                        <div className='addtoken-list-tokenname' >{tokenName}</div>
+                        <div className='addtoken-list-name' >{tokenName} Chain</div>
+                        <div className='addtoken-list-tokenaddress' >{tokenAddress}</div>
                     </List.Item>
                 </div>
             );

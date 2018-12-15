@@ -9,7 +9,7 @@ export default function antdChooseLocale() {
     let Languge = null;
     if (localStorage.language === undefined) {
         let lang = (navigator.language || navigator.browserLanguage).toLowerCase();
-        if (lang.indexOf('zh') >= 0) {
+        if (lang.includes('zh')) {
             localStorage.setItem('language', 'zh-CN');
         }
         else {

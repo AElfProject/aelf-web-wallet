@@ -18,7 +18,7 @@ export default class AddToken extends React.Component {
         super(props);
         this.state = {
             searchTokenName: '',
-            SearchShow: false
+            searchShow: false
         };
     }
 
@@ -30,13 +30,13 @@ export default class AddToken extends React.Component {
 
     searchShow() {
         this.setState({
-            SearchShow: true
+            searchShow: true
         });
     }
 
     searchHide() {
         this.setState({
-            SearchShow: false
+            searchShow: false
         });
     }
 
@@ -49,11 +49,11 @@ export default class AddToken extends React.Component {
                     searchHide={this.searchHide.bind(this)}
                 />
                 <TokenList
-                    searchShow={this.state.SearchShow}
+                    searchShow={this.state.searchShow}
                 />
                 <SearchTokenList
                     value={this.state.searchTokenName}
-                    searchShow={this.state.SearchShow}
+                    searchShow={this.state.searchShow}
                 />
             </div>
         );
