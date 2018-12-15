@@ -108,6 +108,23 @@ export default class TransactionsContent extends React.Component {
         return null;
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.address !== this.props.address) {
+            const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
+            pageIndex = 0;
+            getTxs(result => {
+                this.rData = result.transactions;
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(this.rData),
+                    height: hei,
+                    refreshing: false,
+                    isLoading: false,
+                    walletData: result.transactions
+                });
+            }, this.state.walletAddress, pageIndex);
+        }
+    }
+
     componentDidMount() {
         const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
         pageIndex = 0;
