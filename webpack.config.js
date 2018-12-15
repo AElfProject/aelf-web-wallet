@@ -1,4 +1,6 @@
-/*
+/**
+ * @file
+ * @author huangzongzhe
  * webpack 4.16.1
  * @auther huangzongzhe
  */
@@ -27,14 +29,14 @@ module.exports = {
 	// 	path: path.resolve(__dirname, 'app'),
 	// 	filename: 'public/js/wallet.[hash:5].js'
 	// },
-    entry: {
-        wallet: './app/web/js/index.jsx',
-        transactionDetail: './app/web/js/transactionDetail.jsx'
-    },
-    output: {
-        path: path.resolve(__dirname, 'app'), // equal to __diname + '/build'
-        filename: 'public/js/[name].[hash:5].js'
-    },
+	entry: {
+		wallet: './app/web/js/index.jsx',
+		transactionDetail: './app/web/js/transactionDetail.jsx'
+	},
+	output: {
+		path: path.resolve(__dirname, 'app'), // equal to __diname + '/build'
+		filename: 'public/js/[name].[hash:5].js'
+	},
 
 	resolve: {
 		extensions: ['.js', '.jsx', '.scss']
@@ -65,22 +67,25 @@ module.exports = {
 						// }
 					}
 				},
-				'sass-loader'
+				'sass-loader',
+				'postcss-loader'
 			]
 		}, {
 			// 这里用来加载ant-mobile的样式，不做处理。
 			test: /\.css$/,
-			use: ['style-loader', 'css-loader']
-		}, {
-            test: /\.(png|svg|jpg|gif|ico)$/,
 			use: [
-				{
-                    loader: 'file-loader',
-                    options: {
-                        outputPath: './public/assets/output'
-					}
-                },
+				'style-loader',
+				'css-loader',
+				'postcss-loader'
 			]
+		}, {
+			test: /\.(png|svg|jpg|gif|ico)$/,
+			use: [{
+				loader: 'file-loader',
+				options: {
+					outputPath: './public/assets/output'
+				}
+			}, ]
 		}]
 	},
 	node: {

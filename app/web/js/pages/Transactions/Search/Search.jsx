@@ -40,11 +40,11 @@ export default class Search extends React.Component {
                     this.props.searchShow();
                 }
                 else {
-                    Toast.fail('No deal !!!', 3);
+                    Toast.fail('No deal !!!', 1);
                 }
             }
             else {
-                Toast.fail('Format error !!!', 3);
+                Toast.fail('Format error !!!', 1);
             }
         }
     }

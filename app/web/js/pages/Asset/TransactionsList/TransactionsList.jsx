@@ -161,7 +161,6 @@ class TransactionsList extends Component {
 
             let address = isIncome ? item.address_from : item.params_to;
             let status = item.tx_status;
-
             address = addressOmit(address);
 
             return (

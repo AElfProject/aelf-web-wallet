@@ -2,7 +2,7 @@
  * huangzongzhe
  * 2018.09.19
  */
-import { Toast } from 'antd-mobile';
+import {Toast} from 'antd-mobile';
 import ClipboardJS from 'clipboard';
 
 // https://clipboardjs.com/

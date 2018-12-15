@@ -17,6 +17,7 @@ import checkStatus from './checkStatus';
 import clipboard from './clipboard';
 import insertWalletInfo from './walletStorage'
 import walletStatusCheck from './walletStatusCheck'
+import txIdOmit from './txIdOmit';
 
 export {
     addressCheck,
@@ -32,5 +33,6 @@ export {
     checkStatus,
     clipboard,
     insertWalletInfo,
-    walletStatusCheck
+    walletStatusCheck,
+    txIdOmit
 };

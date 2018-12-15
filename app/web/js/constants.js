@@ -1,9 +1,10 @@
-/*
- * huangzongzhe
+/**
+ * @file
+ * @author huangzongzhe
  * 2018.11.09
  */
 
-import React from "react";
+import React from 'react';
 
 const SCROLLLIST = {
     loading: 'Loading...',
@@ -12,7 +13,7 @@ const SCROLLLIST = {
 }
 const SCROLLFOOTER = (isLoading, hasMore) => {
     return (
-        <div style={{ padding: 6, textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)' }}>
+        <div style={{padding: 6, textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)'}}>
             {
                 isLoading
                     ? SCROLLLIST.loading
@@ -20,9 +21,9 @@ const SCROLLFOOTER = (isLoading, hasMore) => {
             }
         </div>
     );
-}
+};
 
 export {
     SCROLLLIST,
     SCROLLFOOTER
-}
+};

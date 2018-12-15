@@ -1,13 +1,10 @@
 .txList {
-	//height: 32px;
-	//border-bottom: 1px solid #eee;
     overflow: hidden;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 24px 20px;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.1)
-	//height: 88px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 .txList:active {
 	background: rgba(255, 255, 255, 0.2);
@@ -15,20 +12,14 @@
 
 .address {
 	font-size: 9px;
-	color: rgba(255, 255, 255, 0.7)
-	//float: left;
+	color: rgba(255, 255, 255, 0.7);
 }
 
 .balance {
 	font-size: 16px;
 }
 
-.quantity {
-	//float: right;
-}
-
 .transactionContainer {
-	//background: #FFF;
 	height: 100%;
 	border-top:1px solid rgba(255, 255, 255, 0.1);
 }
@@ -71,15 +62,15 @@
 .time{
 	text-align: left;
 	margin-top: 10px;
-	color: rgba(255, 255, 255, 0.7)
+	color: rgba(255, 255, 255, 0.7);
 }
 .tenderValuation{
 	margin-top: 10px;
-	color: rgba(255, 255, 255, 0.7)
+	color: rgba(255, 255, 255, 0.7);
 }
 
 .defeated{
 	text-align: left;
 	margin-top: 8px;
-	color: #ff0080
+	color: #ff0080;
 }

@@ -1,12 +1,13 @@
 /**
  *  @file
  *  @author zhouminghui
- *  token 搜索组件
+ *  Token Search component
  */
 
 import React from 'react';
 import Svg from '../../../components/Svg/Svg';
-import style from './Navtoken.scss';
+import style from './NavToken.scss';
+import {historyReplace} from '../../../utils/historyChange';
 
 export default class NavToken extends React.Component {
 
@@ -26,13 +27,16 @@ export default class NavToken extends React.Component {
     handleClick(e) {
         if (e.which === 13) {
             this.props.getTokenName(this.state.value);
+            this.props.searchShow();
         }
     }
 
     render() {
         return (
             <div className={style.Navtoken}>
-                <div className={style.goBackBtn} >
+                <div className={style.goBackBtn}
+                    onClick={() => historyReplace('/assets')}
+                >
                     <Svg icon={'back22'}
                         style={{display: 'inline-block', height: 36, width: 16}}
                     >
@@ -48,10 +52,19 @@ export default class NavToken extends React.Component {
                         className={style.searchinput}
                         placeholder='Please input token name.'
                         type='text'
-                        onKeyPress = {this.handleClick.bind(this)}
-                        onChange = {value => this.handleChange(value)}
+                        onKeyPress={this.handleClick.bind(this)}
+                        onChange={value => this.handleChange(value)}
                         ref='search'
                     />
+                    <span className='clearBtn'
+                        onClick={() => {
+                            this.refs.search.value = '';
+                            this.setState({
+                                key: ''
+                            });
+                            this.props.searchHide();
+                        }}
+                    >&Chi;</span>
                 </div>
             </div>
         );
