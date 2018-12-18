@@ -48,6 +48,12 @@ class ProxyService extends Service {
         result = await ctx.curl(url, {
             dataType: 'json'
         });
+
+        if (ptype === 'rpc') {
+            return {
+                ...result.data
+            };
+        }
         return {
             result: result.data
         };
@@ -83,8 +89,13 @@ class ProxyService extends Service {
             // telling HttpClient to process the return body as JSON format explicitly
             dataType: 'json'
         });
+
+        if (ptype === 'rpc') {
+            return {
+                ...result.data
+            };
+        }
         return {
-            // url,
             result: result.data
         };
     }

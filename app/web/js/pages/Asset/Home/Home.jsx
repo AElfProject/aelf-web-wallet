@@ -3,18 +3,16 @@
  * @author huangzongzhe
  * 2018.07.26
  */
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { Button, Toast } from 'antd-mobile'
+import React, {Component} from 'react';
+import {Toast} from 'antd-mobile';
 
-import style from './Home.scss'
-import { hashHistory } from 'react-router'
+import style from './Home.scss';
+import {hashHistory} from 'react-router';
 
-import TransactionsList from '../TransactionsList/TransactionsList'
-import NavNormal from '../../NavNormal/NavNormal'
+import TransactionsList from '../TransactionsList/TransactionsList';
+import NavNormal from '../../NavNormal/NavNormal';
 
-import AelfButton from '../../../components/Button/Button'
-import Svg from '../../../components/Svg/Svg'
+import Svg from '../../../components/Svg/Svg';
 
 import {
     checkStatus,
@@ -23,11 +21,11 @@ import {
     getBalanceAndTokenName
 } from '../../../utils/utils';
 
-import { FormattedMessage } from 'react-intl'
+import {FormattedMessage} from 'react-intl';
 
 class Home extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             tokenName: '-',
@@ -40,16 +38,12 @@ class Home extends Component {
         this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
     }
 
-    componentDidUpdate() {
-        Toast.hide();
-    }
-
     getBalanceAndTokenName() {
         let address = this.walletAddress;
         let contractAddress = getParam('contract_address', window.location.href);
 
         getBalanceAndTokenName(address, contractAddress, output => {
-            const { balance = 0 } = output;
+            const {balance = 0} = output;
             this.getELFValue(balance);
             this.setState({
                 balance: output.balance.toLocaleString(),
@@ -67,8 +61,8 @@ class Home extends Component {
 
         fetch('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(checkStatus).then(result => {
             result.text().then(result => {
-                console.log(result, this.setState);
-                const { USD } = JSON.parse(result);
+                // console.log(result, this.setState);
+                const {USD} = JSON.parse(result);
                 const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
                 this.setState({
                     tenderValue
@@ -82,6 +76,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        Toast.hide();
         this.getBalanceAndTokenName();
     }
 
@@ -91,13 +86,12 @@ class Home extends Component {
     }
 
     render() {
-
-        let btnlink =  `/assettransfer?contract_address=${getParam('contract_address', window.location.href)}`;
+        let btnlink =  `/assettransfer?${this.props.location.search}`;
         let pageContainerStyle = getPageContainerStyle();
         pageContainerStyle.overflow = 'hidden';
 
-        let address = this.walletAddress;
-        let contractAddress = getParam('contract_address', window.location.href);
+        // let address = this.walletAddress;
+        // let contractAddress = getParam('contract_address', window.location.href);
 
         return (
             <div>

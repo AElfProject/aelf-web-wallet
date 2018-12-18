@@ -10,7 +10,7 @@ function addressCheck (address = '') {
     };
 
     // TODO: May Change again.
-    if (address.length === 53 && address.match(/^ELF_/)) {
+    if ([53, 54].includes(address.length) && address.match(/^ELF_/)) {
     // if (address.length === 36) {
         let addressUse = JSON.parse(localStorage.getItem('lastuse')).address;
         if (address === addressUse) {
