@@ -29,6 +29,7 @@ class Transfer extends Component {
         this.state = {
         };
         this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+        this.contractAddress = getParam('contract_address', window.location.href);
         this.tokenName = getParam('token', window.location.href);
     }
 
@@ -52,13 +53,12 @@ class Transfer extends Component {
 
     componentDidMount() {
         let address = this.walletAddress;
-        let contractAddress = getParam('contract_address', window.location.href);
 
-        getBalanceAndTokenName(address, contractAddress, output => {
+        getBalanceAndTokenName(address, this.contractAddress, output => {
             this.setState({
                 balance: output.balance,
                 tokenName: this.tokenName || output.tokenDetail.name,
-                contract_address: contractAddress
+                contract_address: this.contractAddress
             });
         });
     }
@@ -98,6 +98,7 @@ class Transfer extends Component {
             const tokenName = this.tokenName;
             let aelf = initAelf({
                 password: password,
+                contractAddress: this.contractAddress,
                 tokenName
             });
 

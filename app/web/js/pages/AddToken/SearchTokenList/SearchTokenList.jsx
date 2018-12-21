@@ -126,12 +126,12 @@ export default class SearchTokenList extends React.Component {
 
                                 if (compare[rowID]) {
                                     bindToken(TokenMessage, () => {
-                                        Toast.success('bind Success', 3);
+                                        Toast.success('bind Success', 3, () => {}, false);
                                     });
                                 }
                                 else {
                                     unbindToken(TokenMessage, () => {
-                                        Toast.success('unbind Success', 3);
+                                        Toast.success('unbind Success', 3, () => {}, false);
                                     });
                                 }
                             }}

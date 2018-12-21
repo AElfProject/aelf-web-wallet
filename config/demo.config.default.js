@@ -1,5 +1,6 @@
-/*
- * huangzongzhe
+/**
+ * @file config/demo.config.default.js
+ * @author huangzongzhe
  * F.Y.I
  * Official default config: node_modules/egg/config/config.default.js
  */

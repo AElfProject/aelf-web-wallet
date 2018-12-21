@@ -18,7 +18,8 @@ import {
     checkStatus,
     getPageContainerStyle,
     getParam,
-    getBalanceAndTokenName
+    getBalanceAndTokenName,
+    apisauce
 } from '../../../utils/utils';
 
 import {FormattedMessage} from 'react-intl';
@@ -54,23 +55,33 @@ class Home extends Component {
     }
 
     getELFValue(ELFValue) {
-        // let ELFValue = 0;
-        // result.map(item => {
-        //     ELFValue += parseInt(item.balance, 10);
-        // });
-
-        fetch('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(checkStatus).then(result => {
-            result.text().then(result => {
-                // console.log(result, this.setState);
-                const {USD} = JSON.parse(result);
-                const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
-                this.setState({
-                    tenderValue
-                });
+        // TODO: 更全的list
+        apisauce.get('https://min-api.cryptocompare.com/data/price', {
+            fsym: getParam('token', window.location.href),
+            tsyms: 'USD'
+        }).then(result => {
+            const {USD} = result;
+            let tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
+            tenderValue = isNaN(tenderValue) ? 0 : tenderValue;
+            this.setState({
+                tenderValue
             });
         }).catch(error => {
-            Toast.fail(error.message, 6);
+            console.log('error:', error);
         });
+
+        // fetch('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(checkStatus).then(result => {
+        //     result.text().then(result => {
+        //         // console.log(result, this.setState);
+        //         const {USD} = JSON.parse(result);
+        //         const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
+        //         this.setState({
+        //             tenderValue
+        //         });
+        //     });
+        // }).catch(error => {
+        //     Toast.fail(error.message, 6);
+        // });
 
         // return ELFValue.toLocaleString();
     }

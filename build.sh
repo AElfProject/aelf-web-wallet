@@ -29,14 +29,13 @@ then
 fi
 
 echo 'running webpack'
+webpack && echo 'webpack done'
 
 if [ ${start_mode} = 'dev' ]
 then
-    webpack -w && echo 'webpack done'
     npm run dev
     echo 'npm run dev'
 else
-    webpack && echo 'webpack done'
     npm stop && npm start
     echo 'npm stop && npm start'
 fi
