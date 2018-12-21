@@ -16,7 +16,8 @@ import {
     checkStatus,
     getPageContainerStyle,
     clipboard,
-    whetherBackupCheck
+    whetherBackupCheck,
+    apisauce
 } from '../../utils/utils';
 
 import {
@@ -129,16 +130,19 @@ class Assets extends Component {
     getELFValue(result) {
         let ELFValue = 0;
         result.map(item => {
-            ELFValue += parseInt(item.balance, 10);
+            if (item.symbol === 'ELF') {
+                ELFValue += parseInt(item.balance, 10);
+            }
+            else {
+                // TODO 首先得有对标的价值
+            }
         });
 
-        fetch('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(checkStatus).then(result => {
-            result.text().then(result => {
-                const { USD } = JSON.parse(result);
-                const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
-                this.setState({
-                    tenderValue
-                });
+        apisauce.get('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(result => {
+            const { USD } = result;
+            const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
+            this.setState({
+                tenderValue
             });
         }).catch(error => {
             Toast.fail(error.message, 6);

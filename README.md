@@ -49,6 +49,13 @@ online(https): nginx/servers/wallet.online.conf
 
 dev(http): nginx/servers/wallet.conf
 
+### 3.Install Webpack
+
+```javascript
+npm install -g webpack
+npm install -g webpack-cli
+```
+
 ### 3.Start the node server
 
 npm install
