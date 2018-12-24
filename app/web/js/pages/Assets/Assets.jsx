@@ -30,38 +30,16 @@ const NUM_ROWS = 20;
 let pageIndex = 0;
 
 function getTokens(callback, pIndex = 0) {
-    let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
-    // http://localhost:7000/block/api/address/tokens?address=0x040a221885855c22714e764f5a3de674554e
-
-    let params = {
+    apisauce.get('/address/api/tokens', {
         limit: NUM_ROWS, // 13
         page: pIndex, // 0
         order: 'desc', // asc
-        address: walletAddress // 0x04263089a3fd878482d81d5f54f6865260d6
-    };
-
-    let query = '';
-    for (let each in params) {
-        query += `${each}=${params[each]}&`;
-    }
-
-    fetch(`/block/api/address/tokens?${query}`, {
-        credentials: 'include',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    }).then(checkStatus).then(result => {
-        result.text().then(result => {
-            let output = JSON.parse(result);
-            callback(output);
-        });
+        address: JSON.parse(localStorage.getItem('lastuse')).address
+    }).then(result => {
+        callback(result);
     }).catch(error => {
         Toast.fail(error.message, 6);
-        // console.log('error:', error);
     });
-
 }
 
 // React component

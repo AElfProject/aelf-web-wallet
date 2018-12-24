@@ -27,10 +27,10 @@ class TransactionDetail extends Component {
         super(props);
         this.state = {
         };
-        this.txid = getParam('txid',
-            hashHistory.getCurrentLocation().search || window.location.href);
-        this.tokenName = getParam('token',
-            hashHistory.getCurrentLocation().search || window.location.href);
+
+        const stringTemp = hashHistory.getCurrentLocation().search || window.location.href;
+        this.txid = getParam('txid', stringTemp);
+        this.tokenName = getParam('token', stringTemp);
 
         this.aelf = initAelf({
             chainOnly: true,

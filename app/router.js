@@ -10,4 +10,6 @@ module.exports = app => {
 
     router.get('/wallet/api/proxy', controller.proxy.getProxy);
     router.post('/wallet/api/proxy', controller.proxy.postProxy);
+
+    router.get('/address/api/tokens', controller.address.getTokens);
 };
