@@ -110,7 +110,7 @@ export default class SearchContent extends React.Component {
             return (
                 <div key={rowID}
                     className={style.txList}
-                    onClick={() => hashHistory.push(`/transactiondetail?txid=${item.txId}`)}
+                    onClick={() => hashHistory.push(`/transactiondetail?txid=${item.txId}&token=${window.defaultConfig.mainTokenName}`)}
                 >
                     <div className={style.leftContainer}>
                         <div className={iconClass}>

@@ -6,7 +6,7 @@
 
 // 中文词典
 const zh_CN = {
-    'aelf.WalletRecord': '钱包记录',
+    'aelf.WalletDetail': '钱包详情',
     'aelf.TransactionList': '交易记录',
     'aelf.AddressBook': '联系人',
     'aelf.SystemSetting': '系统设置',

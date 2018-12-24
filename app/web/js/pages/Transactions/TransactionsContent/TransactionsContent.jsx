@@ -197,10 +197,11 @@ export default class TransactionsContent extends React.Component {
             let txId = item.tx_id;
             txId = txIdOmit(txId);
 
+            // TODO: search for mutli chain.
             return (
                 <div key={rowID}
                      className={style.txList}
-                     onClick={() => hashHistory.push(`/transactiondetail?txid=${item.tx_id}`)}
+                     onClick={() => hashHistory.push(`/transactiondetail?txid=${item.tx_id}&token=${window.defaultConfig.mainTokenName}`)}
                 >
                     <div className={style.leftContainer}>
                         <div className={iconClass}>

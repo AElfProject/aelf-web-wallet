@@ -29,9 +29,9 @@ class personalCenterHome extends Component {
                         <ListContent
                             icon="wallet16"
                             text={
-                                <FormattedMessage 
-                                    id = 'aelf.WalletRecord'
-                                    defaultMessage = 'Wallet Record'
+                                <FormattedMessage
+                                    id = 'aelf.WalletDetail'
+                                    defaultMessage = 'Wallet Detail'
                                 />
                             }
                         ></ListContent>
