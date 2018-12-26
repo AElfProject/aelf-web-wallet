@@ -9,7 +9,7 @@ import {Picker, List} from 'antd-mobile';
 import {createForm} from 'rc-form';
 import {FormattedMessage} from 'react-intl';
 
-require('./Selectlanguage.css');
+require('./SelectLanguage.css');
 
 const select = [
     {
