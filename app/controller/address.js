@@ -49,7 +49,11 @@ class addressController extends Controller {
                 dataType: 'json'
             })).data;
 
-            const result = await ctx.service.address.getTokens(options, nodesInfo);
+            let result = [];
+            if (nodesInfo.length) {
+                result = await ctx.service.address.getTokens(options, nodesInfo);
+            }
+
             this.formatOutput('get', result);
         }
         catch (error) {
