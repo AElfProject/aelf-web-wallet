@@ -99,8 +99,8 @@ class Create extends Component {
     }
 
     render() {
-        let createButton =
-            <AelfButton
+        let createButton
+        = <AelfButton
                 text="Create"
                 style={{
                     opacity: 0.5
