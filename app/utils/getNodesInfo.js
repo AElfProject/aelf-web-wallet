@@ -15,5 +15,5 @@ module.exports = async function getNodesInfo(ctx, curlOptions = {}) {
     if (nodesInfo && nodesInfo.data) {
         return nodesInfo.data.list;
     }
-    throw Error('no information of nodes 111.');
+    throw Error('no information of nodes.');
 }

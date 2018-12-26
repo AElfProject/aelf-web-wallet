@@ -18,6 +18,7 @@
 
 const Controller = require('../core/baseController.js');
 const {apiServerProvider} = require('../../config/config.node.js');
+const {getNodesInfo} = require('../utils/utils.js');
 
 // token=ELF&action=address_transactions&params=xxx
 const getKeysRule = {
@@ -40,16 +41,6 @@ const postKeysRule = {
     nodesInfo: 'object'
 };
 
-// TODO. Get list from redis.
-// get list from api now.
-async function getNodesInfo(ctx, curlOptions = {}) {
-    const nodesInfo = await ctx.curl(apiServerProvider + '/api/nodes/info', curlOptions);
-    if (nodesInfo && nodesInfo.data) {
-        return nodesInfo.data.list;
-    }
-    throw Error('no information of nodes.');
-}
-
 class ProxyController extends Controller {
     async getProxy() {
         let ctx = this.ctx;
@@ -70,9 +61,18 @@ class ProxyController extends Controller {
                 query: ctx.request.query
             };
 
-            ctx.validate(getKeysRule, options);
+            let result;
+            if (options.nodesInfo.length) {
+                ctx.validate(getKeysRule, options);
+                result = await ctx.service.proxy.getProxy(options);
+            }
+            else {
+                result = {
+                    error: 1,
+                    message: 'No information of the AElf Node'
+                }
+            }
 
-            const result = await ctx.service.proxy.getProxy(options);
             this.formatOutput('get', result);
         }
         catch (error) {
@@ -100,9 +100,18 @@ class ProxyController extends Controller {
                 })
             };
 
-            ctx.validate(postKeysRule, options);
+            let result;
+            if (options.nodesInfo.length) {
+                ctx.validate(postKeysRule, options);
+                result = await ctx.service.proxy.postProxy(options);
+            }
+            else {
+                result = {
+                    error: 1,
+                    message: 'No information of the AElf Node'
+                }
+            }
 
-            const result = await ctx.service.proxy.postProxy(options);
             this.formatOutput('post', result);
         }
         catch (error) {
