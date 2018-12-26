@@ -73,5 +73,16 @@ How to proxy in nginx instead of proxy in nodejs.
     - set your own server_name.
     - `when use online(https)`set your own ssl_certificate and ssl_certificate_key.
 
+## FAQ
+
+### permission denied, open '/home/zhengyue/github/aelf-web-wallet/.travis.yml'
+
+https://github.com/eggjs/egg/issues/2442#issuecomment-421895549
+
+```bash
+sudo npm install --unsafe-perm=true --allow-root
+# Then
+sh build.sh # or npm start
+```
 
 # Docker[TODO]
