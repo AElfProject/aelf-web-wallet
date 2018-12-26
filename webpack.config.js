@@ -2,7 +2,6 @@
  * @file
  * @author huangzongzhe
  * webpack 4.16.1
- * @auther huangzongzhe
  */
 
 // const webpack = require('webpack'); // 用于访问内置插件
