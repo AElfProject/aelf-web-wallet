@@ -49,11 +49,18 @@ npm install -g webpack-cli
 
 ### 3.Start the node server
 
+try build.sh at first
+
+```bash
 npm install
+# If meet permisson problem.
+# sudo npm install --unsafe-perm=true --allow-root
 
-dev: npm run dev
-
+# dev
+npm run dev
+# pro
 pro: npm start
+```
 
 default port: 7001
 
@@ -82,7 +89,7 @@ https://github.com/eggjs/egg/issues/2442#issuecomment-421895549
 ```bash
 sudo npm install --unsafe-perm=true --allow-root
 # Then
-sh build.sh # or npm start
+sh build.sh pro # or npm start
 ```
 
 # Docker[TODO]
