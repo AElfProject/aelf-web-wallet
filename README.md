@@ -18,15 +18,15 @@ bash build.sh === bash build.sh pro
 
 ### 0.Dependencies
 
-1.The RPC URL of AElf Node.
+- Start up
+[AElf Chain](https://github.com/AElfProject/AElf),
+[aelf-block-scan](https://github.com/AElfProject/aelf-block-scan),
+[aelf-block-api](https://github.com/AElfProject/aelf-block-api)
+at first
 
-2.[aelf-block-api](https://github.com/AElfProject/aelf-block-api)
-
-3.NodeJS: You can see the JS dependencies in pakage.json, we use egg.js(Node.js & Koa).
-
-4.Nginx (or others) // Use SSL for Secure, And Use Proxy for cross-origin.
-
-5.Correct config.
+- NodeJS: You can see the JS dependencies in pakage.json, we use egg.js(Node.js & Koa).
+- Correct config.
+- `optional`Nginx (or others) // Use SSL for Secure, And Use Proxy for cross-origin.
 
 ### 1.Change config
 
@@ -37,19 +37,10 @@ cp config/demo.config.default.js config/config.default.js
 cp config/demo.config.node.js config/config.node.js
 // set you own httpProvider
 // set your own default mainContract
+// set your own proxy
 ```
 
-### 2.Nginx
-
-Please set your own RPC URL.
-
-Please ser your own server_name.
-
-online(https): nginx/servers/wallet.online.conf
-
-dev(http): nginx/servers/wallet.conf
-
-### 3.Install Webpack
+### 2.Install Webpack
 
 ```javascript
 npm install -g webpack
@@ -65,5 +56,22 @@ dev: npm run dev
 pro: npm start
 
 default port: 7001
+
+## Nginx(For Your Information.)
+
+How to open gizp.
+
+How to config https.(We do not config https server in nodejs.)
+
+How to proxy in nginx instead of proxy in nodejs.
+
+- nginx.conf
+    - see how to open gizp
+
+- servsers/wallet.online.conf & servsers/wallet.conf
+    - set your own RPC URL.
+    - set your own server_name.
+    - `when use online(https)`set your own ssl_certificate and ssl_certificate_key.
+
 
 # Docker[TODO]

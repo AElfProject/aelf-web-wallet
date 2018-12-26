@@ -17,7 +17,7 @@ echo ${node_modules_action} ${start_mode}
 
 git checkout package-lock.json
 
-git pull origin master
+git pull && echo "git pull done"
 
 if [ ${node_modules_action} = 'reinstall' ]
 then
