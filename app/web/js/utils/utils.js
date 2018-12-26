@@ -20,6 +20,7 @@ import clipboard from './clipboard';
 import insertWalletInfo from './walletStorage'
 import walletStatusCheck from './walletStatusCheck'
 import txIdOmit from './txIdOmit';
+import tokenOmit from './tokenOmit';
 
 export {
     addressOmit,
@@ -38,5 +39,6 @@ export {
     clipboard,
     insertWalletInfo,
     walletStatusCheck,
-    txIdOmit
+    txIdOmit,
+    tokenOmit
 };
