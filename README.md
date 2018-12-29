@@ -25,7 +25,7 @@ bash build.sh === bash build.sh pro
 at first
 
 - `important`call the API[POST:api/nodes/info] of aelf-block-api to insert the AElf Node information.
-    - Detail the APIs [Postman share link](https://www.getpostman.com/collections/b97c94ea6f024360b7a7)
+    - Detail the APIs [Postman share link](https://www.getpostman.com/collections/6332e0fab94cdacc9c35)
     - You can update the information throught the PUT API.
     
 - NodeJS: You can see the JS dependencies in pakage.json, we use egg.js(Node.js & Koa).
