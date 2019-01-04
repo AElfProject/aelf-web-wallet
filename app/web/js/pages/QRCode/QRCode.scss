@@ -35,7 +35,9 @@
 	padding-top: 26px;
 }
 .subTitle {
-	font-size: 12px;
+    font-size: 12px;
+    word-break: break-all;
+    padding: 0 16px 0 16px;
 }
 
 .textarea {

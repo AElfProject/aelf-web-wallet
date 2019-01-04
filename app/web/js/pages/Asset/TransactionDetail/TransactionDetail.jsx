@@ -82,7 +82,7 @@ class TransactionDetail extends Component {
         let isOut = walletList.indexOf(from) >= 0;
         if (isIn && isOut || (!isIn && !isOut)) {
             return <div className={style.list}>
-                <div className={style.title}>转账数</div>
+                <div className={style.title}>amount</div>
                 <div className={style.text}>{amount}</div>
             </div>;
         }

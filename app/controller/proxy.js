@@ -17,20 +17,19 @@
 'use strict';
 
 const Controller = require('../core/baseController.js');
-const {apiServerProvider} = require('../../config/config.node.js');
 const {getNodesInfo} = require('../utils/utils.js');
 
 // token=ELF&action=address_transactions&params=xxx
 const getKeysRule = {
-    token: 'string',
+    contract_address: 'string',
     ptype: 'string',
     action: 'string',
     query: 'object',
-    nodesInfo: 'object',
+    nodesInfo: 'object'
 };
 
 const postKeysRule = {
-    token: 'string',
+    contract_address: 'string',
     ptype: 'string',
     action: {
         type: 'string',
@@ -47,12 +46,12 @@ class ProxyController extends Controller {
 
         try {
             let {
-                token,
+                contract_address,
                 ptype,
                 action
             } = ctx.request.query;
             let options = {
-                token,
+                contract_address,
                 ptype,
                 action,
                 nodesInfo: await getNodesInfo(ctx, {
@@ -70,7 +69,7 @@ class ProxyController extends Controller {
                 result = {
                     error: 1,
                     message: 'No information of the AElf Node'
-                }
+                };
             }
 
             this.formatOutput('get', result);
@@ -85,13 +84,13 @@ class ProxyController extends Controller {
 
         try {
             let {
-                token,
+                contract_address,
                 ptype,
                 action
             } = ctx.request.query;
             let body = ctx.request.body;
             let options = {
-                token,
+                contract_address,
                 ptype,
                 action,
                 body,
@@ -109,7 +108,7 @@ class ProxyController extends Controller {
                 result = {
                     error: 1,
                     message: 'No information of the AElf Node'
-                }
+                };
             }
 
             this.formatOutput('post', result);

@@ -133,7 +133,9 @@ export default class TransactionsList extends Component {
     }
 
     render() {
-        const tokenQuery = `token=${getParam('token', window.location.href)}`;
+        const tokenNameQuery = `token=${getParam('token', window.location.href)}`;
+        const tokenAddressQuery = `contract_address=${getParam('contract_address', window.location.href)}`;
+        const tokenQuery = tokenNameQuery + '&' + tokenAddressQuery;
         const row = (rowData, sectionID, rowID) => {
             let item = this.rData[rowID];
             let isIncome = item.params_to === this.walletAddress;
@@ -143,6 +145,9 @@ export default class TransactionsList extends Component {
 
             let address = isIncome ? item.address_from : item.params_to;
             let status = item.tx_status;
+            if (status.toLowerCase().includes('failed')) {
+                iconClass = style.icon + ' ' + style.iconFailed;
+            }
             address = addressOmit(address);
 
             return (

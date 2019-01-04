@@ -6,11 +6,11 @@
 // const Service = require('egg').Service;
 const Service = require('../core/baseService');
 
-function getNodeInfo(nodesInfo, token) {
+function getNodeInfo(nodesInfo, contract_address) {
     let nodeInfo;
     for (let index = 0, len = nodesInfo.length; index < len; index++) {
         const item = nodesInfo[index];
-        if (item.token_name === token) {
+        if (item.contract_address === contract_address) {
             nodeInfo = item;
             break;
         }
@@ -22,9 +22,9 @@ class ProxyService extends Service {
 
     async getProxy(options) {
         const ctx = this.ctx;
-        const {token, ptype, action, query, nodesInfo} = options;
+        const {contract_address, ptype, action, query, nodesInfo} = options;
 
-        let nodeInfo = getNodeInfo(nodesInfo, token);
+        let nodeInfo = getNodeInfo(nodesInfo, contract_address);
 
         let result;
         let url;
@@ -61,9 +61,15 @@ class ProxyService extends Service {
 
     async postProxy(options) {
         const ctx = this.ctx;
-        const {token, ptype, action, nodesInfo, body} = options;
+        const {
+            contract_address,
+            ptype,
+            action,
+            nodesInfo,
+            body
+        } = options;
 
-        let nodeInfo = getNodeInfo(nodesInfo, token);
+        let nodeInfo = getNodeInfo(nodesInfo, contract_address);
 
         let url;
         let origin;

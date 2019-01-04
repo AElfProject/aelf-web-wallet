@@ -195,6 +195,10 @@ export default class TransactionsContent extends React.Component {
             let quantity = item.quantity;
             let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
             let txId = item.tx_id;
+            let status = item.tx_status;
+            if (status.toLowerCase().includes('failed')) {
+                iconClass = style.icon + ' ' + style.iconFailed;
+            }
             txId = txIdOmit(txId);
 
             // TODO: search for mutli chain.

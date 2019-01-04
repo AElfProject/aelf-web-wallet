@@ -18,7 +18,7 @@ const TIMEOUT = 10000;
 // 如果传入了password, 需要在组件内方法执行initAelf
 function init (options = {}) {
 
-    let {password, contractAddress, chainOnly, httpProvider = '', tokenName = ''} = options;
+    let {password, contractAddress, chainOnly, httpProvider = ''} = options;
     let wallet = '';
     if (password) {
         let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
@@ -41,9 +41,9 @@ function init (options = {}) {
     }
 
     // var HttpProvider = function (host, timeout, user, password, headers) { /*...*/ }
-	const proxyHttpProvider = `/wallet/api/proxy?token=${tokenName}&ptype=rpc&action=`;
+    const proxyHttpProvider = `/wallet/api/proxy?contract_address=${contractAddress}&ptype=rpc&action=`;
     let httpProviderTemp = httpProvider || serviceProvider.getProvider();
-    httpProviderTemp = tokenName ? proxyHttpProvider : httpProviderTemp;
+    httpProviderTemp = contractAddress ? proxyHttpProvider : httpProviderTemp;
 
     let aelf = new Aelf(
         new Aelf.providers.HttpProvider(

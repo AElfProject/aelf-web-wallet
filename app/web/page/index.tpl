@@ -40,7 +40,7 @@
     window.defaultConfig = {};
     defaultConfig.httpProvider = '{{httpProvider}}';
     defaultConfig.mainTokenName = '{{mainTokenName}}';
-    defaultConfig.mainContract = '{{mainContract}}';
+    defaultConfig.mainTokenContract = '{{mainTokenContract}}';
     defaultConfig.commonPrivateKey = '{{commonPrivateKey}}';
 </script>
 

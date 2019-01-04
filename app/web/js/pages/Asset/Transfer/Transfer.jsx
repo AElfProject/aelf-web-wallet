@@ -96,10 +96,10 @@ class Transfer extends Component {
                 return;
             }
             const tokenName = this.tokenName;
+            const contractAddress = this.contractAddress;
             let aelf = initAelf({
-                password: password,
-                contractAddress: this.contractAddress,
-                tokenName
+                password,
+                contractAddress
             });
 
             if (aelf.errormsg) {
@@ -113,7 +113,7 @@ class Transfer extends Component {
 
             Toast.hide();
 
-            hashHistory.push(`/transactiondetail?txid=${transfer.hash}&token=${tokenName}`);
+            hashHistory.push(`/transactiondetail?txid=${transfer.hash}&token=${tokenName}&contract_address=${contractAddress}`);
             
         }, 50);
     }

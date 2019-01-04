@@ -88,11 +88,11 @@ class Create extends Component {
         this.setState({walletName: walletName});
     }
 
-    setAgreement() {
-        this.setState({agree: true});
+    toggleAgreement() {
+        this.setState({agree: !this.state.agree});
     }
 
-    toggleAgreement() {
+    toggleAgreementHTML() {
         this.setState({
             agreementDisplay: !this.state.agreementDisplay
         });
@@ -169,11 +169,11 @@ class Create extends Component {
                                 style={{
                                     color: '#26B7FF'
                                 }}
-                                onClick={() => this.toggleAgreement()}
+                                onClick={() => this.toggleAgreementHTML()}
                             >《<FormattedMessage id = 'aelf.Service and Privacy Policy' defaultMessage = 'Service and Privacy Policy' />》</span>
                         </Flex.Item>
                         <Flex.Item>
-                            <div onClick={() => this.setAgreement()}>
+                            <div onClick={() => this.toggleAgreement()}>
                                 {agreementHtml}
                             </div>
                         </Flex.Item>
@@ -181,7 +181,7 @@ class Create extends Component {
 
                     <Agreement
                         agreementDisplay={this.state.agreementDisplay}
-                        toggleAgreement={() => this.toggleAgreement()}
+                        toggleAgreement={() => this.toggleAgreementHTML()}
                     ></Agreement>
                 </div>
 

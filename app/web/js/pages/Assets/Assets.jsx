@@ -5,15 +5,11 @@
  */
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import { ListView, PullToRefresh, Toast } from 'antd-mobile';
-
-import style from './Assets.scss'
-require('./Assets.css')
-
-import { historyPush, historyReplace } from '../../utils/historyChange'
+import { historyPush, historyReplace } from '../../utils/historyChange';
 import {
-    checkStatus,
+    // checkStatus,
     getPageContainerStyle,
     clipboard,
     whetherBackupCheck,
@@ -21,10 +17,12 @@ import {
 } from '../../utils/utils';
 
 import {
-    SCROLLLIST,
+    // SCROLLLIST,
     SCROLLFOOTER
 } from '../../constants';
+import style from './Assets.scss';
 require('./Assets.css');
+
 
 const NUM_ROWS = 20;
 let pageIndex = 0;
@@ -65,7 +63,9 @@ class Assets extends Component {
 
         this.renderRow = (rowData, sectionID, rowID) => {
             let item = this.rData[rowID];
-            let dir = `/assethome?contract_address=${item.contract_address}&token=${item.symbol}`;
+            // let dir = `/assethome?contract_address=${item.contract_address}&token=${item.symbol}`;
+            let dir = `/assethome?contract_address=${item.contract_address}&token=${item.token_name}`;
+            const balance = item.balance ? item.balance.toLocaleString() : 0;
             return (
                 <div key={rowID}
                     className={style.txList}
@@ -83,7 +83,7 @@ class Assets extends Component {
                         </div>
                     </div>
                     <div className={style.listRight}>
-                        <div className={style.balance}>{item.balance}</div>
+                        <div className={style.balance}>{balance}</div>
                         {/*<div className={style.tenderValuation}>≈法币价值</div>*/}
                     </div>
 
@@ -93,7 +93,7 @@ class Assets extends Component {
                     {/*</div>*/}
                 </div>
             );
-        }
+        };
     }
 
     // PullToRefresh start
@@ -108,7 +108,8 @@ class Assets extends Component {
     getELFValue(result) {
         let ELFValue = 0;
         result.map(item => {
-            if (item.symbol === 'ELF') {
+            // if (item.symbol === 'ELF') {
+            if (item.token_name === 'ELF') {
                 ELFValue += parseInt(item.balance, 10);
             }
             else {
