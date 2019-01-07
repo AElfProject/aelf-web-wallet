@@ -1,7 +1,7 @@
 /**
  * @file config/demo.config.node.js
  * @author huangzongzhe
- * @type {{httpProvider: string, apiServerProvider: string, mainContract: string, commonPrivateKey: string}}
+ * @type {{httpProvider: string, apiServerProvider: string, mainTokenContract: string, commonPrivateKey: string}}
  */
 // 默认的rpc接口的访问地址
 module.exports = {

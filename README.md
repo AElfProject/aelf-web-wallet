@@ -42,7 +42,7 @@ cp config/demo.config.default.js config/config.default.js
 
 cp config/demo.config.node.js config/config.node.js
 // set you own httpProvider
-// set your own default mainContract
+// set your own default mainTokenContract
 // set your own proxy
 ```
 

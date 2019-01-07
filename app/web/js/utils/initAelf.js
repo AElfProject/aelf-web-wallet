@@ -66,7 +66,7 @@ function init (options = {}) {
         // hashHistory.push('/error');
     }
     let contractMethods = chainOnly
-        ? {} : aelf.chain.contractAt(contractAddress || window.defaultConfig.mainContract, wallet);
+        ? {} : aelf.chain.contractAt(contractAddress || window.defaultConfig.mainTokenContract, wallet);
 
     // 固定合约，如果没有对应的方法，返回'非法合约'的信息。
     if (!chainOnly && !contractMethods.TokenName && !hasAlert) {

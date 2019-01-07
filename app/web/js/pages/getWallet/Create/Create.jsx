@@ -60,7 +60,7 @@ class Create extends Component {
 
             bindToken({
                 address: result.address,
-                contract_address: window.defaultConfig.mainContract,
+                contract_address: window.defaultConfig.mainTokenContract,
                 signed_address: result.signedAddress,
                 public_key: result.publicKey
             }, () => {
