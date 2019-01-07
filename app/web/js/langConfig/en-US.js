@@ -5,7 +5,8 @@
  */
 
 const en_US = {
-    'aelf.WalletRecord': 'Wallet Record',
+    'aelf.': ' ',
+    'aelf.WalletDetail': 'WalletDetail',
     'aelf.TransactionList': 'Transaction List',
     'aelf.AddressBook': 'Address Book',
     'aelf.SystemSetting': 'System Setting',
@@ -144,8 +145,9 @@ const en_US = {
     'aelf.BackUpCon02':"You must save the wallet's private key and transaction password, and any accidents will result in the loss of assets.",
     'aelf.BackUpCon03':'Aelf prompts you to make a backup, conduct a small transaction test, and start the journey of use.',
     'aelf.BackUpCon04':'Backup your wallet recovery phrase is extremely important when your wallet is lost or forgotten.',
-    'aelf.Backup now':'Backup now'
-
+    'aelf.Backup now':'Backup now',
+    'aelf.The passwords confirmed error.': 'The passwords confirmed error.',
+    'aelf.The passwords is not strong.': 'The passwords is not strong.'
 };
 
 export default en_US;

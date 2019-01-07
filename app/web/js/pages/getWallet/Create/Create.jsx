@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { WhiteSpace, List, InputItem, Toast, Radio, Flex } from 'antd-mobile'
+import { Toast, Flex } from 'antd-mobile'
 import Password from '../../../components/Password/Password'
 import WalletName from '../WalletName/WalletName'
 import AelfButton from '../../../components/Button/Button'
@@ -9,8 +9,6 @@ import NoticePanel from '../../../components/NoticePanel/NoticePanel'
 import style from './Create.scss'
 import { hashHistory } from 'react-router'
 
-import passwordCheck from '../../../utils/passwordCheck'
-import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import insertWalletInfo from '../../../utils/walletStorage'
 import bindToken from '../../../utils/bindToken'
 import getPageContainerStyle from '../../../utils/getPageContainerStyle'
@@ -81,7 +79,7 @@ class Create extends Component {
     }
 
     setWalletName(walletName) {
-        this.setState({walletName: walletName})
+        this.setState({walletName: walletName});
     }
 
     inputWalletName(walletName) {

@@ -100,48 +100,78 @@ class Password extends Component {
     constructor(props) {
         super(props);
         // console.log('this.props: ', this.props);
-        this.passwordReplayHasError = false;
         this.state = {
+            passwordCheckResult: {
+                ready: false,
+                message: ''
+            },
             password: '',
             passwordReplay: ''
         };
     }
 
     inputPassword(password) {
-        // console.log('password: ', password);
+        // console.log('password: ', password, this.state.passwordReplay);
+        let checkResult = passwordCheck(password);
+        this.passwordInfo = checkResult;
+
         let passwordReplay = this.state.passwordReplay;
         if (passwordReplay) {
             this.state.password = password;
             this.comfirmPassword(passwordReplay);
-        } else {
-            this.passwordReplayHasError = false;
+        }
+        else {
+            this.state.passwordCheckResult = {
+                ready: true,
+                message: ''
+            };
         }
 
-        this.setState({password: password});
-
-        let checkResult = passwordCheck(password);
-        this.passwordInfo = checkResult;
+        this.setState({password});
     }
 
     comfirmPassword(passwordReplay) {
-        if (this.state.password != passwordReplay
-            || (this.passwordInfo && this.passwordInfo.level <= 2)) {
-            this.passwordReplayHasError = true;
+        if (this.state.password !== passwordReplay) {
+            this.state.passwordCheckResult = {
+                ready: false,
+                message: 'The passwords confirmed error.'
+            };
             this.props.setPassword(false);
-        } else {
-            this.passwordReplayHasError = false;
+        }
+        else if (this.passwordInfo && this.passwordInfo.level <= 2) {
+            this.state.passwordCheckResult = {
+                ready: false,
+                message: 'The passwords is not strong.'
+            };
+            this.props.setPassword(false);
+        }
+        else {
+            this.state.passwordCheckResult = {
+                ready: true,
+                message: ''
+            };
             this.props.setPassword(passwordReplay);
         }
-        this.setState({passwordReplay: passwordReplay});
+        this.setState({passwordReplay});
+    }
+
+    renderPassowrdErrorText() {
+        let passwordReplayErrorText = '';
+        if (!this.state.passwordCheckResult.ready) {
+            passwordReplayErrorText
+                = <div className={style.error}>
+                    <FormattedMessage
+                        id={'aelf.' + this.state.passwordCheckResult.message}
+                        defaultMessage={this.state.passwordCheckResult.message}
+                    />
+                </div>;
+        }
+        return passwordReplayErrorText;
     }
 
     render() {
 
-        let passwordReplayErrorText = '';
-        if (this.passwordReplayHasError) {
-            passwordReplayErrorText = <div className={style.error}>The passwords confirmed error.</div>
-        }
-
+        let passwordReplayErrorText = this.renderPassowrdErrorText();
         let levelInfo = getPasswordLevelInfo(this.passwordInfo);
 
         return (
@@ -149,7 +179,7 @@ class Password extends Component {
                 <List>
                     <div className="aelf-input-title">
                         <div>
-                            <FormattedMessage 
+                            <FormattedMessage
                                 id = 'aelf.Password'
                                 defaultMessage = 'Password'
                             />
@@ -159,8 +189,8 @@ class Password extends Component {
                             <div className={`${style.level2}  ${style.list}`} style={levelInfo.level2}></div>
                             <div className={`${style.level3}  ${style.list}`} style={levelInfo.level3}></div>
                             <div className={style.levelText}>
-                                <FormattedMessage 
-                                    id = {"aelf." + levelInfo.text }
+                                <FormattedMessage
+                                    id = {'aelf.' + levelInfo.text }
                                     defaultMessage = {levelInfo.text}
                                 />
                             </div>
@@ -178,7 +208,7 @@ class Password extends Component {
                 <List>
                     <div className="aelf-input-title">
                         <div>
-                            <FormattedMessage 
+                            <FormattedMessage
                                 id = 'aelf.Confirm Password'
                                 defaultMessage = 'Confirm Password'
                             />
