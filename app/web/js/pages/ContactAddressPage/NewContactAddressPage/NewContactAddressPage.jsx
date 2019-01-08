@@ -10,9 +10,13 @@ import {Toast, List, InputItem} from 'antd-mobile';
 
 import NavNormal from '../.././NavNormal/NavNormal';
 
-import newContact from '../../../utils/newContact';
-import {historyReplace} from '../../../utils/historyChange';
 import {FormattedMessage} from 'react-intl';
+
+import {
+    newContact,
+    historyReplace,
+    addressCheck
+} from '../../../utils/utils';
 
 require('./NewContactAddressPage.css');
 
@@ -28,9 +32,8 @@ export default class NewContactAddress extends React.Component {
     }
 
     handleClick() {
-        let re = /^[0-9a-zA-Z]*$/g;
         if (this.state.name !== '' && this.state.address !== '') {
-            if (re.test(this.state.address) && this.state.address.length === 36) {
+            if (addressCheck(this.state.address, { compareToUse: false }).ready) {
                 newContact(this.state.name, this.state.address);
                 historyReplace('/contactaddress');
             }

@@ -3,7 +3,10 @@
  * @author huangzongzhe
  * 2018.12.13
  */
-function addressCheck (address = '') {
+
+export default function addressCheck(address = '', options = {
+    compareToUse: true
+}) {
     let output = {
         ready: true,
         message: ''
@@ -12,13 +15,15 @@ function addressCheck (address = '') {
     // TODO: May Change again.
     const length = address.length;
     if (length <= 53 && length >= 49 && address.match(/^ELF_/)) {
-    // if (address.length === 36) {
+
+        // 业务功能
         let addressUse = JSON.parse(localStorage.getItem('lastuse')).address;
-        if (address === addressUse) {
+        if (address === addressUse && options.compareToUse) {
             output.ready = false;
             output.message = 'Address and current wallet are the same.';
             return output;
         }
+
         output.ready = true;
         return output;
     }
@@ -27,4 +32,3 @@ function addressCheck (address = '') {
     return output;
 }
 
-export default addressCheck
