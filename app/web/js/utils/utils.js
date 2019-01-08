@@ -17,8 +17,8 @@ import getBalanceAndTokenName from './getBalanceAndTokenName';
 import whetherBackupCheck from './whetherBackupCheck';
 import checkStatus from './checkStatus';
 import clipboard from './clipboard';
-import insertWalletInfo from './walletStorage'
-import walletStatusCheck from './walletStatusCheck'
+import insertWalletInfo from './walletStorage';
+import walletStatusCheck from './walletStatusCheck';
 import txIdOmit from './txIdOmit';
 import tokenOmit from './tokenOmit';
 

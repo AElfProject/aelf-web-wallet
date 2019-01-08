@@ -44,8 +44,7 @@ class Home extends Component {
         let contractAddress = getParam('contract_address', window.location.href);
 
         getBalanceAndTokenName(address, contractAddress, output => {
-            const {balance = 0} = output;
-            this.getELFValue(balance);
+            this.getELFValue(output);
             this.setState({
                 balance: output.balance.toLocaleString(),
                 tokenName: output.tokenDetail.name,
@@ -54,14 +53,26 @@ class Home extends Component {
         });
     }
 
-    getELFValue(ELFValue) {
-        // TODO: 更全的list
+    getELFValue(tonkenInfo) {
+        const {
+            balance,
+            tokenDetail: {
+                name
+            }
+        } = tonkenInfo;
+        if (name !== 'ELF') {
+            this.setState({
+                tenderValue: 0
+            });
+            return;
+        }
+        // TODO: 需要更全的list
         apisauce.get('https://min-api.cryptocompare.com/data/price', {
-            fsym: getParam('token', window.location.href),
+            fsym: name,
             tsyms: 'USD'
         }).then(result => {
             const {USD} = result;
-            let tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
+            let tenderValue = (parseFloat(USD) * balance).toLocaleString();
             tenderValue = isNaN(tenderValue) ? 0 : tenderValue;
             this.setState({
                 tenderValue
@@ -69,21 +80,6 @@ class Home extends Component {
         }).catch(error => {
             console.log('error:', error);
         });
-
-        // fetch('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(checkStatus).then(result => {
-        //     result.text().then(result => {
-        //         // console.log(result, this.setState);
-        //         const {USD} = JSON.parse(result);
-        //         const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
-        //         this.setState({
-        //             tenderValue
-        //         });
-        //     });
-        // }).catch(error => {
-        //     Toast.fail(error.message, 6);
-        // });
-
-        // return ELFValue.toLocaleString();
     }
 
     componentDidMount() {

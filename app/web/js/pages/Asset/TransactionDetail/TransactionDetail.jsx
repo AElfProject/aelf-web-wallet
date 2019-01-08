@@ -3,6 +3,8 @@
  * @author huangzongzhe
  * 2018.07.27
  */
+
+/* eslint-disable fecs-camelcase */
 import React, {Component} from 'react';
 import {Toast} from 'antd-mobile';
 import style from './TransactionDetail.scss';
@@ -22,7 +24,7 @@ import {
 import {FormattedMessage} from 'react-intl';
 
 // React component
-class TransactionDetail extends Component {
+export default class TransactionDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,10 +33,12 @@ class TransactionDetail extends Component {
         const stringTemp = hashHistory.getCurrentLocation().search || window.location.href;
         this.txid = getParam('txid', stringTemp);
         this.tokenName = getParam('token', stringTemp);
+        this.contractAddress = getParam('contract_address', stringTemp);
 
         this.aelf = initAelf({
             chainOnly: true,
-            tokenName: this.tokenName
+            tokenName: this.tokenName,
+            contractAddress: this.contractAddress
         });
 
         clipboard('#clipboard-transactionDetail');
@@ -43,15 +47,17 @@ class TransactionDetail extends Component {
     getTxInfo() {
         let txid = this.txid;
         let tokenName = this.tokenName;
+        let contractAddress = this.contractAddress;
 
         let txInfo = {
             txState: false,
             txResult: null,
             txid,
-            tokenName
+            tokenName,
+            contractAddress
         };
         try {
-            if (txid && tokenName) {
+            if (txid && contractAddress) {
                 let result = this.aelf.aelf.chain.getTxResult(txid);
                 if (result.error) {
                     txInfo.txResult = result.error;
@@ -60,11 +66,13 @@ class TransactionDetail extends Component {
                     txInfo.txResult = result;
                     txInfo.txState = true;
                 }
-            } else {
-                const URL = window.location.href;
-                txInfo.txResult = 'No (txid=xxx) or No (token=xxx), Please check your URL： ' + URL;
             }
-        } catch (e) {
+            else {
+                const URL = window.location.href;
+                txInfo.txResult = 'No (txid=xxx) or No (contract_address=xxx), Please check your URL： ' + URL;
+            }
+        }
+        catch (e) {
             Toast.fail(e.message, 10);
             txInfo.txResult = e;
         }
@@ -96,7 +104,7 @@ class TransactionDetail extends Component {
     }
 
     renderTransfer(txResult) {
-        let { tx_info } = txResult.result;
+        let {tx_info} = txResult.result;
         let params = tx_info.params && tx_info.params.split(',') || [];
         let to = params[0];
         let amount = params[1];
@@ -118,7 +126,7 @@ class TransactionDetail extends Component {
     }
 
     renderNotTransfer(txResult) {
-        let { tx_info } = txResult.result;
+        let {tx_info} = txResult.result;
         let method = tx_info.Method;
 
         return <div>
@@ -142,7 +150,7 @@ class TransactionDetail extends Component {
                 rightContent={
                     <div
                         onClick={() => {
-                            window.location.href = window.location.protocol + '//'+ window.location.host;
+                            window.location.href = window.location.protocol + '//' + window.location.host;
                         }}
                     ><FormattedMessage id = 'aelf.Home' /></div>
                 }
@@ -156,7 +164,7 @@ class TransactionDetail extends Component {
         let NavHtml = this.renderNavHtml();
         // 这个交易能拿到所有交易，非transfer交易也需要处理。
         let txInfo = this.getTxInfo();
-        let {txResult, txid, txState, tokenName} = txInfo;
+        let {txResult, txid, txState, tokenName, contractAddress} = txInfo;
 
         if (!txState) {
             if (typeof txResult !== 'string') {
@@ -183,6 +191,7 @@ class TransactionDetail extends Component {
 
         let urlForCopy = window.location.host
             + '/transactiondetail?txid=' + txid
+            + '&contract_address=' + contractAddress
             + '&token=' + tokenName;
 
         let containerStyle = getPageContainerStyle();
@@ -195,7 +204,7 @@ class TransactionDetail extends Component {
                 {NavHtml}
                 <div className={style.container} style={containerStyle}>
                     <div style={txInfoContainerStyle}>
-                        <div style={{ wordWrap: 'break-word', lineHeight: 1.5 }}>
+                        <div style={{wordWrap: 'break-word', lineHeight: 1.5}}>
                             {html}
                             <div className={style.list}>
                                 <div className={style.title}>Status</div>
@@ -218,7 +227,12 @@ class TransactionDetail extends Component {
                                    className={style.textarea}
                                    defaultValue={urlForCopy}>
                          </textarea>
-                        <button id="clipboard-transactionDetail" data-clipboard-target="#copyUrl" style={{display: 'none'}}>copy</button>
+                        <button
+                            id="clipboard-transactionDetail"
+                            data-clipboard-target="#copyUrl"
+                            style={{display: 'none'}}>
+                            copy
+                        </button>
 
                         <AelfButton
                             onClick={() => {
@@ -233,5 +247,3 @@ class TransactionDetail extends Component {
         );
     }
 }
-
-export default TransactionDetail
