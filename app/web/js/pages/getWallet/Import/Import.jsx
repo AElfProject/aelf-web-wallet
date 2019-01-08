@@ -95,14 +95,14 @@ class Import extends Component {
 
     inputMnemonic(mnemonic) {
         this.setState({
-            mnemonic: mnemonic.target.value,
+            mnemonic: mnemonic.target.value.trim(),
             mnemonicError: ''
         });
     }
 
     inputPrivateKey(privateKey) {
         this.setState({
-            privateKey: privateKey.target.value,
+            privateKey: privateKey.target.value.trim(),
             privateKeyError: ''
         });
     }

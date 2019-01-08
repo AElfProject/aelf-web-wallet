@@ -1,29 +1,29 @@
-/*
- * huangzongzhe
+/**
+ * @file WalletManage.jsx
+ * @author huangzongzhe
  * 2018.08.24
  */
 import React, {
-	Component
-} from 'react'
-import { List, WhiteSpace, Modal, Toast } from 'antd-mobile'
-import { hashHistory } from 'react-router'
+    Component
+} from 'react';
+import {List, Modal, Toast} from 'antd-mobile';
+import {hashHistory} from 'react-router';
 
-import ListContent from '../../../../components/ListContent/ListContent'
-import NoticePanel from '../../../../components/NoticePanel/NoticePanel'
-import AelfButton from '../../../../components/Button/Button'
+import ListContent from '../../../../components/ListContent/ListContent';
+import NoticePanel from '../../../../components/NoticePanel/NoticePanel';
+import AelfButton from '../../../../components/Button/Button';
 
-import NavWithDrawer from '../../../NavWithDrawer/NavWithDrawer'
+import NavWithDrawer from '../../../NavWithDrawer/NavWithDrawer';
 
 import {
     insertWalletInfo,
     getPageContainerStyle,
-    walletStatusCheck,
     whetherBackupCheck
 } from '../../../../utils/utils';
 
-import { FormattedMessage } from 'react-intl'
+import {FormattedMessage} from 'react-intl';
 
-import style from './WalletManage.scss'
+import style from './WalletManage.scss';
 
 
 const Item = List.Item;
@@ -31,24 +31,24 @@ const prompt = Modal.prompt;
 const alert = Modal.alert;
 
 class WalletManage extends Component {
-	constructor() {
-		super();
-		this.state = {
-			walletNameModal: false,
-			nameChanged: ''
-		};
-	}
+    constructor() {
+        super();
+        this.state = {
+            walletNameModal: false,
+            nameChanged: ''
+        };
+    }
 
     showModal(e, key) {
         e.preventDefault(); // 修复 Android 上点击穿透
         this.setState({
-            [key]: true,
+            [key]: true
         });
     }
 
     onClose(key) {
         this.setState({
-            [key]: false,
+            [key]: false
         });
     }
 
@@ -61,16 +61,16 @@ class WalletManage extends Component {
         insertWalletInfo(walletInfo, false);
         Toast.success('Change success', 1.5, () => {
             // hashHistory.goBack();
-        }, false)
+        }, false);
         this.setState({
-        	nameChanged: ''
+            nameChanged: ''
         });
     }
 
     deleteWallet() {
-		let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
         let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
-		delete walletInfoList[walletAddress];
+        delete walletInfoList[walletAddress];
 
         localStorage.setItem('walletInfoList', JSON.stringify(walletInfoList));
 
@@ -78,8 +78,9 @@ class WalletManage extends Component {
         let lock = false;
         for (let each in walletInfoList) {
             if (count) {
-                break
-            } else {
+                break;
+            }
+            else {
                 console.log(each);
                 localStorage.setItem('lastuse', JSON.stringify({
                     address: walletInfoList[each].address,
@@ -89,7 +90,7 @@ class WalletManage extends Component {
                 lock = true;
                 Toast.success('Deleted', 3, () => {
                     hashHistory.push('/personalcenter/home');
-                })
+                });
             }
         }
         if (!lock) {
@@ -98,14 +99,14 @@ class WalletManage extends Component {
             Toast.fail('No wallet now，please create or insert a wallet.', 3, () => {
                 hashHistory.push('/get-wallet/guide');
             }, 3);
-		}
-	}
+        }
+    }
 
-	render() {
+    render() {
 
-		let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
-		let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
-		let walletName = walletInfoList[walletAddress].walletName;
+        let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+        let walletName = walletInfoList[walletAddress].walletName;
 
         if (!whetherBackupCheck()) {
             walletAddress = 'Please backup your wallet';
@@ -113,9 +114,9 @@ class WalletManage extends Component {
 
         let containerStyle = getPageContainerStyle();
         containerStyle.height = containerStyle.height - 61;
-		let html =
-			<div className={'aelf-personal-pages aelf-solid' + ' ' + style.container} style={containerStyle}>
-				<div className={style.top}>
+        let html
+            = <div className={'aelf-personal-pages aelf-solid' + ' ' + style.container} style={containerStyle}>
+                <div className={style.top}>
                     <NoticePanel
                         mainTitle={walletName}
                         subTitle={[
@@ -143,13 +144,13 @@ class WalletManage extends Component {
                                 }, {
                                     text: 'Submit',
                                     onPress: name => this.changeName(name)
-                                }, ], 'default', '')
+                                }], 'default', '')
                             }>
                             <ListContent
                                 text={
-                                    <FormattedMessage 
-                                        id = 'aelf.Wallet Name'
-                                        defaultMessage = 'Wallet Name'
+                                    <FormattedMessage
+                                        id='aelf.Wallet Name'
+                                        defaultMessage='Wallet Name'
                                     />
                                 }
                             ></ListContent>
@@ -160,9 +161,9 @@ class WalletManage extends Component {
                         <Item onClick={() => hashHistory.push('/get-wallet/backup')}>
                             <ListContent
                                 text={
-                                    <FormattedMessage 
-                                        id = 'aelf.Backup'
-                                        defaultMessage = 'Backup'
+                                    <FormattedMessage
+                                        id='aelf.Backup'
+                                        defaultMessage='Backup'
                                     />
                                 }
                             ></ListContent>
@@ -172,17 +173,17 @@ class WalletManage extends Component {
                         <Item onClick={() => hashHistory.push('/personalcenter/passwordchange')}>
                             <ListContent
                                 text={
-                                    <FormattedMessage 
-                                        id = 'aelf.Change Password'
-                                        defaultMessage = 'Change Password'
+                                    <FormattedMessage
+                                        id='aelf.Change Password'
+                                        defaultMessage='Change Password'
                                     />
                                 }
                             ></ListContent>
                         </Item>
                     </List>
-				</div>
+                </div>
 
-				<div className={style.bottom}>
+                <div className={style.bottom}>
                     <AelfButton
                         text="Delete Wallet"
                         onClick={
@@ -191,23 +192,23 @@ class WalletManage extends Component {
                             }, {
                                 text: 'Submit',
                                 onPress: name => this.deleteWallet()
-                            }, ], 'default', '')
+                            },], 'default', '')
                         }
                     ></AelfButton>
 
-				</div>
-			</div>;
+                </div>
+            </div>;
 
-		return (
-			<div>
-				<NavWithDrawer 
-				showLeftClick={true}
-                hiddenBottom={true}
-				onLeftClick={() => hashHistory.push('/personalcenter/home')}
-				children={html}/>
-	    	</div>
-		);
-	}
+        return (
+            <div>
+                <NavWithDrawer
+                    showLeftClick={true}
+                    hiddenBottom={true}
+                    onLeftClick={() => hashHistory.push('/personalcenter/home')}
+                    children={html} />
+            </div>
+        );
+    }
 }
 
 export default WalletManage
