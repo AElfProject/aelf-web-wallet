@@ -29,7 +29,9 @@ function getTxs(callback, walletAddress, pageIndex) {
         limit: NUM_ROWS, // 13
         page: pageIndex, // 0
         order: 'desc', // asc
-        address: walletAddress
+        address: walletAddress,
+        // TODO, need deal with other contract About token, such lick resource contract.
+        contract_address: window.defaultConfig.mainTokenContract
     };
 
     let query = '';
@@ -191,21 +193,27 @@ export default class TransactionsContent extends React.Component {
     render() {
         const row = (rowData, sectionID, rowID) => {
             let item = this.state.walletData[rowID];
+            // console.log(item);
             let isIncome = item.params_to === this.state.walletAddress ? true : false;
             let quantity = item.quantity;
             let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
             let txId = item.tx_id;
+            const contractAddress = item.address_to;
             let status = item.tx_status;
             if (status.toLowerCase().includes('failed')) {
                 iconClass = style.icon + ' ' + style.iconFailed;
             }
             txId = txIdOmit(txId);
 
+            const txDetailURL = '/transactiondetail?'
+                + `contract_address=${contractAddress}`
+                + `&txid=${item.tx_id}`
+                + `&token=${window.defaultConfig.mainTokenName}`;
             // TODO: search for mutli chain.
             return (
                 <div key={rowID}
                      className={style.txList}
-                     onClick={() => hashHistory.push(`/transactiondetail?txid=${item.tx_id}&token=${window.defaultConfig.mainTokenName}`)}
+                    onClick={() => hashHistory.push(txDetailURL)}
                 >
                     <div className={style.leftContainer}>
                         <div className={iconClass}>

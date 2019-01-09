@@ -178,7 +178,13 @@ export default class TransactionDetail extends Component {
             );
         }
 
-        let {tx_info, tx_status, block_number} = txResult.result;
+        let {
+            tx_info,
+            tx_status
+        } = txResult.result;
+        const {
+            ExecutedInBlock
+        } = tx_info;
 
         let html = this.renderTransfer(txResult);
 
@@ -216,7 +222,7 @@ export default class TransactionDetail extends Component {
                             </div>
                             <div className={style.list}>
                                 <div className={style.title}>Block Height</div>
-                                <div className={style.text}>{block_number}</div>
+                                <div className={style.text}>{ExecutedInBlock}</div>
                             </div>
                             {notTransferHtml}
                         </div>

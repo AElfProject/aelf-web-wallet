@@ -139,7 +139,6 @@ export default class TransactionsList extends Component {
         const row = (rowData, sectionID, rowID) => {
             let item = this.rData[rowID];
             let isIncome = item.params_to === this.walletAddress;
-
             let quantity = (isIncome ? '+' : '-') + item.quantity;
             let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
 

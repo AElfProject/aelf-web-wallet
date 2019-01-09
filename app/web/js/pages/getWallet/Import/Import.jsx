@@ -57,21 +57,23 @@ class Import extends Component {
             return;
         }
 
-        let mnemonicWallet = aelf.wallet.getWalletByMnemonic(this.state.mnemonic || '');
-        let privateKeyWallet = aelf.wallet.getWalletByPrivateKey(this.state.privateKey || '');
+        let mnemonicWallet = aelf.wallet.getWalletByMnemonic(this.state.mnemonic.trim() || '');
+        let privateKeyWallet = aelf.wallet.getWalletByPrivateKey(this.state.privateKey.trim() || '');
 
         // if (!privateKeyWallet && !mnemonicWallet) {
         if (!mnemonicWallet) {
-            this.setState({mnemonicError: 'invalid mnemonic'})
-        } else {
-            this.setState({mnemonicError: ''})
+            this.setState({mnemonicError: 'invalid mnemonic'});
+        }
+        else {
+            this.setState({mnemonicError: ''});
         }
 
         // if (!mnemonicWallet && !privateKeyWallet) {
         if (!privateKeyWallet) {
-            this.setState({privateKeyError: 'invalid privateKey'})
-        } else {
-            this.setState({privateKeyError: ''})
+            this.setState({privateKeyError: 'invalid privateKey'});
+        }
+        else {
+            this.setState({privateKeyError: ''});
         }
 
         if (!privateKeyWallet && !mnemonicWallet) {
@@ -87,22 +89,22 @@ class Import extends Component {
             Toast.info('Import Success，turn to Home Page.', 3, () => {
                 hashHistory.push('/assets');
             });
-        } else {
+        }
+        else {
             Toast.fail('(꒦_꒦) ...Fail, please check the form. Or call Huang Zongzhe');
         }
-        
     }
 
     inputMnemonic(mnemonic) {
         this.setState({
-            mnemonic: mnemonic.target.value.trim(),
+            mnemonic: mnemonic.target.value,
             mnemonicError: ''
         });
     }
 
     inputPrivateKey(privateKey) {
         this.setState({
-            privateKey: privateKey.target.value.trim(),
+            privateKey: privateKey.target.value,
             privateKeyError: ''
         });
     }
