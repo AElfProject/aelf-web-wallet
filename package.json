@@ -61,7 +61,7 @@
     "webpack": "^4.16.1",
     "webpack-bundle-analyzer": "^3.0.4",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.4",
+    "webpack-dev-server": "^3.2.1",
     "webpack-livereload-plugin": "^2.1.1",
     "webstorm-disable-index": "^1.2.0"
   },
