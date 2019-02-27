@@ -26,7 +26,7 @@
     "react-svg": "^7.2.7",
     "redux": "^4.0.0",
     "sugarss": "^2.0.0",
-    "whatwg-fetch": "^2.0.4"
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",
