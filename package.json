@@ -39,7 +39,7 @@
     "browser-sync": "^2.24.5",
     "browser-sync-webpack-plugin": "^2.2.2",
     "css-loader": "^1.0.1",
-    "egg-bin": "^4.3.5",
+    "egg-bin": "^4.11.0",
     "egg-ci": "^1.11.0",
     "egg-mock": "^3.14.0",
     "eslint": "^4.11.0",
