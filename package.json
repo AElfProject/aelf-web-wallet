@@ -10,7 +10,7 @@
     "diff-so-fancy": "^1.2.0",
     "egg": "^2.2.1",
     "egg-proxy": "^1.0.6",
-    "egg-scripts": "^2.5.0",
+    "egg-scripts": "^2.11.0",
     "egg-view": "^2.1.0",
     "egg-view-nunjucks": "^2.2.0",
     "egg-view-react": "^1.1.0",
