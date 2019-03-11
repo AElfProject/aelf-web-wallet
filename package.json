@@ -43,7 +43,7 @@
     "browser-sync-webpack-plugin": "^2.2.2",
     "clean-webpack-plugin": "^1.0.0",
     "css-loader": "^1.0.1",
-    "cssnano": "^4.1.7",
+    "cssnano": "^4.1.10",
     "egg-bin": "^4.3.5",
     "egg-ci": "^1.8.0",
     "egg-mock": "^3.14.0",
