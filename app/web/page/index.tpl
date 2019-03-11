@@ -39,7 +39,8 @@
 <script type="text/javascript">
     window.defaultConfig = {};
     defaultConfig.httpProvider = '{{httpProvider}}';
-    defaultConfig.mainContract = '{{mainContract}}';
+    defaultConfig.mainTokenName = '{{mainTokenName}}';
+    defaultConfig.mainTokenContract = '{{mainTokenContract}}';
     defaultConfig.commonPrivateKey = '{{commonPrivateKey}}';
 </script>
 

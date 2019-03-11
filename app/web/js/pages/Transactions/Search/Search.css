@@ -16,7 +16,7 @@
     border: none;
     color: #fff;
     font-size: 14px;
-    opacity: .3;
+    opacity: .6;
 }
 
 .TransactionsSearch .am-list {
@@ -30,7 +30,7 @@
 
 .TransactionsSearch .am-input-control input {
     font-size: 14px;
-    color: rgba(255, 255, 255, .3);
+    color: rgba(255, 255, 255, .6);
 }
 
 .clearBtn {

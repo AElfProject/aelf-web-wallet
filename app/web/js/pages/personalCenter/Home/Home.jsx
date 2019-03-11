@@ -29,9 +29,9 @@ class personalCenterHome extends Component {
                         <ListContent
                             icon="wallet16"
                             text={
-                                <FormattedMessage 
-                                    id = 'aelf.WalletRecord'
-                                    defaultMessage = 'Wallet Record'
+                                <FormattedMessage
+                                    id = 'aelf.WalletDetail'
+                                    defaultMessage = 'Wallet Detail'
                                 />
                             }
                         ></ListContent>
@@ -54,7 +54,7 @@ class personalCenterHome extends Component {
 
                 <div className={style.blank}></div>
 
-                <List className={'aelf-list'}>
+                {/* <List className={'aelf-list'}>
                     <Item onClick={() => hashHistory.push('/contactaddress')}>
                         <ListContent
                             type="small"
@@ -67,7 +67,7 @@ class personalCenterHome extends Component {
                             }
                         ></ListContent>
                     </Item>
-                </List>
+                </List> */}
                 <List className={'aelf-list'}>
                     <Item onClick={() => hashHistory.push('/personalcenter/systemsetting')}>
                         <ListContent

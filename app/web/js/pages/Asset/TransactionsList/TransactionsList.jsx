@@ -1,67 +1,48 @@
-/*
- * huangzongzhe
+/**
+ * @file TransactionsList.jsx
+ * @author huangzongzhe
  * 2018.07.26
  */
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { PullToRefresh, ListView } from 'antd-mobile'
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+import {PullToRefresh, ListView} from 'antd-mobile';
 
-import style from './TransactionsList.scss'
-require('./TransactionsList.css')
+import style from './TransactionsList.scss';
+require('./TransactionsList.css');
 
-import { hashHistory } from 'react-router'
-
-import checkStatus from '../../../utils/checkStatus'
-import addressOmit from '../../../utils/addressOmit'
-import getParam from '../../../utils/getParam'
+import {hashHistory} from 'react-router';
 
 import {
-    SCROLLLIST,
+    addressOmit,
+    getParam,
+    apisauce
+} from '../../../utils/utils';
+
+import {
     SCROLLFOOTER
-} from '../../../constants'
+} from '../../../constants';
 
 const NUM_ROWS = 20;
 let pageIndex = 0;
 
-function getTxs (callback, pIndex = 0) {
-
-    let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
-
-    let params = {
+function getTxs(callback, pIndex = 0) {
+    apisauce.get('wallet/api/proxy', {
+        token: getParam('token', window.location.href),
+        ptype: 'api',
+        action: 'address_transactions',
         limit: NUM_ROWS, // 13
         page: pIndex, // 0
         order: 'desc', // asc
-        address: walletAddress, // 0x04263089a3fd878482d81d5f54f6865260d6
+        address: JSON.parse(localStorage.getItem('lastuse')).address,
         contract_address: getParam('contract_address', window.location.href)
-    };
+    }).then(result => {
+        let output = result.result;
 
-    let query = '';
-    for (let each in params) {
-        query += `${each}=${params[each]}&`;
-    }
-
-    fetch(`/block/api/address/transactions?${query}`, {
-        credentials: 'include',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    }).then(checkStatus).then(result => {
-        result.text().then(result => {
-            let output = JSON.parse(result);
-
-            let length = output.total;
-            let transactions = output.transactions;
-
-            callback(output);
-        })
-    }).catch(error => {
-        console.log('error:', error);
+        callback(output);
     });
 }
 
-class TransactionsList extends Component {
+export default class TransactionsList extends Component {
     constructor(props) {
         super(props);
 
@@ -152,21 +133,26 @@ class TransactionsList extends Component {
     }
 
     render() {
+        const tokenNameQuery = `token=${getParam('token', window.location.href)}`;
+        const tokenAddressQuery = `contract_address=${getParam('contract_address', window.location.href)}`;
+        const tokenQuery = tokenNameQuery + '&' + tokenAddressQuery;
         const row = (rowData, sectionID, rowID) => {
             let item = this.rData[rowID];
-            let isIncome = item.params_to === this.walletAddress ? true : false;
-
+            let isIncome = item.params_to === this.walletAddress;
             let quantity = (isIncome ? '+' : '-') + item.quantity;
             let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
 
             let address = isIncome ? item.address_from : item.params_to;
             let status = item.tx_status;
+            if (status.toLowerCase().includes('failed')) {
+                iconClass = style.icon + ' ' + style.iconFailed;
+            }
             address = addressOmit(address);
 
             return (
                 <div key={rowID}
                      className={style.txList}
-                     onClick={() => hashHistory.push(`/transactiondetail?txid=${item.tx_id}`)}
+                     onClick={() => hashHistory.push(`/transactiondetail?txid=${item.tx_id}&${tokenQuery}`)}
                 >
                     <div className={style.leftContainer}>
                         <div className={iconClass}>
@@ -218,5 +204,3 @@ class TransactionsList extends Component {
         );
     }
 }
-
-export default TransactionsList;

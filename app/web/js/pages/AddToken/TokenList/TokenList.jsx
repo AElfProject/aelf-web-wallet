@@ -1,7 +1,7 @@
 /**
- *  @file
- *  @author zhouminghui
- *  token  绑定与解绑 以及列表渲染
+ * @file
+ * @author zhouminghui
+ * token  绑定与解绑 以及列表渲染
  */
 
 import React from 'react';
@@ -192,12 +192,12 @@ export default class TokenList extends React.Component {
 
                                 if (compare[rowID]) {
                                     bindToken(TokenMessage, () => {
-                                        Toast.success('bind Success', 3);
+                                        Toast.success('bind Success', 3, () => {}, false);
                                     });
                                 }
                                 else {
                                     unbindToken(TokenMessage, () => {
-                                        Toast.success('unbind Success', 3);
+                                        Toast.success('unbind Success', 3, () => {}, false);
                                     });
                                 }
                             }}

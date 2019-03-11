@@ -57,21 +57,23 @@ class Import extends Component {
             return;
         }
 
-        let mnemonicWallet = aelf.wallet.getWalletByMnemonic(this.state.mnemonic || '');
-        let privateKeyWallet = aelf.wallet.getWalletByPrivateKey(this.state.privateKey || '');
+        let mnemonicWallet = aelf.wallet.getWalletByMnemonic(this.state.mnemonic.trim() || '');
+        let privateKeyWallet = aelf.wallet.getWalletByPrivateKey(this.state.privateKey.trim() || '');
 
         // if (!privateKeyWallet && !mnemonicWallet) {
         if (!mnemonicWallet) {
-            this.setState({mnemonicError: 'invalid mnemonic'})
-        } else {
-            this.setState({mnemonicError: ''})
+            this.setState({mnemonicError: 'invalid mnemonic'});
+        }
+        else {
+            this.setState({mnemonicError: ''});
         }
 
         // if (!mnemonicWallet && !privateKeyWallet) {
         if (!privateKeyWallet) {
-            this.setState({privateKeyError: 'invalid privateKey'})
-        } else {
-            this.setState({privateKeyError: ''})
+            this.setState({privateKeyError: 'invalid privateKey'});
+        }
+        else {
+            this.setState({privateKeyError: ''});
         }
 
         if (!privateKeyWallet && !mnemonicWallet) {
@@ -87,10 +89,10 @@ class Import extends Component {
             Toast.info('Import Success，turn to Home Page.', 3, () => {
                 hashHistory.push('/assets');
             });
-        } else {
+        }
+        else {
             Toast.fail('(꒦_꒦) ...Fail, please check the form. Or call Huang Zongzhe');
         }
-        
     }
 
     inputMnemonic(mnemonic) {
@@ -141,11 +143,11 @@ class Import extends Component {
         this.failMessage = 'Please input Private Key'; // '请填入私钥';
     }
 
-    setAgreement() {
-        this.setState({agree: true});
+    toggleAgreement() {
+        this.setState({ agree: !this.state.agree });
     }
 
-    toggleAgreement() {
+    toggleAgreementHTML() {
         this.setState({
             agreementDisplay: !this.state.agreementDisplay
         });
@@ -259,11 +261,11 @@ class Import extends Component {
                             style={{
                                 color: '#26B7FF'
                             }}
-                            onClick={() => this.toggleAgreement()}
+                            onClick={() => this.toggleAgreementHTML()}
                         >《<FormattedMessage id = 'aelf.Service and Privacy Policy' defaultMessage = 'Service and Privacy Policy' />》</span>
                         </Flex.Item>
                         <Flex.Item>
-                            <div onClick={() => this.setAgreement()}>
+                            <div onClick={() => this.toggleAgreement()}>
                                 {agreementHtml}
                             </div>
                         </Flex.Item>
@@ -271,7 +273,7 @@ class Import extends Component {
 
                     <Agreement
                         agreementDisplay={this.state.agreementDisplay}
-                        toggleAgreement={() => this.toggleAgreement()}
+                        toggleAgreement={() => this.toggleAgreementHTML()}
                     ></Agreement>
                 </div>
 

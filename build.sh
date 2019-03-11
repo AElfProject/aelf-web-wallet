@@ -17,7 +17,7 @@ echo ${node_modules_action} ${start_mode}
 
 git checkout package-lock.json
 
-git pull origin master
+git pull && echo "git pull done"
 
 if [ ${node_modules_action} = 'reinstall' ]
 then
@@ -32,11 +32,11 @@ echo 'running webpack'
 
 if [ ${start_mode} = 'dev' ]
 then
-    webpack -w && echo 'webpack done'
+    webpack && echo 'webpack done'
     npm run dev
     echo 'npm run dev'
 else
-    webpack && echo 'webpack done'
+    webpack --config webpack.config.production.js && echo 'webpack done'
     npm stop && npm start
     echo 'npm stop && npm start'
 fi

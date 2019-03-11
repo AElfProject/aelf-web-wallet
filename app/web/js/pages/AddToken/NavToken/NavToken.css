@@ -1,11 +1,13 @@
 .Tokenlist .am-list-body {
-    width: 92%;
-    margin-left: 1%;
+    width: 100%;
     background: transparent;
     border:  none;
     color: #fff;
     font-size: 14px;
-    opacity: .3;
+}
+
+.Tokenlist .am-list-item .am-list-line .am-list-extra {
+    padding-right: 15px;
 }
 
 .clearBtn {

@@ -12,48 +12,25 @@ import AelfButton from './../../../components/Button/Button'
 import NavNormal from '../../NavNormal/NavNormal'
 import BackupNotice from '../../BackupNotice/BackupNotice'
 
-import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
-import initAelf from '../../../utils/initAelf'
-import getPageContainerStyle from '../../../utils/getPageContainerStyle'
-
-import getParam from '../../../utils/getParam' // 还有类似方法的话，合并一下。
-import getBalanceAndTokenName from '../../../utils/getBalanceAndTokenName'
+import {
+    addressCheck,
+    moneyKeyboardWrapProps,
+    initAelf,
+    getPageContainerStyle,
+    getParam,
+    getBalanceAndTokenName
+} from '../../../utils/utils';
 
 import { FormattedMessage } from 'react-intl'
 
-// React component
-// TODO
-// 1.function addressCheck() {}
-// 2.insufficient funds
-
-// 需要更加完善的机制
-function addressCheck (address = '') {
-    let output = {
-        ready: true,
-        message: ''
-    };
-
-    // if (address.length === 38 && address.match(/^0x/)) {
-    if (address.length === 36) {
-        let addressUse = JSON.parse(localStorage.getItem('lastuse')).address;
-        if (address === addressUse) {
-            output.ready = false;
-            output.message = 'Address and current wallet are the same.';
-            return output;
-        }
-        output.ready = true;
-        return output;
-    }
-    output.ready = false;
-    output.message = 'error address';
-    return output;
-}
 class Transfer extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
         this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+        this.contractAddress = getParam('contract_address', window.location.href);
+        this.tokenName = getParam('token', window.location.href);
     }
 
     inputAmount(amount) {
@@ -76,13 +53,12 @@ class Transfer extends Component {
 
     componentDidMount() {
         let address = this.walletAddress;
-        let contractAddress = getParam('contract_address', window.location.href);
 
-        getBalanceAndTokenName(address, contractAddress, output => {
+        getBalanceAndTokenName(address, this.contractAddress, output => {
             this.setState({
                 balance: output.balance,
-                tokenName: output.tokenDetail.name,
-                contract_address: contractAddress
+                tokenName: this.tokenName || output.tokenDetail.name,
+                contract_address: this.contractAddress
             });
         });
     }
@@ -119,9 +95,11 @@ class Transfer extends Component {
                 Toast.fail('insufficient', 3, () => {}, false);
                 return;
             }
-
+            const tokenName = this.tokenName;
+            const contractAddress = this.contractAddress;
             let aelf = initAelf({
-                password: password
+                password,
+                contractAddress
             });
 
             if (aelf.errormsg) {
@@ -135,7 +113,7 @@ class Transfer extends Component {
 
             Toast.hide();
 
-            hashHistory.push(`/transactiondetail?txid=${transfer.hash}`);
+            hashHistory.push(`/transactiondetail?txid=${transfer.hash}&token=${tokenName}&contract_address=${contractAddress}`);
             
         }, 50);
     }

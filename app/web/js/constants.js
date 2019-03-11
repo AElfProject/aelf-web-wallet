@@ -8,10 +8,9 @@ import React from 'react';
 
 const SCROLLLIST = {
     loading: 'Loading...',
-    loaded: 'Loading',
-    end: 'No More o((⊙﹏⊙))o'
-};
-
+    loaded: 'Loaded',
+    end: 'No More o((⊙﹏⊙))o',
+}
 const SCROLLFOOTER = (isLoading, hasMore) => {
     return (
         <div style={{padding: 6, textAlign: 'center', color: 'rgba(255, 255, 255, 0.7)'}}>

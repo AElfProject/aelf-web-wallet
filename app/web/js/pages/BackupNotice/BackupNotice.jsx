@@ -13,19 +13,11 @@ import {FormattedMessage} from 'react-intl';
 import NavNormal from './../NavNormal/NavNormal'
 
 import AelfButton from './../../components/Button/Button'
+import {whetherBackupCheck} from '../../utils/utils'
 
 class BackupNotice extends Component {
-	needBackup () {
-		let walletId = JSON.parse(localStorage.getItem('lastuse')).address;
-        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
-        let walletInfo = walletInfoList[walletId];
-
-        return walletInfo.hasBackup === undefined
-        	? false : !walletInfo.hasBackup;
-	}
-
 	render() {
-		let needBackup = this.needBackup();
+		let needBackup = !whetherBackupCheck();
 
 		let html = '';
 		if (needBackup) {

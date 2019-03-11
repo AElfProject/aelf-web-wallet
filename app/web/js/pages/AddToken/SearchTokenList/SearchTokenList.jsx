@@ -12,6 +12,7 @@ import getTokens from '../../../utils/getTokens';
 import contractMergeArr from '../../../utils/contractMergeArr';
 import bindToken from '../../../utils/bindToken';
 import unbindToken from '../../../utils/unbindToken';
+import {tokenOmit} from '../../../utils/utils';
 import {SCROLLFOOTER} from '../../../constants';
 
 export default class SearchTokenList extends React.Component {
@@ -100,6 +101,7 @@ export default class SearchTokenList extends React.Component {
         const row = (rowData, sectionID, rowID) => {
             let tokenName = rowData.name;
             let tokenAddress = rowData.contract_address;
+            tokenAddress = tokenOmit(tokenAddress);
             return (
                 <div key={rowID}
                     className='addtoken-list-con'
@@ -126,12 +128,12 @@ export default class SearchTokenList extends React.Component {
 
                                 if (compare[rowID]) {
                                     bindToken(TokenMessage, () => {
-                                        Toast.success('bind Success', 3);
+                                        Toast.success('bind Success', 3, () => {}, false);
                                     });
                                 }
                                 else {
                                     unbindToken(TokenMessage, () => {
-                                        Toast.success('unbind Success', 3);
+                                        Toast.success('unbind Success', 3, () => {}, false);
                                     });
                                 }
                             }}

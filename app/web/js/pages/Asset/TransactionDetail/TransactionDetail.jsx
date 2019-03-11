@@ -1,57 +1,78 @@
-/*
- * huangzongzhe
+/**
+ * @file TransactionDetail.js
+ * @author huangzongzhe
  * 2018.07.27
  */
-import React, { Component } from 'react'
-import { Toast} from 'antd-mobile'
-import style from './TransactionDetail.scss'
-import { hashHistory } from 'react-router'
 
-import NavNormal from '../../NavNormal/NavNormal'
+/* eslint-disable fecs-camelcase */
+import React, {Component} from 'react';
+import {Toast} from 'antd-mobile';
+import style from './TransactionDetail.scss';
+import {hashHistory} from 'react-router';
 
-import AelfButton from './../../../components/Button/Button'
+import NavNormal from '../../NavNormal/NavNormal';
 
-import getParam from '../../../utils/getParam' // 还有类似方法的话，合并一下。
-import initAelf from '../../../utils/initAelf'
-import clipboard from '../../../utils/clipboard'
-import getPageContainerStyle from '../../../utils/getPageContainerStyle'
+import AelfButton from './../../../components/Button/Button';
 
-import { FormattedMessage } from 'react-intl'
+import {
+    getParam,
+    initAelf,
+    clipboard,
+    getPageContainerStyle
+} from '../../../utils/utils';
+
+import {FormattedMessage} from 'react-intl';
 
 // React component
-class TransactionDetail extends Component {
+export default class TransactionDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
+
+        const stringTemp = hashHistory.getCurrentLocation().search || window.location.href;
+        this.txid = getParam('txid', stringTemp);
+        this.tokenName = getParam('token', stringTemp);
+        this.contractAddress = getParam('contract_address', stringTemp);
+
         this.aelf = initAelf({
-            chainOnly: true
+            chainOnly: true,
+            tokenName: this.tokenName,
+            contractAddress: this.contractAddress
         });
+
         clipboard('#clipboard-transactionDetail');
     }
 
     getTxInfo() {
-        let txid = getParam('txid',
-            hashHistory.getCurrentLocation().search || window.location.href);
+        let txid = this.txid;
+        let tokenName = this.tokenName;
+        let contractAddress = this.contractAddress;
 
         let txInfo = {
             txState: false,
             txResult: null,
-            txid: txid
+            txid,
+            tokenName,
+            contractAddress
         };
         try {
-            if (txid) {
+            if (txid && contractAddress) {
                 let result = this.aelf.aelf.chain.getTxResult(txid);
                 if (result.error) {
                     txInfo.txResult = result.error;
-                } else {
+                }
+                else {
                     txInfo.txResult = result;
                     txInfo.txState = true;
                 }
-            } else {
-                txInfo.txResult = 'No Transaction ID';
             }
-        } catch (e) {
+            else {
+                const URL = window.location.href;
+                txInfo.txResult = 'No (txid=xxx) or No (contract_address=xxx), Please check your URL： ' + URL;
+            }
+        }
+        catch (e) {
             Toast.fail(e.message, 10);
             txInfo.txResult = e;
         }
@@ -69,7 +90,7 @@ class TransactionDetail extends Component {
         let isOut = walletList.indexOf(from) >= 0;
         if (isIn && isOut || (!isIn && !isOut)) {
             return <div className={style.list}>
-                <div className={style.title}>转账数</div>
+                <div className={style.title}>amount</div>
                 <div className={style.text}>{amount}</div>
             </div>;
         }
@@ -83,7 +104,7 @@ class TransactionDetail extends Component {
     }
 
     renderTransfer(txResult) {
-        let { tx_info } = txResult.result;
+        let {tx_info} = txResult.result;
         let params = tx_info.params && tx_info.params.split(',') || [];
         let to = params[0];
         let amount = params[1];
@@ -91,21 +112,21 @@ class TransactionDetail extends Component {
         let amounHtml = this.renderAmount(tx_info.From, to, amount);
 
         return <div>
-                {amounHtml}
+            {amounHtml}
 
-                <div className={style.list}>
-                    <div className={style.title}>From</div>
-                    <div className={style.text}>{tx_info.From}</div>
-                </div>
-                <div className={style.list}>
-                    <div className={style.title}>To</div>
-                    <div className={style.text}>{to}</div>
-                </div>
-            </div>;
+            <div className={style.list}>
+                <div className={style.title}>From</div>
+                <div className={style.text}>{tx_info.From}</div>
+            </div>
+            <div className={style.list}>
+                <div className={style.title}>To</div>
+                <div className={style.text}>{to}</div>
+            </div>
+        </div>;
     }
 
     renderNotTransfer(txResult) {
-        let { tx_info } = txResult.result;
+        let {tx_info} = txResult.result;
         let method = tx_info.Method;
 
         return <div>
@@ -121,53 +142,63 @@ class TransactionDetail extends Component {
     }
 
     renderNavHtml() {
-        // 这里有点针对业务定制了。。。233
-        let pathname = window.location.pathname;
-        let NavHtml = pathname.match(/^\/transactiondetail/)
-            ?
+        let hideLeft = window.location.pathname.match(/^\/transactiondetail/) ? true : false;
+        let NavHtml = (
             <NavNormal
                 navTitle={<FormattedMessage id = 'aelf.Transaction Details' />}
-                hideLeft={true}
+                hideLeft={hideLeft}
                 rightContent={
                     <div
                         onClick={() => {
-                            window.location.href = window.location.protocol + '//'+ window.location.host;
+                            window.location.href = window.location.protocol + '//' + window.location.host;
                         }}
                     ><FormattedMessage id = 'aelf.Home' /></div>
                 }
             />
-            : <NavNormal navTitle={<FormattedMessage id = 'aelf.Transaction Details' />}/>;
+        );
+
         return NavHtml;
     }
 
     render() {
+        let NavHtml = this.renderNavHtml();
         // 这个交易能拿到所有交易，非transfer交易也需要处理。
         let txInfo = this.getTxInfo();
-
-        let { txResult, txid, txState} = txInfo;
+        let {txResult, txid, txState, tokenName, contractAddress} = txInfo;
 
         if (!txState) {
+            if (typeof txResult !== 'string') {
+                txResult = JSON.stringify(txResult);
+            }
             return (
                 <div>
-                    <h2>{JSON.stringify(txResult)}</h2>
+                    {NavHtml}
+                    <h2 className={style.stateError}>{txResult}</h2>
                 </div>
             );
         }
 
-        let { tx_info, tx_status, block_number } = txResult.result;
+        let {
+            tx_info,
+            tx_status
+        } = txResult.result;
+        const {
+            ExecutedInBlock
+        } = tx_info;
 
         let html = this.renderTransfer(txResult);
 
         let notTransferHtml = '';
         let method = tx_info.Method;
-        if (method != 'Transfer') {
+        if (method !== 'Transfer') {
             html = '';
             notTransferHtml = this.renderNotTransfer(txResult);
         }
 
-        let NavHtml = this.renderNavHtml();
-
-        let urlForCopy = window.location.host + '/transactiondetail?txid=' + txid;
+        let urlForCopy = window.location.host
+            + '/transactiondetail?txid=' + txid
+            + '&contract_address=' + contractAddress
+            + '&token=' + tokenName;
 
         let containerStyle = getPageContainerStyle();
 
@@ -179,7 +210,7 @@ class TransactionDetail extends Component {
                 {NavHtml}
                 <div className={style.container} style={containerStyle}>
                     <div style={txInfoContainerStyle}>
-                        <div style={{ wordWrap: 'break-word', lineHeight: 1.5 }}>
+                        <div style={{wordWrap: 'break-word', lineHeight: 1.5}}>
                             {html}
                             <div className={style.list}>
                                 <div className={style.title}>Status</div>
@@ -191,7 +222,7 @@ class TransactionDetail extends Component {
                             </div>
                             <div className={style.list}>
                                 <div className={style.title}>Block Height</div>
-                                <div className={style.text}>{block_number}</div>
+                                <div className={style.text}>{ExecutedInBlock}</div>
                             </div>
                             {notTransferHtml}
                         </div>
@@ -202,7 +233,12 @@ class TransactionDetail extends Component {
                                    className={style.textarea}
                                    defaultValue={urlForCopy}>
                          </textarea>
-                        <button id="clipboard-transactionDetail" data-clipboard-target="#copyUrl" style={{display: 'none'}}>copy</button>
+                        <button
+                            id="clipboard-transactionDetail"
+                            data-clipboard-target="#copyUrl"
+                            style={{display: 'none'}}>
+                            copy
+                        </button>
 
                         <AelfButton
                             onClick={() => {
@@ -217,5 +253,3 @@ class TransactionDetail extends Component {
         );
     }
 }
-
-export default TransactionDetail

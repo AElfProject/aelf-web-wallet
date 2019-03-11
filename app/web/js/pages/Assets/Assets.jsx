@@ -3,58 +3,41 @@
  * @author huangzongzhe
  * 2018.07.26
  */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {ListView, PullToRefresh, Toast} from 'antd-mobile';
-
-import style from './Assets.scss';
-import {historyPush, historyReplace} from '../../utils/historyChange';
-import checkStatus from '../../utils/checkStatus';
-import getPageContainerStyle from '../../utils/getPageContainerStyle';
-import clipboard from '../../utils/clipboard';
+import { Link } from 'react-router';
+import { ListView, PullToRefresh, Toast } from 'antd-mobile';
+import { historyPush, historyReplace } from '../../utils/historyChange';
+import {
+    // checkStatus,
+    getPageContainerStyle,
+    clipboard,
+    whetherBackupCheck,
+    apisauce
+} from '../../utils/utils';
 
 import {
-    SCROLLLIST,
+    // SCROLLLIST,
     SCROLLFOOTER
 } from '../../constants';
+import style from './Assets.scss';
 require('./Assets.css');
+
 
 const NUM_ROWS = 20;
 let pageIndex = 0;
 
 function getTokens(callback, pIndex = 0) {
-    let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
-    // http://localhost:7000/block/api/address/tokens?address=0x040a221885855c22714e764f5a3de674554e
-
-    let params = {
+    apisauce.get('/address/api/tokens', {
         limit: NUM_ROWS, // 13
         page: pIndex, // 0
         order: 'desc', // asc
-        address: walletAddress // 0x04263089a3fd878482d81d5f54f6865260d6
-    };
-
-    let query = '';
-    for (let each in params) {
-        query += `${each}=${params[each]}&`;
-    }
-
-    fetch(`/block/api/address/tokens?${query}`, {
-        credentials: 'include',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    }).then(checkStatus).then(result => {
-        result.text().then(result => {
-            let output = JSON.parse(result);
-            callback(output);
-        });
+        address: JSON.parse(localStorage.getItem('lastuse')).address
+    }).then(result => {
+        callback(result);
     }).catch(error => {
         Toast.fail(error.message, 6);
-        console.log('error:', error);
     });
-
 }
 
 // React component
@@ -80,7 +63,9 @@ class Assets extends Component {
 
         this.renderRow = (rowData, sectionID, rowID) => {
             let item = this.rData[rowID];
-            let dir = `/assethome?contract_address=${item.contract_address}`;
+            // let dir = `/assethome?contract_address=${item.contract_address}&token=${item.symbol}`;
+            let dir = `/assethome?contract_address=${item.contract_address}&token=${item.token_name}`;
+            const balance = item.balance ? item.balance.toLocaleString() : 0;
             return (
                 <div key={rowID}
                     className={style.txList}
@@ -98,7 +83,7 @@ class Assets extends Component {
                         </div>
                     </div>
                     <div className={style.listRight}>
-                        <div className={style.balance}>{item.balance}</div>
+                        <div className={style.balance}>{balance}</div>
                         {/*<div className={style.tenderValuation}>≈法币价值</div>*/}
                     </div>
 
@@ -108,7 +93,7 @@ class Assets extends Component {
                     {/*</div>*/}
                 </div>
             );
-        }
+        };
     }
 
     // PullToRefresh start
@@ -123,17 +108,20 @@ class Assets extends Component {
     getELFValue(result) {
         let ELFValue = 0;
         result.map(item => {
-            ELFValue += parseInt(item.balance, 10);
+            // if (item.symbol === 'ELF') {
+            if (item.token_name === 'ELF') {
+                ELFValue += parseInt(item.balance, 10);
+            }
+            else {
+                // TODO 首先得有对标的价值
+            }
         });
 
-        fetch('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(checkStatus).then(result => {
-            result.text().then(result => {
-                console.log(result, this.setState);
-                const { USD } = JSON.parse(result);
-                const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
-                this.setState({
-                    tenderValue
-                });
+        apisauce.get('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(result => {
+            const { USD } = result;
+            const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
+            this.setState({
+                tenderValue
             });
         }).catch(error => {
             Toast.fail(error.message, 6);
@@ -214,6 +202,41 @@ class Assets extends Component {
         this.setState = () => { };
     }
 
+    renderAddress() {
+        if (whetherBackupCheck()) {
+            let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+            return (
+                <div className={style.addressContainer}>
+                    <div className={style.address}>{walletAddress.slice(0, 18) + '...'}</div>
+                    <div
+                        className={style.copyBtn}
+                        onClick={() => {
+                            let btn = document.getElementById('clipboard-assets');
+                            btn.click();
+                        }}
+                    ></div>
+
+                    <button id="clipboard-assets"
+                            data-clipboard-target="#assets-address-text"
+                            className={style.textarea}>copy
+                    </button>
+                    <input id="assets-address-text"
+                           type="text"
+                           className={style.textarea}
+                           value={walletAddress}
+                           readOnly/>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div className={style.addressContainer}>
+                    <Link to={'/get-wallet/backup'}>Click to backup your wallet.</Link>
+                </div>
+            );
+        }
+    }
+
     // TODO: 刷新该页面，下拉，快去点击资产进入到交易列表页，会报错，有内存泄漏的可能。暂无思路。
     render() {
         // check
@@ -251,25 +274,8 @@ class Assets extends Component {
                                 </div>
                             </div>
 
-                            <div className={style.addressContainer}>
-                                <div className={style.address}>{walletAddress.slice(0, 18) + '...'}</div>
-                                <div
-                                    className={style.copyBtn}
-                                    onClick={() => {
-                                        let btn = document.getElementById('clipboard-assets');
-                                        btn.click();
-                                    }}
-                                ></div>
+                            {this.renderAddress()}
 
-                                <button id="clipboard-assets"
-                                    data-clipboard-target="#assets-address-text"
-                                    className={style.textarea}>copy</button>
-                                <input id="assets-address-text"
-                                    type="text"
-                                    className={style.textarea}
-                                    value={walletAddress}
-                                    readOnly />
-                            </div>
                         </div>
 
                         <div className={style.transactionList}>

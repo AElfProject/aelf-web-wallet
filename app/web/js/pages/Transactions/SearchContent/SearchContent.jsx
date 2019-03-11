@@ -102,22 +102,26 @@ export default class SearchContent extends React.Component {
             let params = item.tx_info.params.split(',');
             let isIncome = params[0] === this.state.walletAddress ? true : false;
             let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
-            item.txId = item.tx_info.TxId;
-            let txId = item.tx_info.TxId;
-            txId = txIdOmit(txId);
+            const contractAddress = item.tx_info.To;
+            const txIdOmitted = txIdOmit(item.tx_info.TxId);
             let quantity = params[1];
+
+            const txDetailURL = '/transactiondetail?'
+                + `contract_address=${contractAddress}`
+                + `&txid=${item.tx_info.TxId}`
+                + `&token=${window.defaultConfig.mainTokenName}`;
 
             return (
                 <div key={rowID}
                     className={style.txList}
-                    onClick={() => hashHistory.push(`/transactiondetail?txid=${item.txId}`)}
+                    onClick={() => hashHistory.push(txDetailURL)}
                 >
                     <div className={style.leftContainer}>
                         <div className={iconClass}>
                         </div>
                         <div>
                             <div className={style.address}>
-                                {txId}
+                                {txIdOmitted}
                             </div>
                             {/* <div className={style.time}>2018-09-08</div> */}
                             {/* <div className = {style.defeated} >交易失败</div> */}

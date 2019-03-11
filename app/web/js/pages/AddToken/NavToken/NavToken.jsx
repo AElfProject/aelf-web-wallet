@@ -8,6 +8,7 @@ import React from 'react';
 import Svg from '../../../components/Svg/Svg';
 import style from './NavToken.scss';
 import {historyReplace} from '../../../utils/historyChange';
+require('./NavToken.css');
 
 export default class NavToken extends React.Component {
 
