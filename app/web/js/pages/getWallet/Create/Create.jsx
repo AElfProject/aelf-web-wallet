@@ -1,26 +1,31 @@
-import React, { Component } from 'react'
-import { Toast, Flex } from 'antd-mobile'
-import Password from '../../../components/Password/Password'
-import WalletName from '../WalletName/WalletName'
-import AelfButton from '../../../components/Button/Button'
-import Svg from '../../../components/Svg/Svg'
-import NoticePanel from '../../../components/NoticePanel/NoticePanel'
+/**
+ * @file Create.jsx
+ * @author huangzongzhe
+ */
 
-import style from './Create.scss'
-import { hashHistory } from 'react-router'
+import React, {Component} from 'react';
+import {Toast, Flex} from 'antd-mobile';
+import Password from '../../../components/Password/Password';
+import WalletName from '../WalletName/WalletName';
+import AelfButton from '../../../components/Button/Button';
+import Svg from '../../../components/Svg/Svg';
+import NoticePanel from '../../../components/NoticePanel/NoticePanel';
 
-import insertWalletInfo from '../../../utils/walletStorage'
-import bindToken from '../../../utils/bindToken'
-import getPageContainerStyle from '../../../utils/getPageContainerStyle'
+import style from './Create.scss';
+import {hashHistory} from 'react-router';
 
-import Agreement from '../Agreement/Agreement'
+import insertWalletInfo from '../../../utils/walletStorage';
+import bindToken from '../../../utils/bindToken';
+import getPageContainerStyle from '../../../utils/getPageContainerStyle';
 
-import aelf from 'aelf-sdk'
+import Agreement from '../Agreement/Agreement';
 
-import { FormattedMessage } from 'react-intl'
+import aelf from 'aelf-sdk';
+
+import {FormattedMessage} from 'react-intl';
 
 // React component
-class Create extends Component {
+export default class Create extends Component {
     constructor() {
         super();
         this.haveCreate = false;
@@ -29,7 +34,7 @@ class Create extends Component {
             password: '',
             agreementDisplay: false
         };
-        this.backpDir = '/get-wallet/backup?hash_redirect=%2Fassets'
+        this.backpDir = '/get-wallet/backup?hash_redirect=%2Fassets';
     }
 
     createAndGO() {
@@ -75,15 +80,15 @@ class Create extends Component {
     }
 
     setPassword(password) {
-        this.setState({password: password});
+        this.setState({password});
     }
 
     setWalletName(walletName) {
-        this.setState({walletName: walletName});
+        this.setState({walletName});
     }
 
     inputWalletName(walletName) {
-        this.setState({walletName: walletName});
+        this.setState({walletName});
     }
 
     toggleAgreement() {
@@ -105,8 +110,8 @@ class Create extends Component {
                 }}
             ></AelfButton>;
         if (this.state.password && this.state.walletName && this.state.agree) {
-            createButton =
-                <AelfButton
+            createButton
+                = <AelfButton
                     text="Create"
                     onClick={() => this.createAndGO()}
                 ></AelfButton>;
@@ -117,7 +122,7 @@ class Create extends Component {
 
         let agreementHtml = <Svg icon="radio_select12"></Svg>;
         if (this.state.agree) {
-            agreementHtml = <Svg icon="radio_selected12"></Svg>
+            agreementHtml = <Svg icon="radio_selected12"></Svg>;
         }
 
         let containerStyle = getPageContainerStyle();
@@ -190,5 +195,3 @@ class Create extends Component {
         );
     }
 }
-
-export default Create

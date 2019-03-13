@@ -2,16 +2,15 @@
  * huangzongzhe
  * 2018.07.27
  */
-import React, { Component } from 'react'
-import { WhiteSpace, List, InputItem, Button, Toast } from 'antd-mobile'
-import style from './Transfer.scss'
-import { hashHistory } from 'react-router'
+import React, {Component} from 'react';
+import {WhiteSpace, List, InputItem, Button, Toast} from 'antd-mobile';
+import style from './Transfer.scss';
+import {hashHistory} from 'react-router';
 
-import AelfButton from './../../../components/Button/Button'
+import AelfButton from './../../../components/Button/Button';
 
-import NavNormal from '../../NavNormal/NavNormal'
-import BackupNotice from '../../BackupNotice/BackupNotice'
-
+import NavNormal from '../../NavNormal/NavNormal';
+import BackupNotice from '../../BackupNotice/BackupNotice';
 import {
     addressCheck,
     moneyKeyboardWrapProps,
@@ -21,9 +20,9 @@ import {
     getBalanceAndTokenName
 } from '../../../utils/utils';
 
-import { FormattedMessage } from 'react-intl'
+import {FormattedMessage} from 'react-intl';
 
-class Transfer extends Component {
+export default class Transfer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,7 +33,7 @@ class Transfer extends Component {
     }
 
     inputAmount(amount) {
-        this.setState({amount: amount});
+        this.setState({amount});
     }
 
     inputAddress(address) {
@@ -72,11 +71,9 @@ class Transfer extends Component {
         // TODO:
         // check amount
         Toast.loading('Loading...', 30);
-        // 为了能展示loading, 不惜牺牲用户50毫秒，没看源码，但是这个应该和机器有关。。。sad
+        // 为了能展示loading, 不惜牺牲用户50毫秒。sad
         setTimeout(() => {
-            console.log('password: ', this.state.password);
             let password = this.state.password;
-
 
             // checkAddress
             let address = this.state.address;
@@ -89,7 +86,7 @@ class Transfer extends Component {
             }
 
             // check balance
-            let amount = parseInt(this.state.amount);
+            let amount = parseInt(this.state.amount, 10);
             if (amount > this.state.balance) {
                 Toast.hide();
                 Toast.fail('insufficient', 3, () => {}, false);
@@ -113,32 +110,32 @@ class Transfer extends Component {
 
             Toast.hide();
 
-            hashHistory.push(`/transactiondetail?txid=${transfer.hash}&token=${tokenName}&contract_address=${contractAddress}`);
-            
+            hashHistory.push(`/transactiondetail?txid=${transfer.TransactionId}&token=${tokenName}&contract_address=${contractAddress}`);
+
         }, 50);
     }
-  
+
     render() {
         let addressErrorText;
         if (this.state.addressError) {
-            addressErrorText = <div className={style.error}>{this.state.addressError}</div>
+            addressErrorText = <div className={style.error}>{this.state.addressError}</div>;
         }
 
         let passwordErrorText;
         if (this.state.passwordError) {
-            passwordErrorText = <div className={style.error}>{this.state.passwordError}</div>
+            passwordErrorText = <div className={style.error}>{this.state.passwordError}</div>;
         }
 
-        let createButton =
-            <AelfButton
+        let createButton
+            = <AelfButton
                 text="Send"
                 style={{
                     opacity: 0.5
                 }}
             ></AelfButton>;
         if (this.state.address && this.state.amount && this.state.password) {
-            createButton =
-                <AelfButton
+            createButton
+                = <AelfButton
                     text="Send"
                     onClick={() => this.transfer()}
                 ></AelfButton>;
@@ -222,5 +219,3 @@ class Transfer extends Component {
         );
     }
 }
-
-export default Transfer

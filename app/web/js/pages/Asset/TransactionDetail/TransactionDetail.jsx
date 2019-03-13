@@ -104,19 +104,19 @@ export default class TransactionDetail extends Component {
     }
 
     renderTransfer(txResult) {
-        let {tx_info} = txResult.result;
-        let params = tx_info.params && tx_info.params.split(',') || [];
-        let to = params[0];
-        let amount = params[1];
+        let {Transaction} = txResult;
+        let params = Transaction.Params || [];
+        let to = params.to;
+        let amount = params.amount;
 
-        let amounHtml = this.renderAmount(tx_info.From, to, amount);
+        let amounHtml = this.renderAmount(Transaction.From, to, amount);
 
         return <div>
             {amounHtml}
 
             <div className={style.list}>
                 <div className={style.title}>From</div>
-                <div className={style.text}>{tx_info.From}</div>
+                <div className={style.text}>{Transaction.From}</div>
             </div>
             <div className={style.list}>
                 <div className={style.title}>To</div>
@@ -126,8 +126,8 @@ export default class TransactionDetail extends Component {
     }
 
     renderNotTransfer(txResult) {
-        let {tx_info} = txResult.result;
-        let method = tx_info.Method;
+        let {Transaction} = txResult;
+        let method = Transaction.MethodName;
 
         return <div>
             <div className={style.list}>
@@ -179,17 +179,15 @@ export default class TransactionDetail extends Component {
         }
 
         let {
-            tx_info,
-            tx_status
-        } = txResult.result;
-        const {
-            ExecutedInBlock
-        } = tx_info;
+            Transaction,
+            Status,
+            BlockNumber
+        } = txResult;
 
         let html = this.renderTransfer(txResult);
 
         let notTransferHtml = '';
-        let method = tx_info.Method;
+        let method = Transaction.MethodName;
         if (method !== 'Transfer') {
             html = '';
             notTransferHtml = this.renderNotTransfer(txResult);
@@ -214,15 +212,15 @@ export default class TransactionDetail extends Component {
                             {html}
                             <div className={style.list}>
                                 <div className={style.title}>Status</div>
-                                <div className={style.text}>{tx_status}</div>
+                                <div className={style.text}>{Status}</div>
                             </div>
                             <div className={style.list}>
                                 <div className={style.title}>Transaction ID</div>
-                                <div className={style.text}>{tx_info.TxId}</div>
+                                <div className={style.text}>{txid}</div>
                             </div>
                             <div className={style.list}>
                                 <div className={style.title}>Block Height</div>
-                                <div className={style.text}>{ExecutedInBlock}</div>
+                                <div className={style.text}>{BlockNumber}</div>
                             </div>
                             {notTransferHtml}
                         </div>
