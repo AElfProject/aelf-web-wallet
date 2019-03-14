@@ -6,7 +6,6 @@
 
 const Controller = require('../core/baseController.js');
 const {apiServerProvider} = require('../../config/config.node.js');
-const {getNodesInfo} = require('../utils/utils.js');
 
 class addressController extends Controller {
     // the structure of return data is almost the same as the getTokens API of aelf-block-api.
@@ -44,10 +43,12 @@ class addressController extends Controller {
 
             ctx.validate(keysRule, options);
 
-            const nodesInfo = (await ctx.curl(apiServerProvider
+            const nodesInfo = (await ctx.curl(
+                apiServerProvider
                 + `/api/address/tokens?address=${address}&nodes_info=1&limit=${limit}&page=${page}`, {
-                dataType: 'json'
-            })).data;
+                    dataType: 'json'
+                }
+            )).data;
 
             let result = [];
             if (nodesInfo.length) {

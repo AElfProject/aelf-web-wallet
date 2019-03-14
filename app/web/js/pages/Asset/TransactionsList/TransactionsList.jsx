@@ -8,7 +8,6 @@ import ReactDOM from 'react-dom';
 import {PullToRefresh, ListView} from 'antd-mobile';
 
 import style from './TransactionsList.scss';
-require('./TransactionsList.css');
 
 import {hashHistory} from 'react-router';
 
@@ -21,6 +20,7 @@ import {
 import {
     SCROLLFOOTER
 } from '../../../constants';
+require('./TransactionsList.css');
 
 const NUM_ROWS = 20;
 let pageIndex = 0;
@@ -47,7 +47,7 @@ export default class TransactionsList extends Component {
         super(props);
 
         const dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
+            rowHasChanged: (row1, row2) => row1 !== row2
         });
 
         this.state = {
@@ -55,7 +55,7 @@ export default class TransactionsList extends Component {
             refreshing: true,
             isLoading: true,
             height: document.documentElement.clientHeight,
-            useBodyScroll: false,
+            useBodyScroll: false
         };
 
         this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
@@ -65,7 +65,8 @@ export default class TransactionsList extends Component {
     componentDidUpdate() {
         if (this.state.useBodyScroll) {
             document.body.style.overflow = 'auto';
-        } else {
+        }
+        else {
             document.body.style.overflow = 'hidden';
         }
     }
@@ -80,7 +81,7 @@ export default class TransactionsList extends Component {
                 dataSource: this.state.dataSource.cloneWithRows(this.rData),
                 height: hei,
                 refreshing: false,
-                isLoading: false,
+                isLoading: false
             });
         });
     }
@@ -99,11 +100,11 @@ export default class TransactionsList extends Component {
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(this.rData),
                 refreshing: false,
-                isLoading: false,
+                isLoading: false
             });
         });
         pageIndex = 0;
-    };
+    }
 
     onEndReached(event) {
         // load new data
@@ -121,10 +122,10 @@ export default class TransactionsList extends Component {
             this.rData = [...this.rData, ...result.transactions];
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(this.rData),
-                isLoading: false,
+                isLoading: false
             });
         }, ++pageIndex);
-    };
+    }
     // PullToRefresh end
 
     componentWillUnmount() {
@@ -190,7 +191,7 @@ export default class TransactionsList extends Component {
                     useBodyScroll={this.state.useBodyScroll}
                     style={this.state.useBodyScroll ? {} : {
                         height: '100%',
-                        margin: '5px 0',
+                        margin: '5px 0'
                     }}
 
                     pullToRefresh={<PullToRefresh

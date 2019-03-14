@@ -3,6 +3,8 @@
  * @author huangzongzhe
  * 2018.12
  */
+/* eslint-disable fecs-camelcase */
+
 const Service = require('../core/baseService');
 const {nodesHttpProviderSelect} = require('../utils/utils');
 
@@ -14,13 +16,14 @@ class ProxyService extends Service {
         const getTokensBalance = () => new Promise((resolve, reject) => {
             const ctx = this.ctx;
 
-            let tokensInfo = {};
             let tokensInfoArray = [];
             const nodesInfoLength = nodesInfo.length;
             tokensInfoArray.length = nodesInfoLength;
             let nodesInfoCount = 0;
 
             nodesInfo.map((item, index) => {
+                // https://eggjs.org/zh-cn/basics/plugin.html
+                // TODO: Initial Aelf
                 const contract_address = item.contract_address;
                 const url = nodesHttpProviderSelect(item.api_domain, item.api_ip)
                     + '/api/address/balance?'
