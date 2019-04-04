@@ -10,3 +10,4 @@ test.data.js
 app/view/
 app/public/assets/output/
 .DS_Store
+.vscode/

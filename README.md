@@ -98,4 +98,10 @@ sudo npm install --unsafe-perm=true --allow-root
 sh build.sh pro # or npm start
 ```
 
+### How to deal with int64
+
+Use Long.js
+
+https://www.npmjs.com/package/long
+
 # Docker[TODO]

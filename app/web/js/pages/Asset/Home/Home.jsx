@@ -3,8 +3,15 @@
  * @author huangzongzhe
  * 2018.07.26
  */
+/* eslint-disable fecs-camelcase */
 import React, {Component} from 'react';
 import {Toast} from 'antd-mobile';
+import Long from 'long';
+import BigNumber from 'bignumber.js';
+// window.Long = Long;
+// window.BigNumber = BigNumber;
+// var longVal = { low: 2000, high: 0, unsigned: true };
+// var test = new Long(longVal.low, longVal.high, longVal.unsigned);
 
 import style from './Home.scss';
 import {hashHistory} from 'react-router';
@@ -15,7 +22,6 @@ import NavNormal from '../../NavNormal/NavNormal';
 import Svg from '../../../components/Svg/Svg';
 
 import {
-    checkStatus,
     getPageContainerStyle,
     getParam,
     getBalanceAndTokenName,
@@ -24,7 +30,7 @@ import {
 
 import {FormattedMessage} from 'react-intl';
 
-class Home extends Component {
+export default class Home extends Component {
     constructor(props) {
         super(props);
 
@@ -44,10 +50,15 @@ class Home extends Component {
         let contractAddress = getParam('contract_address', window.location.href);
 
         getBalanceAndTokenName(address, contractAddress, output => {
-            this.getELFValue(output);
+            const tokenInfo = output[0];
+            this.getELFValue(tokenInfo);
+
+            const balanceObj = tokenInfo.balance;
+            const balance = new Long(balanceObj.low, balanceObj.high, balanceObj.unsigned);
+
             this.setState({
-                balance: output.balance.toLocaleString(),
-                tokenName: output.tokenDetail.name,
+                balance, // .toLocaleString(),
+                tokenName: tokenInfo.token_name,
                 contract_address: contractAddress
             });
         });
@@ -56,11 +67,9 @@ class Home extends Component {
     getELFValue(tonkenInfo) {
         const {
             balance,
-            tokenDetail: {
-                name
-            }
+            token_name
         } = tonkenInfo;
-        if (name !== 'ELF') {
+        if (token_name !== 'ELF') {
             this.setState({
                 tenderValue: 0
             });
@@ -68,11 +77,17 @@ class Home extends Component {
         }
         // TODO: 需要更全的list
         apisauce.get('https://min-api.cryptocompare.com/data/price', {
-            fsym: name,
+            fsym: token_name,
             tsyms: 'USD'
         }).then(result => {
             const {USD} = result;
-            let tenderValue = (parseFloat(USD) * balance).toLocaleString();
+
+            const balanceLong = new Long(balance.low, balance.high, balance.unsigned);
+            const balanceBigNumber = new BigNumber(balanceLong.toString());
+            const priceBigNumber = new BigNumber(USD);
+            let tenderValue = balanceBigNumber.multipliedBy(priceBigNumber).toString();
+
+            // let tenderValue = (parseFloat(USD) * balance).toLocaleString();
             tenderValue = isNaN(tenderValue) ? 0 : tenderValue;
             this.setState({
                 tenderValue
@@ -116,7 +131,7 @@ class Home extends Component {
                             </div>
                             <div className={style.assetBalanceContainer}>
                                 <div className={style.balance}>
-                                    {this.state.balance}
+                                    {this.state.balance.toString()}
                                 </div>
                                 <div className={style.tenderValuation}>
                                     {this.state.tenderValue}
@@ -162,5 +177,3 @@ class Home extends Component {
         );
     }
 }
-
-export default Home

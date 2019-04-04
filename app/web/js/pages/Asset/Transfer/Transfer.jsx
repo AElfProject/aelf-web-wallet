@@ -1,11 +1,15 @@
-/*
- * huangzongzhe
+/**
+ * @file Transfer.jsx
+ * @author huangzongzhe
+ *
  * 2018.07.27
  */
+// TODO: 重点关注Int64的处理！！！！！！！！
 import React, {Component} from 'react';
-import {WhiteSpace, List, InputItem, Button, Toast} from 'antd-mobile';
+import {List, InputItem, Toast} from 'antd-mobile';
 import style from './Transfer.scss';
 import {hashHistory} from 'react-router';
+import Long from 'long';
 
 import AelfButton from './../../../components/Button/Button';
 
@@ -26,6 +30,7 @@ export default class Transfer extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            balance: new Long(0)
         };
         this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
         this.contractAddress = getParam('contract_address', window.location.href);
@@ -54,9 +59,14 @@ export default class Transfer extends Component {
         let address = this.walletAddress;
 
         getBalanceAndTokenName(address, this.contractAddress, output => {
+            const tokenInfo = output[0] || {};
+
+            const balanceObj = tokenInfo.balance;
+            const balance = new Long(balanceObj.low, balanceObj.high, balanceObj.unsigned);
+
             this.setState({
-                balance: output.balance,
-                tokenName: this.tokenName || output.tokenDetail.name,
+                balance,
+                tokenName: this.tokenName || tokenInfo.token_name,
                 contract_address: this.contractAddress
             });
         });
@@ -67,6 +77,7 @@ export default class Transfer extends Component {
         this.setState = () => {};
     }
 
+    // TODO: 使用string 转bigNumber操作.
     transfer() {
         // TODO:
         // check amount
@@ -87,7 +98,8 @@ export default class Transfer extends Component {
 
             // check balance
             let amount = parseInt(this.state.amount, 10);
-            if (amount > this.state.balance) {
+            const amountLong = new Long(amount);
+            if (amountLong.greaterThan(this.state.balance)) {
                 Toast.hide();
                 Toast.fail('insufficient', 3, () => {}, false);
                 return;
@@ -106,7 +118,12 @@ export default class Transfer extends Component {
                 return;
             }
 
-            let transfer = aelf.contractMethods.Transfer(address, amount);
+            // let transfer = aelf.contractMethods.Transfer(address, amount);
+            let transfer = aelf.contractMethods.Transfer({
+                symbol: tokenName,
+                to: address,
+                amount: amount
+            });
 
             Toast.hide();
 
@@ -172,7 +189,7 @@ export default class Transfer extends Component {
                             <div className="aelf-input-title">
                                 <div><FormattedMessage id = 'aelf.Amount to send' /></div>
                                 <div>
-                                    <FormattedMessage id = 'aelf.Balance' />：{this.state.balance}
+                                    <FormattedMessage id = 'aelf.Balance' />：{this.state.balance.toString()}
                                 </div>
                             </div>
                             <InputItem

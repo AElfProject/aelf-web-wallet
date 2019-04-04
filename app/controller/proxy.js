@@ -14,6 +14,7 @@
 // 校验、组装参数。
 // 调用 Service 进行业务处理，必要时处理转换 Service 的返回结果，让它适应用户的需求。
 // 通过 HTTP 将结果响应给用户。
+/* eslint-disable fecs-camelcase */
 'use strict';
 
 const Controller = require('../core/baseController.js');
