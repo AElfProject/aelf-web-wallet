@@ -3,11 +3,11 @@
  * @author huangzongzhe
  * 2018.07.26
  */
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router';
-import { ListView, PullToRefresh, Toast } from 'antd-mobile';
-import { historyPush, historyReplace } from '../../utils/historyChange';
+import {Link} from 'react-router';
+import {ListView, PullToRefresh, Toast} from 'antd-mobile';
+import {historyPush, historyReplace} from '../../utils/historyChange';
 import {
     // checkStatus,
     getPageContainerStyle,
@@ -21,6 +21,14 @@ import {
     SCROLLFOOTER
 } from '../../constants';
 import style from './Assets.scss';
+
+import Long from 'long';
+import BigNumber from 'bignumber.js';
+// window.Long = Long;
+// window.BigNumber = BigNumber;
+// var longVal = { low: 2000, high: 0, unsigned: true };
+// var test = new Long(longVal.low, longVal.high, longVal.unsigned);
+
 require('./Assets.css');
 
 
@@ -65,7 +73,11 @@ class Assets extends Component {
             let item = this.rData[rowID];
             // let dir = `/assethome?contract_address=${item.contract_address}&token=${item.symbol}`;
             let dir = `/assethome?contract_address=${item.contract_address}&token=${item.token_name}`;
-            const balance = item.balance ? item.balance.toLocaleString() : 0;
+
+            const balanceObj = item.balance;
+            const balance = (new Long(balanceObj.low, balanceObj.high, balanceObj.unsigned)).toString();
+
+            // const balance = item.balance ? item.balance.toLocaleString() : 0;
             return (
                 <div key={rowID}
                     className={style.txList}
@@ -78,7 +90,7 @@ class Assets extends Component {
                         {/*<img src="https://pbs.twimg.com/profile_images/933992260680552448/tkxR4vpn_400x400.jpg" alt=""/>*/}
                         {/*</div>*/}
                         <div>
-                            <div className={style.name}>{item.name}</div>
+                            <div className={style.name}>{item.token_name}</div>
                             {/*<div className={style.description}>subTitle</div>*/}
                         </div>
                     </div>
@@ -106,11 +118,17 @@ class Assets extends Component {
     }
 
     getELFValue(result) {
-        let ELFValue = 0;
+        // let ELFValue = 0;
+        let ELFValue = new Long();
         result.map(item => {
             // if (item.symbol === 'ELF') {
             if (item.token_name === 'ELF') {
-                ELFValue += parseInt(item.balance, 10);
+
+                const balance = item.balance;
+                const balanceLong = new Long(balance.low, balance.high, balance.unsigned);
+
+                // ELFValue += parseInt(item.balance, 10);
+                ELFValue = ELFValue.add(balanceLong);
             }
             else {
                 // TODO 首先得有对标的价值
@@ -118,8 +136,14 @@ class Assets extends Component {
         });
 
         apisauce.get('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(result => {
-            const { USD } = result;
-            const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
+            const {USD} = result;
+
+            // const balanceLong = new Long(balance.low, balance.high, balance.unsigned);
+            const balanceBigNumber = new BigNumber(ELFValue.toString());
+            const priceBigNumber = new BigNumber(USD);
+            const tenderValue = balanceBigNumber.multipliedBy(priceBigNumber).toString();
+
+            // const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
             this.setState({
                 tenderValue
             });

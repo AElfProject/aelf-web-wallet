@@ -1,17 +1,20 @@
-/*
- * huangzongzhe
+/**
+ * @file Transfer.jsx
+ * @author huangzongzhe
+ *
  * 2018.07.27
  */
-import React, { Component } from 'react'
-import { WhiteSpace, List, InputItem, Button, Toast } from 'antd-mobile'
-import style from './Transfer.scss'
-import { hashHistory } from 'react-router'
+// TODO: 重点关注Int64的处理！！！！！！！！
+import React, {Component} from 'react';
+import {List, InputItem, Toast} from 'antd-mobile';
+import style from './Transfer.scss';
+import {hashHistory} from 'react-router';
+import Long from 'long';
 
-import AelfButton from './../../../components/Button/Button'
+import AelfButton from './../../../components/Button/Button';
 
-import NavNormal from '../../NavNormal/NavNormal'
-import BackupNotice from '../../BackupNotice/BackupNotice'
-
+import NavNormal from '../../NavNormal/NavNormal';
+import BackupNotice from '../../BackupNotice/BackupNotice';
 import {
     addressCheck,
     moneyKeyboardWrapProps,
@@ -21,12 +24,13 @@ import {
     getBalanceAndTokenName
 } from '../../../utils/utils';
 
-import { FormattedMessage } from 'react-intl'
+import {FormattedMessage} from 'react-intl';
 
-class Transfer extends Component {
+export default class Transfer extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            balance: new Long(0)
         };
         this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
         this.contractAddress = getParam('contract_address', window.location.href);
@@ -34,7 +38,7 @@ class Transfer extends Component {
     }
 
     inputAmount(amount) {
-        this.setState({amount: amount});
+        this.setState({amount});
     }
 
     inputAddress(address) {
@@ -55,9 +59,14 @@ class Transfer extends Component {
         let address = this.walletAddress;
 
         getBalanceAndTokenName(address, this.contractAddress, output => {
+            const tokenInfo = output[0] || {};
+
+            const balanceObj = tokenInfo.balance;
+            const balance = new Long(balanceObj.low, balanceObj.high, balanceObj.unsigned);
+
             this.setState({
-                balance: output.balance,
-                tokenName: this.tokenName || output.tokenDetail.name,
+                balance,
+                tokenName: this.tokenName || tokenInfo.token_name,
                 contract_address: this.contractAddress
             });
         });
@@ -68,15 +77,14 @@ class Transfer extends Component {
         this.setState = () => {};
     }
 
+    // TODO: 使用string 转bigNumber操作.
     transfer() {
         // TODO:
         // check amount
         Toast.loading('Loading...', 30);
-        // 为了能展示loading, 不惜牺牲用户50毫秒，没看源码，但是这个应该和机器有关。。。sad
+        // 为了能展示loading, 不惜牺牲用户50毫秒。sad
         setTimeout(() => {
-            console.log('password: ', this.state.password);
             let password = this.state.password;
-
 
             // checkAddress
             let address = this.state.address;
@@ -89,8 +97,9 @@ class Transfer extends Component {
             }
 
             // check balance
-            let amount = parseInt(this.state.amount);
-            if (amount > this.state.balance) {
+            let amount = parseInt(this.state.amount, 10);
+            const amountLong = new Long(amount);
+            if (amountLong.greaterThan(this.state.balance)) {
                 Toast.hide();
                 Toast.fail('insufficient', 3, () => {}, false);
                 return;
@@ -109,36 +118,41 @@ class Transfer extends Component {
                 return;
             }
 
-            let transfer = aelf.contractMethods.Transfer(address, amount);
+            // let transfer = aelf.contractMethods.Transfer(address, amount);
+            let transfer = aelf.contractMethods.Transfer({
+                symbol: tokenName,
+                to: address,
+                amount: amount
+            });
 
             Toast.hide();
 
-            hashHistory.push(`/transactiondetail?txid=${transfer.hash}&token=${tokenName}&contract_address=${contractAddress}`);
-            
+            hashHistory.push(`/transactiondetail?txid=${transfer.TransactionId}&token=${tokenName}&contract_address=${contractAddress}`);
+
         }, 50);
     }
-  
+
     render() {
         let addressErrorText;
         if (this.state.addressError) {
-            addressErrorText = <div className={style.error}>{this.state.addressError}</div>
+            addressErrorText = <div className={style.error}>{this.state.addressError}</div>;
         }
 
         let passwordErrorText;
         if (this.state.passwordError) {
-            passwordErrorText = <div className={style.error}>{this.state.passwordError}</div>
+            passwordErrorText = <div className={style.error}>{this.state.passwordError}</div>;
         }
 
-        let createButton =
-            <AelfButton
+        let createButton
+            = <AelfButton
                 text="Send"
                 style={{
                     opacity: 0.5
                 }}
             ></AelfButton>;
         if (this.state.address && this.state.amount && this.state.password) {
-            createButton =
-                <AelfButton
+            createButton
+                = <AelfButton
                     text="Send"
                     onClick={() => this.transfer()}
                 ></AelfButton>;
@@ -175,7 +189,7 @@ class Transfer extends Component {
                             <div className="aelf-input-title">
                                 <div><FormattedMessage id = 'aelf.Amount to send' /></div>
                                 <div>
-                                    <FormattedMessage id = 'aelf.Balance' />：{this.state.balance}
+                                    <FormattedMessage id = 'aelf.Balance' />：{this.state.balance.toString()}
                                 </div>
                             </div>
                             <InputItem
@@ -222,5 +236,3 @@ class Transfer extends Component {
         );
     }
 }
-
-export default Transfer

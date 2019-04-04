@@ -37,7 +37,7 @@ at first
 ### 1.Change config
 
 ```shell
-cp config/demo.config.default.js config/config.default.js 
+cp config/demo.config.default.js config/config.default.js
 // set your own config.keys
 
 cp config/demo.config.node.js config/config.node.js
@@ -97,5 +97,11 @@ sudo npm install --unsafe-perm=true --allow-root
 # Then
 sh build.sh pro # or npm start
 ```
+
+### How to deal with int64
+
+Use Long.js
+
+https://www.npmjs.com/package/long
 
 # Docker[TODO]

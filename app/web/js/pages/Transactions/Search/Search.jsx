@@ -23,7 +23,8 @@ export default class Search extends React.Component {
         };
 
         this.aelf = initAelf({
-            chainOnly: true
+            chainOnly: true,
+            httpProvider: 'http://192.168.197.56:8000/chain'
         });
 
     }

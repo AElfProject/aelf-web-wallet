@@ -6,14 +6,14 @@
 	right: 0;
 	z-index: 999;
 	//background: #FFF;
-	background: url("../../../../../assets/background/bg1_long.svg") no-repeat;
+    background: url("../../../../../assets/background/bg1_long.svg") no-repeat;
+    background-size: cover;
 }
 @media (min-width: 768px) {
 	.page {
 		position: absolute;
 		top: 0;
 		z-index: 999;
-		background-size: cover;
 	}
 }
 
@@ -80,7 +80,6 @@
 
 .note {
 	background-color: #ffd74e;
-	// margin: 0 15px 0 15px;
     border-radius: 3px;
     padding: 1px 15px 1px 15px;
     color: #333;

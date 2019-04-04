@@ -9,7 +9,7 @@ import aelf from 'aelf-sdk'
 
 // TODO: 将localStorage部分封装到aelf-sdk中去，
 // node部分使用file（json）存储，RN使用AsyncStorage.
-function insertWalletInfo(walletInfoInput, password) {
+export default function insertWalletInfo(walletInfoInput, password) {
     if (!walletInfoInput || (walletInfoInput.privateKey && !password)) {
         return false;
     }
@@ -66,5 +66,3 @@ function insertWalletInfo(walletInfoInput, password) {
     return walletInfo;
     // return true;
 }
-
-export default insertWalletInfo

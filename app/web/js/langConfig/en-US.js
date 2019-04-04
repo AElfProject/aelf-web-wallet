@@ -4,7 +4,7 @@
  *  intl 英文词库
  */
 
-const en_US = {
+export default {
     'aelf.': ' ',
     'aelf.WalletDetail': 'WalletDetail',
     'aelf.TransactionList': 'Transaction List',
@@ -48,7 +48,7 @@ const en_US = {
     'aelf.Becareful08': 'Please write them down carefully and keep them in a secure location！',
     'aelf.Becareful09': 'Please DO NOT use screen capture!',
     'aelf.Becareful010': 'If anyone obtains your Mnemonic, they WILL obtain your digital assets!',
-    'aelf.Confirm Mnemonic ': 'Confirm Mnemonic',
+    'aelf.ConfirmMnemonic ': 'Confirm Mnemonic',
     'aelf.hint01': 'Mnemonic is not in the right sequence, please rearrange!',
     'aelf.hint02': 'To confirm your backup, please click on the Mnemonic in order.',
     'aelf.Copy Private Key': 'Copy Private Key',
@@ -67,8 +67,7 @@ const en_US = {
     'aelf.Old password': 'Old password',
     'aelf.Forget your password': 'Forget your password? Importing mnemonic or private key can be reset.',
     'aelf.Immediately import': 'Immediately import',
-    'aelf.hint03': 'In this wallet, there is no Mnemonic when import Private Key. But we can get '
-    + 'Private Key when we import Mnemonic.',
+    'aelf.hint03': 'In this wallet, there is no Mnemonic when import Private Key. But we can get Private Key when we import Mnemonic.',
     'aelf.Import': 'Import',
     'aelf.System Setting': 'System Setting',
     'aelf.Network': 'Network',
@@ -88,20 +87,10 @@ const en_US = {
     'aelf.HelpTitle04': 'What is the AElf Wallet?',
     'aelf.HelpTitle05': 'How to change the password?',
     'aelf.HelpTitle06': 'What if I forget my password?',
-    'aelf.mnemonicCon01': 'The Mnemonics is equivalent to the bank card + '
-    + 'password of a traditional financial institution. '
-    + 'Please keep it in a safe place. A Mnemonics is another manifestation of a plaintext private'
-    + ' key that is designed to help users remember'
-    + ' complex private keys (64-bit hashes). Mnemonicss are generally composed of 12, 15, 18, and 21 words. These'
-    + ' words are taken from a fixed vocabulary. The order of generation '
-    + 'is also based on a certain algorithm. The Mnemonics is an unencrypted private '
-    + 'key. When people get your Mnemonics, you can take away your assets with little effort.',
+    'aelf.mnemonicCon01': 'The Mnemonics is equivalent to the bank card + password of a traditional financial institution. Please keep it in a safe place. A Mnemonics is another manifestation of a plaintext private key that is designed to help users remember complex private keys (64-bit hashes). Mnemonicss are generally composed of 12, 15, 18, and 21 words. These words are taken from a fixed vocabulary. The order of generation is also based on a certain algorithm. The Mnemonics is an unencrypted private key. When people get your Mnemonics, you can take away your assets with little effort.',
     'aelf.mnemonicCon02': 'Therefore, users must pay attention to three points when backing up the Mnemonics:',
-    'aelf.mnemonicCon03': '1. Use physical media as much as possible. For example, write Mnemonicss on paper. '
-    + 'Do not use screenshots or photos on networked devices as much as possible to prevent hackers from stealing.',
-    'aelf.mnemonicCon04': '2. Verify that the backup Mnemonics is correct multiple times.'
-    + ' Once you have misread a letter or word, it will bring great suffering to the sub'
-    + 'sequent retrieval of the correct Mnemonics.',
+    'aelf.mnemonicCon03': '1. Use physical media as much as possible. For example, write Mnemonicss on paper. Do not use screenshots or photos on networked devices as much as possible to prevent hackers from stealing.',
+    'aelf.mnemonicCon04': '2. Verify that the backup Mnemonics is correct multiple times. Once you have misread a letter or word, it will bring great suffering to the subsequent retrieval of the correct Mnemonics.',
     'aelf.mnemonicCon05': '3. Keep the Mnemonics after the backup in a safe place, and do a good job of anti-theft and anti-lost measures.',
     'aefl.keystoreCon01': 'The Keystore file is a file format (JSON) for storing the private key. It uses user-defined password encryption to protect the wallet to a certain extent, and the degree of protection depends on the password strength of the wallet. If the password is similar to 123456, it is extremely unsafe.',
     'aefl.keystoreCon02': 'So users must pay attention to three points when backing up Keystore:',
@@ -149,5 +138,3 @@ const en_US = {
     'aelf.The passwords confirmed error.': 'The passwords confirmed error.',
     'aelf.The passwords is not strong.': 'The passwords is not strong.'
 };
-
-export default en_US;

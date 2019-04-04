@@ -43,7 +43,7 @@ export default class SearchContent extends React.Component {
     static getDerivedStateFromProps(props, state) {
         if (props.searchValue !== state.searchValue) {
             return {
-                searchValue: props.searchValue.result
+                searchValue: props.searchValue
             };
         }
 
@@ -70,7 +70,7 @@ export default class SearchContent extends React.Component {
                 rowHasChanged: (row1, row2) => row1 !== row2
             });
 
-            if (result.tx_status === 'NotExisted') {
+            if (result.Status === 'NotExisted') {
                 this.setState({
                     searchValue: null,
                     dataSource
@@ -99,16 +99,16 @@ export default class SearchContent extends React.Component {
     render() {
         const row = (rowData, sectionID, rowID) => {
             let item = this.state.searchValue;
-            let params = item.tx_info.params.split(',');
-            let isIncome = params[0] === this.state.walletAddress ? true : false;
+            let params = item.Transaction.Params;
+            let isIncome = params.to === this.state.walletAddress;
             let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
-            const contractAddress = item.tx_info.To;
-            const txIdOmitted = txIdOmit(item.tx_info.TxId);
-            let quantity = params[1];
+            const contractAddress = item.Transaction.To;
+            const txIdOmitted = txIdOmit(item.TransactionId);
+            let quantity = params.amount;
 
             const txDetailURL = '/transactiondetail?'
                 + `contract_address=${contractAddress}`
-                + `&txid=${item.tx_info.TxId}`
+                + `&txid=${item.TransactionId}`
                 + `&token=${window.defaultConfig.mainTokenName}`;
 
             return (

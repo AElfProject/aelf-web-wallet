@@ -14,7 +14,8 @@ export default function addressCheck(address = '', options = {
 
     // TODO: May Change again.
     const length = address.length;
-    if (length <= 53 && length >= 49 && address.match(/^ELF_/)) {
+    // if (length <= 53 && length >= 49 && address.match(/^ELF_/)) {
+    if (length <= 49 && length >= 45) {
 
         // 业务功能
         let addressUse = JSON.parse(localStorage.getItem('lastuse')).address;
