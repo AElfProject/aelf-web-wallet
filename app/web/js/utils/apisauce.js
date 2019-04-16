@@ -19,7 +19,7 @@ const httpErrorHandler = errMsg => {
     Toast.fail(errMsg, 3000, () => {}, false);
 };
 
-const get = async (url, params, config, hideToast = false) => {
+export const get = async (url, params, config, hideToast = false) => {
     const res = await api.get(url, params, config);
     if (res.ok) {
         return res.data;
@@ -30,7 +30,7 @@ const get = async (url, params, config, hideToast = false) => {
     throw Error(res.problem);
 };
 
-const post = async (url, data, config, hideToast = false) => {
+export const post = async (url, data, config, hideToast = false) => {
     const res = await api.post(url, data, config);
     if (res.ok) {
         return res.data;
@@ -39,9 +39,4 @@ const post = async (url, data, config, hideToast = false) => {
         httpErrorHandler(res.problem);
     }
     throw Error(res.problem);
-};
-
-export default {
-    get,
-    post
 };

@@ -13,9 +13,12 @@ import {hashHistory} from 'react-router';
 
 import {
     addressOmit,
-    getParam,
-    apisauce
+    getParam
 } from '../../../utils/utils';
+
+import {
+    get
+} from '../../../utils/apisauce';
 
 import {
     SCROLLFOOTER
@@ -26,19 +29,18 @@ const NUM_ROWS = 20;
 let pageIndex = 0;
 
 function getTxs(callback, pIndex = 0) {
-    apisauce.get('wallet/api/proxy', {
-        token: getParam('token', window.location.href),
-        ptype: 'api',
-        action: 'address_transactions',
+    // get('wallet/api/proxy', {
+    get('api/address/transactions', {
+        // token: getParam('token', window.location.href),
+        // ptype: 'api',
+        // action: 'address_transactions',
         limit: NUM_ROWS, // 13
         page: pIndex, // 0
         order: 'desc', // asc
         address: JSON.parse(localStorage.getItem('lastuse')).address,
         contract_address: getParam('contract_address', window.location.href)
     }).then(result => {
-        let output = result.result;
-
-        callback(output);
+        callback(result);
     });
 }
 

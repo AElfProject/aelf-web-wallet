@@ -12,9 +12,11 @@ import {
     // checkStatus,
     getPageContainerStyle,
     clipboard,
-    whetherBackupCheck,
-    apisauce
+    whetherBackupCheck
 } from '../../utils/utils';
+import {
+    get
+} from '../../utils/apisauce';
 
 import {
     // SCROLLLIST,
@@ -31,12 +33,11 @@ import BigNumber from 'bignumber.js';
 
 require('./Assets.css');
 
-
 const NUM_ROWS = 20;
 let pageIndex = 0;
 
 function getTokens(callback, pIndex = 0) {
-    apisauce.get('/address/api/tokens', {
+    get('/address/api/tokens', {
         limit: NUM_ROWS, // 13
         page: pIndex, // 0
         order: 'desc', // asc
@@ -51,12 +52,12 @@ function getTokens(callback, pIndex = 0) {
 // React component
 // TODO, 这里以后考虑使用ListView
 // https://mobile.ant.design/components/list-view-cn/#components-list-view-demo-basic
-class Assets extends Component {
+export default class Assets extends Component {
     constructor(props) {
         super(props);
 
         const dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
+            rowHasChanged: (row1, row2) => row1 !== row2
         });
 
         this.state = {
@@ -112,7 +113,8 @@ class Assets extends Component {
     componentDidUpdate() {
         if (this.state.useBodyScroll) {
             document.body.style.overflow = 'auto';
-        } else {
+        }
+        else {
             document.body.style.overflow = 'hidden';
         }
     }
@@ -135,7 +137,7 @@ class Assets extends Component {
             }
         });
 
-        apisauce.get('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(result => {
+        get('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(result => {
             const {USD} = result;
 
             // const balanceLong = new Long(balance.low, balance.high, balance.unsigned);
@@ -194,9 +196,7 @@ class Assets extends Component {
             });
         });
         pageIndex = 0;
-    };
-
-
+    }
 
     onEndReached(event) {
         // load new data
@@ -218,7 +218,7 @@ class Assets extends Component {
                 ELFValue: this.getELFValue(result)
             });
         }, ++pageIndex);
-    };
+    }
     // PullToRefresh end
 
     componentWillUnmount() {
@@ -277,7 +277,7 @@ class Assets extends Component {
         let backgroundStyle = Object.assign({}, pageContainerStyle);
         backgroundStyle.height -= 14; // remove padding 7px * 2
 
-        let containerStyle = Object.assign({}, backgroundStyle)
+        let containerStyle = Object.assign({}, backgroundStyle);
         containerStyle.height -= 2; // remove border 2px
 
         return (
@@ -337,5 +337,3 @@ class Assets extends Component {
         );
     }
 }
-
-export default Assets

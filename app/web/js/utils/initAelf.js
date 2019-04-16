@@ -43,9 +43,10 @@ export default function init(options = {}) {
     }
 
     // var HttpProvider = function (host, timeout, user, password, headers) { /*...*/ }
-    const proxyHttpProvider = `/wallet/api/proxy?contract_address=${contractAddress}&ptype=rpc&action=`;
+    // const proxyHttpProvider = `/wallet/api/proxy?contract_address=${contractAddress}&ptype=rpc&action=`;
+    // const proxyHttpProvider = `/api/proxy?contract_address=${contractAddress}&ptype=rpc&action=`;
     let httpProviderTemp = httpProvider || serviceProvider.getProvider();
-    httpProviderTemp = contractAddress ? proxyHttpProvider : httpProviderTemp;
+    // httpProviderTemp = contractAddress ? proxyHttpProvider : httpProviderTemp;
 
     let aelf = new Aelf(
         new Aelf.providers.HttpProvider(
@@ -56,17 +57,19 @@ export default function init(options = {}) {
             [{
                 name: 'x-csrf-token',
                 value: document.cookie.match(/csrfToken=[^;]*/)[0].replace('csrfToken=', '')
+            }, {
+                name: 'Accept',
+                value: 'text/plain;v=1.0'
             }]
         )
     );
 
     try {
-        aelf.isConnected();
+        aelf.chain.getChainInformation();
     }
     catch (e) {
         Toast.hide();
         window.location.href = window.location.protocol + '//' + window.location.host + '#/error';
-        // hashHistory.push('/error');
     }
     let contractMethods = chainOnly
         ? {} : aelf.chain.contractAt(contractAddress || window.defaultConfig.mainTokenContract, wallet);

@@ -24,9 +24,12 @@ import Svg from '../../../components/Svg/Svg';
 import {
     getPageContainerStyle,
     getParam,
-    getBalanceAndTokenName,
-    apisauce
+    getBalanceAndTokenName
 } from '../../../utils/utils';
+
+import {
+    get
+} from '../../../utils/apisauce';
 
 import {FormattedMessage} from 'react-intl';
 
@@ -76,7 +79,7 @@ export default class Home extends Component {
             return;
         }
         // TODO: 需要更全的list
-        apisauce.get('https://min-api.cryptocompare.com/data/price', {
+        get('https://min-api.cryptocompare.com/data/price', {
             fsym: token_name,
             tsyms: 'USD'
         }).then(result => {
@@ -148,7 +151,7 @@ export default class Home extends Component {
                             >
                                 <div className={style.icon}>
                                     <Svg icon='out20'
-                                         style={{ display: 'inline-block', height: 20, width: 20}}
+                                         style={{display: 'inline-block', height: 20, width: 20}}
                                     ></Svg>
                                 </div>
                                 <div><FormattedMessage id = 'aelf.Send' /></div>
@@ -159,7 +162,7 @@ export default class Home extends Component {
                             >
                                 <div className={style.icon}>
                                     <Svg icon='in20'
-                                         style={{ display: 'inline-block', height: 20, width: 20}}></Svg>
+                                         style={{display: 'inline-block', height: 20, width: 20}}></Svg>
                                 </div>
                                 <div><FormattedMessage id = 'aelf.Receive' /></div>
                             </div>

@@ -30,7 +30,7 @@ class ProxyService extends Service {
                     owner: options.address
                 }, (err, result) => {
                     let tokenInfo = {
-                        token_name: item.token_name,
+                        token_name: item.symbol,
                         chain_id: item.chain_id,
                         symbol: item.symbol,
                         name: item.name,

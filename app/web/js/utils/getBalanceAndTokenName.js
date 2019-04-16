@@ -5,15 +5,19 @@
  */
 /* eslint-disable fecs-camelcase */
 // import checkStatus from './checkStatus';
+// import {
+//     // getParam,
+//     // apisauce
+// } from '../utils/utils';
+
 import {
-    getParam,
-    apisauce
-} from '../utils/utils';
+    get
+} from '../utils/apisauce';
 
 export default function getBalanceAndTokenName(walletAddress, contractAddress, successCall, failCall) {
     console.log('getBalanceAndTokenName: ', walletAddress, contractAddress);
 
-    apisauce.get('/address/api/tokens', {
+    get('/address/api/tokens', {
         limit: 10, // 13
         page: 0, // 0
         order: 'desc', // asc

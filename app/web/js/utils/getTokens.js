@@ -3,32 +3,18 @@
  * @author zhouminghui
 */
 
-import checkStatus from './checkStatus';
+import {
+    get
+} from './apisauce';
 
 export default function getTokens(callback) {
-    let params = {
+
+    // TODO: err逻辑待处理
+    get('api/address/tokens', {
         address: JSON.parse(localStorage.lastuse).address
-    };
-
-    let query = '';
-    for (let each in params) {
-        query += `${each}=${params[each]}&`;
-    }
-
-    fetch(`/block/api/address/tokens?${query}`, {
-        credentials: 'include',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    }).then(checkStatus).then(result => {
-        result.text().then(result => {
-            let output = JSON.parse(result);
-            callback(output);
-        });
+    }).then(result => {
+        callback(result);
     }).catch(error => {
         console.log('error:', error);
     });
-
 }

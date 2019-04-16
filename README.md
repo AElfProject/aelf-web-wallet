@@ -90,6 +90,8 @@ How to proxy in nginx instead of proxy in nodejs.
 
 ### permission denied, open '/home/zhengyue/github/aelf-web-wallet/.travis.yml'
 
+### no such file or directory, scandir '/opt/aelf/app/aelf-web-wallet/node_modules/node-sass/vendor'
+
 https://github.com/eggjs/egg/issues/2442#issuecomment-421895549
 
 ```bash

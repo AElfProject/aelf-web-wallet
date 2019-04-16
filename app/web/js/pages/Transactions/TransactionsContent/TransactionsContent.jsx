@@ -5,16 +5,17 @@
  *  整理页面可读性
  *  NUM_ROWS 显示行数
  */
-
+/* eslint-disable fecs-camelcase */
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {PullToRefresh, ListView} from 'antd-mobile';
 
-import checkStatus from '../../../utils/checkStatus';
+// import checkStatus from '../../../utils/checkStatus';
 import {txIdOmit} from '../../../utils/utils';
 import {hashHistory} from 'react-router';
 import {SCROLLFOOTER} from '../../../constants';
+import {get} from '../../../utils/apisauce';
 
 import style from './TransactionsContent.scss';
 
@@ -25,32 +26,17 @@ let pageIndex = 0;
 const NUM_ROWS = 20;
 
 function getTxs(callback, walletAddress, pageIndex) {
-    let params = {
+    // fetch(`/block/api/address/transactions?${query}`, {
+    // TODO: Error Logic
+    get('api/address/transactions', {
         limit: NUM_ROWS, // 13
         page: pageIndex, // 0
         order: 'desc', // asc
         address: walletAddress,
         // TODO, need deal with other contract About token, such lick resource contract.
         contract_address: window.defaultConfig.mainTokenContract
-    };
-
-    let query = '';
-    for (let each in params) {
-        query += `${each}=${params[each]}&`;
-    }
-
-    fetch(`/block/api/address/transactions?${query}`, {
-        credentials: 'include',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    }).then(checkStatus).then(result => {
-        result.text().then(result => {
-            let output = JSON.parse(result);
-            callback(output);
-        });
+    }).then(result => {
+        callback(result);
     }).catch(error => {
         console.log('error:', error);
     });

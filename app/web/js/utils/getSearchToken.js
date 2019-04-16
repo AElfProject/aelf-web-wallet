@@ -4,30 +4,14 @@
 * 模糊查询的Token数据
 */
 
-import checkStatus from './checkStatus';
+import {get} from '../utils/apisauce';
 
 export default function getSearchToken(callback, name) {
-    let params = {
+    // TODO: Error Logic
+    get('api/contract/searchtoken', {
         name
-    };
-
-    let query = '';
-    for (let each in params) {
-        query += `${each}=${params[each]}&`;
-    }
-
-    fetch(`block/api/contract/searchtoken?${query}`, {
-        credentials: 'include',
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    }).then(checkStatus).then(result => {
-        result.text().then(result => {
-            let output = JSON.parse(result);
-            callback(output);
-        });
+    }).then(result => {
+        callback(result);
     }).catch(error => {
         console.log('error:', error);
     });

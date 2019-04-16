@@ -65,6 +65,10 @@ import ErrorPage from './pages/ErrorPage/ErrorPage';
 import 'whatwg-fetch';
 
 import AddToken from './pages/AddToken/AddToken';
+import Cookies from 'js-cookie';
+import {
+    get
+} from './utils/apisauce';
 
 // react-intl 国际化
 // 有可能是当时书写有问题
@@ -74,90 +78,133 @@ import {IntlProvider, addLocaleData} from 'react-intl';
 import zh from 'react-intl/locale-data/zh';
 import en from 'react-intl/locale-data/en';
 // import enUS from 'antd-mobile/lib/locale-provider/en_US';
+/* eslint-disable fecs-camelcase */
 
 addLocaleData([...zh, ...en]);
 
 // import style from '../style/index.scss'
 require('./../style/ant-mobile-aelf.css');
 
-// TODO: localStorage file, asyncStorage统一成一个方法。
-let walletInfoList = localStorage.getItem('walletInfoList');
+function initPage() {
+    // TODO: localStorage file, asyncStorage统一成一个方法。
+    let walletInfoList = localStorage.getItem('walletInfoList');
 
-// TODO: 通过localStorage 判断所选语言
+    // TODO: 通过localStorage 判断所选语言
+    if (!walletInfoList) {
+        hashHistory.replace('/get-wallet/guide');
+    }
+    else if (hashHistory.getCurrentLocation().pathname === '/') {
+        hashHistory.replace('/assets');
+    }
 
-if (!walletInfoList) {
-    hashHistory.replace('/get-wallet/guide');
+    // remove welcome-page
+    let welcomePage = document.getElementById('welcome-page');
+
+    welcomePage.style.opacity = 0;
+    setTimeout(() => {
+        welcomePage.style.display = 'none';
+    }, 600);
+
+    setTimeout(() => {
+        ReactDOM.render(
+            <IntlProvider locale={navigator.language} messages={chooseLocale()} >
+                <LocaleProvider locale={antdChooseLocale()} >
+                    {/*<Provider store={store}>*/}
+                    <Router history={hashHistory}>
+                        <Route path="/" component={HomePage}>
+                            <Route path="/assets" component={Assets}></Route>
+                            {/*<Route path="/qrcode" component={QRCode}></Route>*/}
+                            <Route path="/personalcenter/home" component={personalCenterHome}></Route>
+                            <Route path="/personalcenter/walletlist" component={WalletList}></Route>
+                        </Route>
+
+                        <Route path="/qrcode" component={QRCode}></Route>
+
+                        <Route path="/transactiondetail" component={AssetTransactionDetail}></Route>
+                        <Route path="/personalcenter/walletmanage" component={WalletManage}></Route>
+
+                        <Route path="/assethome" component={AssetHome}></Route>
+                        <Route path="/assettransfer" component={AssetTransfer}></Route>
+                        <Route path="/personalcenter/passwordchange" component={PasswordChange}></Route>
+
+                        <Route path="/personalcenter/about" component={personalCenterAbout}></Route>
+                        <Route path="/personalcenter/about/privacy" component={Privacy}></Route>
+                        <Route path="/personalcenter/about/service" component={Service}></Route>
+
+                        <Route path="/personalcenter/help" component={personalCenterHelpCenter}></Route>
+                        <Route path="/personalcenter/whatismnemonic" component={WhatIsMnemonic}></Route>
+                        <Route path="/personalcenter/whatiskeystore" component={WhatIsKeyStore}></Route>
+                        <Route path="/personalcenter/whatisprivatepublickey" component={WhatIsPrivatePublicKey}></Route>
+                        <Route path="/personalcenter/whatisaelfwallet" component={WhatIsAElfWallet}></Route>
+                        <Route path="/personalcenter/howtochangepassword" component={HowToChangePassword}></Route>
+                        <Route path="/personalcenter/forget" component={ForgetPassword} ></Route>
+                        <Route path="/personalcenter/systemsetting" component={personalCenterSystemSetting}></Route>
+                        <Route path="/personalcenter/systemsetting/network" component={systemSettingNetwork}></Route>
+
+                        <Route path="/get-wallet/backup" component={getWalletBackup} />
+
+                        <Route path="/agreement" component={getWalletAgreement} />
+                        <Route path="/get-wallet/nav" component={getWalletNav}>
+                            <Route path="/get-wallet/guide" component={getWalletGuide} />
+                            <Route path="/get-wallet/create" component={getWalletCreate} />
+                            <Route path="/get-wallet/import" component={getWalletImport} />
+                        </Route>
+
+                        <Route path="/error" component={ErrorPage}></Route>
+
+                        <Route path='/contactaddress' component={ContactAddressPage}></Route>
+                        <Route path='/contactaddress/newcontactaddress' component={NewContactAddressPage}></Route>
+
+                        <Route path='/transactions' component={Transactions} ></Route>
+
+                        <Route path='/addtoken' component={AddToken} ></Route>
+
+                    </Router>
+                    {/*</Provider>*/}
+                </LocaleProvider>
+            </IntlProvider>,
+            document.getElementById('root')
+        );
+    }, 0);
 }
-else if (hashHistory.getCurrentLocation().pathname === '/') {
-    hashHistory.replace('/assets');
+
+async function getNodesInfo() {
+
+    let currentChain = JSON.parse(localStorage.getItem('currentChain'));
+
+    if (currentChain) {
+        const {
+            contract_address,
+            chain_id
+        } = currentChain;
+        Cookies.set('aelf_ca_ci', contract_address + chain_id);
+        initPage();
+    }
+
+    const nodesInfoProvider = 'api/nodes/info';
+    const nodesInfo = await get(nodesInfoProvider);
+
+    if (nodesInfo.error === 0 && nodesInfo.result && nodesInfo.result.list) {
+        const nodesInfoList = nodesInfo.result.list;
+        localStorage.setItem('nodesInfo', JSON.stringify(nodesInfoList));
+        if (currentChain) {
+            return;
+        }
+
+        const nodeInfo = nodesInfoList.find(item => {
+            if (item.chain_id === 'AELF') {
+                return item;
+            }
+        });
+        const {
+            contract_address,
+            chain_id
+        } = nodeInfo;
+        localStorage.setItem('currentChain', JSON.stringify(nodeInfo));
+        Cookies.set('aelf_ca_ci', contract_address + chain_id);
+        initPage();
+    }
+    // TODO: turn to 404 page.
 }
 
-// remove welcome-page
-let welcomePage = document.getElementById('welcome-page');
-
-welcomePage.style.opacity = 0;
-setTimeout(() => {
-    welcomePage.style.display = 'none';
-}, 600);
-
-setTimeout(() => {
-    ReactDOM.render(
-        <IntlProvider locale={navigator.language} messages={chooseLocale()} >
-            <LocaleProvider locale={antdChooseLocale()} >
-                {/*<Provider store={store}>*/}
-                <Router history={hashHistory}>
-                    <Route path="/" component={HomePage}>
-                        <Route path="/assets" component={Assets}></Route>
-                        {/*<Route path="/qrcode" component={QRCode}></Route>*/}
-                        <Route path="/personalcenter/home" component={personalCenterHome}></Route>
-                        <Route path="/personalcenter/walletlist" component={WalletList}></Route>
-                    </Route>
-
-                    <Route path="/qrcode" component={QRCode}></Route>
-
-                    <Route path="/transactiondetail" component={AssetTransactionDetail}></Route>
-                    <Route path="/personalcenter/walletmanage" component={WalletManage}></Route>
-
-                    <Route path="/assethome" component={AssetHome}></Route>
-                    <Route path="/assettransfer" component={AssetTransfer}></Route>
-                    <Route path="/personalcenter/passwordchange" component={PasswordChange}></Route>
-
-                    <Route path="/personalcenter/about" component={personalCenterAbout}></Route>
-                    <Route path="/personalcenter/about/privacy" component={Privacy}></Route>
-                    <Route path="/personalcenter/about/service" component={Service}></Route>
-
-                    <Route path="/personalcenter/help" component={personalCenterHelpCenter}></Route>
-                    <Route path="/personalcenter/whatismnemonic" component={WhatIsMnemonic}></Route>
-                    <Route path="/personalcenter/whatiskeystore" component={WhatIsKeyStore}></Route>
-                    <Route path="/personalcenter/whatisprivatepublickey" component={WhatIsPrivatePublicKey}></Route>
-                    <Route path="/personalcenter/whatisaelfwallet" component={WhatIsAElfWallet}></Route>
-                    <Route path="/personalcenter/howtochangepassword" component={HowToChangePassword}></Route>
-                    <Route path="/personalcenter/forget" component={ForgetPassword} ></Route>
-                    <Route path="/personalcenter/systemsetting" component={personalCenterSystemSetting}></Route>
-                    <Route path="/personalcenter/systemsetting/network" component={systemSettingNetwork}></Route>
-
-                    <Route path="/get-wallet/backup" component={getWalletBackup} />
-
-                    <Route path="/agreement" component={getWalletAgreement} />
-                    <Route path="/get-wallet/nav" component={getWalletNav}>
-                        <Route path="/get-wallet/guide" component={getWalletGuide} />
-                        <Route path="/get-wallet/create" component={getWalletCreate} />
-                        <Route path="/get-wallet/import" component={getWalletImport} />
-                    </Route>
-
-                    <Route path="/error" component={ErrorPage}></Route>
-
-                    <Route path='/contactaddress' component={ContactAddressPage}></Route>
-                    <Route path='/contactaddress/newcontactaddress' component={NewContactAddressPage}></Route>
-
-                    <Route path='/transactions' component={Transactions} ></Route>
-
-                    <Route path='/addtoken' component={AddToken} ></Route>
-
-                </Router>
-                {/*</Provider>*/}
-            </LocaleProvider>
-        </IntlProvider>,
-        document.getElementById('root')
-    );
-}, 0);
+getNodesInfo();

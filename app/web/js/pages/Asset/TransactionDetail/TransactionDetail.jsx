@@ -103,10 +103,11 @@ export default class TransactionDetail extends Component {
         </div>;
     }
 
+    // TODO: 解析proto数据
     renderTransfer(txResult) {
         let {Transaction} = txResult;
         let params = Transaction.Params || [];
-        let to = params.to;
+        let to = Transaction.To;
         let amount = params.amount;
 
         let amounHtml = this.renderAmount(Transaction.From, to, amount);

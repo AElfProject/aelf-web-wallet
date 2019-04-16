@@ -4,12 +4,13 @@
  * 2018.07.30
  * init aelf
  */
-
+/* eslint-disable fecs-camelcase */
 import checkStatus from './checkStatus';
 
 export default function bindToken(option, callback) {
     let csrf = document.cookie.match(/csrfToken=[^;]*/)[0].replace('csrfToken=', '');
-    fetch('/block/api/address/bind-token', {
+    // fetch('/block/api/address/bind-token', {
+    fetch('/api/address/bind-token', {
         credentials: 'include',
         method: 'POST',
         headers: {

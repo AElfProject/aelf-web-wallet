@@ -1,3 +1,24 @@
 .transaction-list-container {
     height: 100%;
 }
+
+.addtoken-list-tokenaddress {
+    word-break: break-all;
+    white-space: pre-line;
+}
+
+@media screen and (max-width: 320px) {
+    .addtoken-list-tokenaddress {
+        max-width: 250px;
+        word-break: break-all;
+        white-space: pre-line;
+    }
+}
+
+@media screen and (min-width: 321px) and (max-width: 375px) {
+    .addtoken-list-tokenaddress {
+        max-width: 300px;
+        word-break: break-all;
+        white-space: pre-line;
+    }
+}
