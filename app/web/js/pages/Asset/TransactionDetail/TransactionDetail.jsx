@@ -20,6 +20,7 @@ import {
     clipboard,
     getPageContainerStyle
 } from '../../../utils/utils';
+import deserializeParams from '../../../utils/deserializeParams';
 
 import {FormattedMessage} from 'react-intl';
 
@@ -82,12 +83,10 @@ export default class TransactionDetail extends Component {
     // 如果有地址，则显示icon，如果只是分享，不显示icon
     renderAmount(from, to, amount) {
         let walletInfo = JSON.parse(localStorage.getItem('walletInfoList'));
-        let walletList = [];
-        for (let each in walletInfo) {
-            walletList.push(each);
-        }
-        let isIn = walletList.indexOf(to) >= 0;
-        let isOut = walletList.indexOf(from) >= 0;
+        let walletList = Object.keys(walletInfo);
+
+        let isIn = walletList.includes(to);
+        let isOut = walletList.includes(from);
         if (isIn && isOut || (!isIn && !isOut)) {
             return <div className={style.list}>
                 <div className={style.title}>amount</div>
@@ -107,8 +106,17 @@ export default class TransactionDetail extends Component {
     renderTransfer(txResult) {
         let {Transaction} = txResult;
         let params = Transaction.Params || [];
-        let to = Transaction.To;
-        let amount = params.amount;
+        const contractAddress = Transaction.To;
+        // Demo:
+        // input: CiAKHrbOcdaZjxh7cmWNzzSRSHvijvAerPnIVpz2QCkWFBIDRUxGGKCcAQ==
+        // output: {to: "E5x5tUoandnGSvFsFjF6Tqz", symbol: "ELF", amount: 10000, amountStr: "10000"}
+        const paramsDeserialized = deserializeParams(params, contractAddress, {
+            method: 'transfer'
+        });
+        const {
+            amount,
+            to
+        } = paramsDeserialized;
 
         let amounHtml = this.renderAmount(Transaction.From, to, amount);
 
