@@ -159,7 +159,12 @@ export default class TransactionDetail extends Component {
                 rightContent={
                     <div
                         onClick={() => {
-                            window.location.href = window.location.protocol + '//' + window.location.host;
+                            if (hideLeft) {
+                                window.location.href = window.location.protocol + '//' + window.location.host;
+                            }
+                            else {
+                                hashHistory.push('/assets');
+                            }
                         }}
                     ><FormattedMessage id = 'aelf.Home' /></div>
                 }
