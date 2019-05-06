@@ -66,7 +66,7 @@ export default function init(options = {}) {
 
     // TODO: 使用异步，这里调整为 await async
     try {
-        aelf.chain.getChainInformation();
+        aelf.chain.getChainStatus();
     }
     catch (e) {
         Toast.hide();

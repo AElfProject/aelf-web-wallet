@@ -9,7 +9,8 @@ export default function contractMergeArr(json1, json2) {
     for (let i = 0; i < json1.length; i++) {
         keyArr[i] = false;
         for (let j = 0; j < json2.length; j++) {
-            if (json2[j].contract_address === json1[i].contract_address) {
+            if (json2[j].contract_address === json1[i].contract_address
+                && json2[j].symbol === json1[i].symbol) {
                 keyArr[i] = true;
             }
         }

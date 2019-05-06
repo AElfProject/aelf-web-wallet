@@ -41,13 +41,15 @@ class addressController extends Controller {
                 address,
                 limit,
                 page,
-                contract_address
+                contract_address,
+                symbol
             } = ctx.request.query;
             let options = {
                 address,
                 limit: limit ? parseInt(limit, 0) : 0,
                 page: page ? parseInt(page, 0) : 0,
-                contract_address: contract_address || ''
+                contract_address: contract_address || '',
+                symbol: symbol || ''
             };
 
             ctx.validate(keysRule, options);
@@ -61,7 +63,8 @@ class addressController extends Controller {
 
             if (contract_address) {
                 nodesInfo = [nodesInfo.find(item => {
-                    if (item.contract_address === contract_address) {
+                    if (item.contract_address === contract_address
+                        && item.symbol === symbol) {
                         return true;
                     }
                 })];

@@ -24,6 +24,12 @@
     margin-bottom: 6px;
 }
 
+.addtoken-list-symbol {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
 .Tokenlist .am-list-item .am-list-line .am-list-content {
     overflow: initial;
 }

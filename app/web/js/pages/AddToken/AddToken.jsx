@@ -42,7 +42,7 @@ export default class AddToken extends React.Component {
 
     render() {
         return (
-            <div className = 'Tokenlist' >
+            <div className = 'Tokenlist'>
                 <NavToken
                     getTokenName={this.getTokenName.bind(this)}
                     searchShow={this.searchShow.bind(this)}

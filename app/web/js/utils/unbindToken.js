@@ -25,6 +25,7 @@ export default function unbindToken(option, callback) {
         body: JSON.stringify({
             address: option.address,
             contract_address: option.contract_address,
+            symbol: option.symbol,
             signed_address: option.signed_address,
             public_key: option.public_key
         })

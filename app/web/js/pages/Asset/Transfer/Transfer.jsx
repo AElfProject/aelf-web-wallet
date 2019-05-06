@@ -58,7 +58,7 @@ export default class Transfer extends Component {
     componentDidMount() {
         let address = this.walletAddress;
 
-        getBalanceAndTokenName(address, this.contractAddress, output => {
+        getBalanceAndTokenName(address, this.contractAddress, this.tokenName, output => {
             const tokenInfo = output[0] || {};
 
             const balanceObj = tokenInfo.balance;

@@ -165,7 +165,8 @@ export default class TokenList extends React.Component {
 
     render() {
         const row = (rowData, sectionID, rowID) => {
-            let tokenName = rowData.name;
+            // let tokenName = rowData.name;
+            let symbol = rowData.symbol;
             let tokenAddress = rowData.contract_address;
             return (
                 <div key={rowID}
@@ -184,8 +185,9 @@ export default class TokenList extends React.Component {
                                 let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
                                 let address = JSON.parse(localStorage.lastuse).address;
                                 let TokenMessage = {
-                                    address: address,
+                                    address,
                                     contract_address: tokenAddress,
+                                    symbol,
                                     signed_address: walletInfoList[address].signedAddress,
                                     public_key: walletInfoList[address].publicKey
                                 };
@@ -203,9 +205,10 @@ export default class TokenList extends React.Component {
                             }}
                         />}
                     >
-                        <div className='addtoken-list-tokenname' >{tokenName}</div>
-                        <div className='addtoken-list-name' >{tokenName} Chain</div>
-                        <div className='addtoken-list-tokenaddress' >{tokenAddress}</div>
+                        <div className='addtoken-list-symbol' >{symbol}</div>
+                        {/* <div className='addtoken-list-tokenname' >{symbol}</div> */}
+                        {/* <div className='addtoken-list-name' >{tokenName} Chain</div> */}
+                        {/* <div className='addtoken-list-tokenaddress' >{tokenAddress}</div> */}
                     </List.Item>
                 </div>
             );

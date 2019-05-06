@@ -175,7 +175,6 @@ export default class Assets extends Component {
     }
 
     onRefresh(isSetState = true) {
-        // this.props.getBalanceAndTokenName();
         if (isSetState) {
             this.setState({
                 refreshing: true,

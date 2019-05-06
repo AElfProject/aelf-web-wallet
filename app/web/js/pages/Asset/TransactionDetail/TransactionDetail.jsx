@@ -110,9 +110,10 @@ export default class TransactionDetail extends Component {
         // Demo:
         // input: CiAKHrbOcdaZjxh7cmWNzzSRSHvijvAerPnIVpz2QCkWFBIDRUxGGKCcAQ==
         // output: {to: "E5x5tUoandnGSvFsFjF6Tqz", symbol: "ELF", amount: 10000, amountStr: "10000"}
-        const paramsDeserialized = deserializeParams(params, contractAddress, {
-            method: 'transfer'
-        });
+        // const paramsDeserialized = deserializeParams(params, contractAddress, {
+        //     method: 'transfer'
+        // });
+        const paramsDeserialized = JSON.parse(params);
         const {
             amount,
             to

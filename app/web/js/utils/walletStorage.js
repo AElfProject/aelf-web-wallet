@@ -5,7 +5,7 @@
  */
 // Immutability Is Important
 // https://reactjs.org/tutorial/tutorial.html#why-immutability-is-important
-import aelf from 'aelf-sdk'
+import aelf from 'aelf-sdk';
 
 // TODO: 将localStorage部分封装到aelf-sdk中去，
 // node部分使用file（json）存储，RN使用AsyncStorage.

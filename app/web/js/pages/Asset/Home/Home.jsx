@@ -51,8 +51,9 @@ export default class Home extends Component {
     getBalanceAndTokenName() {
         let address = this.walletAddress;
         let contractAddress = getParam('contract_address', window.location.href);
+        let symbol = getParam('token', window.location.href);
 
-        getBalanceAndTokenName(address, contractAddress, output => {
+        getBalanceAndTokenName(address, contractAddress, symbol, output => {
             const tokenInfo = output[0];
             this.getELFValue(tokenInfo);
 
