@@ -19,18 +19,18 @@ module.exports = appInfo => {
     // DISCUSS & TODO: proxy API -> plugin???
     // 如果不使用Nginx来代理，请使用这段node代码
     // For dev: you can use these codes instead of the config in nginx.
-    config.proxy = [{
-        serviceName: 'AElf Node RPC', // never use
-        host: 'http://127.0.0.1:7250', // target host that matched path will be proxy to
-        match: /^\/chain/ // path pattern.
-    }, {
-        serviceName: 'aelf-block-api', // never use
-        host: 'http://127.0.0.1:7250', // target host that matched path will be proxy to
-        match: /^\/api/, // path pattern.
-        map(path) {
-            return path.replace(/^\/block/, '');
-        }
-    }];
+    // config.proxy = [{
+    //     serviceName: 'AElf Node RPC', // never use
+    //     host: 'http://127.0.0.1:7250', // target host that matched path will be proxy to
+    //     match: /^\/chain/ // path pattern.
+    // }, {
+    //     serviceName: 'aelf-block-api', // never use
+    //     host: 'http://127.0.0.1:7250', // target host that matched path will be proxy to
+    //     match: /^\/api/, // path pattern.
+    //     map(path) {
+    //         return path.replace(/^\/block/, '');
+    //     }
+    // }];
 
     // add your config here
     config.middleware = [];

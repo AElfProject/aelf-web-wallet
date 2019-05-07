@@ -5,7 +5,9 @@
  */
 // 默认的rpc接口的访问地址
 module.exports = {
+    // About the Web Api of AElf node
     httpProvider: '/chain',
+    // About the api of aelf-block-api
     apiServerProvider: 'http://127.0.0.1:7101',
     mainTokenName: 'ELF',
     mainTokenContract: 'ELF_4Qna4KWEr9XyxewGNHku1gwUvqtfsARSHcwjd3WXBpLw9Yx',
