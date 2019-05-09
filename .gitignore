@@ -11,3 +11,4 @@ app/view/
 app/public/assets/output/
 .DS_Store
 .vscode/
+package-lock.json
