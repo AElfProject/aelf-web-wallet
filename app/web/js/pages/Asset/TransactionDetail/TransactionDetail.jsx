@@ -13,6 +13,7 @@ import {hashHistory} from 'react-router';
 import NavNormal from '../../NavNormal/NavNormal';
 
 import AelfButton from './../../../components/Button/Button';
+import Cookies from 'js-cookie';
 
 import {
     getParam,
@@ -20,7 +21,7 @@ import {
     clipboard,
     getPageContainerStyle
 } from '../../../utils/utils';
-import deserializeParams from '../../../utils/deserializeParams';
+// import deserializeParams from '../../../utils/deserializeParams';
 
 import {FormattedMessage} from 'react-intl';
 
@@ -41,6 +42,12 @@ export default class TransactionDetail extends Component {
             tokenName: this.tokenName,
             contractAddress: this.contractAddress
         });
+
+        // TODO: 临时方案，后续处理一下。
+        // 分享出去的交易详情页，不一定有cookie和其它记录，回头好好梳理下这一块的逻辑。
+        if (/[^#]+\/transactiondetail?/.test(window.location.href)) {
+            Cookies.set('aelf_ca_ci', getParam('aelf_ca_ci', window.location.href));
+        }
 
         clipboard('#clipboard-transactionDetail');
     }
@@ -82,7 +89,7 @@ export default class TransactionDetail extends Component {
 
     // 如果有地址，则显示icon，如果只是分享，不显示icon
     renderAmount(from, to, amount) {
-        let walletInfo = JSON.parse(localStorage.getItem('walletInfoList'));
+        let walletInfo = JSON.parse(localStorage.getItem('walletInfoList')) || {};
         let walletList = Object.keys(walletInfo);
 
         let isIn = walletList.includes(to);
@@ -106,7 +113,7 @@ export default class TransactionDetail extends Component {
     renderTransfer(txResult) {
         let {Transaction} = txResult;
         let params = Transaction.Params || [];
-        const contractAddress = Transaction.To;
+        // const contractAddress = Transaction.To;
         // Demo:
         // input: CiAKHrbOcdaZjxh7cmWNzzSRSHvijvAerPnIVpz2QCkWFBIDRUxGGKCcAQ==
         // output: {to: "E5x5tUoandnGSvFsFjF6Tqz", symbol: "ELF", amount: 10000, amountStr: "10000"}
@@ -211,7 +218,9 @@ export default class TransactionDetail extends Component {
         let urlForCopy = window.location.host
             + '/transactiondetail?txid=' + txid
             + '&contract_address=' + contractAddress
-            + '&token=' + tokenName;
+            + '&token=' + tokenName
+            + '&aelf_ca_ci=' + Cookies.get('aelf_ca_ci');
+        // Cookies.set('aelf_ca_ci', contract_address + chain_id);
 
         let containerStyle = getPageContainerStyle();
 
