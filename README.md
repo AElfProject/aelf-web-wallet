@@ -32,7 +32,7 @@ at first
 
 - Correct config.
 
-- `optional` Nginx (or others) // Use SSL for Secure, And Use Proxy for cross-origin.
+- `optional` Nginx (or others) // SSL for Secure, Proxy for cross-origin.
 
 ### 1.Change config
 
@@ -115,7 +115,7 @@ https://github.com/eggjs/egg/issues/2442#issuecomment-421895549
 ```bash
 sudo npm install --unsafe-perm=true --allow-root
 # Then
-sh build.sh pro # or npm start
+bash build.sh pro # or npm start
 ```
 
 ### How to deal with int64

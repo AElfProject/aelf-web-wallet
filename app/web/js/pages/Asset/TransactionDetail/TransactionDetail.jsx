@@ -66,7 +66,7 @@ export default class TransactionDetail extends Component {
         };
         try {
             if (txid && contractAddress) {
-                let result = this.aelf.aelf.chain.getTxResult(txid);
+                let result = this.aelf.aelf.chain.getTxResult(txid, {sync: true});
                 if (result.error) {
                     txInfo.txResult = result.error;
                 }

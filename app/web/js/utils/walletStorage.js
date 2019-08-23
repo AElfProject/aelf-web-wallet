@@ -17,8 +17,8 @@ export default function insertWalletInfo(walletInfoInput, password) {
     let walletInfo = Object.assign({}, walletInfoInput);
     // let walletInfo = mnemonicWallet || privateKeyWallet; // 助记词钱包优先
     if (password) {
-        walletInfo.AESEncryptoPrivateKey = aelf.wallet.AESEncrypto(walletInfo.privateKey, password);
-        walletInfo.AESEncryptoMnemonic = aelf.wallet.AESEncrypto(walletInfo.mnemonic, password);
+        walletInfo.AESEncryptoPrivateKey = aelf.wallet.AESEncrypt(walletInfo.privateKey, password);
+        walletInfo.AESEncryptoMnemonic = aelf.wallet.AESEncrypt(walletInfo.mnemonic, password);
 
         if (!walletInfo.publicKey) {
             let publicKey = walletInfo.keyPair.getPublic();
