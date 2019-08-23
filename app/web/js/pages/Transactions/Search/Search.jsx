@@ -34,7 +34,7 @@ export default class Search extends React.Component {
         let re = /^[0-9a-zA-Z]*$/g;
         if (e.which === 13) {
             if (re.test(this.state.key) && this.state.key.length === 64) {
-                let result = this.aelf.aelf.chain.getTxResult(this.state.key);
+                let result = this.aelf.aelf.chain.getTxResult(this.state.key, {sync: true});
                 if (result.tx_trc !== null) {
                     this.props.setValue(result);
                     this.props.searchShow();

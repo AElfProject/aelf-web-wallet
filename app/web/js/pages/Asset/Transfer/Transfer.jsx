@@ -119,16 +119,19 @@ export default class Transfer extends Component {
             }
 
             // let transfer = aelf.contractMethods.Transfer(address, amount);
-            let transfer = aelf.contractMethods.Transfer({
+            // let transfer = 
+            aelf.contractMethods.Transfer({
                 symbol: tokenName,
                 to: address,
-                amount: amount
+                amount: amount,
+                memo: ''
+            }).then(transfer => {
+              Toast.hide();
+              hashHistory.push(`/transactiondetail?txid=${transfer.TransactionId}&token=${tokenName}&contract_address=${contractAddress}`);
+            }).catch(error => {
+              Toast.hide();
+              Toast.fail(error, 3, () => { }, false);
             });
-
-            Toast.hide();
-
-            hashHistory.push(`/transactiondetail?txid=${transfer.TransactionId}&token=${tokenName}&contract_address=${contractAddress}`);
-
         }, 50);
     }
 
