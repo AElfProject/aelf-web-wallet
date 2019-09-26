@@ -28,7 +28,9 @@ const NUM_ROWS = 20;
 function getTxs(callback, walletAddress, pageIndex) {
     // fetch(`/block/api/address/transactions?${query}`, {
     // TODO: Error Logic
+    // 后续这里也需要拆分开
     get('api/address/transactions', {
+    // get('api/token/txs', {
         limit: NUM_ROWS, // 13
         page: pageIndex, // 0
         order: 'desc', // asc
