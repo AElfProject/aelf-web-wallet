@@ -80,6 +80,7 @@ export default class Home extends Component {
             return;
         }
         // TODO: 需要更全的list
+        // TODO: 这个数据，走server存到数据库去，能加速，目前大陆连这个接口太慢了。
         get('https://min-api.cryptocompare.com/data/price', {
             fsym: token_name,
             tsyms: 'USD'
