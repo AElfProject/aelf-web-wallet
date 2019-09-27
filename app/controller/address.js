@@ -6,7 +6,10 @@
 'use strict';
 
 const Controller = require('../core/baseController.js');
-const {apiServerProvider} = require('../../config/config.node.js');
+const {
+  apiServerProvider,
+  mainTokenContract
+} = require('../../config/config.node.js');
 
 class addressController extends Controller {
     // the structure of return data is almost the same as the getTokens API of aelf-block-api.
@@ -61,6 +64,20 @@ class addressController extends Controller {
                 }
             )).data;
 
+            // http://localhost:7101/api/contract/detail?contract_address=25CecrU94dmMdbhC3LWMKxtoaL4Wv8PChGvVJM6PxkHAyvXEhB
+            let tokenInfo = (await ctx.curl(
+              apiServerProvider
+                +`/api/contract/detail?contract_address=${mainTokenContract}`, {
+                    dataType: 'json'
+                }
+            )).data;
+            console.log('tokenInfo: ', tokenInfo);
+              
+            const tokenInfoFormatted = {};
+            tokenInfo.forEach(item => {
+              tokenInfoFormatted[item.symbol] = item;
+            });
+
             if (contract_address) {
                 nodesInfo = [nodesInfo.find(item => {
                     if (item.contract_address === contract_address
@@ -72,7 +89,7 @@ class addressController extends Controller {
 
             let result = [];
             if (nodesInfo.length) {
-                result = await ctx.service.address.getTokens(options, nodesInfo);
+                result = await ctx.service.address.getTokens(options, nodesInfo, tokenInfoFormatted);
             }
 
             this.formatOutput('get', result);

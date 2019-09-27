@@ -10,6 +10,7 @@ import {List, InputItem, Toast} from 'antd-mobile';
 import style from './Transfer.scss';
 import {hashHistory} from 'react-router';
 import Long from 'long';
+import { BigNumber } from 'bignumber.js';
 
 import AelfButton from './../../../components/Button/Button';
 
@@ -25,12 +26,14 @@ import {
 } from '../../../utils/utils';
 
 import {FormattedMessage} from 'react-intl';
+import { from } from 'rxjs/observable/from';
 
 export default class Transfer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            balance: new Long(0)
+          decimals: 0,
+          balance: new BigNumber(0)
         };
         this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
         this.contractAddress = getParam('contract_address', window.location.href);
@@ -61,12 +64,18 @@ export default class Transfer extends Component {
         getBalanceAndTokenName(address, this.contractAddress, this.tokenName, output => {
             const tokenInfo = output[0] || {};
 
-            const balanceObj = tokenInfo.balance;
-            const balance = new Long(balanceObj.low, balanceObj.high, balanceObj.unsigned);
+            const {
+              balance,
+              decimals,
+              token_name
+            } = tokenInfo;
+              // const balanceObj = tokenInfo.balance;
+            let balanceBig = (new BigNumber(balance)).div(Math.pow(10, decimals));
 
             this.setState({
-                balance,
-                tokenName: this.tokenName || tokenInfo.token_name,
+                decimals,
+                balance: balanceBig,
+                tokenName: this.tokenName || token_name,
                 contract_address: this.contractAddress
             });
         });
@@ -97,9 +106,11 @@ export default class Transfer extends Component {
             }
 
             // check balance
-            let amount = parseInt(this.state.amount, 10);
-            const amountLong = new Long(amount);
-            if (amountLong.greaterThan(this.state.balance)) {
+            // let amount = parseInt(this.state.amount, 10);
+            let amountBig = new BigNumber(this.state.amount);
+            // const amountLong = new Long(amount);
+            // if (amountLong.greaterThan(this.state.balance)) {
+            if (amountBig.gt(this.state.balance)) {
                 Toast.hide();
                 Toast.fail('insufficient', 3, () => {}, false);
                 return;
@@ -123,11 +134,11 @@ export default class Transfer extends Component {
             aelf.contractMethods.Transfer({
                 symbol: tokenName,
                 to: address,
-                amount: amount,
+                amount: amountBig.multipliedBy(Math.pow(10, this.state.decimals)).toNumber(),
                 memo: ''
             }).then(transfer => {
               Toast.hide();
-              hashHistory.push(`/transactiondetail?txid=${transfer.TransactionId}&token=${tokenName}&contract_address=${contractAddress}`);
+              hashHistory.push(`/transactiondetail?txid=${transfer.TransactionId}&token=${tokenName}&contract_address=${contractAddress}&decimals=${this.state.decimals}`);
             }).catch(error => {
               Toast.hide();
               Toast.fail(error, 3, () => { }, false);
@@ -192,7 +203,7 @@ export default class Transfer extends Component {
                             <div className="aelf-input-title">
                                 <div><FormattedMessage id = 'aelf.Amount to send' /></div>
                                 <div>
-                                    <FormattedMessage id = 'aelf.Balance' />：{this.state.balance.toString()}
+                                    <FormattedMessage id = 'aelf.Balance' />：{this.state.balance.toFixed(2)}
                                 </div>
                             </div>
                             <InputItem

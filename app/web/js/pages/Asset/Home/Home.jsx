@@ -7,6 +7,8 @@
 import React, {Component} from 'react';
 import {Toast} from 'antd-mobile';
 import BigNumber from 'bignumber.js';
+// test.div(Math.pow(10, 8)).toFixed(2);
+// test.div(Math.pow(10, decimals)).toFixed(2);
 
 import style from './Home.scss';
 import {hashHistory} from 'react-router';
@@ -34,7 +36,8 @@ export default class Home extends Component {
 
         this.state = {
             tokenName: '-',
-            balance: '-'
+            balance: '-',
+            decimals: 30
         };
 
         // 得把作用域绑上，不然子组件里执行函数，无法执行this.setState这些。
@@ -52,9 +55,18 @@ export default class Home extends Component {
             const tokenInfo = output[0];
             this.getELFValue(tokenInfo);
 
+            const {
+              balance,
+              token_name,
+              decimals
+            } = tokenInfo;
+
+            let balanceBig = new BigNumber(balance);
+            balanceBig = balanceBig.div(Math.pow(10, decimals)).toFixed(2);
+
             this.setState({
-                balance: tokenInfo.balance, // .toLocaleString(),
-                tokenName: tokenInfo.token_name,
+              balance: balanceBig, // .toLocaleString(),
+              tokenName: token_name,
                 contract_address: contractAddress
             });
         });
@@ -63,10 +75,12 @@ export default class Home extends Component {
     getELFValue(tonkenInfo) {
         const {
             balance,
-            token_name
+            token_name,
+            decimals
         } = tonkenInfo;
         if (token_name !== 'ELF') {
             this.setState({
+                decimals,
                 tenderValue: 0
             });
             return;
@@ -81,11 +95,12 @@ export default class Home extends Component {
 
             const balanceBigNumber = new BigNumber(balance);
             const priceBigNumber = new BigNumber(USD);
-            let tenderValue = balanceBigNumber.multipliedBy(priceBigNumber).toString();
+            let tenderValue = balanceBigNumber.div(Math.pow(10, decimals)).multipliedBy(priceBigNumber).toFixed(2);
 
             // let tenderValue = (parseFloat(USD) * balance).toLocaleString();
             tenderValue = isNaN(tenderValue) ? 0 : tenderValue;
             this.setState({
+                decimals,
                 tenderValue
             });
         }).catch(error => {
@@ -165,6 +180,8 @@ export default class Home extends Component {
                     <div className={style.txListContainer}>
                         <TransactionsList
                             getBalanceAndTokenName={this.getBalanceAndTokenName}
+                            decimals={this.state.decimals}
+                            turnToDetailReady={this.state.decimals < 30}
                         ></TransactionsList>
                     </div>
                 </div>

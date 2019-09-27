@@ -7,6 +7,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { PullToRefresh, ListView } from 'antd-mobile';
 
+import { BigNumber } from 'bignumber.js';
+
 import style from './TransactionsList.scss';
 
 import { hashHistory } from 'react-router';
@@ -137,17 +139,28 @@ export default class TransactionsList extends Component {
   render() {
     const tokenNameQuery = `token=${getParam('token', window.location.href)}`;
     const tokenAddressQuery = `contract_address=${getParam('contract_address', window.location.href)}`;
-    const tokenQuery = tokenNameQuery + '&' + tokenAddressQuery;
+    const decimalsQuery = `decimals=${this.props.decimals}`;
+    const tokenQuery = tokenNameQuery + '&' + tokenAddressQuery + '&' + decimalsQuery;
     const row = (rowData, sectionID, rowID) => {
 
       let item = this.rData[rowID];
 
-      console.log('111111111_______________', item);
+      // console.log('111111111_______________', item);
       const params = JSON.parse(item.params);
       // let isIncome = item.params_to === this.walletAddress;
       let isIncome = item.adderss_to === this.walletAddress;
       // let quantity = (isIncome ? '+' : '-') + params.quantity;
-      let quantity = (isIncome ? '+' : '-') + (params.amount || 0);
+      let amount = (new BigNumber((params.amount || 0))).div(Math.pow(10, this.props.decimals)).toFixed(2);
+      let quantity = (isIncome ? '+' : '-') + amount;
+
+      if (this.props.decimals >= 30) {
+        quantity = '...';
+      }
+
+      // quantity = (new BigNumber(quantity)).div(10, this.props.decimals).toFixed(2);
+      // quantity = (new BigNumber(quantity)).div(10, this.props.decimals).toFixed(2);
+      
+
       let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
 
       // let address = isIncome ? item.address_from : item.params_to;
@@ -161,7 +174,11 @@ export default class TransactionsList extends Component {
       return (
         <div key={rowID}
           className={style.txList}
-          onClick={() => hashHistory.push(`/transactiondetail?txid=${item.tx_id}&${tokenQuery}`)}
+          onClick={() => {
+            if (this.props.turnToDetailReady) {
+              hashHistory.push(`/transactiondetail?txid=${item.tx_id}&${tokenQuery}`)
+            }
+          }}
         >
           <div className={style.leftContainer}>
             <div className={iconClass}>

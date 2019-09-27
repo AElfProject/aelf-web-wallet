@@ -6,8 +6,8 @@
 /* eslint-disable fecs-camelcase */
 
 const Service = require('../core/baseService');
-const protoDecode = require('../utils/protoDecode');
-const Long = require('long');
+// const protoDecode = require('../utils/protoDecode');
+// const Long = require('long');
 // const {nodesHttpProviderSelect} = require('../utils/utils');
 
 // const GETBALANCETIMEOUT = 1000;
@@ -15,7 +15,7 @@ const Long = require('long');
 class ProxyService extends Service {
 
     // use Long.js to deal with Balance.
-    async getTokens(options, nodesInfo) {
+    async getTokens(options, nodesInfo, tokenInfoFormatted) {
         const getTokensBalance = () => new Promise((resolve, reject) => {
             const ctx = this.ctx;
 
@@ -33,6 +33,7 @@ class ProxyService extends Service {
                         token_name: item.symbol,
                         chain_id: item.chain_id,
                         symbol: item.symbol,
+                        decimals: tokenInfoFormatted[item.symbol].decimals,
                         name: item.name,
                         address: options.address,
                         contract_address: item.contract_address,

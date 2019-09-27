@@ -71,7 +71,8 @@ export default class Assets extends Component {
             // let dir = `/assethome?contract_address=${item.contract_address}&token=${item.symbol}`;
             let dir = `/assethome?contract_address=${item.contract_address}&token=${item.token_name}`;
 
-            const balance = item.balance;
+            // const balance = item.balance;
+            let balance = (new BigNumber(item.balance)).div(Math.pow(10, item.decimals)).toFixed(2);
 
             // const balance = item.balance ? item.balance.toLocaleString() : 0;
             return (
@@ -121,7 +122,8 @@ export default class Assets extends Component {
             if (item.token_name === 'ELF') {
 
                 const balanceBigNumber = new BigNumber(item.balance);
-                ELFValue = ELFValue.plus(balanceBigNumber);
+                // ELFValue = ELFValue.plus(balanceBigNumber);
+                ELFValue = ELFValue.plus(balanceBigNumber).div(Math.pow(10, item.decimals));
             }
             else {
                 // TODO 首先得有对标的价值
@@ -133,7 +135,7 @@ export default class Assets extends Component {
 
             const balanceBigNumber = new BigNumber(ELFValue.toString());
             const priceBigNumber = new BigNumber(USD);
-            const tenderValue = balanceBigNumber.multipliedBy(priceBigNumber).toString();
+            const tenderValue = balanceBigNumber.multipliedBy(priceBigNumber).toFixed(2)//.toString();
 
             // const tenderValue = (parseFloat(USD) * ELFValue).toLocaleString();
             this.setState({
@@ -143,7 +145,8 @@ export default class Assets extends Component {
             Toast.fail(error.message, 6);
         });
 
-        return ELFValue.toLocaleString();
+        // return ELFValue.toLocaleString();
+        return ELFValue.toFixed(2);
     }
 
     componentDidMount() {
