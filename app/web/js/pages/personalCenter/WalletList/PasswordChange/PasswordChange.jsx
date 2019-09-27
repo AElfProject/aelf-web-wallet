@@ -53,8 +53,8 @@ class PasswordChange extends Component {
         let mnemonic = false;
 
         try {
-            privateKey = window.Aelf.wallet.AESDecrypto(walletInfo.AESEncryptoPrivateKey, password);
-            mnemonic = window.Aelf.wallet.AESDecrypto(walletInfo.AESEncryptoMnemonic, password);
+            privateKey = window.Aelf.wallet.AESDecrypt(walletInfo.AESEncryptoPrivateKey, password);
+            mnemonic = window.Aelf.wallet.AESDecrypt(walletInfo.AESEncryptoMnemonic, password);
         } catch (e) {
             // 因为封装了一层，解密错误时，转换成utf-8会抛出异常。
             let string = '[ERROR] Hey guy, your invalid password make the program crash.';
