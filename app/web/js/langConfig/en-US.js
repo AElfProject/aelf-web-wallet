@@ -136,5 +136,5 @@ export default {
     'aelf.BackUpCon04':'Backup your wallet recovery phrase is extremely important when your wallet is lost or forgotten.',
     'aelf.Backup now':'Backup now',
     'aelf.The passwords confirmed error.': 'The passwords confirmed error.',
-    'aelf.The passwords is not strong.': 'The passwords is not strong.'
+    'aelf.Not less than 9 characters, including upper and lower case characters, numbers, special characters.': 'Not less than 9 characters, including upper and lower case characters, numbers, special characters.'
 };
