@@ -36,15 +36,9 @@ class ProxyService extends Service {
                         name: item.name,
                         address: options.address,
                         contract_address: item.contract_address,
-                        balance: {
-                            low: 0,
-                            high: 0,
-                            unsigned: true
-                        }
+                        balance: result.balance || 0
                     };
-                    if (!err) {
-                        tokenInfo.balance = new Long(result.balance || '0');
-                    }
+
                     tokensInfoArray[index] = tokenInfo;
                     nodesInfoCount++;
 

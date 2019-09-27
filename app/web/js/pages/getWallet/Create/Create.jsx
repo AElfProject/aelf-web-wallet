@@ -67,7 +67,8 @@ export default class Create extends Component {
                 address: result.address,
                 contract_address: window.defaultConfig.mainTokenContract,
                 signed_address: result.signedAddress,
-                public_key: result.publicKey
+                public_key: result.publicKey,
+                symbol: 'ELF',
             }, () => {
                 Toast.hide();
                 Toast.success('Create Success', 3, () => {

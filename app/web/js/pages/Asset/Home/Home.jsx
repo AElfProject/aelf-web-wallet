@@ -6,12 +6,7 @@
 /* eslint-disable fecs-camelcase */
 import React, {Component} from 'react';
 import {Toast} from 'antd-mobile';
-import Long from 'long';
 import BigNumber from 'bignumber.js';
-// window.Long = Long;
-// window.BigNumber = BigNumber;
-// var longVal = { low: 2000, high: 0, unsigned: true };
-// var test = new Long(longVal.low, longVal.high, longVal.unsigned);
 
 import style from './Home.scss';
 import {hashHistory} from 'react-router';
@@ -57,11 +52,8 @@ export default class Home extends Component {
             const tokenInfo = output[0];
             this.getELFValue(tokenInfo);
 
-            const balanceObj = tokenInfo.balance;
-            const balance = new Long(balanceObj.low, balanceObj.high, balanceObj.unsigned);
-
             this.setState({
-                balance, // .toLocaleString(),
+                balance: tokenInfo.balance, // .toLocaleString(),
                 tokenName: tokenInfo.token_name,
                 contract_address: contractAddress
             });
@@ -87,8 +79,7 @@ export default class Home extends Component {
         }).then(result => {
             const {USD} = result;
 
-            const balanceLong = new Long(balance.low, balance.high, balance.unsigned);
-            const balanceBigNumber = new BigNumber(balanceLong.toString());
+            const balanceBigNumber = new BigNumber(balance);
             const priceBigNumber = new BigNumber(USD);
             let tenderValue = balanceBigNumber.multipliedBy(priceBigNumber).toString();
 
