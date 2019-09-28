@@ -84,7 +84,7 @@ export default class TransactionDetail extends Component {
             }
         }
         catch (e) {
-            Toast.fail(e.message, 10);
+            Toast.fail(e.message || e.Error, 10, ()=>{}, false);
             txInfo.txResult = e;
         }
         return txInfo;

@@ -41,7 +41,7 @@ function getTokens(callback, pIndex = 0) {
     }).then(result => {
         callback(result);
     }).catch(error => {
-        Toast.fail(error.message, 6);
+        Toast.fail(error.message, 6, () => { }, false);
     });
 }
 
@@ -142,7 +142,7 @@ export default class Assets extends Component {
                 tenderValue
             });
         }).catch(error => {
-            Toast.fail(error.message, 6);
+            Toast.fail(error.message, 6, () => { }, false);
         });
 
         // return ELFValue.toLocaleString();

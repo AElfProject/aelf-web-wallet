@@ -53,7 +53,7 @@ class Camera extends Component {
                 // 播放视频
                 this.vide.play()
             }, (error) => {
-                Toast.fail(`erro ${error}`);
+                Toast.fail(`erro ${error}`, 2, () => { }, false);
                 console.log('error: ', error);
                 // if (error.name === 'NotAllowedError') {
                 //     this.props.binderror(error)
@@ -62,7 +62,7 @@ class Camera extends Component {
                 // }
             })
         } else {
-            Toast.fail(`你的浏览器不支持访问用户媒体设备`);
+            Toast.fail(`你的浏览器不支持访问用户媒体设备`, 2, () => { }, false);
             // alert('你的浏览器不支持访问用户媒体设备')
         }
     }

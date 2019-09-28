@@ -76,7 +76,7 @@ export default class Create extends Component {
                 });
             });
         } else {
-            Toast.fail('(꒦_꒦) ...emmmm，please call the monkey.');
+            Toast.fail('(꒦_꒦) ...emmmm，please call the monkey.', 2, () => { }, false);
         }
     }
 

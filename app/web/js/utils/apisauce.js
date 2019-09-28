@@ -16,7 +16,7 @@ const api = create({
 });
 
 const httpErrorHandler = errMsg => {
-    Toast.fail(errMsg, 3000, () => {}, false);
+    Toast.fail(errMsg, 3, () => {}, false);
 };
 
 export const get = async (url, params, config, hideToast = false) => {

@@ -76,7 +76,7 @@ class PasswordChange extends Component {
             });
         	// console.log('change done: ', privateKey, result);
         } else {
-        	Toast.fail('Wrong Password', 2);
+          Toast.fail('Wrong Password', 2, () => { }, false);
         	// console.log('傻逼，滚。');
         }
     }

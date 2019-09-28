@@ -44,16 +44,16 @@ class Import extends Component {
     createAndGO() {
         let password = this.state.password;
         if (!password) {
-            Toast.fail('No password', 2);
+            Toast.fail('No password', 2, () => { }, false);
             return;
         }
         if (!this.state.walletName) {
-            Toast.fail('No walletName', 2);
+            Toast.fail('No walletName', 2, () => { }, false);
             return;
         }
 
         if (!this.state.mnemonic && !this.state.privateKey) {
-            Toast.fail('Please input your privateKey or mnemonic', 3);
+            Toast.fail('Please input your privateKey or mnemonic', 3, () => { }, false);
             return;
         }
 
@@ -77,7 +77,7 @@ class Import extends Component {
         }
 
         if (!privateKeyWallet && !mnemonicWallet) {
-            Toast.fail('Import Failed');
+            Toast.fail('Import Failed', 2, ()=> {}, false);
             return;
         }
 
@@ -91,7 +91,7 @@ class Import extends Component {
             });
         }
         else {
-            Toast.fail('(꒦_꒦) ...Fail, please check the form. Or call Huang Zongzhe');
+            Toast.fail('(꒦_꒦) ...Fail, please check the form. Or call Huang Zongzhe', 2, () => { }, false);
         }
     }
 
