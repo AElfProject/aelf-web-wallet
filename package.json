@@ -83,6 +83,8 @@
     "stop": "egg-scripts stop --title=egg-server-aelf-web-wallet",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
+    "build": "webpack",
+    "build:pro": "webpack --config webpack.config.production.js",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
     "cov": "egg-bin cov",
