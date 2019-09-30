@@ -136,5 +136,5 @@ export default {
     'aelf.BackUpCon04': '备份助记词在您丢失钱包或忘记密码时，能帮助您恢复钱包。',
     'aelf.Backup now': '立即备份助记词',
     'aelf.The passwords confirmed error.': '两次输入不一致',
-    'aelf.The passwords is not strong.': '密码强度不够'
+    'aelf.Not less than 9 characters, including upper and lower case characters, numbers, special characters.': '不少于9个字符，包括大小写字符、数字、特殊字符'
 };

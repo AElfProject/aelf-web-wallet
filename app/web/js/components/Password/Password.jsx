@@ -141,7 +141,7 @@ class Password extends Component {
         else if (this.passwordInfo && this.passwordInfo.level <= 2) {
             this.state.passwordCheckResult = {
                 ready: false,
-                message: 'The passwords is not strong.'
+                message: 'Not less than 9 characters, including upper and lower case characters, numbers, special characters.'
             };
             this.props.setPassword(false);
         }

@@ -27,6 +27,7 @@ class personalCenterHome extends Component {
 	            <List className={'aelf-list'}>
 	                <Item onClick={() => hashHistory.push('/personalcenter/walletmanage?title=WalletManagement')}>
                         <ListContent
+                            type="small"
                             icon="wallet16"
                             text={
                                 <FormattedMessage
@@ -38,7 +39,7 @@ class personalCenterHome extends Component {
                     </Item>
 	            </List>
 
-                <List className={'aelf-list'}>
+                {/* <List className={'aelf-list'}>
                     <Item onClick={() => hashHistory.push('/transactions')}>
                         <ListContent
                             icon="tx_history16"
@@ -50,9 +51,9 @@ class personalCenterHome extends Component {
                             }
                         ></ListContent>
                     </Item>
-                </List>
+                </List> */}
 
-                <div className={style.blank}></div>
+                {/* <div className={style.blank}></div> */}
 
                 {/* <List className={'aelf-list'}>
                     <Item onClick={() => hashHistory.push('/contactaddress')}>

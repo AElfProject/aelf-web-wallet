@@ -62,7 +62,7 @@ class SystemSetting extends Component {
                     iconHidden={true}
                 ></NoticePanel>
                 <div className='aelf-blank16'></div>
-                {listHtml}
+                {/* {listHtml} */}
                 <SelectLanguage />
             </div>
         );

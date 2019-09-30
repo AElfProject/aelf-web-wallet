@@ -34,8 +34,8 @@ export default function insertWalletInfo(walletInfoInput, password) {
         delete walletInfo.xPrivateKey;
         delete walletInfo.keyPair;
     }
-    // console.log('window decrypto: ', window.Aelf.wallet.AESDecrypto(walletInfo.AESEncryptoPrivateKey, password));
-    // console.log('aelf decrypto: ', aelf.wallet.AESDecrypto(walletInfo.AESEncryptoMnemonic, password));
+    // console.log('window decrypto: ', window.Aelf.wallet.AESDecrypt(walletInfo.AESEncryptoPrivateKey, password));
+    // console.log('aelf decrypto: ', aelf.wallet.AESDecrypt(walletInfo.AESEncryptoMnemonic, password));
     // console.log('wallet info: ', walletInfo);
 
     let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList')) || {};

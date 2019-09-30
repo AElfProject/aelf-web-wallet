@@ -98,7 +98,7 @@ class WalletManage extends Component {
             localStorage.removeItem('lastuse');
             Toast.fail('No wallet now，please create or insert a wallet.', 3, () => {
                 hashHistory.push('/get-wallet/guide');
-            }, 3);
+            }, false);
         }
     }
 

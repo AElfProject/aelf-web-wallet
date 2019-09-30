@@ -22,7 +22,10 @@ module.exports = appInfo => {
     config.proxy = [{
         serviceName: 'AElf Node RPC', // never use
         host: 'http://127.0.0.1:7250', // target host that matched path will be proxy to
-        match: /^\/chain/ // path pattern.
+        match: /^\/chain/, // path pattern.
+        map(path) {
+          return path.replace(/^\/chain/, '');
+        }
     }, {
         serviceName: 'aelf-block-api', // never use
         host: 'http://127.0.0.1:7250', // target host that matched path will be proxy to

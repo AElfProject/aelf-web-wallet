@@ -207,4 +207,5 @@ async function getNodesInfo() {
     // TODO: turn to 404 page.
 }
 
-getNodesInfo();
+// getNodesInfo();
+initPage();

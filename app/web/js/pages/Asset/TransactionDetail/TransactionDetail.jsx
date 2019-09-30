@@ -10,6 +10,8 @@ import {Toast} from 'antd-mobile';
 import style from './TransactionDetail.scss';
 import {hashHistory} from 'react-router';
 
+import { BigNumber } from 'bignumber.js';
+
 import NavNormal from '../../NavNormal/NavNormal';
 
 import AelfButton from './../../../components/Button/Button';
@@ -35,6 +37,7 @@ export default class TransactionDetail extends Component {
         const stringTemp = hashHistory.getCurrentLocation().search || window.location.href;
         this.txid = getParam('txid', stringTemp);
         this.tokenName = getParam('token', stringTemp);
+        this.decimals = getParam('decimals', stringTemp);
         this.contractAddress = getParam('contract_address', stringTemp);
 
         this.aelf = initAelf({
@@ -45,9 +48,9 @@ export default class TransactionDetail extends Component {
 
         // TODO: 临时方案，后续处理一下。
         // 分享出去的交易详情页，不一定有cookie和其它记录，回头好好梳理下这一块的逻辑。
-        if (/[^#]+\/transactiondetail?/.test(window.location.href)) {
-            Cookies.set('aelf_ca_ci', getParam('aelf_ca_ci', window.location.href));
-        }
+        // if (/[^#]+\/transactiondetail?/.test(window.location.href)) {
+        //     Cookies.set('aelf_ca_ci', getParam('aelf_ca_ci', window.location.href));
+        // }
 
         clipboard('#clipboard-transactionDetail');
     }
@@ -81,7 +84,7 @@ export default class TransactionDetail extends Component {
             }
         }
         catch (e) {
-            Toast.fail(e.message, 10);
+            Toast.fail(e.message || e.Error, 10, ()=>{}, false);
             txInfo.txResult = e;
         }
         return txInfo;
@@ -94,17 +97,24 @@ export default class TransactionDetail extends Component {
 
         let isIn = walletList.includes(to);
         let isOut = walletList.includes(from);
+
+        let amountStr = (new BigNumber(amount)).div(Math.pow(10, this.decimals)).toFixed(+this.decimals) + this.tokenName;
+
         if (isIn && isOut || (!isIn && !isOut)) {
             return <div className={style.list}>
                 <div className={style.title}>amount</div>
-                <div className={style.text}>{amount}</div>
+                {/* <div className={style.text}>{amount}</div> */}
+                <div className={style.text}>{amountStr}</div>
+                {/* <div className={style.tenderValuation}>法币价值【暂无】</div> */}
+                {/* <div className={style.tenderValuation}>{amount}</div> */}
             </div>;
         }
         return <div className={style.list + ' ' + style.banner}>
             <div className={style.icon + ' ' + (isIn ? style.in : style.out)}></div>
             <div>
-                <div className={style.balance}>{amount}</div>
-                {/*<div className={style.tenderValuation}>法币价值【暂无】</div>*/}
+                <div className={style.balance}>{amountStr}</div>
+                {/* <div className={style.tenderValuation}>法币价值【暂无】</div> */}
+                {/* <div className={style.tenderValuation}>{amount}</div> */}
             </div>
         </div>;
     }

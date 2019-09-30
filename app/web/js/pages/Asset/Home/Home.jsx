@@ -6,12 +6,9 @@
 /* eslint-disable fecs-camelcase */
 import React, {Component} from 'react';
 import {Toast} from 'antd-mobile';
-import Long from 'long';
 import BigNumber from 'bignumber.js';
-// window.Long = Long;
-// window.BigNumber = BigNumber;
-// var longVal = { low: 2000, high: 0, unsigned: true };
-// var test = new Long(longVal.low, longVal.high, longVal.unsigned);
+// test.div(Math.pow(10, 8)).toFixed(2);
+// test.div(Math.pow(10, decimals)).toFixed(2);
 
 import style from './Home.scss';
 import {hashHistory} from 'react-router';
@@ -39,7 +36,8 @@ export default class Home extends Component {
 
         this.state = {
             tokenName: '-',
-            balance: '-'
+            balance: '-',
+            decimals: 30
         };
 
         // 得把作用域绑上，不然子组件里执行函数，无法执行this.setState这些。
@@ -57,12 +55,18 @@ export default class Home extends Component {
             const tokenInfo = output[0];
             this.getELFValue(tokenInfo);
 
-            const balanceObj = tokenInfo.balance;
-            const balance = new Long(balanceObj.low, balanceObj.high, balanceObj.unsigned);
+            const {
+              balance,
+              token_name,
+              decimals
+            } = tokenInfo;
+
+            let balanceBig = new BigNumber(balance);
+            balanceBig = balanceBig.div(Math.pow(10, decimals)).toFixed(2);
 
             this.setState({
-                balance, // .toLocaleString(),
-                tokenName: tokenInfo.token_name,
+              balance: balanceBig, // .toLocaleString(),
+              tokenName: token_name,
                 contract_address: contractAddress
             });
         });
@@ -71,29 +75,32 @@ export default class Home extends Component {
     getELFValue(tonkenInfo) {
         const {
             balance,
-            token_name
+            token_name,
+            decimals
         } = tonkenInfo;
         if (token_name !== 'ELF') {
             this.setState({
+                decimals,
                 tenderValue: 0
             });
             return;
         }
         // TODO: 需要更全的list
+        // TODO: 这个数据，走server存到数据库去，能加速，目前大陆连这个接口太慢了。
         get('https://min-api.cryptocompare.com/data/price', {
             fsym: token_name,
             tsyms: 'USD'
         }).then(result => {
             const {USD} = result;
 
-            const balanceLong = new Long(balance.low, balance.high, balance.unsigned);
-            const balanceBigNumber = new BigNumber(balanceLong.toString());
+            const balanceBigNumber = new BigNumber(balance);
             const priceBigNumber = new BigNumber(USD);
-            let tenderValue = balanceBigNumber.multipliedBy(priceBigNumber).toString();
+            let tenderValue = balanceBigNumber.div(Math.pow(10, decimals)).multipliedBy(priceBigNumber).toFixed(2);
 
             // let tenderValue = (parseFloat(USD) * balance).toLocaleString();
             tenderValue = isNaN(tenderValue) ? 0 : tenderValue;
             this.setState({
+                decimals,
                 tenderValue
             });
         }).catch(error => {
@@ -173,6 +180,8 @@ export default class Home extends Component {
                     <div className={style.txListContainer}>
                         <TransactionsList
                             getBalanceAndTokenName={this.getBalanceAndTokenName}
+                            decimals={this.state.decimals}
+                            turnToDetailReady={this.state.decimals < 30}
                         ></TransactionsList>
                     </div>
                 </div>

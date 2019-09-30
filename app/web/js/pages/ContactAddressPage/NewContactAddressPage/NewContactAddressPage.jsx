@@ -38,11 +38,11 @@ export default class NewContactAddress extends React.Component {
                 historyReplace('/contactaddress');
             }
             else {
-                Toast.fail('Address format error', 3);
+                Toast.fail('Address format error', 3, () => { }, false);
             }
         }
         else {
-            Toast.fail('Can not be empty', 3);
+            Toast.fail('Can not be empty', 3, () => { }, false);
         }
     }
 
