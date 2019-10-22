@@ -130,7 +130,8 @@ export default class Assets extends Component {
             }
         });
 
-        get('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(result => {
+        // get('https://min-api.cryptocompare.com/data/price?fsym=ELF&tsyms=USD').then(result => {
+        get('/api/token/price?fsym=ELF&tsyms=USD').then(result => {
             const {USD} = result;
 
             const balanceBigNumber = new BigNumber(ELFValue.toString());
