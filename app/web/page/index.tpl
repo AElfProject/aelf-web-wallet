@@ -28,7 +28,7 @@
         <div class="aelf-logo-container">
             <div class="aelf-logo"></div>
         </div>
-        <p class="aelf-wallet-description">Official Wallet</p>
+        <p class="aelf-wallet-description">aelf Wallet</p>
     </div>
     <div class="welcome-page-bg"></div>
 </div>
