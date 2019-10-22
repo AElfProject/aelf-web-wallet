@@ -148,7 +148,7 @@ export default class TransactionsList extends Component {
       // console.log('111111111_______________', item);
       const params = JSON.parse(item.params);
       // let isIncome = item.params_to === this.walletAddress;
-      let isIncome = item.adderss_to === this.walletAddress;
+      let isIncome = item.address_to === this.walletAddress;
       // let quantity = (isIncome ? '+' : '-') + params.quantity;
       let amount = (new BigNumber((params.amount || 0))).div(Math.pow(10, this.props.decimals)).toFixed(2);
       let quantity = (isIncome ? '+' : '-') + amount;
