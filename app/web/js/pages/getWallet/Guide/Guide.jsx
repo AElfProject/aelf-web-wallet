@@ -22,7 +22,8 @@ class Guide extends Component {
                     <Svg icon={'logo'} style={{height: 32, width: 104}}></Svg>
                     <p className={style.welcome}>Welcome</p>
                     <p className={style.wallet}>aelf.Wallet</p>
-                    <p className={style.description}>offcial</p>
+                    {/* <p className={style.description}>offcial</p> */}
+                    <p className={style.description}></p>
                 </div>
 
                 <div className={style.bottom}>
