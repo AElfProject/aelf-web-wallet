@@ -20,6 +20,16 @@ import { FormattedMessage } from 'react-intl'
 const Item = List.Item;
 
 class personalCenterHome extends Component { 
+
+  componentDidMount() {
+    // 比如微信就会弹个底窗上来，就resize了
+    window.onresize = () => {
+      this.setState({
+        personalRandom: Math.random()
+      });
+    };
+  }
+  
 	render() {
 		return (
 			<div className={style.container + ' ' + 'aelf-personal-pages aelf-solid'}>

@@ -167,6 +167,7 @@ export default class Assets extends Component {
             });
         });
 
+        // 比如微信就会弹个底窗上来，就resize了
         window.onresize = () => {
           this.setState({
             assetsRandom: Math.random()
