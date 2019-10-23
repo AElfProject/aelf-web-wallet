@@ -166,6 +166,12 @@ export default class Assets extends Component {
                 ELFValue: this.getELFValue(result)
             });
         });
+
+        window.onresize = () => {
+          this.setState({
+            assetsRandom: Math.random()
+          });
+        };
     }
 
     onRefresh(isSetState = true) {
@@ -264,7 +270,7 @@ export default class Assets extends Component {
         this.walletAddressTemp = walletAddress;
         // checked
 
-        let pageContainerStyle = getPageContainerStyle();
+        let pageContainerStyle = getPageContainerStyle(true);
         pageContainerStyle.height -= 90;
 
         let backgroundStyle = Object.assign({}, pageContainerStyle);
