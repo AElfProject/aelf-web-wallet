@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Modal, Button, WhiteSpace, List, InputItem, Toast } from 'antd-mobile'
 import style from './Backup.scss'
 
@@ -26,11 +26,17 @@ const prompt = Modal.prompt;
 class Backup extends Component {
     constructor() {
         super();
+
+        let walletId = JSON.parse(localStorage.getItem('lastuse')).address;
+        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+        let walletInfo = walletInfoList[walletId];
+        
         this.state = {
             privateKey: '',
             // mnemonic: 'grocery jungle body action shop vast toilet fog prevent banner deliver indicate',
             mnemonic: '',
             password: '',
+            AESEncryptoMnemonic: walletInfo.AESEncryptoMnemonic,
             mnemonicDisplay: false,
             privateKeyModal: false,
             passwordModal: false
@@ -63,7 +69,8 @@ class Backup extends Component {
 
         try {
             privateKey = aelf.wallet.AESDecrypt(walletInfo.AESEncryptoPrivateKey, password);
-            mnemonic = aelf.wallet.AESDecrypt(walletInfo.AESEncryptoMnemonic, password);
+            mnemonic = walletInfo.AESEncryptoMnemonic
+                ? aelf.wallet.AESDecrypt(walletInfo.AESEncryptoMnemonic, password) : null;
         } catch (e) {
             // 因为封装了一层，解密错误时，转换成utf-8会抛出异常。
             // let string = '[ERROR] Hey guy, your invalid password make the program crash.';
@@ -112,6 +119,30 @@ class Backup extends Component {
                                 display={this.state.mnemonicDisplay}
                                 onLeftClick={() => this.toggleMnemonic()}>
                             </Mnemonic>;
+        }
+        let mnemonicButtonHtml;
+        if (this.state.AESEncryptoMnemonic) {
+          mnemonicButtonHtml =
+            <Fragment>
+              <AelfButton
+                  text='Mnemonic'
+                  onClick={(e) => prompt(
+                      'Password',
+                      'Please make sure you are under safe enviroment.',
+                      [
+                          { text: 'Cancel' },
+                          { text: 'Submit', onPress: password => {
+                                  let boolean = this.getPrivateKeyAndMnemonic(password);
+                                  boolean && this.toggleMnemonic();
+                              }
+                          },
+                      ],
+                      'secure-text',
+                  )}
+              ></AelfButton>
+
+              <div className='aelf-blank12'></div>
+          </Fragment>
         }
 
         let containerStyle = getPageContainerStyle();
@@ -169,36 +200,8 @@ class Backup extends Component {
                     </div>
 
                     <div className={style.bottom}>
-
-                        <AelfButton
-                            text='Mnemonic'
-                            onClick={(e) => prompt(
-                                'Password',
-                                'Please make sure you are under safe enviroment.',
-                                [
-                                    { text: 'Cancel' },
-                                    { text: 'Submit', onPress: password => {
-                                            let boolean = this.getPrivateKeyAndMnemonic(password);
-                                            boolean && this.toggleMnemonic();
-                                        }
-                                    },
-                                ],
-                                'secure-text',
-                            )}
-                            // onClick={(e) => prompt(
-                            //     '密码',
-                            //     '请确保您处于安全的环境中',
-                            //     [
-                            //         { text: '取消' },
-                            //         { text: '提交', onPress: password => {
-                            //                 let boolean = this.getPrivateKeyAndMnemonic(password);
-                            //                 boolean && this.toggleMnemonic();
-                            //             }
-                            //         },
-                            //     ],
-                            //     'secure-text',
-                            // )}
-                        ></AelfButton>
+                        
+                        {mnemonicButtonHtml}
 
                         <div className='aelf-blank12'></div>
 
