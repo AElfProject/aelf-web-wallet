@@ -37,10 +37,10 @@ at first
 ### 1.Change config
 
 ```shell
-cp config/demo.config.default.js config/config.default.js
+config/config.default.js
 // set your own config.keys
 
-cp config/demo.config.node.js config/config.node.js
+config/config.node.js
 // set you own httpProvider
 // set your own default mainTokenContract
 // set your own proxy
