@@ -15,11 +15,6 @@ exports.validate = {
     package: 'egg-validate'
 };
 
-// exports.proxy = {
-//     enable: true,
-//     package: 'egg-proxy'
-// };
-
 exports.aelf = {
     enable: true,
     package: 'egg-aelf'
