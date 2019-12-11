@@ -38,12 +38,12 @@ at first
 
 ```shell
 config/config.default.js
-// set your own config.keys
+# set your own metaSource
+# set your own config.keys
 
 config/config.node.js
-// set you own httpProvider
-// set your own default mainTokenContract
-// set your own proxy
+# set you own apiServerProvider
+# set your own default mainTokenName & mainTokenContract
 ```
 
 ### 2.Install Webpack
