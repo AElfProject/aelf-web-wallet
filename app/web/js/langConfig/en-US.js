@@ -116,6 +116,7 @@ export default {
     'aelf.Receive': 'Receive',
     'aelf.Send': 'Send',
     'aelf.Copy URL': 'Copy URL',
+    'aelf.To Explorer': 'Turn to explorer',
     'aelf.Transaction Details': 'Transaction Details',
     'aelf.To Address': 'To Address',
     'aelf.Transaction': 'Transaction',

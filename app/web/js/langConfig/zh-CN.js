@@ -116,6 +116,7 @@ export default {
     'aelf.Send': '发送',
     'aelf.Receive': '接收',
     'aelf.Copy URL': '复制链接',
+    'aelf.To Explorer': '浏览器查看更多',
     'aelf.Transaction Details': '交易细节',
     'aelf.To Address': '发送地址',
     'aelf.Transaction': '交易',

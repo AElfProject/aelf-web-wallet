@@ -225,14 +225,9 @@ export default class TransactionDetail extends Component {
             notTransferHtml = this.renderNotTransfer(txResult);
         }
 
-        let urlForCopy = window.location.host
-            + '/transactiondetail?txid=' + txid
-            + '&contract_address=' + contractAddress
-            + '&token=' + tokenName
-            + '&aelf_ca_ci=' + Cookies.get('aelf_ca_ci');
-        // Cookies.set('aelf_ca_ci', contract_address + chain_id);
+        const explorerURL = defaultConfig.explorerURL + '/tx/' + txid;
 
-        let containerStyle = getPageContainerStyle();
+        const containerStyle = getPageContainerStyle();
 
         let txInfoContainerStyle = Object.assign({}, containerStyle);
         txInfoContainerStyle.height -= 150;
@@ -261,23 +256,11 @@ export default class TransactionDetail extends Component {
 
                     </div>
                     <div className={style.bottom}>
-                         <textarea id="copyUrl"
-                                   className={style.textarea}
-                                   defaultValue={urlForCopy}>
-                         </textarea>
-                        <button
-                            id="clipboard-transactionDetail"
-                            data-clipboard-target="#copyUrl"
-                            style={{display: 'none'}}>
-                            copy
-                        </button>
-
                         <AelfButton
                             onClick={() => {
-                                let btn = document.getElementById('clipboard-transactionDetail');
-                                btn.click();
+                                window.location = explorerURL;
                             }}
-                            text = 'Copy URL'
+                            text = 'To Explorer'
                         ></AelfButton>
                     </div>
                 </div>
