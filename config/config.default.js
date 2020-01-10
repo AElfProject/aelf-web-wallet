@@ -16,7 +16,7 @@ module.exports = appInfo => {
     config.aelf = {
         initRequestLimit: 10, // default: 20
         app: true,
-        metaSource: 'http://192.168.199.207:7101/api/nodes/info',
+        metaSource: 'http://127.0.0.1:7000/api/nodes/info',
         httpProvider: []
     };
 
@@ -66,7 +66,7 @@ module.exports = appInfo => {
 
         request: {
             // default timeout of request
-            timeout: 3000
+            timeout: 10000
         },
 
         httpAgent: {

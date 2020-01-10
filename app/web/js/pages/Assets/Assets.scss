@@ -159,6 +159,13 @@
 	line-height: 14px;
 }
 
+.addressSubTitle {
+	width: 220px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
 .copyBtn {
 	background: url("../../../assets/svg_icon/copy12.svg") no-repeat;
 	margin: 0 0 0 8px;

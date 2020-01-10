@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom';
 import { PullToRefresh, ListView } from 'antd-mobile';
 
 import { BigNumber } from 'bignumber.js';
+import moment from 'moment';
 
 import style from './TransactionsList.scss';
 
@@ -25,6 +26,7 @@ import {
 import {
   SCROLLFOOTER
 } from '../../../constants';
+import getPrice from '../../../utils/getPrice';
 require('./TransactionsList.css');
 
 const NUM_ROWS = 20;
@@ -54,6 +56,7 @@ export default class TransactionsList extends Component {
     });
 
     this.state = {
+      tokenPrice: null,
       dataSource,
       refreshing: true,
       isLoading: true,
@@ -86,6 +89,14 @@ export default class TransactionsList extends Component {
         refreshing: false,
         isLoading: false
       });
+    });
+
+    getPrice('ELF', result => {
+      const {USD} = result;
+      this.setState({
+          tokenPrice: USD
+      });
+    }, () => {
     });
   }
 
@@ -141,35 +152,50 @@ export default class TransactionsList extends Component {
     const tokenAddressQuery = `contract_address=${getParam('contract_address', window.location.href)}`;
     const decimalsQuery = `decimals=${this.props.decimals}`;
     const tokenQuery = tokenNameQuery + '&' + tokenAddressQuery + '&' + decimalsQuery;
+
+    const {tokenPrice} = this.state;
+
     const row = (rowData, sectionID, rowID) => {
 
       let item = this.rData[rowID];
 
-      // console.log('111111111_______________', item);
       const params = JSON.parse(item.params);
       // let isIncome = item.params_to === this.walletAddress;
       let isIncome = item.address_to === this.walletAddress;
       // let quantity = (isIncome ? '+' : '-') + params.quantity;
       let amount = (new BigNumber((params.amount || 0))).div(Math.pow(10, this.props.decimals)).toFixed(2);
-      let quantity = (isIncome ? '+' : '-') + amount;
 
-      if (this.props.decimals >= 30) {
-        quantity = '...';
+      let tenderValue = '-';
+      if (item.symbol === 'ELF' && tokenPrice) {
+        const balanceBigNumber = new BigNumber(params.amount);
+        const priceBigNumber = new BigNumber(tokenPrice);
+        tenderValue = '$' + balanceBigNumber.div(Math.pow(10, 8)).multipliedBy(priceBigNumber).toFixed(2);
       }
-
-      // quantity = (new BigNumber(quantity)).div(10, this.props.decimals).toFixed(2);
-      // quantity = (new BigNumber(quantity)).div(10, this.props.decimals).toFixed(2);
-      
-
-      let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
 
       // let address = isIncome ? item.address_from : item.params_to;
       let address = isIncome ? item.address_from : item.address_to;
-      let status = item.tx_status;
-      if (status.toLowerCase().includes('failed')) {
+      address = addressOmit(address);
+
+      const timeFormatted = moment(item.time).format('YYYY-MM-DD HH:MM:SS');
+      console.log('111111111111111', item);
+
+      const {PREFIX, CURRENT_CHAIN_ID} = window.defaultConfig.ADDRESS_INFO;
+      // TODO other chain
+      if (item.method === 'CrossChainTransfer') {
+        const paramsTemp = JSON.parse(item.params);
+        const toChainIdBase58 = window.defaultConfig.ADDRESS_INFO[paramsTemp.toChainId];
+
+        address = PREFIX + '_' + addressOmit(paramsTemp.to) + '_' + toChainIdBase58;
+        isIncome = false;
+
+      } else {
+        address = PREFIX + '_' + address + '_' + CURRENT_CHAIN_ID;
+      }
+
+      let iconClass = style.icon + ' ' + (isIncome ? style.iconIn : '');
+      if (item.tx_status.toLowerCase().includes('failed')) {
         iconClass = style.icon + ' ' + style.iconFailed;
       }
-      address = addressOmit(address);
 
       return (
         <div key={rowID}
@@ -188,12 +214,13 @@ export default class TransactionsList extends Component {
               <div className={style.address}>
                 {address}
               </div>
-              {/*<div className={style.time}>2018-09-08</div>*/}
+              <div className={style.time}>{timeFormatted}</div>
             </div>
           </div>
           <div className={style.rightContainer}>
-            <div className={style.balance}>{quantity} {status}</div>
-            {/*<div className={style.tenderValuation}>法币价值</div>*/}
+            {/*<div className={style.balance}>{quantity}</div>*/}
+            <div className={style.balance}>{amount}</div>
+            <div className={style.tenderValuation}>{tenderValue}</div>
           </div>
         </div>
       );

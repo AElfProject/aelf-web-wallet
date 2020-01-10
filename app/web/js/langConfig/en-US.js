@@ -48,7 +48,7 @@ export default {
     'aelf.Becareful08': 'Please write them down carefully and keep them in a secure location！',
     'aelf.Becareful09': 'Please DO NOT use screen capture!',
     'aelf.Becareful010': 'If anyone obtains your Mnemonic, they WILL obtain your digital assets!',
-    'aelf.ConfirmMnemonic ': 'Confirm Mnemonic',
+    'aelf.ConfirmMnemonic': 'Confirm Mnemonic',
     'aelf.hint01': 'Mnemonic is not in the right sequence, please rearrange!',
     'aelf.hint02': 'To confirm your backup, please click on the Mnemonic in order.',
     'aelf.Copy Private Key': 'Copy Private Key',

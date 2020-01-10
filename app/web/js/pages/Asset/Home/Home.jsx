@@ -24,9 +24,7 @@ import {
     getBalanceAndTokenName
 } from '../../../utils/utils';
 
-import {
-    get
-} from '../../../utils/apisauce';
+import getPrice from '../../../utils/getPrice';
 
 import {FormattedMessage} from 'react-intl';
 
@@ -87,11 +85,7 @@ export default class Home extends Component {
         }
         // TODO: 需要更全的list
         // TODO: 这个数据，走server存到数据库去，能加速，目前大陆连这个接口太慢了。
-        // get('https://min-api.cryptocompare.com/data/price', {
-        get('/api/token/price', {
-            fsym: token_name,
-            tsyms: 'USD'
-        }).then(result => {
+        getPrice(token_name, result => {
             const {USD} = result;
 
             const balanceBigNumber = new BigNumber(balance);
@@ -104,8 +98,7 @@ export default class Home extends Component {
                 decimals,
                 tenderValue
             });
-        }).catch(error => {
-            console.log('error:', error);
+        }, () => {
         });
     }
 
@@ -159,7 +152,7 @@ export default class Home extends Component {
                                 onClick={() => hashHistory.push(btnlink)}
                             >
                                 <div className={style.icon}>
-                                    <Svg icon='out20'
+                                    <Svg icon='in20'
                                          style={{display: 'inline-block', height: 20, width: 20}}
                                     ></Svg>
                                 </div>
@@ -170,7 +163,7 @@ export default class Home extends Component {
                                 onClick={() => hashHistory.push('/qrcode')}
                             >
                                 <div className={style.icon}>
-                                    <Svg icon='in20'
+                                    <Svg icon='out20'
                                          style={{display: 'inline-block', height: 20, width: 20}}></Svg>
                                 </div>
                                 <div><FormattedMessage id = 'aelf.Receive' /></div>

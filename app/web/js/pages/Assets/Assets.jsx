@@ -8,6 +8,8 @@ import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 import {ListView, PullToRefresh, Toast} from 'antd-mobile';
 import {historyPush, historyReplace} from '../../utils/historyChange';
+import addressOmit from '../../utils/addressOmit';
+import addressPrefixSuffix from '../../utils/addressPrefixSuffix';
 import {
     // checkStatus,
     getPageContainerStyle,
@@ -228,10 +230,12 @@ export default class Assets extends Component {
 
     renderAddress() {
         if (whetherBackupCheck()) {
-            let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+            const {address} = JSON.parse(localStorage.getItem('lastuse'));
+            let walletAddressShow = addressPrefixSuffix(addressOmit(address));
+            let walletAddress = addressPrefixSuffix(address);
             return (
                 <div className={style.addressContainer}>
-                    <div className={style.address}>{walletAddress.slice(0, 18) + '...'}</div>
+                    <div className={style.addressSubTitle}>{walletAddressShow}</div>
                     <div
                         className={style.copyBtn}
                         onClick={() => {

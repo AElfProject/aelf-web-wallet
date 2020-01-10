@@ -7,8 +7,20 @@
 module.exports = {
     // About the Web Api of AElf node
     httpProvider: '/chain',
-    apiServerProvider: 'http://127.0.0.1:7101',
+    apiServerProvider: 'http://127.0.0.1:7000',
     mainTokenName: 'ELF',
-    mainTokenContract: 'mS8xMLs9SuWdNECkrfQPF8SuRXRuQzitpjzghi3en39C3SRvf',
-    commonPrivateKey: 'f6e512a3c259e5f9af981d7f99d245aa5bc52fe448495e0b0dd56e8406be6f71'
+    chainId: 'AELF',
+    explorerURL: 'http://explorer-test.aelf.io/',
+    mainTokenContract: '25CecrU94dmMdbhC3LWMKxtoaL4Wv8PChGvVJM6PxkHAyvXEhB',
+    commonPrivateKey: 'f6e512a3c259e5f9af981d7f99d245aa5bc52fe448495e0b0dd56e8406be6f71',
+    ADDRESS_INFO: encodeURIComponent(JSON.stringify({
+        PREFIX: 'ELF',
+        CURRENT_CHAIN_ID: 'AELF',
+        9992731: 'AELF',
+        1866392: 'tDVV',
+        1931928: 'tDVW',
+        1997464: 'tDVX',
+        2063000: 'tDVY',
+        2128536: 'tDVZ'
+    }))
 };

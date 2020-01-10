@@ -14,6 +14,7 @@ import NoticePanel from '../../../../components/NoticePanel/NoticePanel';
 import AelfButton from '../../../../components/Button/Button';
 
 import NavWithDrawer from '../../../NavWithDrawer/NavWithDrawer';
+import addressPrefixSuffix from '../../../../utils/addressPrefixSuffix';
 
 import {
     insertWalletInfo,
@@ -105,6 +106,7 @@ class WalletManage extends Component {
     render() {
 
         let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+        let walletAddressShow = addressPrefixSuffix(JSON.parse(localStorage.getItem('lastuse')).address);
         let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
         let walletName = walletInfoList[walletAddress].walletName;
 
@@ -120,7 +122,7 @@ class WalletManage extends Component {
                     <NoticePanel
                         mainTitle={walletName}
                         subTitle={[
-                            walletAddress
+                            walletAddressShow
                         ]}
                         subTitleStyle={{
                             opacity: 0.5

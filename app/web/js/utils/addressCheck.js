@@ -12,11 +12,19 @@ export default function addressCheck(address = '', options = {
         message: ''
     };
 
+    const addressPartsArray = address.split('_');
+    if (addressPartsArray[2] !== window.defaultConfig.ADDRESS_INFO.CURRENT_CHAIN_ID) {
+        output = {
+            ready: false,
+            message: '`Cross Chain` please use iOS/Android wallet.'
+        };
+        return output;
+    }
+
     // TODO: May Change again.
     const length = address.length;
     // if (length <= 53 && length >= 49 && address.match(/^ELF_/)) {
     if (length <= 51 && length >= 47) {
-
         // 业务功能
         let addressUse = JSON.parse(localStorage.getItem('lastuse')).address;
         if (address === addressUse && options.compareToUse) {

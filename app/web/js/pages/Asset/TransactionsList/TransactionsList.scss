@@ -18,7 +18,12 @@
 
 .address {
 	font-size: 9px;
+	opacity: 70%;
 	//float: left;
+}
+
+.time {
+	opacity: 50%;
 }
 
 .balance {
@@ -42,20 +47,21 @@
 
 .leftContainer {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	font-size: 10px;
 }
 
 .icon {
 	//background: url("../../../../assets/svg_icon/in20.svg") no-repeat;
-	background: url("../../../../assets/svg_icon/out20.svg") no-repeat;
+	background: url("../../../../assets/svg_icon/in20.svg") no-repeat;
 	width: 20px;
 	height: 20px;
-	margin: 0 8px 0 0;
+	margin: 4px 8px 0 0;
 }
 
 .iconIn {
-	background: url("../../../../assets/svg_icon/in20.svg") no-repeat;
+	background: url("../../../../assets/svg_icon/out20.svg") no-repeat;
+	//background: url("../../../../assets/svg_icon/in20.svg") no-repeat;
 }
 
 .iconFailed {
@@ -71,4 +77,5 @@
 }
 .tenderValuation {
 	font-size: 10px;
+	opacity: 50%;
 }

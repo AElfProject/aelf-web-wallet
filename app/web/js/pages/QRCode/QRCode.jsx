@@ -19,6 +19,7 @@ import {FormattedMessage} from 'react-intl';
 import BackupNotice from '../BackupNotice/BackupNotice';
 import clipboard from '../../utils/clipboard';
 import getPageContainerStyle from '../../utils/getPageContainerStyle';
+import addressPrefixSuffix from '../../utils/addressPrefixSuffix';
 
 class QRCodeTemplate extends Component {
 
@@ -28,7 +29,7 @@ class QRCodeTemplate extends Component {
 
 	render() {
 
-		let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+		let walletAddress = addressPrefixSuffix(JSON.parse(localStorage.getItem('lastuse')).address);
 		let containerStyle = getPageContainerStyle();
 		// containerStyle.height -= 100;
 		return (
