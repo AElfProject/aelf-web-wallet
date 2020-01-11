@@ -32,20 +32,36 @@ require('./TransactionsList.css');
 const NUM_ROWS = 20;
 let pageIndex = 0;
 
+/* eslint-disable */
 function getTxs(callback, pIndex = 0) {
-  get('api/token/txs', {
+
+  const params = {
     symbol: getParam('token', window.location.href),
-    // ptype: 'api',
-    // action: 'address_transactions',
     limit: NUM_ROWS, // 13
     page: pIndex, // 0
     order: 'desc', // asc
-    address: JSON.parse(localStorage.getItem('lastuse')).address // ,
-    // contract_address: getParam('contract_address', window.location.href)
-  }).then(result => {
-    callback(result);
+    address: JSON.parse(localStorage.getItem('lastuse')).address,
+  };
+  const paramsUnconfirmed = Object.assign({type: 'unconfirmed'}, params);
+
+  const requestList = [get('api/token/txs', params)];
+
+  if (pIndex === 0) {
+    requestList.unshift(get('api/token/txs', paramsUnconfirmed));
+  }
+  Promise.all(requestList).then(results => {
+    const newResult = {
+      total: 0,
+      transactions: []
+    };
+    results.forEach(result => {
+      newResult.total += result.total;
+      newResult.transactions = [...newResult.transactions, ...result.transactions];
+    });
+    callback(newResult);
   });
 }
+/* eslint-enable */
 
 export default class TransactionsList extends Component {
   constructor(props) {
@@ -177,7 +193,6 @@ export default class TransactionsList extends Component {
       address = addressOmit(address);
 
       const timeFormatted = moment(item.time).format('YYYY-MM-DD HH:MM:SS');
-      console.log('111111111111111', item);
 
       const {PREFIX, CURRENT_CHAIN_ID} = window.defaultConfig.ADDRESS_INFO;
       // TODO other chain
