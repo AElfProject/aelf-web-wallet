@@ -48,6 +48,20 @@
     defaultConfig.commonPrivateKey = '{{commonPrivateKey}}';
 </script>
 
+<script type="text/javascript">
+  // TODO: 微信浏览器的底部前进返回按钮。
+  // document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+  //   alert(window.history.length);
+  //   if (window.history.length === 1) {
+  //     window.location.href = window.location.href + '?t=1';
+  //   }
+  //   if (window.history.length === 2) {
+  //     window.location.href = window.location.href + '?t=2';
+  //   }
+  //   // WeixinJSBridge.call('hideToolbar');
+  // });
+</script>
+
 <!--   <script id="__bs_script__">//<![CDATA[
     document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.5'><\/script>".replace("HOST", location.hostname));
 //]]></script> -->

@@ -107,7 +107,7 @@ function initPage() {
 
     setTimeout(() => {
         ReactDOM.render(
-            <IntlProvider locale={navigator.language} messages={chooseLocale()} >
+            <IntlProvider locale={localStorage.language || 'en-US'} messages={chooseLocale()} >
                 <LocaleProvider locale={antdChooseLocale()} >
                     {/*<Provider store={store}>*/}
                     <Router history={hashHistory}>

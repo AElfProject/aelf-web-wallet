@@ -25,40 +25,26 @@ const select = [
 class Selectlang extends React.Component {
     constructor(props) {
         super(props);
-        let defaultlanguage = null;
-        if (localStorage.language === 'zh-CN') {
-            defaultlanguage = '简体中文';
-        } else {
-            defaultlanguage = 'English';
-        }
         this.state = {
-            language: [defaultlanguage]
+            language: [localStorage.language]
         };
     }
 
     onChangelang(label) {
-
-        let defaultlanguage = null;
-        if (label === 'zh-CN') {
-            defaultlanguage = '简体中文';
-        } else {
-            defaultlanguage = 'English';
-        }
         this.setState({
-            language: [defaultlanguage]
+            language: [label]
         });
-
 
         localStorage.setItem('language', [label]);
 
         window.history.go(0);
         setTimeout(() => {
-          location.reload();
+            location.reload();
         }, 10);
     }
 
     render() {
-        console.log(this.state.language);
+        // console.log('this.state.language', this.state.language);
         return (<div>
             <List className="language">
                 <Picker
