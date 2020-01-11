@@ -48,6 +48,8 @@ export default class TokenList extends React.Component {
             compare: null,
             searchShow: this.props.searchShow
         };
+
+        pIndex = 0;
     }
 
     componentDidUpdate() {
