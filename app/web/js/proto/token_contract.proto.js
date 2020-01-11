@@ -1,4 +1,8 @@
-{
+/**
+ * @file token_contract_proto.js
+ * @author aelf
+ */
+export default {
   "nested": {
     "token": {
       "options": {
@@ -2107,4 +2111,4 @@
       }
     }
   }
-}
+};

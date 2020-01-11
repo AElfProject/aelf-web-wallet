@@ -16,6 +16,7 @@ import NavNormal from '../../NavNormal/NavNormal';
 
 import AelfButton from './../../../components/Button/Button';
 import addressPrefixSuffix from './../../../utils/addressPrefixSuffix';
+import deserializeTokenContract from './../../../utils/deserializeTokenContract';
 
 import {
     getParam,
@@ -100,14 +101,14 @@ export default class TransactionDetail extends Component {
         const walletInfo = JSON.parse(localStorage.getItem('lastuse')) || {};
         const {address} = walletInfo;
 
-        const isOut = address === from;
+        const isIn = address === to;
 
         const amountTemp = (new BigNumber(amount)).div(Math.pow(10, this.decimals)).toFixed(+this.decimals);
         const amountStr
           = (isNaN(amountTemp) ? '-' : amountTemp) + this.tokenName;
 
         return <div className={style.list + ' ' + style.banner}>
-            <div className={style.icon + ' ' + (isOut ? style.out : style.in)}></div>
+            <div className={style.icon + ' ' + (isIn ? style.in : style.out)}></div>
             <div>
                 <div className={style.balance}>{amountStr}</div>
                 {/* <div className={style.tenderValuation}>法币价值【暂无】</div> */}
@@ -116,41 +117,38 @@ export default class TransactionDetail extends Component {
         </div>;
     }
 
-    // TODO: 解析proto数据
     renderTransfer(txResult) {
-        let {Transaction} = txResult;
+        let {Transaction, crossReceiveMemo, crossReceiveTo, crossReceiveAmount} = txResult;
         let params = Transaction.Params || [];
         const {MethodName} = Transaction;
 
-        // const contractAddress = Transaction.To;
-        // Demo:
-        // input: CiAKHrbOcdaZjxh7cmWNzzSRSHvijvAerPnIVpz2QCkWFBIDRUxGGKCcAQ==
-        // output: {to: "E5x5tUoandnGSvFsFjF6Tqz", symbol: "ELF", amount: 10000, amountStr: "10000"}
-        // const paramsDeserialized = deserializeParams(params, contractAddress, {
-        //     method: 'transfer'
-        // });
         const paramsDeserialized = JSON.parse(params);
         const {
             amount,
             to,
             toChainId,
-            fromChainId
+            fromChainId,
+            memo
         } = paramsDeserialized;
 
-        let amounHtml = this.renderAmount(Transaction.From, to, amount);
+        const amountShow = crossReceiveAmount || amount;
+        const memoShow = crossReceiveMemo || memo;
+        const toShow = crossReceiveTo || to;
 
-        console.log('Transaction.Meth', Transaction, params);
+        let amounHtml = this.renderAmount(Transaction.From, toShow, amountShow);
+
+        // console.log('Transaction.Meth', Transaction, params, deserializeTokenContract);
 
         let addressFromShow = Transaction.From;
-        let addressToShow = to;
+        let addressToShow = toShow;
         if (MethodName === 'CrossChainTransfer') {
             addressFromShow = addressPrefixSuffix(addressFromShow);
             addressToShow = addressPrefixSuffix(addressToShow, toChainId);
         }
-        else if (MethodName === 'CrossChainTransfer') {
+        else if (MethodName === 'CrossChainReceiveToken') {
             const fromAddress = Transaction.From;
             addressFromShow = addressPrefixSuffix(fromAddress, fromChainId);
-            addressToShow = addressPrefixSuffix(addressToShow);
+            addressToShow = addressPrefixSuffix(crossReceiveTo);
         }
         else {
             addressFromShow = addressPrefixSuffix(addressFromShow);
@@ -168,6 +166,10 @@ export default class TransactionDetail extends Component {
                 <div className={style.title}>To</div>
                 <div className={style.text}>{addressToShow}</div>
             </div>
+            {memoShow && <div className={style.list}>
+                <div className={style.title}>Memo</div>
+                <div className={style.text}>{memoShow}</div>
+            </div>}
         </div>;
     }
 
@@ -250,7 +252,7 @@ export default class TransactionDetail extends Component {
         let NavHtml = this.renderNavHtml();
         // 这个交易能拿到所有交易，非transfer交易也需要处理。
         let txInfo = this.getTxInfo();
-        let {txResult, txid, txState, tokenName, contractAddress} = txInfo;
+        let {txResult, txid} = txInfo;
 
         let {
             Transaction,
@@ -262,6 +264,18 @@ export default class TransactionDetail extends Component {
         let notTransferHtml = '';
         let method = Transaction && Transaction.MethodName || '';
         if (Status !== 'NotExisted') {
+
+            if (method === 'CrossChainReceiveToken') {
+                try {
+                    const crossReceive
+                      = deserializeTokenContract(JSON.parse(Transaction.Params).transferTransactionBytes);
+                    txResult.crossReceiveAmount = crossReceive.amount;
+                    txResult.crossReceiveTo = crossReceive.to;
+                    txResult.crossReceiveMemo = crossReceive.memo;
+                }
+                catch (e) {}
+            }
+
             html = this.renderTransfer(txResult);
             if (method !== 'Transfer' && !method.includes('CrossChain')) {
                 html = '';
