@@ -13,7 +13,7 @@ export default function addressCheck(address = '', options = {
     };
 
     const addressPartsArray = address.split('_');
-    if (addressPartsArray[2] !== window.defaultConfig.ADDRESS_INFO.CURRENT_CHAIN_ID) {
+    if (addressPartsArray.length === 3 && addressPartsArray[2] !== window.defaultConfig.ADDRESS_INFO.CURRENT_CHAIN_ID) {
         output = {
             ready: false,
             message: '`Cross Chain` please use iOS/Android wallet.'

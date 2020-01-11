@@ -6,7 +6,7 @@
 
 /* eslint-disable fecs-camelcase */
 import React, {Component} from 'react';
-import {Toast} from 'antd-mobile';
+import {Toast, Tag} from 'antd-mobile';
 import style from './TransactionDetail.scss';
 import {hashHistory} from 'react-router';
 
@@ -15,12 +15,11 @@ import { BigNumber } from 'bignumber.js';
 import NavNormal from '../../NavNormal/NavNormal';
 
 import AelfButton from './../../../components/Button/Button';
-import Cookies from 'js-cookie';
+import addressPrefixSuffix from './../../../utils/addressPrefixSuffix';
 
 import {
     getParam,
     initAelf,
-    clipboard,
     getPageContainerStyle
 } from '../../../utils/utils';
 // import deserializeParams from '../../../utils/deserializeParams';
@@ -32,6 +31,7 @@ export default class TransactionDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            chainStatus: {}
         };
 
         const stringTemp = hashHistory.getCurrentLocation().search || window.location.href;
@@ -45,14 +45,18 @@ export default class TransactionDetail extends Component {
             tokenName: this.tokenName,
             contractAddress: this.contractAddress
         });
+    }
 
-        // TODO: 临时方案，后续处理一下。
-        // 分享出去的交易详情页，不一定有cookie和其它记录，回头好好梳理下这一块的逻辑。
-        // if (/[^#]+\/transactiondetail?/.test(window.location.href)) {
-        //     Cookies.set('aelf_ca_ci', getParam('aelf_ca_ci', window.location.href));
-        // }
+    componentDidMount() {
+        this.getChainStatus();
+    }
 
-        clipboard('#clipboard-transactionDetail');
+    getChainStatus() {
+        this.aelf.aelf.chain.getChainStatus().then(result => {
+            this.setState({
+                chainStatus: result
+            });
+        });
     }
 
     getTxInfo() {
@@ -84,7 +88,8 @@ export default class TransactionDetail extends Component {
             }
         }
         catch (e) {
-            Toast.fail(e.message || e.Error, 10, ()=>{}, false);
+            // Toast.fail(e.message || e.Error, 10, ()=>{}, false);
+            // Toast.fail(e.message || e.Error, 10, ()=>{}, false);
             txInfo.txResult = e;
         }
         return txInfo;
@@ -92,25 +97,17 @@ export default class TransactionDetail extends Component {
 
     // 如果有地址，则显示icon，如果只是分享，不显示icon
     renderAmount(from, to, amount) {
-        let walletInfo = JSON.parse(localStorage.getItem('walletInfoList')) || {};
-        let walletList = Object.keys(walletInfo);
+        const walletInfo = JSON.parse(localStorage.getItem('lastuse')) || {};
+        const {address} = walletInfo;
 
-        let isIn = walletList.includes(to);
-        let isOut = walletList.includes(from);
+        const isOut = address === from;
 
-        let amountStr = (new BigNumber(amount)).div(Math.pow(10, this.decimals)).toFixed(+this.decimals) + this.tokenName;
+        const amountTemp = (new BigNumber(amount)).div(Math.pow(10, this.decimals)).toFixed(+this.decimals);
+        const amountStr
+          = (isNaN(amountTemp) ? '-' : amountTemp) + this.tokenName;
 
-        if (isIn && isOut || (!isIn && !isOut)) {
-            return <div className={style.list}>
-                <div className={style.title}>amount</div>
-                {/* <div className={style.text}>{amount}</div> */}
-                <div className={style.text}>{amountStr}</div>
-                {/* <div className={style.tenderValuation}>法币价值【暂无】</div> */}
-                {/* <div className={style.tenderValuation}>{amount}</div> */}
-            </div>;
-        }
         return <div className={style.list + ' ' + style.banner}>
-            <div className={style.icon + ' ' + (isIn ? style.in : style.out)}></div>
+            <div className={style.icon + ' ' + (isOut ? style.out : style.in)}></div>
             <div>
                 <div className={style.balance}>{amountStr}</div>
                 {/* <div className={style.tenderValuation}>法币价值【暂无】</div> */}
@@ -123,6 +120,8 @@ export default class TransactionDetail extends Component {
     renderTransfer(txResult) {
         let {Transaction} = txResult;
         let params = Transaction.Params || [];
+        const {MethodName} = Transaction;
+
         // const contractAddress = Transaction.To;
         // Demo:
         // input: CiAKHrbOcdaZjxh7cmWNzzSRSHvijvAerPnIVpz2QCkWFBIDRUxGGKCcAQ==
@@ -133,21 +132,41 @@ export default class TransactionDetail extends Component {
         const paramsDeserialized = JSON.parse(params);
         const {
             amount,
-            to
+            to,
+            toChainId,
+            fromChainId
         } = paramsDeserialized;
 
         let amounHtml = this.renderAmount(Transaction.From, to, amount);
+
+        console.log('Transaction.Meth', Transaction, params);
+
+        let addressFromShow = Transaction.From;
+        let addressToShow = to;
+        if (MethodName === 'CrossChainTransfer') {
+            addressFromShow = addressPrefixSuffix(addressFromShow);
+            addressToShow = addressPrefixSuffix(addressToShow, toChainId);
+        }
+        else if (MethodName === 'CrossChainTransfer') {
+            const fromAddress = Transaction.From;
+            addressFromShow = addressPrefixSuffix(fromAddress, fromChainId);
+            addressToShow = addressPrefixSuffix(addressToShow);
+        }
+        else {
+            addressFromShow = addressPrefixSuffix(addressFromShow);
+            addressToShow = addressPrefixSuffix(addressToShow);
+        }
 
         return <div>
             {amounHtml}
 
             <div className={style.list}>
                 <div className={style.title}>From</div>
-                <div className={style.text}>{Transaction.From}</div>
+                <div className={style.text}>{addressFromShow}</div>
             </div>
             <div className={style.list}>
                 <div className={style.title}>To</div>
-                <div className={style.text}>{to}</div>
+                <div className={style.text}>{addressToShow}</div>
             </div>
         </div>;
     }
@@ -192,23 +211,46 @@ export default class TransactionDetail extends Component {
         return NavHtml;
     }
 
+    renderBlockHeightHTML(blockNumber, status) {
+        if (!['FAILED', 'MINED'].includes(status)) {
+            return 'Unconfirmed';
+        }
+
+        const {chainStatus} = this.state;
+        const {LastIrreversibleBlockHeight} = chainStatus;
+
+        let blockHeightHTML = blockNumber;
+        if (LastIrreversibleBlockHeight) {
+            const confirmedBlocks = LastIrreversibleBlockHeight - blockNumber;
+            const isIB = confirmedBlocks >= 0;
+            blockHeightHTML = (
+              <div>
+                  {blockNumber} {isIB
+                ? <span className={style.blockHeightConfirmed}>({confirmedBlocks} Block Confirmations)</span>
+                : (<Tag small>Unconfirmed</Tag>)}
+              </div>);
+        }
+        return blockHeightHTML;
+    }
+
+    renderTurnToExplorerHTML(txId) {
+        const explorerURL = window.defaultConfig.explorerURL + '/tx/' + txId;
+
+        return (<div className={style.bottom}>
+            <AelfButton
+              onClick={() => {
+                  window.location = explorerURL;
+              }}
+              text = 'To Explorer'
+            />
+        </div>);
+    }
+
     render() {
         let NavHtml = this.renderNavHtml();
         // 这个交易能拿到所有交易，非transfer交易也需要处理。
         let txInfo = this.getTxInfo();
         let {txResult, txid, txState, tokenName, contractAddress} = txInfo;
-
-        if (!txState) {
-            if (typeof txResult !== 'string') {
-                txResult = JSON.stringify(txResult);
-            }
-            return (
-                <div>
-                    {NavHtml}
-                    <h2 className={style.stateError}>{txResult}</h2>
-                </div>
-            );
-        }
 
         let {
             Transaction,
@@ -216,19 +258,21 @@ export default class TransactionDetail extends Component {
             BlockNumber
         } = txResult;
 
-        let html = this.renderTransfer(txResult);
-
+        let html = '';
         let notTransferHtml = '';
-        let method = Transaction.MethodName;
-        if (method !== 'Transfer') {
-            html = '';
-            notTransferHtml = this.renderNotTransfer(txResult);
+        let method = Transaction && Transaction.MethodName || '';
+        if (Status !== 'NotExisted') {
+            html = this.renderTransfer(txResult);
+            if (method !== 'Transfer' && !method.includes('CrossChain')) {
+                html = '';
+                notTransferHtml = this.renderNotTransfer(txResult);
+            }
         }
 
-        const explorerURL = defaultConfig.explorerURL + '/tx/' + txid;
+        const blockHeightHTML = this.renderBlockHeightHTML(BlockNumber, Status);
+        const turnToExplorerHTML = this.renderTurnToExplorerHTML(txid);
 
         const containerStyle = getPageContainerStyle();
-
         let txInfoContainerStyle = Object.assign({}, containerStyle);
         txInfoContainerStyle.height -= 150;
 
@@ -249,20 +293,12 @@ export default class TransactionDetail extends Component {
                             </div>
                             <div className={style.list}>
                                 <div className={style.title}>Block Height</div>
-                                <div className={style.text}>{BlockNumber}</div>
+                                <div className={style.text}>{blockHeightHTML}</div>
                             </div>
                             {notTransferHtml}
                         </div>
-
                     </div>
-                    <div className={style.bottom}>
-                        <AelfButton
-                            onClick={() => {
-                                window.location = explorerURL;
-                            }}
-                            text = 'To Explorer'
-                        ></AelfButton>
-                    </div>
+                    {turnToExplorerHTML}
                 </div>
             </div>
         );
