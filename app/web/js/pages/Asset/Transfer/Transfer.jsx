@@ -41,7 +41,10 @@ export default class Transfer extends Component {
     }
 
     inputAmount(amount) {
-        this.setState({amount});
+        this.setState({
+            amount,
+            amountError: false
+        });
     }
 
     inputAddress(address) {
@@ -108,6 +111,16 @@ export default class Transfer extends Component {
             // check balance
             // let amount = parseInt(this.state.amount, 10);
             let amountBig = new BigNumber(this.state.amount);
+
+            if (amountBig.isNaN() || !amountBig.isFinite() || !amountBig.gt(0)) {
+                this.setState({
+                    amountError: 'Invalid Number'
+                });
+                Toast.hide();
+                Toast.fail('Invalid Number', 3, () => {}, false);
+                return;
+            }
+
             // const amountLong = new Long(amount);
             // if (amountLong.greaterThan(this.state.balance)) {
             if (amountBig.gt(this.state.balance)) {
@@ -130,7 +143,7 @@ export default class Transfer extends Component {
             }
 
             // let transfer = aelf.contractMethods.Transfer(address, amount);
-            // let transfer = 
+            // let transfer =
             aelf.contractMethods.Transfer({
                 symbol: tokenName,
                 to: address,
@@ -152,6 +165,11 @@ export default class Transfer extends Component {
             addressErrorText = <div className={style.error}>{this.state.addressError}</div>;
         }
 
+        let amountErrorText;
+        if (this.state.amountError) {
+            amountErrorText = <span className={style.error}>{this.state.amountError} &nbsp;</span>;
+        }
+
         let passwordErrorText;
         if (this.state.passwordError) {
             passwordErrorText = <div className={style.error}>{this.state.passwordError}</div>;
@@ -163,13 +181,13 @@ export default class Transfer extends Component {
                 style={{
                     opacity: 0.5
                 }}
-            ></AelfButton>;
+            />;
         if (this.state.address && this.state.amount && this.state.password) {
             createButton
                 = <AelfButton
                     text="Send"
                     onClick={() => this.transfer()}
-                ></AelfButton>;
+                />;
         }
 
         let containerStyle = getPageContainerStyle();
@@ -177,7 +195,7 @@ export default class Transfer extends Component {
         return (
             <div>
                 <BackupNotice/>
-                <NavNormal></NavNormal>
+                <NavNormal/>
                 <div className={style.container} style={containerStyle}>
                     <div className="aelf-input-container aelf-dash-light">
                         <div className={style.title}>{this.state.tokenName} <FormattedMessage id = 'aelf.Transaction' /></div>
@@ -196,13 +214,14 @@ export default class Transfer extends Component {
                                 }}
                                 onChange={address => this.inputAddress(address)}
                                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                            ></InputItem>
+                            />
                         </List>
 
                         <List>
                             <div className="aelf-input-title">
                                 <div><FormattedMessage id = 'aelf.Amount to send' /></div>
                                 <div>
+                                    {amountErrorText}
                                     <FormattedMessage id = 'aelf.Balance' />：{this.state.balance.toFixed(2)}
                                 </div>
                             </div>
@@ -211,7 +230,7 @@ export default class Transfer extends Component {
                                 placeholder=""
                                 onChange={amount => this.inputAmount(amount)}
                                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                            ></InputItem>
+                            />
                         </List>
 
                         <List>
@@ -225,7 +244,7 @@ export default class Transfer extends Component {
                                 placeholder=""
                                 onChange={password => this.inputPassword(password)}
                                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                            ></InputItem>
+                            />
                         </List>
 
                         {/*<List>*/}
