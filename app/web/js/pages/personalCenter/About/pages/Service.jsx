@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 import style from './pages.scss'
 import NavNormal from '../../../NavNormal/NavNormal'
 import ServiceText from '../../../getWallet/Agreement/Service'
+import ServiceTextZh from '../../../getWallet/Agreement/Service_zh'
 
 import getPageContainerStyle from '../../../../utils/getPageContainerStyle'
 
@@ -20,7 +21,7 @@ class Service extends Component {
 			<div>
 				<NavNormal navTitle="Terms of Service"></NavNormal>
 				<div className={style.textContainer} style={containerStyle}>
-					<ServiceText></ServiceText>
+					{localStorage.language === 'zh-CN' ? <ServiceTextZh/> : <ServiceText/>}
 				</div>
 			</div>
 		);

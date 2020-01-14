@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 import style from './pages.scss'
 import NavNormal from '../../../NavNormal/NavNormal'
 import PrivacyText from '../../../getWallet/Agreement/Privacy'
+import PrivacyTextZh from '../../../getWallet/Agreement/Privacy_zh'
 
 import getPageContainerStyle from '../../../../utils/getPageContainerStyle'
 
@@ -19,7 +20,7 @@ class Privacy extends Component {
 			<div>
 				<NavNormal navTitle="Privacy Policy"></NavNormal>
 				<div className={style.textContainer} style={containerStyle}>
-					<PrivacyText></PrivacyText>
+					{localStorage.language === 'zh-CN' ? <PrivacyTextZh/> : <PrivacyText/>}
 				</div>
 			</div>
 		);

@@ -242,7 +242,7 @@ export default class Assets extends Component {
                             let btn = document.getElementById('clipboard-assets');
                             btn.click();
                         }}
-                    ></div>
+                    />
 
                     <button id="clipboard-assets"
                             data-clipboard-target="#assets-address-text"
@@ -298,7 +298,7 @@ export default class Assets extends Component {
                                     <div
                                         className={style.addBtn}
                                         onClick={() => historyReplace('/addtoken')}
-                                    ></div>
+                                    />
                                 </div>
                             </div>
 

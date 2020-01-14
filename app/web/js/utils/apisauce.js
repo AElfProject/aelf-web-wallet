@@ -12,7 +12,7 @@ import {Toast} from 'antd-mobile';
 
 const api = create({
     baseURL: '/',
-    timeout: 10000
+    timeout: 20000
 });
 
 const httpErrorHandler = errMsg => {
