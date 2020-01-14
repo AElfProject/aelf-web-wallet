@@ -31,10 +31,10 @@ export default function init(options = {}) {
             privateKey = Aelf.wallet.AESDecrypt(AESEncryptoPrivateKey, password);
         }
         catch (e) {
-            return error('wrong password, program crash.');
+            return error('Password Error');
         }
         if (!privateKey) {
-            return error('wrong password.');
+            return error('Password Error');
         }
         wallet = Aelf.wallet.getWalletByPrivateKey(privateKey);
     }
@@ -75,7 +75,7 @@ export default function init(options = {}) {
     // 固定合约，如果没有对应的方法，返回'非法合约'的信息。
     if (!chainOnly && !contractMethods.GetBalance && !hasAlert) {
         hasAlert = true;
-        alert('合约未部署;不匹配的合约');
+        alert('Contract Error');
     }
 
     return {

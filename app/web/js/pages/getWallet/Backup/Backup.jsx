@@ -8,6 +8,7 @@ import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import { historyPush } from '../../../utils/historyChange'
 import clipboard from '../../../utils/clipboard'
 import getPageContainerStyle from '../../../utils/getPageContainerStyle'
+import getPrivateKeyAndMnemonic from '../../../utils/getPrivateKeyAndMnemonic'
 
 import backupStatusChange from '../../BackupNotice/backupStatusChange'
 import AelfButton from '../../../components/Button/Button'
@@ -30,7 +31,7 @@ class Backup extends Component {
         let walletId = JSON.parse(localStorage.getItem('lastuse')).address;
         let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
         let walletInfo = walletInfoList[walletId];
-        
+
         this.state = {
             privateKey: '',
             // mnemonic: 'grocery jungle body action shop vast toilet fog prevent banner deliver indicate',
@@ -57,40 +58,18 @@ class Backup extends Component {
         });
     }
 
-    getPrivateKeyAndMnemonic(password = '') {
+    passwordCheck(password = '') {
         password = password || this.state.password;
-
-        let walletId = JSON.parse(localStorage.getItem('lastuse')).address;
-        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
-        let walletInfo = walletInfoList[walletId];
-
-        let privateKey = '';
-        let mnemonic = '';
-
-        try {
-            privateKey = aelf.wallet.AESDecrypt(walletInfo.AESEncryptoPrivateKey, password);
-            mnemonic = walletInfo.AESEncryptoMnemonic
-                ? aelf.wallet.AESDecrypt(walletInfo.AESEncryptoMnemonic, password) : null;
-        } catch (e) {
-            // 因为封装了一层，解密错误时，转换成utf-8会抛出异常。
-            // let string = '[ERROR] Hey guy, your invalid password make the program crash.';
-            // privateKey = string;
-            // mnemonic = string;
-        }
-
-        if (privateKey || mnemonic) {
-            this.setState({'privateKey': privateKey});
-            this.setState({'mnemonic': mnemonic});
-            return true
-        } else {
-            Toast.fail('Wrong Password', 1, () => {}, false);
-        }
-        return false;
-
-    }
-
-    inputPassword(password) {
-        this.setState({password: password});
+        return getPrivateKeyAndMnemonic(password).then(result => {
+            this.setState({
+                privateKey: result.privateKey,
+                mnemonic: result.mnemonic
+            });
+            return true;
+        }).catch(error => {
+            Toast.fail('Password Error', 1, () => {}, false);
+            return false;
+        });
     }
 
     // 子组件要用，要么this.toggleMnemonic = this.toggleMnemonic.bind(this);
@@ -108,7 +87,7 @@ class Backup extends Component {
             Toast.fail('There is no Mnemonic because the wallet import by Private Key.', 2, () => {}, false);
         }
     }
-  
+
     render() {
 
         let mnemonicHtml = '';
@@ -122,8 +101,8 @@ class Backup extends Component {
         }
         let mnemonicButtonHtml;
         if (this.state.AESEncryptoMnemonic) {
-          mnemonicButtonHtml =
-            <Fragment>
+          mnemonicButtonHtml
+            = <Fragment>
               <AelfButton
                   text='Mnemonic'
                   onClick={(e) => prompt(
@@ -132,17 +111,18 @@ class Backup extends Component {
                       [
                           { text: 'Cancel' },
                           { text: 'Submit', onPress: password => {
-                                  let boolean = this.getPrivateKeyAndMnemonic(password);
-                                  boolean && this.toggleMnemonic();
+                                  this.passwordCheck(password).then(result => {
+                                      result && this.toggleMnemonic();
+                                  });
                               }
                           },
                       ],
                       'secure-text',
                   )}
-              ></AelfButton>
+              />
 
-              <div className='aelf-blank12'></div>
-          </Fragment>
+              <div className='aelf-blank12'/>
+          </Fragment>;
         }
 
         let containerStyle = getPageContainerStyle();
@@ -153,23 +133,23 @@ class Backup extends Component {
                 {/*<NavNormal navTitle="导入钱包" */}
                 <NavNormal
                     onLeftClick={() => historyPush('/personalcenter/walletManage')}
-                ></NavNormal>
+                />
 
                 <div className={style.container} style={containerStyle}>
                     <div className={style.textContainer}>
                         <NoticePanel
                             mainTitle={
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.Backup Wallet'
                                     defaultMessage = 'Backup Wallet'
                                 />
                             }
                             subTitle={[
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.AElf Wallet'
                                     defaultMessage = 'AElf Wallet'
                                 />,
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.Manage your wallet addresses'
                                     defaultMessage = 'Manage your wallet addresses'
                                 />
@@ -179,112 +159,59 @@ class Backup extends Component {
                                 // '没有妥善备份就无法保障资产安全；',
                                 // '删除程序或钱包后，',
                                 // '您需要通过备份的助记词来会恢复钱包！'
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.Becareful03'
                                     defaultMessage = 'Please backup your Mnemonic in a secure environment!'
                                 />,
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.Becareful04'
                                     defaultMessage = 'No secure Mnemonic backup means no secure wallet.'
                                 />,
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.Becareful05'
                                     defaultMessage = 'In the case of wallet or App deletion,'
                                 />,
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.Becareful06'
                                     defaultMessage = 'you will need your Mnemonic to recover your wallet.'
                                 />
                             ]}
-                        ></NoticePanel>
+                        />
                     </div>
 
                     <div className={style.bottom}>
-                        
+
                         {mnemonicButtonHtml}
 
-                        <div className='aelf-blank12'></div>
+                        <div className='aelf-blank12'/>
 
                         <AelfButton
                             text='Private Key'
-                            onClick={(e) => {
-                                // be nullified after the event callback has been invoked,
-                                // if dont e.persist(), we can't get e.preventDefault in this.showModal
-                                // https://reactjs.org/docs/events.html#event-pooling
-                                e.persist();
-                                prompt(
-                                    'Password',
-                                    'Please make sure you are under safe enviroment.',
-                                    [
-                                        { text: 'Cancel' },
-                                        { text: 'Submit', onPress: password => {
-                                                let boolean = this.getPrivateKeyAndMnemonic(password);
-                                                boolean && this.showModal(e, 'privateKeyModal');
-                                            }
-                                        },
-                                    ],
-                                    'secure-text',
-                                );
+                            onClick={
+                                e => {
+                                    // be nullified after the event callback has been invoked,
+                                    // if dont e.persist(), we can't get e.preventDefault in this.showModal
+                                    // https://reactjs.org/docs/events.html#event-pooling
+                                    e.persist();
+                                    prompt(
+                                        'Password',
+                                        'Please make sure you are under safe enviroment.',
+                                        [
+                                            { text: 'Cancel' },
+                                            { text: 'Submit', onPress: password => {
+                                                    this.passwordCheck(password).then(result => {
+                                                        result && this.showModal(e, 'privateKeyModal');
+                                                    });
+                                                }
+                                            },
+                                        ],
+                                        'secure-text',
+                                    );
+                                }
                             }
-                            }
-                        ></AelfButton>
-                        {/*<AelfButton*/}
-                            {/*text='备份助记词'*/}
-                            {/*onClick={e => {*/}
-                                {/*this.showModal(e, 'passwordModal')*/}
-                            {/*}}*/}
-                        {/*></AelfButton>*/}
+                        />
                     </div>
                 </div>
-
-                {/*<Modal*/}
-                    {/*popup*/}
-                    {/*visible={this.state.passwordModal}*/}
-                    {/*onClose={() => this.onClose('passwordModal')}*/}
-                    {/*animationType="slide-up"*/}
-                {/*>*/}
-                    {/*<div style={{ height: 100, wordWrap: 'break-word' }}>*/}
-                        {/*<InputItem*/}
-                            {/*value={this.state.password}*/}
-                            {/*type="password"*/}
-                            {/*placeholder=""*/}
-                            {/*onChange={password => this.inputPassword(password)}*/}
-                            {/*moneyKeyboardWrapProps={moneyKeyboardWrapProps}*/}
-                        {/*></InputItem>*/}
-                    {/*</div>*/}
-                    {/*<Button onClick={() => this.onClose('passwordModal')}>提交</Button>*/}
-                {/*</Modal>*/}
-
-                {/*<Modal*/}
-                  {/*visible={this.state.privateKeyModal}*/}
-                  {/*transparent*/}
-                  {/*maskClosable={false}*/}
-                  {/*onClose={() => this.onClose('privateKeyModal')}*/}
-                  {/*title="私钥"*/}
-                  {/*footer={[*/}
-                    {/*{*/}
-                        {/*text: '关闭',*/}
-                        {/*onPress: () => {*/}
-                            {/*this.onClose('privateKeyModal');*/}
-                        {/*}*/}
-                    {/*}]}*/}
-                  {/*wrapProps={{ onTouchStart: this.onWrapTouchStart }}*/}
-                {/*>*/}
-                  {/*<div style={{ height: 100, wordWrap: 'break-word' }}>*/}
-                    {/*{this.state.privateKey}*/}
-                    {/*<textarea id="privateKeyBackUp"*/}
-                        {/*className={style.textarea}*/}
-                        {/*defaultValue={this.state.privateKey}>*/}
-                    {/*</textarea>*/}
-
-                    {/*<Button  */}
-                    {/*onClick={() => {*/}
-                        {/*let btn = document.getElementById('clipboard-backup');*/}
-                        {/*btn.click();*/}
-                    {/*}}>复制</Button>*/}
-                    {/*<button id="clipboard-backup" data-clipboard-target="#privateKeyBackUp" style={{display: 'none'}}>copy</button>*/}
-                  {/*</div>*/}
-                {/*</Modal>*/}
 
                 <Modal
                     popup
@@ -294,7 +221,7 @@ class Backup extends Component {
                 >
                     <div>
                         <div className={style.pannelTitle}>
-                            <FormattedMessage 
+                            <FormattedMessage
                                 id = 'aelf.Copy Private Key'
                                 defaultMessage = 'Copy Private Key'
                             />
@@ -317,7 +244,7 @@ class Backup extends Component {
                                 btn.click();
                             }}
                         >
-                            <FormattedMessage 
+                            <FormattedMessage
                                 id = 'aelf.Copy'
                                 defaultMessage = 'Copy'
                             />
@@ -326,18 +253,21 @@ class Backup extends Component {
                             className={style.pannelBtnPurple + ' ' + style.pannerlBtnGrey}
                             onClick={() => this.onClose('privateKeyModal')}
                         >
-                            <FormattedMessage 
+                            <FormattedMessage
                                 id = 'aelf.Close'
                                 defaultMessage = 'Close'
                             />
                         </div>
-                        <button id="clipboard-backup" data-clipboard-target="#privateKeyBackUp" style={{display: 'none'}}>copy</button>
+                        <button
+                          id="clipboard-backup"
+                          data-clipboard-target="#privateKeyBackUp"
+                          style={{display: 'none'}}>copy</button>
                     </div>
                 </Modal>
 
 
                {mnemonicHtml}
- 
+
             </div>
         );
     }

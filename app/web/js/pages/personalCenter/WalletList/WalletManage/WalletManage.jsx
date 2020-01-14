@@ -15,6 +15,7 @@ import AelfButton from '../../../../components/Button/Button';
 
 import NavWithDrawer from '../../../NavWithDrawer/NavWithDrawer';
 import addressPrefixSuffix from '../../../../utils/addressPrefixSuffix';
+import getPrivateKeyAndMnemonic from '../../../../utils/getPrivateKeyAndMnemonic';
 
 import {
     insertWalletInfo,
@@ -29,28 +30,14 @@ import style from './WalletManage.scss';
 
 const Item = List.Item;
 const prompt = Modal.prompt;
-const alert = Modal.alert;
 
-class WalletManage extends Component {
+export default class WalletManage extends Component {
     constructor() {
         super();
         this.state = {
             walletNameModal: false,
             nameChanged: ''
         };
-    }
-
-    showModal(e, key) {
-        e.preventDefault(); // 修复 Android 上点击穿透
-        this.setState({
-            [key]: true
-        });
-    }
-
-    onClose(key) {
-        this.setState({
-            [key]: false
-        });
     }
 
     changeName(name) {
@@ -103,6 +90,14 @@ class WalletManage extends Component {
         }
     }
 
+    passwordCheck(password = '') {
+        getPrivateKeyAndMnemonic(password || this.state.password).then(result => {
+            this.deleteWallet();
+        }).catch(error => {
+            Toast.fail('Password Error', 1, () => {}, false);
+        });
+    }
+
     render() {
 
         let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
@@ -128,7 +123,7 @@ class WalletManage extends Component {
                             opacity: 0.5
                         }}
                         iconHidden={true}
-                    ></NoticePanel>
+                    />
 
                     {/*<List>*/}
                     {/*<Item>*/}
@@ -155,7 +150,7 @@ class WalletManage extends Component {
                                         defaultMessage='Wallet Name'
                                     />
                                 }
-                            ></ListContent>
+                            />
                         </Item>
                     </List>
 
@@ -168,7 +163,7 @@ class WalletManage extends Component {
                                         defaultMessage='Backup'
                                     />
                                 }
-                            ></ListContent>
+                            />
                         </Item>
                     </List>
                     <List className={'aelf-list'}>
@@ -180,7 +175,7 @@ class WalletManage extends Component {
                                         defaultMessage='Change Password'
                                     />
                                 }
-                            ></ListContent>
+                            />
                         </Item>
                     </List>
                 </div>
@@ -189,15 +184,26 @@ class WalletManage extends Component {
                     <AelfButton
                         text="Delete Wallet"
                         onClick={
-                            () => alert('Delete', 'Are you sure?', [{
-                                text: 'Cancel'
-                            }, {
-                                text: 'Submit',
-                                onPress: name => this.deleteWallet()
-                            },], 'default', '')
+                            e => {
+                                // be nullified after the event callback has been invoked,
+                                // if dont e.persist(), we can't get e.preventDefault in this.showModal
+                                // https://reactjs.org/docs/events.html#event-pooling
+                                e.persist();
+                                prompt(
+                                  'Password',
+                                  'Please make sure you are under safe enviroment.',
+                                  [
+                                      { text: 'Cancel' },
+                                      { text: 'Submit', onPress: password => {
+                                              this.passwordCheck(password);
+                                          }
+                                      }
+                                  ],
+                                  'secure-text',
+                                );
+                            }
                         }
-                    ></AelfButton>
-
+                    />
                 </div>
             </div>;
 
@@ -211,6 +217,4 @@ class WalletManage extends Component {
             </div>
         );
     }
-}
-
-export default WalletManage
+};

@@ -39,7 +39,7 @@ class PasswordChange extends Component {
 
         this.setState({password: password});
     }
- 
+
 	setNewPassword(newPassword) {
         this.setState({newPassword: newPassword});
     }
@@ -76,7 +76,7 @@ class PasswordChange extends Component {
             });
         	// console.log('change done: ', privateKey, result);
         } else {
-          Toast.fail('Wrong Password', 2, () => { }, false);
+          Toast.fail('Password Error', 2, () => { }, false);
         	// console.log('傻逼，滚。');
         }
     }
@@ -95,7 +95,7 @@ class PasswordChange extends Component {
                     opacity: 0.5
                 }}
             >
-            <FormattedMessage 
+            <FormattedMessage
                 id = 'aelf.Submit'
                 defaultMessage = 'Submit'
             />
@@ -113,7 +113,7 @@ class PasswordChange extends Component {
                 <div
                     onClick={() => this.changePassword()}
                 >
-                <FormattedMessage 
+                <FormattedMessage
                     id = 'aelf.Submit'
                     defaultMessage = 'Submit'
                 />
@@ -132,7 +132,7 @@ class PasswordChange extends Component {
                     <div>
                         <NoticePanel
                             mainTitle={
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.Change Password'
                                     defaultMessage = 'Change Password'
                                 />
@@ -146,7 +146,7 @@ class PasswordChange extends Component {
 
                             <div className="aelf-input-title">
                                 <div>
-                                    <FormattedMessage 
+                                    <FormattedMessage
                                         id = 'aelf.Old password'
                                         defaultMessage = 'Old password'
                                     />
@@ -167,13 +167,13 @@ class PasswordChange extends Component {
 
                         {/*<div className={style.forget}>忘记密码？导入助记词或私钥可重置。*/}
                         <div className={style.forget}>
-                            <FormattedMessage 
+                            <FormattedMessage
                                 id = 'aelf.Forget your password'
                             />
                             <a href="javascript:;"
                                className="aelf-blue"
                                onClick={() => hashHistory.push('/get-wallet/import')}>
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.Immediately import'
                                     defaultMessage = 'Immediately import'
                                 />
