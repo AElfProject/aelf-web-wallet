@@ -122,7 +122,7 @@ export default class Home extends Component {
 
         return (
             <div>
-                <NavNormal navTitle={<FormattedMessage id = 'aelf.Transaction Record' />}></NavNormal>
+                <NavNormal navTitle={<FormattedMessage id = 'aelf.Transaction Record' />}/>
                 <div style={pageContainerStyle} className={style.container}>
                     <div>
                         <div className={style.assetsInfoContainer}>
@@ -154,7 +154,7 @@ export default class Home extends Component {
                                 <div className={style.icon}>
                                     <Svg icon='in20'
                                          style={{display: 'inline-block', height: 20, width: 20}}
-                                    ></Svg>
+                                    />
                                 </div>
                                 <div><FormattedMessage id = 'aelf.Send' /></div>
                             </div>
@@ -164,7 +164,7 @@ export default class Home extends Component {
                             >
                                 <div className={style.icon}>
                                     <Svg icon='out20'
-                                         style={{display: 'inline-block', height: 20, width: 20}}></Svg>
+                                         style={{display: 'inline-block', height: 20, width: 20}}/>
                                 </div>
                                 <div><FormattedMessage id = 'aelf.Receive' /></div>
                             </div>
@@ -176,7 +176,7 @@ export default class Home extends Component {
                             getBalanceAndTokenName={this.getBalanceAndTokenName}
                             decimals={this.state.decimals}
                             turnToDetailReady={this.state.decimals < 30}
-                        ></TransactionsList>
+                        />
                     </div>
                 </div>
 

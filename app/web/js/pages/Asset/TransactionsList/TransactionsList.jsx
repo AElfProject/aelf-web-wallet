@@ -124,7 +124,7 @@ export default class TransactionsList extends Component {
       refreshing: true,
       isLoading: true
     });
-
+    pageIndex = 0;
     getTxs(result => {
       this.rData = result.transactions;
       this.setState({
@@ -133,7 +133,6 @@ export default class TransactionsList extends Component {
         isLoading: false
       });
     });
-    pageIndex = 0;
   }
 
   onEndReached(event) {
@@ -192,7 +191,7 @@ export default class TransactionsList extends Component {
       let address = isIncome ? item.address_from : item.address_to;
       address = addressOmit(address);
 
-      const timeFormatted = moment(item.time).format('YYYY-MM-DD HH:MM:SS');
+      const timeFormatted = moment(item.time).format('YYYY-MM-DD HH:mm:ss');
 
       const {PREFIX, CURRENT_CHAIN_ID} = window.defaultConfig.ADDRESS_INFO;
       // TODO other chain
