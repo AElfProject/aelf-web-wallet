@@ -235,6 +235,25 @@ export default class TransactionDetail extends Component {
         return blockHeightHTML;
     }
 
+    renderFeeHTML(TransactionFee) {
+        const feeValueObject = TransactionFee && TransactionFee.Value || {};
+        const feeTokenName = Object.keys(feeValueObject)[0];
+        const feeAmount = feeValueObject[feeTokenName] || 0;
+
+        if (!feeAmount) {
+            return null;
+        }
+
+        const feeTemp = (new BigNumber(feeAmount)).div(Math.pow(10, this.decimals)).toFixed(+this.decimals);
+        const feeStr
+          = (isNaN(feeTemp) ? '-' : feeTemp) + feeTokenName;
+
+        return <div className={style.list}>
+            <div className={style.title}>Fee</div>
+            <div className={style.text}>{feeStr}</div>
+        </div>;
+    }
+
     renderTurnToExplorerHTML(txId) {
         const explorerURL = window.defaultConfig.explorerURL + '/tx/' + txId;
 
@@ -257,7 +276,8 @@ export default class TransactionDetail extends Component {
         let {
             Transaction,
             Status,
-            BlockNumber
+            BlockNumber,
+            TransactionFee
         } = txResult;
 
         let html = '';
@@ -283,6 +303,7 @@ export default class TransactionDetail extends Component {
             }
         }
 
+        const feeHTML = this.renderFeeHTML(TransactionFee);
         const blockHeightHTML = this.renderBlockHeightHTML(BlockNumber, Status);
         const turnToExplorerHTML = this.renderTurnToExplorerHTML(txid);
 
@@ -309,6 +330,7 @@ export default class TransactionDetail extends Component {
                                 <div className={style.title}>Block Height</div>
                                 <div className={style.text}>{blockHeightHTML}</div>
                             </div>
+                            {feeHTML}
                             {notTransferHtml}
                         </div>
                     </div>
