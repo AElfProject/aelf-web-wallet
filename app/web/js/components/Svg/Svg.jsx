@@ -23,7 +23,7 @@ class Svg extends Component {
                 style={{height: 18, width: 18}}
                 dangerouslySetInnerHTML={{__html: svg}}
                 {...this.props}
-            ></div>
+            />
         );
     }
 }

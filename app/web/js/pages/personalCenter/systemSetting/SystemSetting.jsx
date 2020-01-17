@@ -15,6 +15,7 @@ import AelfList from '../../../components/List/List'
 import NoticePanel from '../../../components/NoticePanel/NoticePanel'
 
 import SelectLanguage from './Component/SelectLanguage';
+import SelectChain from './Component/SelectChain';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -44,7 +45,7 @@ class SystemSetting extends Component {
                 onClick={() => hashHistory.push(item.url)}
                 text={<FormattedMessage id={'aelf.' + item.text} defaultMessage={item.text} />}
                 type={item.type}
-            ></AelfList>
+            />
         });
 
         return listHtml;
@@ -55,15 +56,20 @@ class SystemSetting extends Component {
 
         return (
             <div className='aelf-personal-pages aelf-solid'>
-                <NavNormal></NavNormal>
-                <div className='aelf-blank40'></div>
+                <NavNormal/>
+                <div className='aelf-blank40'/>
                 <NoticePanel
                     mainTitle={<FormattedMessage id='aelf.System Setting' defaultMessage='System Setting' />}
                     iconHidden={true}
-                ></NoticePanel>
-                <div className='aelf-blank16'></div>
+                />
+                {/*<NoticePanel*/}
+                {/*  mainTitle={<FormattedMessage id='aelf.Chain Select' defaultMessage='Select Chain' />}*/}
+                {/*  iconHidden={true}*/}
+                {/*/>*/}
+                <div className='aelf-blank16'/>
                 {/* {listHtml} */}
                 <SelectLanguage />
+                <SelectChain />
             </div>
         );
     }

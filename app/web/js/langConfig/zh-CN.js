@@ -13,6 +13,7 @@ export default {
     'aelf.SystemSetting': '系统设置',
     'aelf.HelpCenter': '帮助中心',
     'aelf.About': '关于 aelf 钱包',
+    'aelf.Wallet Select': '切换钱包',
     'aelf.Contact': '联系人',
     'aelf.Copy Address': '复制钱包地址',
     'aelf.Receive': '钱包地址',

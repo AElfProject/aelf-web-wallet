@@ -10,9 +10,17 @@ module.exports = {
     apiServerProvider: 'http://127.0.0.1:7000',
     mainTokenName: 'ELF',
     chainId: 'AELF',
-    explorerURL: 'http://explorer-test.aelf.io',
+    explorerURL: 'https://explorer-test.aelf.io',
     mainTokenContract: '25CecrU94dmMdbhC3LWMKxtoaL4Wv8PChGvVJM6PxkHAyvXEhB',
     commonPrivateKey: 'f6e512a3c259e5f9af981d7f99d245aa5bc52fe448495e0b0dd56e8406be6f71',
+    WALLET_INFO: encodeURIComponent(JSON.stringify({
+        AELF: 'https://aelf-wallet-test.aelf.io',
+        tDVV: 'http://tdvv-wallet-test.aelf.io',
+        tDVW: 'http://tdvw-wallet-test.aelf.io',
+        tDVX: 'http://tdvx-wallet-test.aelf.io',
+        tDVY: 'http://tdvy-wallet-test.aelf.io',
+        tDVZ: 'http://tdvz-wallet-test.aelf.io'
+    })),
     ADDRESS_INFO: encodeURIComponent(JSON.stringify({
         PREFIX: 'ELF',
         CURRENT_CHAIN_ID: 'AELF',

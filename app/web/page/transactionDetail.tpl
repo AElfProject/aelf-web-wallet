@@ -18,6 +18,7 @@
     defaultConfig.chainId = '{{chainId}}';
     defaultConfig.explorerURL = '{{explorerURL}}';
     defaultConfig.ADDRESS_INFO = JSON.parse(decodeURIComponent('{{ADDRESS_INFO}}'));
+    defaultConfig.WALLET_INFO = JSON.parse(decodeURIComponent('{{WALLET_INFO}}'));
     defaultConfig.mainTokenContract = '{{mainTokenContract}}';
     defaultConfig.commonPrivateKey = '{{commonPrivateKey}}';
 </script>

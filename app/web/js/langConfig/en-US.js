@@ -12,6 +12,7 @@ export default {
     'aelf.SystemSetting': 'System Setting',
     'aelf.HelpCenter': 'Help Center',
     'aelf.About': 'About aelf Wallet',
+    'aelf.Wallet Select': 'Select Wallet',
     'aelf.Contact': 'Contact',
     'aelf.Copy Address': 'Copy Address',
     'aelf.Receive': 'Receive',

@@ -19,7 +19,7 @@ import { FormattedMessage } from 'react-intl'
 
 const Item = List.Item;
 
-class personalCenterHome extends Component { 
+class personalCenterHome extends Component {
 
   componentDidMount() {
     // 比如微信就会弹个底窗上来，就resize了
@@ -29,7 +29,7 @@ class personalCenterHome extends Component {
       });
     };
   }
-  
+
 	render() {
 		return (
 			<div className={style.container + ' ' + 'aelf-personal-pages aelf-solid'}>
@@ -45,7 +45,7 @@ class personalCenterHome extends Component {
                                     defaultMessage = 'Wallet Detail'
                                 />
                             }
-                        ></ListContent>
+                        />
                     </Item>
 	            </List>
 
@@ -54,7 +54,7 @@ class personalCenterHome extends Component {
                         <ListContent
                             icon="tx_history16"
                             text={
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.TransactionList'
                                     defaultMessage = 'Transaction List'
                                 />
@@ -71,7 +71,7 @@ class personalCenterHome extends Component {
                             type="small"
                             icon="contact16"
                             text={
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.AddressBook'
                                     defaultMessage = 'Address Book'
                                 />
@@ -85,12 +85,12 @@ class personalCenterHome extends Component {
                             type="small"
                             icon="setting16"
                             text={
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.SystemSetting'
                                     defaultMessage = 'System Setting'
                                 />
                             }
-                        ></ListContent>
+                        />
                     </Item>
                 </List>
                 <List className={'aelf-list'}>
@@ -99,12 +99,12 @@ class personalCenterHome extends Component {
                             type="small"
                             icon="help16"
                             text={
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.HelpCenter'
                                     defaultMessage = 'Help Center'
                                 />
                             }
-                        ></ListContent>
+                        />
                     </Item>
                 </List>
                 <List className={'aelf-list'}>
@@ -113,12 +113,12 @@ class personalCenterHome extends Component {
                             type="small"
                             icon="about16"
                             text={
-                                <FormattedMessage 
+                                <FormattedMessage
                                     id = 'aelf.About'
                                     defaultMessage = "About ELF Official Wallet"
                                 />
                             }
-                        ></ListContent>
+                        />
                     </Item>
                 </List>
 
