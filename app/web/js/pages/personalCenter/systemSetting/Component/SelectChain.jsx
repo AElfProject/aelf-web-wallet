@@ -51,7 +51,7 @@ class SelectChain extends React.Component {
     this.setState({
       chain: label
     });
-    if (window.defaultConfig.ADDRESS_INFO.CURRENT_CHAIN_ID === [label[0]]) {
+    if (window.defaultConfig.ADDRESS_INFO.CURRENT_CHAIN_ID === label[0]) {
       return;
     }
     window.location.href = window.defaultConfig.WALLET_INFO[label[0]];
