@@ -7,6 +7,7 @@
 // 中文词典
 export default {
     'aelf.': ' ',
+    'aelf.Chain ID': '链ID',
     'aelf.WalletDetail': '钱包详情',
     'aelf.TransactionList': '交易记录',
     'aelf.AddressBook': '联系人',
@@ -14,6 +15,7 @@ export default {
     'aelf.HelpCenter': '帮助中心',
     'aelf.About': '关于 aelf 钱包',
     'aelf.Wallet Select': '切换钱包',
+    'aelf.Wallet Select Tip': '提示：切换到新的钱包，需要重新导入助记词或私钥。',
     'aelf.Contact': '联系人',
     'aelf.Copy Address': '复制钱包地址',
     'aelf.Receive': '钱包地址',

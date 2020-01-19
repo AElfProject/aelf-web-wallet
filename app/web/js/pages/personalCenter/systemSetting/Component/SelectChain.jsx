@@ -70,6 +70,7 @@ class SelectChain extends React.Component {
           <List.Item arrow="horizontal"><FormattedMessage id='aelf.Wallet Select' /></List.Item>
         </Picker>
       </List>
+      <p className="notes"><FormattedMessage id='aelf.Wallet Select Tip' /></p>
     </div>);
   }
 }

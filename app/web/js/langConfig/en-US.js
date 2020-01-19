@@ -6,13 +6,15 @@
 
 export default {
     'aelf.': ' ',
+    'aelf.Chain ID': 'Chain ID',
     'aelf.WalletDetail': 'WalletDetail',
     'aelf.TransactionList': 'Transaction List',
     'aelf.AddressBook': 'Address Book',
     'aelf.SystemSetting': 'System Setting',
     'aelf.HelpCenter': 'Help Center',
     'aelf.About': 'About aelf Wallet',
-    'aelf.Wallet Select': 'Select Wallet',
+    'aelf.Wallet Select': 'Switch Wallet',
+    'aelf.Wallet Select Tip': 'Tip: You need to reimport the mnemonic or private key in the new wallet.',
     'aelf.Contact': 'Contact',
     'aelf.Copy Address': 'Copy Address',
     'aelf.Receive': 'Receive',

@@ -5,3 +5,9 @@
 .language .am-list-item .am-list-line .am-list-content{
     font-size: 14px;
 }
+
+.notes {
+    padding: 0px 24px;
+    color: #FFF;
+    font-size: 12px;
+}

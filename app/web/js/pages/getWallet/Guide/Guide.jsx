@@ -10,7 +10,7 @@ import getPageContainerStyle from '../../../utils/getPageContainerStyle'
 import { FormattedMessage } from 'react-intl'
 
 // React component
-class Guide extends Component {
+export default class Guide extends Component {
     render() {
 
         let containerStyle = getPageContainerStyle();
@@ -18,22 +18,23 @@ class Guide extends Component {
         return (
             <div className={style.container} style={containerStyle}>
                 <div className={style.top}>
-                    <div className={style.blank}></div>
-                    <Svg icon={'logo'} style={{height: 32, width: 104}}></Svg>
+                    <div className={style.blank}/>
+                    <Svg icon={'logo'} style={{height: 32, width: 104}}/>
                     <p className={style.welcome}>Welcome</p>
                     <p className={style.wallet}>aelf.Wallet</p>
-                    {/* <p className={style.description}>offcial</p> */}
-                    <p className={style.description}></p>
+                    <p className={style.description}>
+                      <FormattedMessage id='aelf.Chain ID' />: {window.defaultConfig.ADDRESS_INFO.CURRENT_CHAIN_ID}
+                    </p>
                 </div>
 
                 <div className={style.bottom}>
-                    <AelfButton 
+                    <AelfButton
                         text='CreateWallets'
-                        aelficon='add_purple20' 
+                        aelficon='add_purple20'
                         onClick={() => hashHistory.push('/get-wallet/create')}>
                     </AelfButton>
-                    <div className='aelf-blank12'></div>
-                    <AelfButton 
+                    <div className='aelf-blank12'/>
+                    <AelfButton
                         text='ImprotWallets'
                         aelficon='in_white20' onClick={() => hashHistory.push('/get-wallet/import')}
                         style={{ border: '1px dashed #fff', backgroundColor: 'rgba(255, 255, 255, 0)', color: '#FFF' }}>
@@ -43,5 +44,3 @@ class Guide extends Component {
         );
     }
 }
-
-export default Guide
