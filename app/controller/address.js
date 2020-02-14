@@ -71,8 +71,8 @@ class addressController extends Controller {
                     dataType: 'json'
                 }
             )).data;
-            console.log('tokenInfo: ', tokenInfo);
-              
+            // console.log('tokenInfo: ', tokenInfo);
+
             const tokenInfoFormatted = {};
             tokenInfo.forEach(item => {
               tokenInfoFormatted[item.symbol] = item;

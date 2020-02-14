@@ -154,7 +154,7 @@ export default class TokenList extends React.Component {
             // 测试上千条数据
             // this.rData = [...this.rData, ...this.rData];
             this.rData = [...this.rData, ...result.transactions];
-            if (result.transactions.lenght !== undefined) {
+            if (result.transactions.length !== undefined) {
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(this.rData),
                     isLoading: false,
