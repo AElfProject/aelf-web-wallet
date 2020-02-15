@@ -44,6 +44,8 @@
     defaultConfig.chainId = '{{chainId}}';
     defaultConfig.explorerURL = '{{explorerURL}}';
     defaultConfig.ADDRESS_INFO = JSON.parse(decodeURIComponent('{{ADDRESS_INFO}}'));
+    defaultConfig.WEB_API_INFO = JSON.parse(decodeURIComponent('{{WEB_API_INFO}}'));
+    defaultConfig.TOKEN_CROSS_SUPPORT = JSON.parse(decodeURIComponent('{{TOKEN_CROSS_SUPPORT}}'));
     defaultConfig.WALLET_INFO = JSON.parse(decodeURIComponent('{{WALLET_INFO}}'));
     defaultConfig.mainTokenContract = '{{mainTokenContract}}';
     defaultConfig.commonPrivateKey = '{{commonPrivateKey}}';

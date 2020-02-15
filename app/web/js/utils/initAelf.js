@@ -10,6 +10,7 @@ import {Toast} from 'antd-mobile';
 import {
     serviceProvider
 } from '../utils/utils';
+import {CrossChainMethods} from '../utils/crossChain';
 
 let hasAlert = false;
 
