@@ -161,38 +161,3 @@ export class CrossChainMethods {
         };
     }
 }
-
-window.CrossChainMethods = CrossChainMethods;
-window.CrossChain = CrossChain;
-
-// 2RCLmZQ2291xDwSbDEJR6nLhFJcMkyfrVTq1i1YxWC4SdY49a6
-const defaultPrivateKey = '07da45c0a4cbe8e791c9249ed0255069ffac635e0da8650f05b19993ab109936';
-const wallet = Wallet.getWalletByPrivateKey(defaultPrivateKey);
-
-window.cross = new window.CrossChainMethods({
-    wallet,
-    WEB_API_INFO: window.defaultConfig.WEB_API_INFO,
-    TOKEN_CROSS_SUPPORT: window.defaultConfig.TOKEN_CROSS_SUPPORT
-});
-// var params = {
-//     transfer: {
-//         to: '2RCLmZQ2291xDwSbDEJR6nLhFJcMkyfrVTq1i1YxWC4SdY49a6',
-//         symbol: 'ELF',
-//         amount: 1,
-//         memo: 'to be or not to be.'
-//     },
-//     fromChain: 'AELF',
-//     toChain: 'tDVV'
-// };
-// cross.send(params).then(result => {console.log(result);}).catch(error => {console.log(error);});
-// //
-// var time = (new Date()).getTime();
-//
-// cross.isChainReadyToReceive({
-//     crossTransferTxId: '841988ce167d5c6ae6a791c0113ef95dd57840b32275e5854a056af40eb13608'
-// }).then(result => {
-//     console.log((new Date()).getTime() - time);
-//     console.log(result);
-// }).catch(error => {
-//     console.log(error);
-// });
