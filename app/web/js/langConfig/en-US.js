@@ -90,6 +90,7 @@ export default {
     'aelf.HelpTitle04': 'What is the AElf Wallet?',
     'aelf.HelpTitle05': 'How to change the password?',
     'aelf.HelpTitle06': 'What if I forget my password?',
+    'aelf.HelpTitle07': 'Notes on cross chain transfer',
     'aelf.mnemonicCon01': 'The Mnemonics is equivalent to the bank card + password of a traditional financial institution. Please keep it in a safe place. A Mnemonics is another manifestation of a plaintext private key that is designed to help users remember complex private keys (64-bit hashes). Mnemonicss are generally composed of 12, 15, 18, and 21 words. These words are taken from a fixed vocabulary. The order of generation is also based on a certain algorithm. The Mnemonics is an unencrypted private key. When people get your Mnemonics, you can take away your assets with little effort.',
     'aelf.mnemonicCon02': 'Therefore, users must pay attention to three points when backing up the Mnemonics:',
     'aelf.mnemonicCon03': '1. Use physical media as much as possible. For example, write Mnemonicss on paper. Do not use screenshots or photos on networked devices as much as possible to prevent hackers from stealing.',
@@ -140,5 +141,16 @@ export default {
     'aelf.BackUpCon04':'Backup your wallet recovery phrase is extremely important when your wallet is lost or forgotten.',
     'aelf.Backup now':'Backup now',
     'aelf.The passwords confirmed error.': 'The passwords confirmed error.',
-    'aelf.Not less than 9 characters, including upper and lower case characters, numbers, special characters.': 'Not less than 9 characters, including upper and lower case characters, numbers, special characters.'
+    'aelf.Not less than 9 characters, including upper and lower case characters, numbers, special characters.': 'Not less than 9 characters, including upper and lower case characters, numbers, special characters.',
+    'aelf.Notes on cross chain transfer': 'Notes on cross chain transfer',
+    'aelf.Notes on cross chain transfer 1': 'Change the address of payee to the specified Chain ID',
+    'aelf.Notes on cross chain transfer 2': 'Example:',
+    'aelf.Notes on cross chain transfer 3': 'If the address ELF_address_AELF is known when you want to transfer token to the address of the chain tDVV. ' +
+      'Please change the address to ELF_address_tDVV, and complete the subsequent transfer according to the operation.',
+    'aelf.Notes on cross chain transfer 4': 'Be careful:',
+    'aelf.Notes on cross chain transfer 5': '1. For cross chain transfer initiated by other wallets, this web wallet is unable to confirm the transaction temporarily.',
+    'aelf.Notes on cross chain transfer 6':
+      '2. Cross chain transfer requires two transactions, one sending transaction and one confirming transaction, with a certain block confirmation time in the middle.' +
+      "You can view the cross chain transfer to be confirmed in 'My - Cross chain transactions to be confirmed'.",
+    'aelf.Notes on cross chain transfer 7': '3. Please make sure you have enough token to pay the fee in the two chain.'
 };

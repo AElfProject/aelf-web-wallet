@@ -6,7 +6,7 @@
  */
 // TODO: 重点关注Int64的处理！！！！！！！！
 import React, {Component} from 'react';
-import {List, InputItem, Toast} from 'antd-mobile';
+import {List, InputItem, Toast, Modal} from 'antd-mobile';
 import style from './Transfer.scss';
 import {hashHistory} from 'react-router';
 import Long from 'long';
@@ -32,8 +32,8 @@ export default class Transfer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          decimals: 0,
-          balance: new BigNumber(0)
+            decimals: 0,
+            balance: new BigNumber(0),
         };
         this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
         this.contractAddress = getParam('contract_address', window.location.href);
@@ -246,6 +246,10 @@ export default class Transfer extends Component {
                                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                             />
                         </List>
+
+                        <div className={style.crossChain} onClick={() => hashHistory.push('/personalcenter/notesoncrosschaintransfer')}>
+                            <FormattedMessage id = 'aelf.Notes on cross chain transfer' />
+                        </div>
 
                         {/*<List>*/}
                             {/*<div className="aelf-input-title">*/}

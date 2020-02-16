@@ -76,6 +76,7 @@ export class CrossChainMethods {
             crossTransferTxId
         } = await crossChainInstance.send(params.transfer);
         // TODO store the params in localStorage
+        // TODO store this tx in database by api
         console.log('crossTransferTxId: ', crossTransferTxId);
         return crossTransferTxId;
     }
