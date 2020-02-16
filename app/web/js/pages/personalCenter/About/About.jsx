@@ -37,7 +37,7 @@ class About extends Component {
                 onClick={() => hashHistory.push(item.url)}
                 text={<FormattedMessage id = {'aelf.' + item.text} />}
                 type={item.type}
-            ></AelfList>
+            />
         });
 
         return listHtml;
@@ -47,13 +47,13 @@ class About extends Component {
         let listHtml = this.renderList();
         return (
             <div className='aelf-personal-pages aelf-solid'>
-                <NavNormal></NavNormal>
-                <div className='aelf-blank40'></div>
+                <NavNormal/>
+                <div className='aelf-blank40'/>
                 <NoticePanel
                     mainTitle={<FormattedMessage id = 'aelf.About AElf Official Wallet' />}
                     iconHidden={true}
-                ></NoticePanel>
-                <div className='aelf-blank16'></div>
+                />
+                <div className='aelf-blank16'/>
                 {listHtml}
             </div>
         );

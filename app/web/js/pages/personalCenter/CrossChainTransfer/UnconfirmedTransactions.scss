@@ -1,0 +1,24 @@
+.listContainer {
+  overflow: scroll;
+  height: 100%;
+}
+
+.list {
+  color: #FFF;
+}
+
+.listItem {
+  word-break: break-all;
+  white-space: normal;
+}
+
+.listItemText {
+  font-size: 12px;
+}
+
+.confirmButton {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}

@@ -121,6 +121,20 @@ class personalCenterHome extends Component {
                         />
                     </Item>
                 </List>
+                <List className={'aelf-list'}>
+                    <Item onClick={() => hashHistory.push('/personalcenter/unconfirmedtransactions')}>
+                        <ListContent
+                            type="small"
+                            // icon="about16"
+                            text={
+                                <FormattedMessage
+                                    id = 'aelf.Cross chain transactions to be confirmed'
+                                    defaultMessage = "Cross chain transactions to be confirmed"
+                                />
+                            }
+                        />
+                    </Item>
+                </List>
 
                 {/*<List>*/}
 	                {/*<Item onClick={() => hashHistory.push('/personalcenter/walletmanage?title=钱包管理')}>钱包管理</Item>*/}

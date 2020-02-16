@@ -51,6 +51,9 @@ import NotesOnCrossChainTransfer from './pages/personalCenter/HelpCenter/pages/N
 import personalCenterSystemSetting from './pages/personalCenter/systemSetting/SystemSetting';
 import systemSettingNetwork from './pages/personalCenter/systemSetting/pages/Network';
 
+// Cross Chain
+import UnconfirmedTransactions from './pages/personalCenter/CrossChainTransfer/UnconfirmedTransactions';
+
 // 联系人列表
 import ContactAddressPage from './pages/ContactAddressPage/ContactAddressPage';
 import NewContactAddressPage from './pages/ContactAddressPage/NewContactAddressPage/NewContactAddressPage';
@@ -131,6 +134,8 @@ function initPage() {
                         <Route path="/personalcenter/about" component={personalCenterAbout}></Route>
                         <Route path="/personalcenter/about/privacy" component={Privacy}></Route>
                         <Route path="/personalcenter/about/service" component={Service}></Route>
+
+                        <Route path="/personalcenter/unconfirmedtransactions" component={UnconfirmedTransactions}></Route>
 
                         <Route path="/personalcenter/help" component={personalCenterHelpCenter}></Route>
                         <Route path="/personalcenter/whatismnemonic" component={WhatIsMnemonic}></Route>
