@@ -13,6 +13,7 @@ export default {
     'aelf.SystemSetting': 'System Setting',
     'aelf.HelpCenter': 'Help Center',
     'aelf.About': 'About aelf Wallet',
+    'aelf.Cross chain transactions to be confirmed': 'Unconfirmed cross chain transactions',
     'aelf.Wallet Select': 'Switch Wallet',
     'aelf.Wallet Select Tip': 'Tip: You need to reimport the mnemonic or private key in the new wallet.',
     'aelf.Contact': 'Contact',
@@ -64,6 +65,7 @@ export default {
     'aelf.Transaction List': 'Transaction List',
     'aelf.Contact': 'Contact',
     'aelf.Commit': 'Commit',
+    'aelf.Confirm': 'Confirm',
     'aelf.New contacts': 'New contacts',
     'aelf.Name': 'Name',
     'aelf.Payee wallet address': 'Payee wallet address',
@@ -151,6 +153,6 @@ export default {
     'aelf.Notes on cross chain transfer 5': '1. For cross chain transfer initiated by other wallets, this web wallet is unable to confirm the transaction temporarily.',
     'aelf.Notes on cross chain transfer 6':
       '2. Cross chain transfer requires two transactions, one sending transaction and one confirming transaction, with a certain block confirmation time in the middle.' +
-      "You can view the cross chain transfer to be confirmed in 'My - Cross chain transactions to be confirmed'.",
+      "You can view the cross chain transfer to be confirmed in 'Settings - Unconfirmed cross chain transactions'.",
     'aelf.Notes on cross chain transfer 7': '3. Please make sure you have enough token to pay the fee in the two chain.'
 };

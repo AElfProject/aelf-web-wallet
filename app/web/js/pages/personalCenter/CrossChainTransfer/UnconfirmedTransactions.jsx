@@ -51,7 +51,7 @@ class UnconfirmedTransactions extends Component {
     ];
 
     let listHtml = lists.map(item => {
-      return <List>
+      return <List key={item.tx_id}>
         <Item>
           <div className={style.list}>
             <div className={style.listItem}>Tx id: <span className={style.listItemText}>{item.tx_id}</span></div>

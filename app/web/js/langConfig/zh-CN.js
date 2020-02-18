@@ -14,6 +14,7 @@ export default {
     'aelf.SystemSetting': '系统设置',
     'aelf.HelpCenter': '帮助中心',
     'aelf.About': '关于 aelf 钱包',
+    'aelf.Cross chain transactions to be confirmed': '待确认跨链转账',
     'aelf.Wallet Select': '切换钱包',
     'aelf.Wallet Select Tip': '提示：切换到新的钱包，需要重新导入助记词或私钥。',
     'aelf.Contact': '联系人',
@@ -64,6 +65,7 @@ export default {
     'aelf.Transaction List': '交易记录',
     'aelf.Contact': '联系人',
     'aelf.Commit': '提交',
+    'aelf.Confirm': '确认',
     'aelf.New contacts': '新建联系人',
     'aelf.Name': '姓名',
     'aelf.Payee wallet address': '钱包地址',
@@ -150,6 +152,6 @@ export default {
     'aelf.Notes on cross chain transfer 4': '注意: ',
     'aelf.Notes on cross chain transfer 5': '1. 其它钱包发起的跨链转账，本web钱包暂时无法确认交易。',
     'aelf.Notes on cross chain transfer 6':
-      '2. 跨链转账需要发两笔交易，一笔发送交易，一笔确认交易。两笔交易中间会需要等待一定的区块确认时间。在 ‘我的 - 待确认跨链转账中’，可以查看待确认的跨链转账。',
+      '2. 跨链转账需要发两笔交易，一笔发送交易，一笔确认交易。两笔交易中间会需要等待一定的区块确认时间。在 ‘设置 - 待确认跨链转账’，可以查看待确认的跨链转账。',
     'aelf.Notes on cross chain transfer 7': '3. 请确保您有足够的代币支付两个链中的交易手续费。'
 };
