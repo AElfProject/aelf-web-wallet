@@ -16,6 +16,7 @@
     "egg-aelf": "^1.0.4",
     "egg-proxy": "^1.1.0",
     "egg-scripts": "^2.5.0",
+    "egg-sequelize": "^5.2.1",
     "egg-validate": "^1.1.1",
     "egg-view": "^2.1.0",
     "egg-view-nunjucks": "^2.2.0",
@@ -24,6 +25,7 @@
     "js-cookie": "^2.2.0",
     "long": "^4.0.0",
     "moment": "^2.22.2",
+    "mysql2": "^2.1.0",
     "qrcode.react": "^0.8.0",
     "rc-form": "^2.2.6",
     "react": "^16.4.1",
@@ -67,6 +69,7 @@
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.4.0",
     "sass-loader": "^7.0.3",
+    "sequelize-cli": "^5.5.1",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "webpack": "^4.16.1",
@@ -92,7 +95,8 @@
     "lint": "eslint .",
     "ci": "npm run lint && npm run cov",
     "autod": "autod",
-    "start:dev": "webpack-dev-server"
+    "start:dev": "webpack-dev-server",
+    "initDatabase": "npx sequelize db:migrate"
   },
   "ci": {
     "version": "8"

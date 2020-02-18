@@ -24,3 +24,8 @@ exports.aelf = {
     enable: true,
     package: 'egg-aelf'
 };
+
+exports.sequelize = {
+    enable: true,
+    package: 'egg-sequelize'
+};
