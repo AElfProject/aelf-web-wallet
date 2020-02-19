@@ -11,6 +11,6 @@ module.exports = app => {
 
     router.get('/address/api/tokens', controller.address.getTokens);
     router.get('/cross/api/list', controller.crossTransactions.list);
-    // router.post('cross/api/record/update', controller.record.update);
-    // router.post('cross/api/record/update_tx_status', controller.record.updateTxStatus);
+    router.post('/cross/api/sent', controller.crossTransactions.sent);
+    router.post('/cross/api/received', controller.crossTransactions.received);
 };

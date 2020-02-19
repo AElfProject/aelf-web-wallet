@@ -14,6 +14,7 @@ module.exports.crossTransactions = function(Sequelize) {
     },
     tx_id: {
       type: STRING(64),
+      unique: true,
       allowNull: false
     },
     address: {
@@ -55,6 +56,12 @@ module.exports.crossTransactions = function(Sequelize) {
     issue_chain_id: {
       type: STRING(16),
       allowNull: false
+    },
+    status: {
+      type: INTEGER(4),
+      allowNull: false,
+      defaultValue: 0,
+      comment: 'had received'
     },
     createdAt: {
       field: 'created_at',

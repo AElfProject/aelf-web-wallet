@@ -24,7 +24,7 @@ class BaseController extends Controller {
             case 'error':
                 ctx.status = parseInt(errCode, 10);
                 result = {
-                    message: result.message
+                    message: result
                 };
                 break;
             default:
