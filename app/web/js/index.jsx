@@ -46,9 +46,13 @@ import WhatIsPrivatePublicKey from './pages/personalCenter/HelpCenter/pages/What
 import WhatIsAElfWallet from './pages/personalCenter/HelpCenter/pages/WhatIsAElfWallet';
 import HowToChangePassword from './pages/personalCenter/HelpCenter/pages/HowToChangePassword';
 import ForgetPassword from './pages/personalCenter/HelpCenter/pages/ForgetPassword';
+import NotesOnCrossChainTransfer from './pages/personalCenter/HelpCenter/pages/NotesOnCrossChainTransfer';
 // 系统设置
 import personalCenterSystemSetting from './pages/personalCenter/systemSetting/SystemSetting';
 import systemSettingNetwork from './pages/personalCenter/systemSetting/pages/Network';
+
+// Cross Chain
+import UnconfirmedTransactions from './pages/personalCenter/CrossChainTransfer/UnconfirmedTransactions';
 
 // 联系人列表
 import ContactAddressPage from './pages/ContactAddressPage/ContactAddressPage';
@@ -131,6 +135,8 @@ function initPage() {
                         <Route path="/personalcenter/about/privacy" component={Privacy}></Route>
                         <Route path="/personalcenter/about/service" component={Service}></Route>
 
+                        <Route path="/personalcenter/unconfirmedtransactions" component={UnconfirmedTransactions}></Route>
+
                         <Route path="/personalcenter/help" component={personalCenterHelpCenter}></Route>
                         <Route path="/personalcenter/whatismnemonic" component={WhatIsMnemonic}></Route>
                         <Route path="/personalcenter/whatiskeystore" component={WhatIsKeyStore}></Route>
@@ -138,6 +144,7 @@ function initPage() {
                         <Route path="/personalcenter/whatisaelfwallet" component={WhatIsAElfWallet}></Route>
                         <Route path="/personalcenter/howtochangepassword" component={HowToChangePassword}></Route>
                         <Route path="/personalcenter/forget" component={ForgetPassword} ></Route>
+                        <Route path="/personalcenter/notesoncrosschaintransfer" component={NotesOnCrossChainTransfer} ></Route>
                         <Route path="/personalcenter/systemsetting" component={personalCenterSystemSetting}></Route>
                         <Route path="/personalcenter/systemsetting/network" component={systemSettingNetwork}></Route>
 

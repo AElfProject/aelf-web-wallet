@@ -14,6 +14,7 @@ export default {
     'aelf.SystemSetting': '系统设置',
     'aelf.HelpCenter': '帮助中心',
     'aelf.About': '关于 aelf 钱包',
+    'aelf.Cross chain transactions to be confirmed': '待确认跨链转账',
     'aelf.Wallet Select': '切换钱包',
     'aelf.Wallet Select Tip': '提示：切换到新的钱包，需要重新导入助记词或私钥。',
     'aelf.Contact': '联系人',
@@ -64,6 +65,8 @@ export default {
     'aelf.Transaction List': '交易记录',
     'aelf.Contact': '联系人',
     'aelf.Commit': '提交',
+    'aelf.Confirm': '确认',
+    'aelf.Pending': '请稍等',
     'aelf.New contacts': '新建联系人',
     'aelf.Name': '姓名',
     'aelf.Payee wallet address': '钱包地址',
@@ -90,6 +93,7 @@ export default {
     'aelf.HelpTitle04': 'AElf钱包介绍',
     'aelf.HelpTitle05': '如何修改密码？',
     'aelf.HelpTitle06': '如果我忘记密码了怎么办？',
+    'aelf.HelpTitle07': '跨链转账注意事项',
     'aelf.mnemonicCon01': '助记词相当于传统金融机构的银行卡+密码。请把它放在安全的地方。助记词是明文私钥的另一种表现形式，它被设计成帮助用户记住复杂的私钥（64位散列）。记忆法一般由12, 15, 18个单词和21个单词组成。这些词是从固定的词汇中提取出来的。生成顺序也是基于一定的算法。助记词是一个未加密的私钥。任何人得到你的助记词之后，就可以不费吹灰之力夺走你的资产。',
     'aelf.mnemonicCon02': '因此，用户在备份助记符时必须注意三点：',
     'aelf.mnemonicCon03': '1、尽可能采用物理介质，例如把助记词写在纸上，尽可能不要采用截屏或者拍照之后放在联网设备上，以防被黑客窃取。',
@@ -124,6 +128,7 @@ export default {
     'aelf.To Address': '发送地址',
     'aelf.Transaction': '交易',
     'aelf.Amount to send': '发送值/价值',
+    'aelf.Memo to send': '备注',
     'aelf.Balance': '等量',
     'aelf.New Provider': '新供应商',
     'aelf.slow': '慢',
@@ -140,5 +145,16 @@ export default {
     'aelf.BackUpCon04': '备份助记词在您丢失钱包或忘记密码时，能帮助您恢复钱包。',
     'aelf.Backup now': '立即备份助记词',
     'aelf.The passwords confirmed error.': '两次输入不一致',
-    'aelf.Not less than 9 characters, including upper and lower case characters, numbers, special characters.': '不少于9个字符，包括大小写字符、数字、特殊字符'
+    'aelf.Not less than 9 characters, including upper and lower case characters, numbers, special characters.': '不少于9个字符，包括大小写字符、数字、特殊字符',
+    'aelf.Notes on cross chain transfer': '跨链转账注意事项',
+    'aelf.Notes on cross chain transfer 1': '将收款人地址改为指定链ID即可',
+    'aelf.Notes on cross chain transfer 2': '示例:',
+    'aelf.Notes on cross chain transfer 3': '已知地址ELF_address_AELF, 想在需要往链tDVV的该地址转移token，' +
+      '则将地址改为ELF_address_tDVV，并按操作完成后续转账即可',
+    'aelf.Notes on cross chain transfer 4': '注意: ',
+    'aelf.Notes on cross chain transfer 5': '1. 其它钱包发起的跨链转账，本web钱包暂时无法确认交易。',
+    'aelf.Notes on cross chain transfer 6':
+      '2. 跨链转账需要发两笔交易，一笔发送交易，一笔确认交易。两笔交易中间会需要等待一定的区块确认时间。在 ‘设置 - 待确认跨链转账’，可以查看待确认的跨链转账。',
+    'aelf.Notes on cross chain transfer 7': '3. 请确保您有足够的代币支付两个链中的交易手续费。',
+    'aelf.Notes on cross chain transfer 8': '4. 确认交易请在‘设置 - 系统设置’中，选择到对应的接收钱包中查看，发起交易的钱包无法查看该交易。'
 };

@@ -11,6 +11,7 @@ import style from './TransactionDetail.scss';
 import {hashHistory} from 'react-router';
 
 import { BigNumber } from 'bignumber.js';
+import AElf from 'aelf-sdk';
 
 import NavNormal from '../../NavNormal/NavNormal';
 
@@ -40,12 +41,20 @@ export default class TransactionDetail extends Component {
         this.tokenName = getParam('token', stringTemp);
         this.decimals = getParam('decimals', stringTemp);
         this.contractAddress = getParam('contract_address', stringTemp);
+        this.isCrossChain = getParam('is_cross_chain', stringTemp);
+        this.from = getParam('from', stringTemp);
+        this.to = getParam('to', stringTemp);
+        this.type = getParam('type', stringTemp);
 
-        this.aelf = initAelf({
-            chainOnly: true,
-            tokenName: this.tokenName,
-            contractAddress: this.contractAddress
-        });
+        this.aelf = new AElf(new AElf.providers.HttpProvider(
+          window.defaultConfig.WEB_API_INFO[window.defaultConfig.chainId].url)
+        );
+
+        // cross transfer txid
+        if (this.from && this.to) {
+            const providerUrl =  window.defaultConfig.WEB_API_INFO[this.to].url;
+            this.aelf.setProvider(new AElf.providers.HttpProvider(providerUrl));
+        }
     }
 
     componentDidMount() {
@@ -53,7 +62,7 @@ export default class TransactionDetail extends Component {
     }
 
     getChainStatus() {
-        this.aelf.aelf.chain.getChainStatus().then(result => {
+        this.aelf.chain.getChainStatus().then(result => {
             this.setState({
                 chainStatus: result
             });
@@ -63,18 +72,17 @@ export default class TransactionDetail extends Component {
     getTxInfo() {
         let txid = this.txid;
         let tokenName = this.tokenName;
-        let contractAddress = this.contractAddress;
 
         let txInfo = {
             txState: false,
             txResult: null,
             txid,
-            tokenName,
-            contractAddress
+            tokenName
         };
         try {
-            if (txid && contractAddress) {
-                let result = this.aelf.aelf.chain.getTxResult(txid, {sync: true});
+            if (txid) {
+
+                let result = this.aelf.chain.getTxResult(txid, {sync: true});
                 if (result.error) {
                     txInfo.txResult = result.error;
                 }
@@ -141,7 +149,12 @@ export default class TransactionDetail extends Component {
 
         let addressFromShow = Transaction.From;
         let addressToShow = toShow;
-        if (MethodName === 'CrossChainTransfer') {
+        // cross chain
+        if (this.from && this.to) {
+            addressFromShow = addressPrefixSuffix(addressFromShow, null, this.from);
+            addressToShow = addressPrefixSuffix(addressToShow, null, this.to);
+        }
+        else if (MethodName === 'CrossChainTransfer') {
             addressFromShow = addressPrefixSuffix(addressFromShow);
             addressToShow = addressPrefixSuffix(addressToShow, toChainId);
         }
@@ -254,8 +267,22 @@ export default class TransactionDetail extends Component {
         </div>;
     }
 
+    renderTurnToCrossPendingHTML() {
+        return (<div className={style.crossPendingBottom}>
+            <AelfButton
+              onClick={() => {
+                  hashHistory.push('/personalcenter/unconfirmedtransactions');
+              }}
+              text = 'Cross chain transactions to be confirmed'
+            />
+        </div>);
+    }
+
     renderTurnToExplorerHTML(txId) {
-        const explorerURL = window.defaultConfig.explorerURL + '/tx/' + txId;
+        let explorerURL = window.defaultConfig.explorerURL + '/tx/' + txId;
+        if (this.to) {
+            explorerURL = window.defaultConfig.WEB_API_INFO[this.to].explorer + '/tx/' + txId;
+        }
 
         return (<div className={style.bottom}>
             <AelfButton
@@ -307,6 +334,8 @@ export default class TransactionDetail extends Component {
         const blockHeightHTML = this.renderBlockHeightHTML(BlockNumber, Status);
         const turnToExplorerHTML = this.renderTurnToExplorerHTML(txid);
 
+        const turnToCrossPendingList = this.isCrossChain ? this.renderTurnToCrossPendingHTML() : null;
+
         const containerStyle = getPageContainerStyle();
         let txInfoContainerStyle = Object.assign({}, containerStyle);
         txInfoContainerStyle.height -= 150;
@@ -334,6 +363,7 @@ export default class TransactionDetail extends Component {
                             {notTransferHtml}
                         </div>
                     </div>
+                    {turnToCrossPendingList}
                     {turnToExplorerHTML}
                 </div>
             </div>

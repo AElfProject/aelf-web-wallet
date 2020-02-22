@@ -17,7 +17,8 @@ export default function addressCheck(address = '', options = {
     if (addressPartsArray.length === 3) {
         if (addressPartsArray[2] !== window.defaultConfig.ADDRESS_INFO.CURRENT_CHAIN_ID) {
             output = {
-                ready: false,
+                ready: true,
+                isCrossChain: true,
                 message: '`Cross Chain` please use iOS/Android wallet.'
             };
             return output;
@@ -39,7 +40,7 @@ export default function addressCheck(address = '', options = {
         if (addressFroTx === addressUse && options.compareToUse) {
             output = {
                 ready: false,
-                message: 'Address and current wallet are the same.'
+                message: 'Address of current wallet.'
             };
             return output;
         }

@@ -32,7 +32,7 @@ export default class AelfList extends Component {
                             width: 16,
                             height: 16
                         }}
-                    ></Svg>
+                    />
                 </div>;
         }
 
@@ -47,7 +47,7 @@ export default class AelfList extends Component {
                         <div>
                             <Svg
                                 icon="right12"
-                            ></Svg>
+                            />
                         </div>
                     </div>
                 </Item>

@@ -54,6 +54,11 @@ class HelpCenter extends Component {
                 url: '/personalcenter/forget',
                 text: <FormattedMessage id = 'aelf.HelpTitle06' defaultMessage = 'What if I forget my password?' />,
                 type: type
+            },
+            {
+                url: '/personalcenter/notesoncrosschaintransfer',
+                text: <FormattedMessage id = 'aelf.HelpTitle07' defaultMessage = 'Notes on cross chain transfer' />,
+                type: type
             }
 		];
 
