@@ -43,7 +43,7 @@ module.exports = {
         },
         tDVW: {
             url: 'http://13.236.40.223:8000',
-            explorer: 'https://tdvw-explorer-test-side02.aelf.io',
+            explorer: 'https://tdvw-explorer-test.aelf.io',
             // url: 'http://3.112.150.128:8000',
             id: 1931928,
             feeToken: 'EDA',
@@ -52,7 +52,7 @@ module.exports = {
         },
         tDVX: {
             url: 'http://13.239.50.175:8000',
-            explorer: 'https://tdvx-explorer-test-side03.aelf.io',
+            explorer: 'https://tdvx-explorer-test.aelf.io',
             // url: 'http://3.112.226.157:8000',
             id: 1997464,
             feeToken: 'EDB',
@@ -61,7 +61,7 @@ module.exports = {
         },
         tDVY: {
             url: 'http://13.55.199.121:8000',
-            explorer: 'https://tdvy-explorer-test-side04.aelf.io',
+            explorer: 'https://tdvy-explorer-test.aelf.io',
             // url: 'http://176.34.14.149:8000',
             id: 2063000,
             feeToken: 'EDC',
@@ -70,7 +70,7 @@ module.exports = {
         },
         tDVZ: {
             url: 'http://3.104.42.91:8000',
-            explorer: 'https://tdvz-explorer-test-side05.aelf.io',
+            explorer: 'https://tdvz-explorer-test.aelf.io',
             // url: 'http://13.231.243.127:8000',
             id: 2128536,
             feeToken: 'EDD',
