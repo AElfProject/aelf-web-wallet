@@ -21,6 +21,7 @@ class NotesOnCrossChainTransfer extends Component {
           <p><FormattedMessage id = 'aelf.Notes on cross chain transfer 5' /></p>
           <p><FormattedMessage id = 'aelf.Notes on cross chain transfer 6' /></p>
           <p><FormattedMessage id = 'aelf.Notes on cross chain transfer 7' /></p>
+          <p><FormattedMessage id = 'aelf.Notes on cross chain transfer 8' /></p>
         </div>
       </div>
     );

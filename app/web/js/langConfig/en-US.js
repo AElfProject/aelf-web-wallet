@@ -156,5 +156,7 @@ export default {
     'aelf.Notes on cross chain transfer 6':
       '2. Cross chain transfer requires two transactions, one sending transaction and one confirming transaction, with a certain block confirmation time in the middle.' +
       "You can view the cross chain transfer to be confirmed in 'Settings - Unconfirmed cross chain transactions'.",
-    'aelf.Notes on cross chain transfer 7': '3. Please make sure you have enough token to pay the fee in the two chain.'
+    'aelf.Notes on cross chain transfer 7': '3. Please make sure you have enough token to pay the fee in the two chain.',
+    'aelf.Notes on cross chain transfer 8': "4. Please turn to 'Settings - SystemSetting - Switch Wallet', select the receive wallet to get the confirming transaction." +
+      'You can not see the confirming transaction in this wallet.'
 };
