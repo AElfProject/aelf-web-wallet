@@ -40,6 +40,7 @@ at first
 config/config.default.js
 # set your own metaSource
 # set your own config.keys
+# set your own sequelize
 
 config/config.node.js
 # set you own apiServerProvider
@@ -48,9 +49,19 @@ config/config.node.js
 
 ### 2.Install Webpack
 
-```javascript
+```bash
 npm install -g webpack
 npm install -g webpack-cli
+```
+
+### 3.Init mysql
+
+```bash
+mysql -u xxx -e 'CREATE DATABASE IF NOT EXISTS `egg-sequelize-wallet-dev`;'
+mysql -u xxx -e 'CREATE DATABASE IF NOT EXISTS `egg-sequelize-wallet-test`;'
+mysql -u xxx -e 'CREATE DATABASE IF NOT EXISTS `egg-sequelize-wallet-pro`;'
+
+npm run initDatabase
 ```
 
 ### 3.Start the node server
