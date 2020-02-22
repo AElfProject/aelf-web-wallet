@@ -27,7 +27,6 @@ class CrossTransactionsService extends Service {
     const {ctx} = this;
     const {
       tx_id,
-      address,
       from,
       to,
       symbol,
@@ -43,14 +42,13 @@ class CrossTransactionsService extends Service {
     } = options;
 
     const verifyResult = signatureVerify({
-      address,
+      address: from,
       signed_address,
       public_key
     });
     if (verifyResult) {
       return ctx.model.CrossTransactions.create({
         tx_id,
-        address,
         from,
         to,
         symbol,
@@ -86,7 +84,7 @@ class CrossTransactionsService extends Service {
       }, {
         where: {
           tx_id,
-          address
+          from: address
         }
       });
     }

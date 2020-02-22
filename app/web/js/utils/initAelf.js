@@ -21,28 +21,7 @@ const TIMEOUT = null;
 export default function init(options = {}) {
 
     let {password, contractAddress, chainOnly, httpProvider = ''} = options;
-    let wallet = '';
-    if (password) {
-        let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
-        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
-        let AESEncryptoPrivateKey = walletInfoList[walletAddress].AESEncryptoPrivateKey;
-
-        let privateKey = '';
-        try {
-            privateKey = Aelf.wallet.AESDecrypt(AESEncryptoPrivateKey, password);
-        }
-        catch (e) {
-            return error('Password Error');
-        }
-        if (!privateKey) {
-            return error('Password Error');
-        }
-        wallet = Aelf.wallet.getWalletByPrivateKey(privateKey);
-    }
-    else {
-        // 公共账户用来进行查询操作。需要转账操作时,再使用用户的账户。
-        wallet = Aelf.wallet.getWalletByPrivateKey(window.defaultConfig.commonPrivateKey);
-    }
+    let wallet = getWallet(password);
 
     // var HttpProvider = function (host, timeout, user, password, headers) { /*...*/ }
     // const proxyHttpProvider = `/api/proxy?contract_address=${contractAddress}&ptype=rpc&action=`;
@@ -83,6 +62,32 @@ export default function init(options = {}) {
         aelf,
         contractMethods
     };
+}
+
+export function getWallet(password) {
+    let wallet = '';
+    if (password) {
+        let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+        let AESEncryptPrivateKey = walletInfoList[walletAddress].AESEncryptoPrivateKey;
+
+        let privateKey = '';
+        try {
+            privateKey = Aelf.wallet.AESDecrypt(AESEncryptPrivateKey, password);
+        }
+        catch (e) {
+            return error('Password Error');
+        }
+        if (!privateKey) {
+            return error('Password Error');
+        }
+        wallet = Aelf.wallet.getWalletByPrivateKey(privateKey);
+    }
+    else {
+        // 公共账户用来进行查询操作。需要转账操作时,再使用用户的账户。
+        wallet = Aelf.wallet.getWalletByPrivateKey(window.defaultConfig.commonPrivateKey);
+    }
+    return wallet;
 }
 
 // TODO, 整理一套返回格式。

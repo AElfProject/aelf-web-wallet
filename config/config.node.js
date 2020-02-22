@@ -25,6 +25,7 @@ module.exports = {
     WEB_API_INFO: encodeURIComponent(JSON.stringify({
         AELF: {
             url: 'http://3.25.10.185:8000',
+            explorer: 'https://explorer-test.aelf.io',
             // url: 'http://54.199.254.157:8000',
             id: 9992731,
             feeToken: 'ELF',
@@ -33,6 +34,7 @@ module.exports = {
         },
         tDVV: {
             url: 'http://13.211.28.67:8000',
+            explorer: 'https://explorer-test-side01.aelf.io',
             // url: 'http://3.112.250.87:8000',
             id: 1866392,
             feeToken: 'EPC',
@@ -41,6 +43,7 @@ module.exports = {
         },
         tDVW: {
             url: 'http://13.236.40.223:8000',
+            explorer: 'https://explorer-test-side02.aelf.io',
             // url: 'http://3.112.150.128:8000',
             id: 1931928,
             feeToken: 'EDA',
@@ -49,6 +52,7 @@ module.exports = {
         },
         tDVX: {
             url: 'http://13.239.50.175:8000',
+            explorer: 'https://explorer-test-side03.aelf.io',
             // url: 'http://3.112.226.157:8000',
             id: 1997464,
             feeToken: 'EDB',
@@ -57,6 +61,7 @@ module.exports = {
         },
         tDVY: {
             url: 'http://13.55.199.121:8000',
+            explorer: 'https://explorer-test-side04.aelf.io',
             // url: 'http://176.34.14.149:8000',
             id: 2063000,
             feeToken: 'EDC',
@@ -65,6 +70,7 @@ module.exports = {
         },
         tDVZ: {
             url: 'http://3.104.42.91:8000',
+            explorer: 'https://explorer-test-side05.aelf.io',
             // url: 'http://13.231.243.127:8000',
             id: 2128536,
             feeToken: 'EDD',
@@ -75,27 +81,33 @@ module.exports = {
     TOKEN_CROSS_SUPPORT: encodeURIComponent(JSON.stringify({
         ELF: {
             issueChainId: 9992731,
-            readyTo: [9992731, 1866392, 1931928, 1997464, 2063000, 2128536]
+            readyTo: [9992731, 1866392, 1931928, 1997464, 2063000, 2128536],
+            decimals: 8
         },
         EPC: {
             issueChainId: 1866392,
-            readyTo: [9992731, 1866392]
+            readyTo: [9992731, 1866392],
+            decimals: 8
         },
         EDA: {
             issueChainId: 1931928,
-            readyTo: [9992731, 1931928]
+            readyTo: [9992731, 1931928],
+            decimals: 8
         },
         EDB: {
             issueChainId: 1997464,
-            readyTo: [9992731, 1997464]
+            readyTo: [9992731, 1997464],
+            decimals: 8
         },
         EDC: {
             issueChainId: 2063000,
-            readyTo: [9992731, 2063000]
+            readyTo: [9992731, 2063000],
+            decimals: 8
         },
         EDD: {
             issueChainId: 2128536,
-            readyTo: [9992731, 2128536]
+            readyTo: [9992731, 2128536],
+            decimals: 8
         }
     })),
     ADDRESS_INFO: encodeURIComponent(JSON.stringify({

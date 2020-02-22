@@ -20,11 +20,12 @@ class CrossTransactionsController extends baseController {
     try {
       const result = await ctx.model.CrossTransactions.findAll({
         where: {
-          address,
+          from: address,
           status: 0
         },
         offset: parseInt(offset, 10),
-        limit: parseInt(limit, 10)
+        limit: parseInt(limit, 10),
+        order: [[ 'id', 'DESC' ]]
       });
       this.formatOutput('get', result);
     } catch (error) {
@@ -36,7 +37,6 @@ class CrossTransactionsController extends baseController {
     const { ctx } = this;
     const {
       tx_id,
-      address,
       from,
       to,
       symbol,
@@ -53,7 +53,6 @@ class CrossTransactionsController extends baseController {
 
     const options = {
       tx_id,
-      address,
       from,
       to,
       symbol,
@@ -70,12 +69,15 @@ class CrossTransactionsController extends baseController {
 
     const keysRule = {
       tx_id: 'string',
-      address: 'string',
       from: 'string',
       to: 'string',
       symbol: 'string',
       amount: 'string',
-      memo: 'string',
+      memo: {
+        type: 'string',
+        required: false,
+        allowEmpty: true
+      },
       time: 'string',
       send_node: 'string',
       receive_node: 'string',

@@ -6,10 +6,9 @@
  */
 // TODO: 重点关注Int64的处理！！！！！！！！
 import React, {Component} from 'react';
-import {List, InputItem, Toast, Modal} from 'antd-mobile';
+import {List, InputItem, Toast} from 'antd-mobile';
 import style from './Transfer.scss';
 import {hashHistory} from 'react-router';
-import Long from 'long';
 import { BigNumber } from 'bignumber.js';
 
 import AelfButton from './../../../components/Button/Button';
@@ -25,8 +24,10 @@ import {
     getBalanceAndTokenName
 } from '../../../utils/utils';
 
+import {getWallet} from '../../../utils/initAelf';
+import {CrossChainMethods} from '../../../utils/crossChain';
+
 import {FormattedMessage} from 'react-intl';
-import { from } from 'rxjs/observable/from';
 
 export default class Transfer extends Component {
     constructor(props) {
@@ -34,6 +35,11 @@ export default class Transfer extends Component {
         this.state = {
             decimals: 0,
             balance: new BigNumber(0),
+            memo: '',
+            amountError: null,
+            memoError: null,
+            addressError: null,
+            isCrossChain: false
         };
         this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
         this.contractAddress = getParam('contract_address', window.location.href);
@@ -41,16 +47,60 @@ export default class Transfer extends Component {
     }
 
     inputAmount(amount) {
+        let amountBig = new BigNumber(amount);
+
+        if (amountBig.isNaN() || !amountBig.isFinite() || !amountBig.gt(0)) {
+            this.setState({
+                amount,
+                amountError: 'Invalid Number'
+            });
+            return;
+        }
+
+        if (amountBig.gt(this.state.balance)) {
+            this.setState({
+                amount,
+                amountError: 'insufficient'
+            });
+            return;
+        }
+
         this.setState({
             amount,
-            amountError: false
+            amountError: null
+        });
+    }
+
+    inputMemo(memo) {
+        if (memo.replace(/[^\u0000-\u00ff]/g, 'aa').length > 64) {
+            const memoError = 'Too long memo';
+            this.setState({
+                memo,
+                memoError
+            });
+            return;
+        }
+
+        this.setState({
+            memo,
+            memoError: null
         });
     }
 
     inputAddress(address) {
+        // checkAddress
+        let addressCheckResult = addressCheck(address);
+        if (!addressCheckResult.ready) {
+            this.setState({
+                address,
+                addressError: addressCheckResult.message
+            });
+            return;
+        }
         this.setState({
             address: address,
-            addressError: false
+            isCrossChain: addressCheckResult.isCrossChain || false,
+            addressError: null
         });
     }
 
@@ -89,90 +139,136 @@ export default class Transfer extends Component {
         this.setState = () => {};
     }
 
+    crossTransfer(options) {
+        const {password, address, tokenName, amountBig, amount, memo, contractAddress, decimals} = options;
+        const wallet = getWallet(password);
+        if (wallet.errormsg) {
+            this.setState({passwordError: wallet.errormsg});
+            Toast.hide();
+            Toast.fail(wallet.errormsg, 3, () => {}, false);
+            return;
+        }
+
+        const crossInstance = new CrossChainMethods({
+            wallet,
+            WEB_API_INFO: window.defaultConfig.WEB_API_INFO,
+            TOKEN_CROSS_SUPPORT: window.defaultConfig.TOKEN_CROSS_SUPPORT
+        });
+
+        // window.crossTemp = crossInstance;
+
+        const crossParams = {
+            transfer: {
+                to: address,
+                symbol: tokenName,
+                amount: amountBig.multipliedBy(Math.pow(10, decimals)).toNumber(),
+                memo
+            },
+            amountShow: amount,
+            fromChain: window.defaultConfig.chainId
+        };
+        Toast.loading('Cross chain transfer', 30);
+        console.log('Cross chain transfer');
+        crossInstance.send(crossParams).then(result => {
+            console.log('cross error', result);
+            if (result.isNotReady) {
+                Toast.hide();
+                Toast.fail(result.message, 3, () => { }, false);
+                return;
+            }
+            Toast.hide();
+
+            hashHistory.push(`/transactiondetail?txid=${result}&is_cross_chain=1`
+              + `&token=${tokenName}&contract_address=${contractAddress}&decimals=${decimals}`);
+        }).catch(error => {
+            console.log('cross error', error);
+            Toast.hide();
+            Toast.fail(error, 3, () => { }, false);
+        });
+    }
+
+    normalTransfer(options) {
+        const {password, contractAddress, tokenName, address, amountBig, memo, decimals} = options;
+        // Normal transfer
+        let aelf = initAelf({
+            password,
+            contractAddress
+        });
+
+        if (aelf.errormsg) {
+            this.setState({passwordError: aelf.errormsg});
+            Toast.hide();
+            Toast.fail(aelf.errormsg, 3, () => {}, false);
+            return;
+        }
+
+        aelf.contractMethods.Transfer({
+            symbol: tokenName,
+            to: address,
+            amount: amountBig.multipliedBy(Math.pow(10, decimals)).toNumber(),
+            memo
+        }).then(transfer => {
+            Toast.hide();
+            hashHistory.push(`/transactiondetail?txid=${transfer.TransactionId}`
+              + `&token=${tokenName}&contract_address=${contractAddress}&decimals=${decimals}`);
+        }).catch(error => {
+            Toast.hide();
+            Toast.fail(error, 3, () => { }, false);
+        });
+    }
+
     // TODO: 使用string 转bigNumber操作.
     transfer() {
         // TODO:
         // check amount
-        Toast.loading('Loading...', 30);
+        let {
+            password, address, memo, amount, addressError, memoError, amountError, isCrossChain, decimals
+        } = this.state;
+
+        const errorMessage = addressError || memoError || amountError;
+        if (errorMessage) {
+            Toast.fail(errorMessage, 3, () => {}, false);
+            return;
+        }
+
+        const loadingMessage = isCrossChain ? 'Cross chain transfer...' : 'Loading...';
+        Toast.loading(loadingMessage, 30);
         // 为了能展示loading, 不惜牺牲用户50毫秒。sad
         setTimeout(() => {
-            let password = this.state.password;
-
-            // checkAddress
-            let address = this.state.address;
-            let addressCheckResult = addressCheck(address);
-            if (!addressCheckResult.ready) {
-                this.setState({addressError: addressCheckResult.message});
-                Toast.hide();
-                Toast.fail(addressCheckResult.message, 3, () => {}, false);
-                return;
-            }
-
             // check balance
             // let amount = parseInt(this.state.amount, 10);
-            let amountBig = new BigNumber(this.state.amount);
+            let amountBig = new BigNumber(amount);
 
-            if (amountBig.isNaN() || !amountBig.isFinite() || !amountBig.gt(0)) {
-                this.setState({
-                    amountError: 'Invalid Number'
-                });
-                Toast.hide();
-                Toast.fail('Invalid Number', 3, () => {}, false);
-                return;
-            }
+            const {tokenName, contractAddress}  = this;
+            const options = {
+                password, contractAddress, address, tokenName, amountBig, amount, memo, decimals
+            };
+            isCrossChain ? this.crossTransfer(options) :  this.normalTransfer(options);
 
-            // const amountLong = new Long(amount);
-            // if (amountLong.greaterThan(this.state.balance)) {
-            if (amountBig.gt(this.state.balance)) {
-                Toast.hide();
-                Toast.fail('insufficient', 3, () => {}, false);
-                return;
-            }
-            const tokenName = this.tokenName;
-            const contractAddress = this.contractAddress;
-            let aelf = initAelf({
-                password,
-                contractAddress
-            });
-
-            if (aelf.errormsg) {
-                this.setState({passwordError: aelf.errormsg});
-                Toast.hide();
-                Toast.fail(aelf.errormsg, 3, () => {}, false);
-                return;
-            }
-
-            // let transfer = aelf.contractMethods.Transfer(address, amount);
-            // let transfer =
-            aelf.contractMethods.Transfer({
-                symbol: tokenName,
-                to: address,
-                amount: amountBig.multipliedBy(Math.pow(10, this.state.decimals)).toNumber(),
-                memo: ''
-            }).then(transfer => {
-              Toast.hide();
-              hashHistory.push(`/transactiondetail?txid=${transfer.TransactionId}&token=${tokenName}&contract_address=${contractAddress}&decimals=${this.state.decimals}`);
-            }).catch(error => {
-              Toast.hide();
-              Toast.fail(error, 3, () => { }, false);
-            });
         }, 50);
     }
 
     render() {
+        const {addressError, amountError, memoError, passwordError} = this.state;
+
         let addressErrorText;
-        if (this.state.addressError) {
-            addressErrorText = <div className={style.error}>{this.state.addressError}</div>;
+        if (addressError) {
+            addressErrorText = <div className={style.error}>{addressError}</div>;
         }
 
         let amountErrorText;
-        if (this.state.amountError) {
-            amountErrorText = <span className={style.error}>{this.state.amountError} &nbsp;</span>;
+        if (amountError) {
+            amountErrorText = <span className={style.error}>{amountError} &nbsp;</span>;
+        }
+
+        let memoErrorText;
+        if (memoError) {
+            memoErrorText = <span className={style.error}>{memoError}</span>;
         }
 
         let passwordErrorText;
-        if (this.state.passwordError) {
-            passwordErrorText = <div className={style.error}>{this.state.passwordError}</div>;
+        if (passwordError) {
+            passwordErrorText = <div className={style.error}>{passwordError}</div>;
         }
 
         let createButton
@@ -198,7 +294,9 @@ export default class Transfer extends Component {
                 <NavNormal/>
                 <div className={style.container} style={containerStyle}>
                     <div className="aelf-input-container aelf-dash-light">
-                        <div className={style.title}>{this.state.tokenName} <FormattedMessage id = 'aelf.Transaction' /></div>
+                        <div className={style.title}>
+                            {this.state.tokenName} <FormattedMessage id = 'aelf.Transaction' />
+                        </div>
                         <List>
                             <div className="aelf-input-title" style={{
                                 marginTop: 28
@@ -230,6 +328,21 @@ export default class Transfer extends Component {
                                 placeholder=""
                                 onChange={amount => this.inputAmount(amount)}
                                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+                            />
+                        </List>
+
+                        <List>
+                            <div className="aelf-input-title">
+                                <div><FormattedMessage id = 'aelf.Memo to send' /></div>
+                                <div>
+                                    {memoErrorText}
+                                </div>
+                            </div>
+                            <InputItem
+                              value={this.state.memo}
+                              placeholder=""
+                              onChange={memo => this.inputMemo(memo)}
+                              moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                             />
                         </List>
 

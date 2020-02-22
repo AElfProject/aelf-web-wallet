@@ -17,10 +17,6 @@ module.exports.crossTransactions = function(Sequelize) {
       unique: true,
       allowNull: false
     },
-    address: {
-      type: STRING(64),
-      allowNull: false
-    },
     from: {
       type: STRING(64),
       allowNull: false
@@ -33,9 +29,13 @@ module.exports.crossTransactions = function(Sequelize) {
       type: STRING(32),
       allowNull: false
     },
-    memo: {
+    symbol: {
       type: STRING(32),
       allowNull: false
+    },
+    memo: {
+      type: STRING(64),
+      allowNull: true
     },
     time: {
       type: STRING(16),
