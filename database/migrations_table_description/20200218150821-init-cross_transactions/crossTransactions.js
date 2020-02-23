@@ -42,11 +42,11 @@ module.exports.crossTransactions = function(Sequelize) {
       allowNull: false
     },
     send_node: {
-      type: STRING(32),
+      type: STRING(128),
       allowNull: false
     },
     receive_node: {
-      type: STRING(32),
+      type: STRING(128),
       allowNull: false
     },
     main_chain_id: {
