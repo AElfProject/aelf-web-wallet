@@ -57,9 +57,9 @@ npm install -g webpack-cli
 ### 3.Init mysql
 
 ```bash
-mysql -u xxx -e 'CREATE DATABASE IF NOT EXISTS `egg-sequelize-wallet-dev`;'
-mysql -u xxx -e 'CREATE DATABASE IF NOT EXISTS `egg-sequelize-wallet-test`;'
-mysql -u xxx -e 'CREATE DATABASE IF NOT EXISTS `egg-sequelize-wallet-pro`;'
+mysql -u xxx -e 'CREATE DATABASE IF NOT EXISTS `egg_sequelize_wallet_dev`;'
+mysql -u xxx -e 'CREATE DATABASE IF NOT EXISTS `egg_sequelize_wallet_test`;'
+mysql -u xxx -e 'CREATE DATABASE IF NOT EXISTS `egg_sequelize_wallet_pro`;'
 
 npm run initDatabase
 ```

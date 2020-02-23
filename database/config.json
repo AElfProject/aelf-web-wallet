@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "egg-sequelize-wallet-dev",
+    "database": "egg_sequelize_wallet_dev",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "operatorsAliases": false
@@ -10,7 +10,7 @@
   "test": {
     "username": "root",
     "password": null,
-    "database": "egg-sequelize-wallet-test",
+    "database": "egg_sequelize_wallet_test",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "operatorsAliases": false
@@ -18,7 +18,7 @@
   "production": {
     "username": "root",
     "password": null,
-    "database": "egg-sequelize-wallet-pro",
+    "database": "egg_sequelize_wallet_pro",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "operatorsAliases": false

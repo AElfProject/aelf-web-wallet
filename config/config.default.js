@@ -44,7 +44,7 @@ module.exports = appInfo => {
         dialect: 'mysql',
         host: '127.0.0.1',
         port: 3306,
-        database: 'egg-sequelize-wallet-dev'
+        database: 'egg_sequelize_wallet_dev'
     };
 
     // add your config here
