@@ -182,7 +182,6 @@ export default class Transfer extends Component {
               + `&token=${tokenName}&contract_address=${contractAddress}&decimals=${decimals}`);
         }).catch(error => {
             console.log('cross error', error);
-            Toast.hide();
             Toast.fail(error.message || error, 3, () => { }, false);
         });
     }
@@ -197,7 +196,6 @@ export default class Transfer extends Component {
 
         if (aelf.errormsg) {
             this.setState({passwordError: aelf.errormsg});
-            Toast.hide();
             Toast.fail(aelf.errormsg, 3, () => {}, false);
             return;
         }
@@ -212,7 +210,6 @@ export default class Transfer extends Component {
             hashHistory.push(`/transactiondetail?txid=${transfer.TransactionId}`
               + `&token=${tokenName}&contract_address=${contractAddress}&decimals=${decimals}`);
         }).catch(error => {
-            Toast.hide();
             Toast.fail(error, 3, () => { }, false);
         });
     }
