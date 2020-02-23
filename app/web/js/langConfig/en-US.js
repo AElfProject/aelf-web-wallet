@@ -128,7 +128,7 @@ export default {
     'aelf.To Address': 'To Address',
     'aelf.Transaction': 'Transaction',
     'aelf.Amount to send': 'Value / Amount to Send',
-    'aelf.Memo to send': 'Memo to Send',
+    'aelf.Memo to send': 'Memo',
     'aelf.Balance': 'Balance',
     'aelf.New Provider': 'New Provider',
     'aelf.slow': 'Slow',
