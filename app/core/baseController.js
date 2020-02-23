@@ -23,9 +23,17 @@ class BaseController extends Controller {
                 break;
             case 'error':
                 ctx.status = parseInt(errCode, 10);
-                result = {
-                    message: result
-                };
+                if (typeof result !== 'object') {
+                    result = {
+                        message: result
+                    };
+                }
+                else {
+                    result = {
+                        message: result.message || JSON.stringify(result)
+                    };
+                }
+
                 break;
             default:
         }

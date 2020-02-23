@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
-    "aelf-sdk": "^3.1.12",
+    "aelf-sdk": "^3.2.26",
     "aelf-sdk-cross-chain": "^1.0.11",
     "antd-mobile": "^2.2.2",
     "apisauce": "^1.0.1",
