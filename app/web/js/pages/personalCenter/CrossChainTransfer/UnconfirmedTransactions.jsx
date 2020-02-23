@@ -71,6 +71,7 @@ class UnconfirmedTransactions extends Component {
     crossInstance.receive(options).then(result => {
       console.log('result', result);
       if (result.TransactionId) {
+        Toast.hide();
         const {symbol, to} = transfer;
         const toChain = to.split('_')[2];
         const decimals = window.defaultConfig.TOKEN_CROSS_SUPPORT[symbol].decimals;
@@ -78,7 +79,7 @@ class UnconfirmedTransactions extends Component {
           + `&decimals=${decimals}&from=${fromChain}&to=${toChain}&type=receive`);
       }
     }).catch(error => {
-      Toast.fail(error, 3, () => {}, false);
+      Toast.fail(error.message || 'Something error', 3, () => {}, false);
     });
   }
 
