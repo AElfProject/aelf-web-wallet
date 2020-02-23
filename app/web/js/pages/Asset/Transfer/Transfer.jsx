@@ -183,7 +183,7 @@ export default class Transfer extends Component {
         }).catch(error => {
             console.log('cross error', error);
             Toast.hide();
-            Toast.fail(error, 3, () => { }, false);
+            Toast.fail(error.message || error, 3, () => { }, false);
         });
     }
 
