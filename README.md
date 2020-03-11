@@ -79,7 +79,7 @@ npm install
 # dev
 npm run dev
 # pro
-pro: npm start
+npm start
 ```
 
 default port: 7001
