@@ -43,7 +43,7 @@ config/config.default.js
 # set your own sequelize
 
 config/config.node.js
-# set you own apiServerProvider
+# set you own apiServerProvider // api from aelf-block-api
 # set your own default mainTokenName & mainTokenContract
 
 database/config.json
