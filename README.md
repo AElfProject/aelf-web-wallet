@@ -38,13 +38,16 @@ at first
 
 ```shell
 config/config.default.js
-# set your own metaSource
+# set your own metaSource // api from aelf-block-api
 # set your own config.keys
 # set your own sequelize
 
 config/config.node.js
 # set you own apiServerProvider
 # set your own default mainTokenName & mainTokenContract
+
+database/config.json
+# set your sql config for sequelize
 ```
 
 ### 2.Install Webpack
@@ -98,22 +101,6 @@ How to proxy in nginx instead of proxy in nodejs.
   - `when use online(https)`set your own ssl_certificate and ssl_certificate_key.
 
 And please use plugin.nginx.js & demo.config.default.nginx.js instead of plugin.js & demo.config.defalut.js
-
-## Advance(For Your Information)
-
-`Important` If you are a deep user of these systems.
-
-[aelf-web-proxy](https://github.com/hzz780/aelf-web-proxy)
-
-default port: 7250
-
-After start up AElf Chain, aelf-block-scan, aelf-block-api.
-
-call POST /api/nodes/info of aelf-block-api.
-
-aelf-web-proxy can make it easier to switch the api of different Basic Service.
-
-PS: We need a nginx version.
 
 ## FAQ
 
