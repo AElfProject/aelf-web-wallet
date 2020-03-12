@@ -248,18 +248,25 @@ export default class TransactionDetail extends Component {
         return blockHeightHTML;
     }
 
-    renderFeeHTML(TransactionFee) {
-        const feeValueObject = TransactionFee && TransactionFee.Value || {};
-        const feeTokenName = Object.keys(feeValueObject)[0];
-        const feeAmount = feeValueObject[feeTokenName] || 0;
-
-        if (!feeAmount) {
+    renderFeeHTML(Logs) {
+        if (!Logs) {
             return null;
         }
 
-        const feeTemp = (new BigNumber(feeAmount)).div(Math.pow(10, this.decimals)).toFixed(+this.decimals);
+        const feeFormatted = AElf.pbUtils.getTransactionFee(Logs);
+        if (!feeFormatted.length) {
+            return null;
+        }
+
+        const {symbol, amount} = feeFormatted[0];
+
+        if (!amount || !symbol) {
+            return null;
+        }
+
+        const feeTemp = (new BigNumber(amount)).div(Math.pow(10, this.decimals)).toFixed(+this.decimals);
         const feeStr
-          = (isNaN(feeTemp) ? '-' : feeTemp) + feeTokenName;
+          = (isNaN(feeTemp) ? '-' : feeTemp) + symbol;
 
         return <div className={style.list}>
             <div className={style.title}>Fee</div>
@@ -299,12 +306,11 @@ export default class TransactionDetail extends Component {
         // 这个交易能拿到所有交易，非transfer交易也需要处理。
         let txInfo = this.getTxInfo();
         let {txResult, txid} = txInfo;
-
         let {
             Transaction,
             Status,
             BlockNumber,
-            TransactionFee
+            Logs
         } = txResult;
 
         let html = '';
@@ -330,7 +336,7 @@ export default class TransactionDetail extends Component {
             }
         }
 
-        const feeHTML = this.renderFeeHTML(TransactionFee);
+        const feeHTML = this.renderFeeHTML(Logs);
         const blockHeightHTML = this.renderBlockHeightHTML(BlockNumber, Status);
         const turnToExplorerHTML = this.renderTurnToExplorerHTML(txid);
 
