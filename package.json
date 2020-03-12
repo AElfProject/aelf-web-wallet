@@ -52,6 +52,7 @@
     "browser-sync": "^2.24.5",
     "browser-sync-webpack-plugin": "^2.2.2",
     "clean-webpack-plugin": "^1.0.0",
+    "cross-env": "^7.0.2",
     "css-loader": "^1.0.1",
     "cssnano": "^4.1.7",
     "egg-bin": "^4.3.5",
@@ -87,8 +88,8 @@
     "stop": "egg-scripts stop --title=egg-server-aelf-web-wallet",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
-    "build": "webpack",
-    "build:pro": "webpack --config webpack.config.production.js",
+    "build:dev": "webpack",
+    "build": "webpack --config webpack.config.production.js",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
     "cov": "egg-bin cov",
@@ -96,7 +97,14 @@
     "ci": "npm run lint && npm run cov",
     "autod": "autod",
     "start:dev": "webpack-dev-server",
-    "initDatabase": "npx sequelize db:migrate"
+    "create-db": "cross-env NODE_ENV=production sequelize db:create",
+    "create-db:dev": "cross-env NODE_ENV=development sequelize db:create",
+    "generate": "cross-env NODE_ENV=production sequelize migration:generate",
+    "generate:dev": "cross-env NODE_ENV=development sequelize migration:generate",
+    "migrate": "cross-env NODE_ENV=production sequelize db:migrate",
+    "migrate:dev": "cross-env NODE_ENV=development sequelize db:migrate",
+    "undo-all": "cross-env NODE_ENV=production sequelize db:migrate:undo:all",
+    "undo-all:dev": "cross-env NODE_ENV=development sequelize db:migrate:undo:all"
   },
   "ci": {
     "version": "8"

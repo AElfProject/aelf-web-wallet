@@ -1,22 +1,6 @@
 # AElf Web Wallet
 
-## Quick Start
-
-Please ensure your dependencies are ready.
-
-If you meet some permission problem, please use 'sudo'.
-
-```shell
-bash build.sh < type|optional > < node_moduels|optinal >
-// if you only want to use the second param, you must set the type=""
-bash build.sh dev
-bash build.sh dev reinstall
-bash build.sh "" reinstall
-
-bash build.sh === bash build.sh pro
-```
-
-### 0.Dependencies
+## 0.Dependencies
 
 - Start up
 [AElf Chain](https://github.com/AElfProject/AElf),
@@ -34,7 +18,7 @@ at first
 
 - `optional` Nginx (or others) // SSL for Secure, Proxy for cross-origin.
 
-### 1.Change config
+## 1.Change config
 
 ```shell
 config/config.default.js
@@ -50,26 +34,28 @@ database/config.json
 # set your sql config for sequelize
 ```
 
-### 2.Install Webpack
+## 2.Install Webpack & compile front files
 
 ```bash
 npm install -g webpack
 npm install -g webpack-cli
+
+npm run build
+# npm run build:dev
 ```
 
-### 3.Init mysql
+## 3.Operate mysql by sequelize
 
 ```bash
-mysql -u xxx -e 'CREATE DATABASE IF NOT EXISTS `egg_sequelize_wallet_dev`;'
-mysql -u xxx -e 'CREATE DATABASE IF NOT EXISTS `egg_sequelize_wallet_test`;'
-mysql -u xxx -e 'CREATE DATABASE IF NOT EXISTS `egg_sequelize_wallet_pro`;'
-
-npm run initDatabase
+npm run create-db
+# npm run create-db:dev
+npm run migrate
+# npm run migrate:dev
+# npm run undo-all
+# npm run undo-all:dev
 ```
 
-### 3.Start the node server
-
-try build.sh at first
+## 3.Start the node server
 
 ```bash
 npm install

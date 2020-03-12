@@ -22,5 +22,6 @@ module.exports = {
     //   Example:
     //   return queryInterface.dropTable('users');
     // */
+    return queryInterface.dropTable('cross_transactions');
   }
 };
