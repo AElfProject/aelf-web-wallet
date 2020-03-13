@@ -135,8 +135,9 @@ export class CrossChainMethods {
     //     fromChain: 'AELF':
     // }
     // TODO: Error of Cross SDK; throw Error but not return error:1
-    async receive(params) {
-        const isReadyToRecevie = await this.isChainReadyToReceive(params);
+    // config: 1.address send the cross transfer, 2.primary token info
+    async receive(params, balanceCheckConfig) {
+        const isReadyToRecevie = await this.isChainReadyToReceive(params, balanceCheckConfig);
 
         if (isReadyToRecevie.error) {
             throw Error(isReadyToRecevie.message);
@@ -169,9 +170,21 @@ export class CrossChainMethods {
     // &receive=http://3.112.250.87:8000
     // &main_chain_id=9992731&issue_chain_id=9992731
     // &cross_transfer_tx_id=841988ce167d5c6ae6a791c0113ef95dd57840b32275e5854a056af40eb13608
-    async isChainReadyToReceive(params) {
+    async isChainReadyToReceive(params, balanceCheckConfig) {
         const crossChainInstance = await this.crossChainInstanceInit(params);
         const {crossTransferTxId} = params;
+
+        const {symbol, owner, toChain} = balanceCheckConfig;
+        const balance
+          = await crossChainInstance.tokenCrossChainInstance.aelfInstance.tokenContractReceive.GetBalance.call({
+              // target chain primary token
+              symbol,
+              // the address send the token
+              owner
+          });
+        if (balance.balance <= 10 ** 8) {
+            throw Error(`Insufficient ${symbol} in chain ${toChain} to pay the fee.`);
+        }
         return await crossChainInstance.isChainReadyToReceive({
             crossTransferTxId
             // crossTransferTxId: '688f6386a66fae9e6994a1a8e49ff2e22534c159ed91787ad120d6179c2e35cb'
@@ -207,14 +220,6 @@ export class CrossChainMethods {
                 message: `Do not support ${symbol} transfer to ${toChain} yet.`
             };
         }
-
-        // TODO: is insufficient?
-        // const receiveInstance = new AElf(new AElf.providers.HttpProvider(url));
-        //
-        // return {
-        //     isNotReady: false,
-        //     message: 'insufficient'
-        // }; // true / false
 
         return {
             isNotReady: false,
