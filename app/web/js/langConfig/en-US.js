@@ -66,7 +66,7 @@ export default {
     'aelf.Contact': 'Contact',
     'aelf.Commit': 'Commit',
     'aelf.Confirm': 'Confirm',
-    'aelf.Pending': 'Pending',
+    'aelf.Pending': 'Please wait',
     'aelf.New contacts': 'New contacts',
     'aelf.Name': 'Name',
     'aelf.Payee wallet address': 'Payee wallet address',
