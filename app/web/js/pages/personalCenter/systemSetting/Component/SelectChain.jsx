@@ -11,32 +11,14 @@ import {FormattedMessage} from 'react-intl';
 
 require('./SelectLanguage.css');
 
-const select = [
-  {
-    label: 'AELF',
-    value: 'AELF'
-  },
-  {
-    label: 'tDVV',
-    value: 'tDVV'
-  },
-  {
-    label: 'tDVW',
-    value: 'tDVW'
-  },
-  {
-    label: 'tDVX',
-    value: 'tDVX'
-  },
-  {
-    label: 'tDVY',
-    value: 'tDVY'
-  },
-  {
-    label: 'tDVZ',
-    value: 'tDVZ'
-  },
-];
+const walletKeys = Object.keys(window.defaultConfig.WALLET_INFO);
+
+const select = walletKeys.map(item => {
+  return {
+    label: item,
+    value: item
+  };
+});
 
 class SelectChain extends React.Component {
   constructor(props) {
