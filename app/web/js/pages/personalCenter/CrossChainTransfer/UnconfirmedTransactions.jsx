@@ -68,14 +68,7 @@ class UnconfirmedTransactions extends Component {
       TOKEN_CROSS_SUPPORT: window.defaultConfig.TOKEN_CROSS_SUPPORT
     });
 
-    const toChain = transfer.to.split('_')[2];
-    const balanceCheck = {
-      symbol: window.defaultConfig.WEB_API_INFO[toChain].feeToken,
-      owner: wallet.address,
-      toChain
-    };
-
-    crossInstance.receive(options, balanceCheck).then(result => {
+    crossInstance.receive(options).then(result => {
       console.log('result', result);
       if (result.TransactionId) {
         Toast.hide();
