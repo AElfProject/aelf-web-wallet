@@ -89,6 +89,7 @@
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "build:dev": "webpack",
+    "build:dev:w": "webpack -w",
     "build": "webpack --config webpack.config.production.js",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",

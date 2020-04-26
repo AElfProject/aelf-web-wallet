@@ -42,6 +42,7 @@ npm install -g webpack-cli
 
 npm run build
 # npm run build:dev
+# npm run build:dev:w
 ```
 
 ## 3.Operate mysql by sequelize

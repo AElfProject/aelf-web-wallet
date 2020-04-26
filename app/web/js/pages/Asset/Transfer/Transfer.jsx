@@ -135,42 +135,40 @@ export default class Transfer extends Component {
     }
 
     componentWillUnmount() {
-        this.WillUnmount = true;
         this.setState = () => {};
     }
 
-    crossTransfer(options) {
+    async crossTransfer(options) {
         const {password, address, tokenName, amountBig, amount, memo, contractAddress, decimals} = options;
-        const wallet = getWallet(password);
-        if (wallet.errormsg) {
+        let wallet;
+        try {
+            wallet = getWallet(password);
+        } catch(e) {
             this.setState({passwordError: wallet.errormsg});
             Toast.hide();
             Toast.fail(wallet.errormsg, 3, () => {}, false);
             return;
         }
 
-        const crossInstance = new CrossChainMethods({
-            wallet,
-            WEB_API_INFO: window.defaultConfig.WEB_API_INFO,
-            TOKEN_CROSS_SUPPORT: window.defaultConfig.TOKEN_CROSS_SUPPORT
-        });
+        try {
+            const crossInstance = new CrossChainMethods({
+                wallet,
+                WEB_API_INFO: window.defaultConfig.WEB_API_INFO,
+                TOKEN_CROSS_SUPPORT: window.defaultConfig.TOKEN_CROSS_SUPPORT
+            });
 
-        // window.crossTemp = crossInstance;
-
-        const crossParams = {
-            transfer: {
-                to: address,
-                symbol: tokenName,
-                amount: amountBig.multipliedBy(Math.pow(10, decimals)).toNumber(),
-                memo
-            },
-            amountShow: amount,
-            fromChain: window.defaultConfig.chainId
-        };
-        Toast.loading('Cross chain transfer', 30);
-        console.log('Cross chain transfer');
-        crossInstance.send(crossParams).then(result => {
-            console.log('cross error', result);
+            const crossParams = {
+                transfer: {
+                    to: address,
+                    symbol: tokenName,
+                    amount: amountBig.multipliedBy(Math.pow(10, decimals)).toNumber(),
+                    memo
+                },
+                amountShow: amount,
+                fromChain: window.defaultConfig.chainId
+            };
+            Toast.loading('Cross chain transfer', 30);
+            const result =await crossInstance.send(crossParams);
             if (result.isNotReady) {
                 Toast.hide();
                 Toast.fail(result.message, 3, () => { }, false);
@@ -180,38 +178,44 @@ export default class Transfer extends Component {
 
             hashHistory.push(`/transactiondetail?txid=${result}&is_cross_chain=1`
               + `&token=${tokenName}&contract_address=${contractAddress}&decimals=${decimals}`);
-        }).catch(error => {
-            console.log('cross error', error);
-            Toast.fail(error.message || 'Something Error', 3, () => { }, false);
-        });
+        } catch(e) {
+            Toast.fail(e.message || 'Something Error', 3, () => { }, false);
+        }
     }
 
-    normalTransfer(options) {
+    async normalTransfer(options) {
         const {password, contractAddress, tokenName, address, amountBig, memo, decimals} = options;
-        // Normal transfer
-        let aelf = initAelf({
-            password,
-            contractAddress
-        });
 
-        if (aelf.errormsg) {
-            this.setState({passwordError: aelf.errormsg});
-            Toast.fail(aelf.errormsg, 3, () => {}, false);
+        try {
+            getWallet(password);
+        } catch(e) {
+            this.setState({passwordError: wallet.errormsg});
+            Toast.fail(wallet.errormsg, 3, () => {}, false);
             return;
         }
 
-        aelf.contractMethods.Transfer({
-            symbol: tokenName,
-            to: address,
-            amount: amountBig.multipliedBy(Math.pow(10, decimals)).toNumber(),
-            memo
-        }).then(transfer => {
+        try {
+            // Normal transfer
+            let aelf = initAelf({
+                password,
+                contractAddress
+            });
+            const result = await aelf.contractMethods.Transfer({
+                symbol: tokenName,
+                to: address,
+                amount: amountBig.multipliedBy(Math.pow(10, decimals)).toNumber(),
+                memo
+            });
             Toast.hide();
-            hashHistory.push(`/transactiondetail?txid=${transfer.TransactionId}`
+            hashHistory.push(`/transactiondetail?txid=${result.TransactionId}`
               + `&token=${tokenName}&contract_address=${contractAddress}&decimals=${decimals}`);
-        }).catch(error => {
-            Toast.fail(error, 3, () => { }, false);
-        });
+        } catch(e) {
+            const errorMessage = e.message || 'Send failed';
+            Toast.fail(errorMessage, 3, () => { }, false);
+            if (errorMessage === 'Invalid address') {
+                this.setState({addressError: errorMessage});
+            }
+        }
     }
 
     // TODO: 使用string 转bigNumber操作.
