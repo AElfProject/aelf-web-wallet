@@ -144,9 +144,9 @@ export default class Transfer extends Component {
         try {
             wallet = getWallet(password);
         } catch(e) {
-            this.setState({passwordError: wallet.errormsg});
+            this.setState({passwordError: e.message});
             Toast.hide();
-            Toast.fail(wallet.errormsg, 3, () => {}, false);
+            Toast.fail(e.message, 3, () => {}, false);
             return;
         }
 
@@ -189,8 +189,8 @@ export default class Transfer extends Component {
         try {
             getWallet(password);
         } catch(e) {
-            this.setState({passwordError: wallet.errormsg});
-            Toast.fail(wallet.errormsg, 3, () => {}, false);
+            this.setState({passwordError: e.message});
+            Toast.fail(e.message, 3, () => {}, false);
             return;
         }
 
