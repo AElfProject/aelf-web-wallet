@@ -105,18 +105,19 @@ export default class TransactionDetail extends Component {
     }
 
     // 如果有地址，则显示icon，如果只是分享，不显示icon
-    renderAmount(from, to, amount) {
+    renderAmount(from, to, amount, isCrossReceive = false) {
         const walletInfo = JSON.parse(localStorage.getItem('lastuse')) || {};
         const {address} = walletInfo;
 
-        const isIn = address === to;
+        // const isIn = address === to;
+        const isOut = isCrossReceive ? address !== to : address === from;
 
         const amountTemp = (new BigNumber(amount)).div(Math.pow(10, this.decimals)).toFixed(+this.decimals);
         const amountStr
           = (isNaN(amountTemp) ? '-' : amountTemp) + this.tokenName;
 
         return <div className={style.list + ' ' + style.banner}>
-            <div className={style.icon + ' ' + (isIn ? style.in : style.out)}></div>
+            <div className={style.icon + ' ' + (isOut ? style.out : style.in)}/>
             <div>
                 <div className={style.balance}>{amountStr}</div>
                 {/* <div className={style.tenderValuation}>法币价值【暂无】</div> */}
@@ -143,12 +144,11 @@ export default class TransactionDetail extends Component {
         const memoShow = crossReceiveMemo || memo;
         const toShow = crossReceiveTo || to;
 
-        let amounHtml = this.renderAmount(Transaction.From, toShow, amountShow);
-
         // console.log('Transaction.Meth', Transaction, params, deserializeTokenContract);
 
         let addressFromShow = Transaction.From;
         let addressToShow = toShow;
+        let isCrossReceive = false;
         // cross chain
         if (this.from && this.to) {
             addressFromShow = addressPrefixSuffix(addressFromShow, null, this.from);
@@ -162,11 +162,14 @@ export default class TransactionDetail extends Component {
             const fromAddress = Transaction.From;
             addressFromShow = addressPrefixSuffix(fromAddress, fromChainId);
             addressToShow = addressPrefixSuffix(crossReceiveTo);
+            isCrossReceive = true;
         }
         else {
             addressFromShow = addressPrefixSuffix(addressFromShow);
             addressToShow = addressPrefixSuffix(addressToShow);
         }
+
+        const amounHtml = this.renderAmount(Transaction.From, toShow, amountShow, isCrossReceive);
 
         return <div>
             {amounHtml}

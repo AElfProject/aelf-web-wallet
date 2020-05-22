@@ -202,6 +202,13 @@ export default class TransactionsList extends Component {
         address = PREFIX + '_' + addressOmit(paramsTemp.to) + '_' + toChainIdBase58;
         isIncome = false;
 
+        // example: this.walletAddress = A_AELF, from = B_AELF
+        // Cross Transfer B_AELF -> A_tDVV
+        // This transaction will not show in A AELF wallet.
+        if (item.address_from !== this.walletAddress) {
+          return null;
+        }
+
       } else {
         address = PREFIX + '_' + address + '_' + CURRENT_CHAIN_ID;
       }

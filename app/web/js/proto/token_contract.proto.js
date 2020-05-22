@@ -47,24 +47,12 @@ export default {
               "requestType": "BurnInput",
               "responseType": "google.protobuf.Empty"
             },
-            "ChargeTransactionFees": {
-              "requestType": "ChargeTransactionFeesInput",
+            "AddTokenWhiteList": {
+              "requestType": "AddTokeWhiteListInput",
               "responseType": "google.protobuf.Empty"
             },
-            "ClaimTransactionFees": {
-              "requestType": "google.protobuf.Empty",
-              "responseType": "google.protobuf.Empty"
-            },
-            "RegisterCrossChainTokenContractAddress": {
-              "requestType": "RegisterCrossChainTokenContractAddressInput",
-              "responseType": "google.protobuf.Empty"
-            },
-            "RegisterNativeAndResourceTokenInfo": {
-              "requestType": "RegisterNativeAndResourceTokenInfoInput",
-              "responseType": "google.protobuf.Empty"
-            },
-            "RegisterNativeTokenInfo": {
-              "requestType": "RegisterNativeTokenInfoInput",
+            "SetPrimaryTokenSymbol": {
+              "requestType": "SetPrimaryTokenSymbolInput",
               "responseType": "google.protobuf.Empty"
             },
             "CrossChainTransfer": {
@@ -79,48 +67,52 @@ export default {
               "requestType": "CrossChainCreateTokenInput",
               "responseType": "google.protobuf.Empty"
             },
+            "InitializeFromParentChain": {
+              "requestType": "InitializeFromParentChainInput",
+              "responseType": "google.protobuf.Empty"
+            },
+            "ClaimTransactionFees": {
+              "requestType": "TotalTransactionFeesMap",
+              "responseType": "google.protobuf.Empty"
+            },
+            "ChargeTransactionFees": {
+              "requestType": "ChargeTransactionFeesInput",
+              "responseType": "google.protobuf.BoolValue"
+            },
+            "SetSymbolsToPayTxSizeFee": {
+              "requestType": "SymbolListToPayTxSizeFee",
+              "responseType": "google.protobuf.Empty"
+            },
+            "UpdateCoefficientsForSender": {
+              "requestType": "UpdateCoefficientsInput",
+              "responseType": "google.protobuf.Empty"
+            },
             "CheckThreshold": {
               "requestType": "CheckThresholdInput",
               "responseType": "google.protobuf.Empty"
             },
-            "SetProfitReceivingInformation": {
-              "requestType": "ProfitReceivingInformation",
-              "responseType": "google.protobuf.Empty"
-            },
-            "ReceiveProfits": {
-              "requestType": "ReceiveProfitsInput",
-              "responseType": "google.protobuf.Empty"
-            },
-            "CheckResourceToken": {
+            "InitialCoefficients": {
               "requestType": "google.protobuf.Empty",
+              "responseType": "google.protobuf.Empty"
+            },
+            "DonateResourceToken": {
+              "requestType": "TotalResourceTokensMaps",
               "responseType": "google.protobuf.Empty"
             },
             "ChargeResourceToken": {
               "requestType": "ChargeResourceTokenInput",
               "responseType": "google.protobuf.Empty"
             },
-            "DonateResourceToken": {
+            "CheckResourceToken": {
               "requestType": "google.protobuf.Empty",
               "responseType": "google.protobuf.Empty"
             },
-            "TransferToContract": {
-              "requestType": "TransferToContractInput",
+            "UpdateCoefficientsForContract": {
+              "requestType": "UpdateCoefficientsInput",
               "responseType": "google.protobuf.Empty"
             },
-            "SetResourceTokenUnitPrice": {
-              "requestType": "SetResourceTokenUnitPriceInput",
-              "responseType": "google.protobuf.Empty"
-            },
-            "AdvanceResourceToken": {
-              "requestType": "AdvanceResourceTokenInput",
-              "responseType": "google.protobuf.Empty"
-            },
-            "TakeResourceTokenBack": {
-              "requestType": "TakeResourceTokenBackInput",
-              "responseType": "google.protobuf.Empty"
-            },
-            "SetFeeReceiver": {
-              "requestType": "aelf.Address",
+            "InitializeAuthorizedController": {
+              "requestType": "google.protobuf.Empty",
               "responseType": "google.protobuf.Empty"
             },
             "GetTokenInfo": {
@@ -165,23 +157,9 @@ export default {
                 "(aelf.is_view)": true
               }
             },
-            "GetProfitReceivingInformation": {
-              "requestType": "aelf.Address",
-              "responseType": "ProfitReceivingInformation",
-              "options": {
-                "(aelf.is_view)": true
-              }
-            },
             "GetLockedAmount": {
               "requestType": "GetLockedAmountInput",
               "responseType": "GetLockedAmountOutput",
-              "options": {
-                "(aelf.is_view)": true
-              }
-            },
-            "GetVirtualAddressForLocking": {
-              "requestType": "GetVirtualAddressForLockingInput",
-              "responseType": "aelf.Address",
               "options": {
                 "(aelf.is_view)": true
               }
@@ -199,6 +177,41 @@ export default {
               "options": {
                 "(aelf.is_view)": true
               }
+            },
+            "GetCalculateFeeCoefficientsForContract": {
+              "requestType": "google.protobuf.Int32Value",
+              "responseType": "CalculateFeeCoefficients",
+              "options": {
+                "(aelf.is_view)": true
+              }
+            },
+            "GetCalculateFeeCoefficientsForSender": {
+              "requestType": "google.protobuf.Empty",
+              "responseType": "CalculateFeeCoefficients",
+              "options": {
+                "(aelf.is_view)": true
+              }
+            },
+            "GetSymbolsToPayTxSizeFee": {
+              "requestType": "google.protobuf.Empty",
+              "responseType": "SymbolListToPayTxSizeFee",
+              "options": {
+                "(aelf.is_view)": true
+              }
+            },
+            "GetLatestTotalTransactionFeesMapHash": {
+              "requestType": "google.protobuf.Empty",
+              "responseType": "aelf.Hash",
+              "options": {
+                "(aelf.is_view)": true
+              }
+            },
+            "GetLatestTotalResourceTokensMapsHash": {
+              "requestType": "google.protobuf.Empty",
+              "responseType": "aelf.Hash",
+              "options": {
+                "(aelf.is_view)": true
+              }
             }
           }
         },
@@ -213,15 +226,15 @@ export default {
               "id": 2
             },
             "supply": {
-              "type": "sint64",
+              "type": "int64",
               "id": 3
             },
             "totalSupply": {
-              "type": "sint64",
+              "type": "int64",
               "id": 4
             },
             "decimals": {
-              "type": "sint32",
+              "type": "int32",
               "id": 5
             },
             "issuer": {
@@ -232,16 +245,16 @@ export default {
               "type": "bool",
               "id": 7
             },
-            "isTransferDisabled": {
+            "isProfitable": {
               "type": "bool",
               "id": 8
             },
             "issueChainId": {
-              "type": "sint32",
+              "type": "int32",
               "id": 9
             },
             "burned": {
-              "type": "sint64",
+              "type": "int64",
               "id": 10
             }
           }
@@ -257,11 +270,11 @@ export default {
               "id": 2
             },
             "totalSupply": {
-              "type": "sint64",
+              "type": "int64",
               "id": 3
             },
             "decimals": {
-              "type": "sint32",
+              "type": "int32",
               "id": 4
             },
             "issuer": {
@@ -277,7 +290,7 @@ export default {
               "type": "aelf.Address",
               "id": 7
             },
-            "isTransferDisabled": {
+            "isProfitable": {
               "type": "bool",
               "id": 8
             },
@@ -298,11 +311,11 @@ export default {
               "id": 2
             },
             "totalSupply": {
-              "type": "sint64",
+              "type": "int64",
               "id": 3
             },
             "decimals": {
-              "type": "sint32",
+              "type": "int32",
               "id": 4
             },
             "issuer": {
@@ -313,25 +326,21 @@ export default {
               "type": "bool",
               "id": 6
             },
+            "isProfitable": {
+              "type": "bool",
+              "id": 7
+            },
             "issueChainId": {
-              "type": "sint32",
+              "type": "int32",
               "id": 8
             }
           }
         },
-        "RegisterNativeAndResourceTokenInfoInput": {
+        "SetPrimaryTokenSymbolInput": {
           "fields": {
-            "nativeTokenInfo": {
-              "type": "RegisterNativeTokenInfoInput",
+            "symbol": {
+              "type": "string",
               "id": 1
-            },
-            "resourceTokenList": {
-              "type": "TokenInfoList",
-              "id": 2
-            },
-            "chainPrimaryToken": {
-              "type": "TokenInfo",
-              "id": 3
             }
           }
         },
@@ -342,7 +351,7 @@ export default {
               "id": 1
             },
             "amount": {
-              "type": "sint64",
+              "type": "int64",
               "id": 2
             },
             "memo": {
@@ -366,7 +375,7 @@ export default {
               "id": 2
             },
             "amount": {
-              "type": "sint64",
+              "type": "int64",
               "id": 3
             },
             "memo": {
@@ -438,7 +447,7 @@ export default {
               "id": 3
             },
             "amount": {
-              "type": "sint64",
+              "type": "int64",
               "id": 4
             },
             "memo": {
@@ -458,7 +467,7 @@ export default {
               "id": 2
             },
             "amount": {
-              "type": "sint64",
+              "type": "int64",
               "id": 3
             }
           }
@@ -474,7 +483,7 @@ export default {
               "id": 2
             },
             "amount": {
-              "type": "sint64",
+              "type": "int64",
               "id": 3
             }
           }
@@ -486,46 +495,47 @@ export default {
               "id": 1
             },
             "amount": {
-              "type": "sint64",
+              "type": "int64",
               "id": 2
-            }
-          }
-        },
-        "ChargeTransactionFeesInput": {
-          "fields": {
-            "symbolToAmount": {
-              "keyType": "string",
-              "type": "sint64",
-              "id": 1
             }
           }
         },
         "ChargeResourceTokenInput": {
           "fields": {
-            "transactionSize": {
-              "type": "sint32",
+            "costDic": {
+              "keyType": "string",
+              "type": "int64",
               "id": 1
-            },
-            "writesCount": {
-              "type": "sint32",
-              "id": 2
-            },
-            "readsCount": {
-              "type": "sint32",
-              "id": 3
             },
             "caller": {
               "type": "aelf.Address",
-              "id": 4
+              "id": 2
             }
           }
         },
-        "TokenSymbolList": {
+        "TransactionFeeBill": {
           "fields": {
-            "symbolList": {
-              "rule": "repeated",
-              "type": "string",
+            "feesMap": {
+              "keyType": "string",
+              "type": "int64",
               "id": 1
+            }
+          }
+        },
+        "CheckThresholdInput": {
+          "fields": {
+            "sender": {
+              "type": "aelf.Address",
+              "id": 1
+            },
+            "symbolToThreshold": {
+              "keyType": "string",
+              "type": "int64",
+              "id": 2
+            },
+            "isCheckAllowance": {
+              "type": "bool",
+              "id": 3
             }
           }
         },
@@ -560,7 +570,7 @@ export default {
               "id": 2
             },
             "balance": {
-              "type": "sint64",
+              "type": "int64",
               "id": 3
             }
           }
@@ -596,7 +606,7 @@ export default {
               "id": 3
             },
             "allowance": {
-              "type": "sint64",
+              "type": "int64",
               "id": 4
             }
           }
@@ -612,7 +622,7 @@ export default {
               "id": 2
             },
             "amount": {
-              "type": "sint64",
+              "type": "int64",
               "id": 3
             },
             "memo": {
@@ -661,125 +671,76 @@ export default {
             }
           }
         },
-        "CheckThresholdInput": {
+        "SymbolToPayTxSizeFee": {
           "fields": {
-            "sender": {
-              "type": "aelf.Address",
+            "tokenSymbol": {
+              "type": "string",
               "id": 1
             },
-            "symbolToThreshold": {
-              "keyType": "string",
-              "type": "sint64",
+            "baseTokenWeight": {
+              "type": "int32",
               "id": 2
             },
-            "isCheckAllowance": {
-              "type": "bool",
+            "addedTokenWeight": {
+              "type": "int32",
               "id": 3
             }
           }
         },
-        "ProfitReceivingInformation": {
+        "SymbolListToPayTxSizeFee": {
           "fields": {
-            "contractAddress": {
-              "type": "aelf.Address",
-              "id": 1
-            },
-            "profitReceiverAddress": {
-              "type": "aelf.Address",
-              "id": 2
-            },
-            "donationPartsPerHundred": {
-              "type": "sint32",
-              "id": 3
-            }
-          }
-        },
-        "ReceiveProfitsInput": {
-          "fields": {
-            "contractAddress": {
-              "type": "aelf.Address",
-              "id": 1
-            },
-            "symbols": {
+            "symbolsToPayTxSizeFee": {
               "rule": "repeated",
-              "type": "string",
-              "id": 2
+              "type": "SymbolToPayTxSizeFee",
+              "id": 1
             }
           }
         },
-        "TransferToContractInput": {
+        "ChargeTransactionFeesInput": {
           "fields": {
-            "symbol": {
+            "methodName": {
               "type": "string",
               "id": 1
             },
-            "amount": {
-              "type": "sint64",
+            "contractAddress": {
+              "type": "aelf.Address",
               "id": 2
             },
-            "memo": {
-              "type": "string",
+            "transactionSizeFee": {
+              "type": "int64",
               "id": 3
+            },
+            "primaryTokenSymbol": {
+              "type": "string",
+              "id": 4
+            },
+            "symbolsToPayTxSizeFee": {
+              "rule": "repeated",
+              "type": "SymbolToPayTxSizeFee",
+              "id": 5
+            }
+          }
+        },
+        "ExtraTokenListModified": {
+          "options": {
+            "(aelf.is_event)": true
+          },
+          "fields": {
+            "symbolListToPayTxSizeFee": {
+              "type": "SymbolListToPayTxSizeFee",
+              "id": 1
             }
           }
         },
         "ReturnTaxInput": {
           "fields": {
             "balanceBeforeSelling": {
-              "type": "sint64",
+              "type": "int64",
               "id": 1
             },
             "returnTaxReceiverAddress": {
               "type": "aelf.Address",
               "id": 2
-            }
-          }
-        },
-        "SetResourceTokenUnitPriceInput": {
-          "fields": {
-            "cpuUnitPrice": {
-              "type": "sint64",
-              "id": 1
-            },
-            "stoUnitPrice": {
-              "type": "sint64",
-              "id": 2
-            },
-            "netUnitPrice": {
-              "type": "sint64",
-              "id": 3
-            }
-          }
-        },
-        "AdvanceResourceTokenInput": {
-          "fields": {
-            "contractAddress": {
-              "type": "aelf.Address",
-              "id": 1
-            },
-            "resourceTokenSymbol": {
-              "type": "string",
-              "id": 2
-            },
-            "amount": {
-              "type": "sint64",
-              "id": 3
-            }
-          }
-        },
-        "TakeResourceTokenBackInput": {
-          "fields": {
-            "contractAddress": {
-              "type": "aelf.Address",
-              "id": 1
-            },
-            "resourceTokenSymbol": {
-              "type": "string",
-              "id": 2
-            },
-            "amount": {
-              "type": "sint64",
-              "id": 3
             }
           }
         },
@@ -791,11 +752,11 @@ export default {
             },
             "symbol": {
               "type": "string",
-              "id": 3
+              "id": 2
             },
             "lockId": {
               "type": "aelf.Hash",
-              "id": 4
+              "id": 3
             }
           }
         },
@@ -807,27 +768,15 @@ export default {
             },
             "symbol": {
               "type": "string",
-              "id": 3
+              "id": 2
             },
             "lockId": {
               "type": "aelf.Hash",
-              "id": 4
+              "id": 3
             },
             "amount": {
-              "type": "sint64",
-              "id": 5
-            }
-          }
-        },
-        "GetVirtualAddressForLockingInput": {
-          "fields": {
-            "address": {
-              "type": "aelf.Address",
-              "id": 1
-            },
-            "lockId": {
-              "type": "aelf.Hash",
-              "id": 3
+              "type": "int64",
+              "id": 4
             }
           }
         },
@@ -868,27 +817,141 @@ export default {
             }
           }
         },
-        "RegisterCrossChainTokenContractAddressInput": {
+        "AddTokeWhiteListInput": {
           "fields": {
-            "fromChainId": {
+            "tokenSymbol": {
+              "type": "string",
+              "id": 1
+            },
+            "address": {
+              "type": "aelf.Address",
+              "id": 2
+            }
+          }
+        },
+        "InitializeFromParentChainInput": {
+          "fields": {
+            "resourceAmount": {
+              "keyType": "string",
               "type": "int32",
               "id": 1
             },
-            "parentChainHeight": {
-              "type": "int64",
+            "registeredOtherTokenContractAddresses": {
+              "keyType": "int32",
+              "type": "aelf.Address",
               "id": 2
             },
-            "transactionBytes": {
-              "type": "bytes",
-              "id": 3
-            },
-            "merklePath": {
-              "type": "aelf.MerklePath",
-              "id": 4
-            },
-            "tokenContractAddress": {
+            "creator": {
               "type": "aelf.Address",
-              "id": 5
+              "id": 3
+            }
+          }
+        },
+        "UpdateCoefficientsInput": {
+          "fields": {
+            "pieceNumbers": {
+              "rule": "repeated",
+              "type": "int32",
+              "id": 1
+            },
+            "coefficients": {
+              "type": "CalculateFeeCoefficients",
+              "id": 2
+            }
+          }
+        },
+        "FeeTypeEnum": {
+          "values": {
+            "READ": 0,
+            "STORAGE": 1,
+            "WRITE": 2,
+            "TRAFFIC": 3,
+            "TX": 4
+          }
+        },
+        "CalculateFeePieceCoefficients": {
+          "fields": {
+            "value": {
+              "rule": "repeated",
+              "type": "int32",
+              "id": 1
+            }
+          }
+        },
+        "CalculateFeeCoefficients": {
+          "fields": {
+            "feeTokenType": {
+              "type": "int32",
+              "id": 1
+            },
+            "pieceCoefficientsList": {
+              "rule": "repeated",
+              "type": "CalculateFeePieceCoefficients",
+              "id": 2
+            }
+          }
+        },
+        "AllCalculateFeeCoefficients": {
+          "fields": {
+            "value": {
+              "rule": "repeated",
+              "type": "CalculateFeeCoefficients",
+              "id": 1
+            }
+          }
+        },
+        "TotalTransactionFeesMap": {
+          "fields": {
+            "value": {
+              "keyType": "string",
+              "type": "int64",
+              "id": 1
+            },
+            "blockHash": {
+              "type": "aelf.Hash",
+              "id": 2
+            },
+            "blockHeight": {
+              "type": "int64",
+              "id": 3
+            }
+          }
+        },
+        "TotalResourceTokensMaps": {
+          "fields": {
+            "value": {
+              "rule": "repeated",
+              "type": "ContractTotalResourceTokens",
+              "id": 1
+            },
+            "blockHash": {
+              "type": "aelf.Hash",
+              "id": 2
+            },
+            "blockHeight": {
+              "type": "int64",
+              "id": 3
+            }
+          }
+        },
+        "ContractTotalResourceTokens": {
+          "fields": {
+            "contractAddress": {
+              "type": "aelf.Address",
+              "id": 1
+            },
+            "tokensMap": {
+              "type": "TotalResourceTokensMap",
+              "id": 2
+            }
+          }
+        },
+        "TotalResourceTokensMap": {
+          "fields": {
+            "value": {
+              "keyType": "string",
+              "type": "int64",
+              "id": 1
             }
           }
         },
@@ -919,7 +982,7 @@ export default {
               }
             },
             "amount": {
-              "type": "sint64",
+              "type": "int64",
               "id": 4
             },
             "memo": {
@@ -955,7 +1018,7 @@ export default {
               }
             },
             "amount": {
-              "type": "sint64",
+              "type": "int64",
               "id": 4
             }
           }
@@ -987,7 +1050,7 @@ export default {
               }
             },
             "amount": {
-              "type": "sint64",
+              "type": "int64",
               "id": 4
             }
           }
@@ -1012,7 +1075,7 @@ export default {
               }
             },
             "amount": {
-              "type": "sint64",
+              "type": "int64",
               "id": 3
             }
           }
@@ -1025,6 +1088,194 @@ export default {
             "tokenSymbol": {
               "type": "string",
               "id": 1
+            }
+          }
+        },
+        "TransactionSizeFeeUnitPriceUpdated": {
+          "options": {
+            "(aelf.is_event)": true
+          },
+          "fields": {
+            "unitPrice": {
+              "type": "int64",
+              "id": 1
+            }
+          }
+        },
+        "CalculateFeeAlgorithmUpdated": {
+          "options": {
+            "(aelf.is_event)": true
+          },
+          "fields": {
+            "allTypeFeeCoefficients": {
+              "type": "AllCalculateFeeCoefficients",
+              "id": 1
+            }
+          }
+        },
+        "RentalCharged": {
+          "options": {
+            "(aelf.is_event)": true
+          },
+          "fields": {
+            "symbol": {
+              "type": "string",
+              "id": 1
+            },
+            "amount": {
+              "type": "int64",
+              "id": 2
+            }
+          }
+        },
+        "RentalAccountBalanceInsufficient": {
+          "options": {
+            "(aelf.is_event)": true
+          },
+          "fields": {
+            "symbol": {
+              "type": "string",
+              "id": 1
+            },
+            "amount": {
+              "type": "int64",
+              "id": 2
+            }
+          }
+        },
+        "TokenCreated": {
+          "options": {
+            "(aelf.is_event)": true
+          },
+          "fields": {
+            "symbol": {
+              "type": "string",
+              "id": 1
+            },
+            "tokenName": {
+              "type": "string",
+              "id": 2
+            },
+            "totalSupply": {
+              "type": "int64",
+              "id": 3
+            },
+            "decimals": {
+              "type": "int32",
+              "id": 4
+            },
+            "issuer": {
+              "type": "aelf.Address",
+              "id": 5
+            },
+            "isBurnable": {
+              "type": "bool",
+              "id": 6
+            },
+            "isProfitable": {
+              "type": "bool",
+              "id": 7
+            },
+            "issueChainId": {
+              "type": "int32",
+              "id": 8
+            }
+          }
+        },
+        "Issued": {
+          "options": {
+            "(aelf.is_event)": true
+          },
+          "fields": {
+            "symbol": {
+              "type": "string",
+              "id": 1
+            },
+            "amount": {
+              "type": "int64",
+              "id": 2
+            },
+            "memo": {
+              "type": "string",
+              "id": 3
+            },
+            "to": {
+              "type": "aelf.Address",
+              "id": 4
+            }
+          }
+        },
+        "CrossChainTransferred": {
+          "options": {
+            "(aelf.is_event)": true
+          },
+          "fields": {
+            "from": {
+              "type": "aelf.Address",
+              "id": 1
+            },
+            "to": {
+              "type": "aelf.Address",
+              "id": 2
+            },
+            "symbol": {
+              "type": "string",
+              "id": 3
+            },
+            "amount": {
+              "type": "int64",
+              "id": 4
+            },
+            "memo": {
+              "type": "string",
+              "id": 5
+            },
+            "toChainId": {
+              "type": "int32",
+              "id": 6
+            },
+            "issueChainId": {
+              "type": "int32",
+              "id": 7
+            }
+          }
+        },
+        "CrossChainReceived": {
+          "options": {
+            "(aelf.is_event)": true
+          },
+          "fields": {
+            "from": {
+              "type": "aelf.Address",
+              "id": 1
+            },
+            "to": {
+              "type": "aelf.Address",
+              "id": 2
+            },
+            "symbol": {
+              "type": "string",
+              "id": 3
+            },
+            "amount": {
+              "type": "int64",
+              "id": 4
+            },
+            "memo": {
+              "type": "string",
+              "id": 5
+            },
+            "fromChainId": {
+              "type": "int32",
+              "id": 6
+            },
+            "issueChainId": {
+              "type": "int32",
+              "id": 7
+            },
+            "parentChainHeight": {
+              "type": "int64",
+              "id": 8
             }
           }
         }
@@ -1094,7 +1345,8 @@ export default {
             "PENDING": 1,
             "FAILED": 2,
             "MINED": 3,
-            "UNEXECUTABLE": 4
+            "UNEXECUTABLE": 4,
+            "CONFLICT": 5
           }
         },
         "TransactionResult": {
@@ -1136,13 +1388,9 @@ export default {
               "type": "Hash",
               "id": 9
             },
-            "Error": {
+            "error": {
               "type": "string",
               "id": 10
-            },
-            "ReadableReturnValue": {
-              "type": "string",
-              "id": 11
             }
           }
         },
@@ -1170,7 +1418,7 @@ export default {
         "SmartContractRegistration": {
           "fields": {
             "category": {
-              "type": "int32",
+              "type": "sint32",
               "id": 1
             },
             "code": {
@@ -1180,6 +1428,14 @@ export default {
             "codeHash": {
               "type": "Hash",
               "id": 3
+            },
+            "isSystemContract": {
+              "type": "bool",
+              "id": 4
+            },
+            "version": {
+              "type": "int32",
+              "id": 5
             }
           }
         },
@@ -1194,6 +1450,11 @@ export default {
               "keyType": "string",
               "type": "bool",
               "id": 2
+            },
+            "deletes": {
+              "keyType": "string",
+              "type": "bool",
+              "id": 3
             }
           }
         },
