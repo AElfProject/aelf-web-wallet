@@ -174,7 +174,12 @@ export default class TransactionsList extends Component {
 
       let item = this.rData[rowID];
 
-      const params = JSON.parse(item.params);
+      // const params = JSON.parse(item.params);
+      let params = JSON.parse(item.params);
+      // If tx is cross transfer
+      if (params.transferTx) {
+        params = params.transferTx;
+      }
       // let isIncome = item.params_to === this.walletAddress;
       let isIncome = item.address_to === this.walletAddress;
       // let quantity = (isIncome ? '+' : '-') + params.quantity;
