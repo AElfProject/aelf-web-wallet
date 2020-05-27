@@ -46,7 +46,8 @@ module.exports = appInfo => {
         user: '',
         password: '',
         port: 3306,
-        database: 'egg-sequelize-wallet-dev'
+        database: 'egg-sequelize-wallet-dev',
+        charset: 'utf8mb4'
     };
 
     // add your config here
