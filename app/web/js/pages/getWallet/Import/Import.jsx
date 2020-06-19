@@ -6,8 +6,6 @@ import Svg from '../../../components/Svg/Svg'
 import style from './Import.scss'
 
 import { hashHistory } from 'react-router'
-import passwordCheck from '../../../utils/passwordCheck'
-import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import insertWalletInfo from '../../../utils/walletStorage'
 import Password from '../../../components/Password/Password'
 import WalletName from '../WalletName/WalletName'
@@ -58,7 +56,9 @@ class Import extends Component {
         }
 
         let mnemonicWallet = aelf.wallet.getWalletByMnemonic(this.state.mnemonic.trim() || '');
-        let privateKeyWallet = aelf.wallet.getWalletByPrivateKey(this.state.privateKey.trim() || '');
+
+        const privateKeyInput = this.state.privateKey.trim();
+        let privateKeyWallet = privateKeyInput ? aelf.wallet.getWalletByPrivateKey(privateKeyInput) : null;
 
         // if (!privateKeyWallet && !mnemonicWallet) {
         if (!mnemonicWallet) {
@@ -152,7 +152,7 @@ class Import extends Component {
             agreementDisplay: !this.state.agreementDisplay
         });
     }
-  
+
     render() {
         let createButtonText = 'Submit';
         let createButton =
@@ -161,18 +161,18 @@ class Import extends Component {
                 style={{
                     opacity: 0.5
                 }}
-            ></AelfButton>;
+            />;
         if (this.state.password && this.state.walletName && this.state.agree) {
             createButton =
                 <AelfButton
                     text={createButtonText}
                     onClick={() => this.createAndGO()}
-                ></AelfButton>;
+               />
         }
 
-        let agreementHtml = <Svg icon="radio_select12"></Svg>;
+        let agreementHtml = <Svg icon="radio_select12"/>;
         if (this.state.agree) {
-            agreementHtml = <Svg icon="radio_selected12"></Svg>
+            agreementHtml = <Svg icon="radio_selected12"/>
         }
 
         let containerStyle = getPageContainerStyle();
@@ -190,12 +190,12 @@ class Import extends Component {
                                 onClick={() => this.tabClickN()}
                             >
                                 <div>
-                                    <FormattedMessage 
+                                    <FormattedMessage
                                         id = 'aelf.Mnemonic'
                                         defaultMessage = 'Mnemonic'
                                     />
                                 </div>
-                                <div className={style.tabSelectedLine}></div>
+                                <div className={style.tabSelectedLine}/>
                             </div>
 
                             <div
@@ -203,12 +203,12 @@ class Import extends Component {
                                 onClick={() => this.tabClickP()}
                             >
                                 <div>
-                                    <FormattedMessage 
+                                    <FormattedMessage
                                         id = 'aelf.Private Key'
                                         defaultMessage = 'Private Key'
                                     />
                                 </div>
-                                <div className={style.tabSelectedLine}></div>
+                                <div className={style.tabSelectedLine}/>
                             </div>
                         </div>
                         <div>
@@ -233,7 +233,7 @@ class Import extends Component {
 
                     </div>
                     <p className={style.title}>
-                        <FormattedMessage 
+                        <FormattedMessage
                             id = 'aelf.hint03'
                             defaultMessage = 'In this wallet, there is no Mnemonic when import Private Key. But we can get Private Key when we import Mnemonic.'
                         />
@@ -241,18 +241,18 @@ class Import extends Component {
 
                     <WalletName
                         setWalletName={walletName => this.setWalletName(walletName)}
-                    ></WalletName>
+                    />
 
                     <Password
                         setPassword={password => this.setPassword(password)}
-                    ></Password>
+                    />
 
                     <WhiteSpace />
 
                     <Flex style={{ padding: '0 24px 0 24px' }}>
 
                         <Flex.Item style={{ padding: '15px 0', color: '#FFF', flex: 'none', opacity: 0.5 }}>
-                            <FormattedMessage 
+                            <FormattedMessage
                                 id = 'aelf.Agree'
                                 defaultMessage = 'Agree'
                             />
@@ -274,7 +274,7 @@ class Import extends Component {
                     <Agreement
                         agreementDisplay={this.state.agreementDisplay}
                         toggleAgreement={() => this.toggleAgreementHTML()}
-                    ></Agreement>
+                    />
                 </div>
 
                 <div className={style.bottom}>
