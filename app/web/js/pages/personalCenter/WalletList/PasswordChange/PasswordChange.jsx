@@ -36,11 +36,10 @@ class PasswordChange extends Component {
         };
     }
     inputPassword(password) {
-
         this.setState({password: password});
     }
 
-	setNewPassword(newPassword) {
+	  setNewPassword(newPassword) {
         this.setState({newPassword: newPassword});
     }
 
@@ -56,7 +55,7 @@ class PasswordChange extends Component {
 
         try {
             privateKey = aelf.wallet.AESDecrypt(walletInfo.AESEncryptoPrivateKey, password);
-            mnemonic = aelf.wallet.AESDecrypt(walletInfo.AESEncryptoMnemonic, password);
+            mnemonic = aelf.wallet.AESDecrypt(walletInfo.AESEncryptoMnemonic || '', password);
         } catch (e) {
             // 因为封装了一层，解密错误时，转换成utf-8会抛出异常。
             let string = '[ERROR] Hey guy, your invalid password make the program crash.';
@@ -127,7 +126,7 @@ class PasswordChange extends Component {
 			<div className={'aelf-dash'}>
                 <NavNormal
                    rightContent={rightContent}
-                ></NavNormal>
+                />
                 <div className={style.container} >
                     <div>
                         <NoticePanel
@@ -141,7 +140,7 @@ class PasswordChange extends Component {
                                 walletName
                             ]}
                             iconHidden={true}
-                        ></NoticePanel>
+                        />
                         <List className={style.passwordContainer}>
 
                             <div className="aelf-input-title">
@@ -158,12 +157,12 @@ class PasswordChange extends Component {
                                 placeholder=""
                                 onChange={password => this.inputPassword(password)}
                                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                            ></InputItem>
+                            />
                         </List>
 
                         <Password
                             setPassword={newPassword => this.setNewPassword(newPassword)}
-                        ></Password>
+                        />
 
                         {/*<div className={style.forget}>忘记密码？导入助记词或私钥可重置。*/}
                         <div className={style.forget}>
