@@ -78,7 +78,7 @@ class addressController extends Controller {
                 );
                 const getTokenInfo = ctx.service.address.getMultiTokensInfo({});
 
-                const result = await new Promise.all([getNodesInfo, getTokenInfo]);
+                const result = await Promise.all([getNodesInfo, getTokenInfo]);
                 nodesInfo = result[0].data;
                 tokenInfo = result[1];
             }
