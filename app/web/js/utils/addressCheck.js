@@ -13,7 +13,7 @@ export default function addressCheck(address = '', options = {
     };
 
     const addressPartsArray = address.split('_');
-    let addressFroTx = address;
+    let addressForTx = address;
     if (addressPartsArray.length === 3) {
         if (addressPartsArray[2] !== window.defaultConfig.ADDRESS_INFO.CURRENT_CHAIN_ID) {
             output = {
@@ -30,14 +30,14 @@ export default function addressCheck(address = '', options = {
             };
             return output;
         }
-        addressFroTx = addressPartsArray[1];
+        addressForTx = addressPartsArray[1];
     }
 
-    const length = addressFroTx.length;
+    const length = addressForTx.length;
     if (length <= 51 && length >= 47) {
         // 业务功能
         let addressUse = JSON.parse(localStorage.getItem('lastuse')).address;
-        if (addressFroTx === addressUse && options.compareToUse) {
+        if (addressForTx === addressUse && options.compareToUse) {
             output = {
                 ready: false,
                 message: 'Address of current wallet.'

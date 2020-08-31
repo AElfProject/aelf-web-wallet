@@ -10,6 +10,8 @@ module.exports = app => {
     router.get('/transactiondetail', controller.home.transactionDetail);
 
     router.get('/address/api/tokens', controller.address.getTokens);
+    router.get('/address/api/tokens-info', controller.address.getTokensInfo);
+
     router.get('/cross/api/list', controller.crossTransactions.list);
     router.post('/cross/api/sent', controller.crossTransactions.sent);
     router.post('/cross/api/received', controller.crossTransactions.received);

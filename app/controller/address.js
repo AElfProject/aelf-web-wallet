@@ -22,7 +22,7 @@ class addressController extends Controller {
                 type: 'int',
                 required: false,
                 allowEmpty: true,
-                max: 500,
+                max: 100,
                 min: 0
             },
             page: {
@@ -36,6 +36,11 @@ class addressController extends Controller {
                 required: false,
                 allowEmpty: true,
                 min: 0
+            },
+            all: {
+                type: 'bool',
+                required: false,
+                allowEmpty: true
             }
         };
 
@@ -45,37 +50,39 @@ class addressController extends Controller {
                 limit,
                 page,
                 contract_address,
-                symbol
+                symbol,
+                all,
             } = ctx.request.query;
             let options = {
                 address,
                 limit: limit ? parseInt(limit, 0) : 0,
                 page: page ? parseInt(page, 0) : 0,
                 contract_address: contract_address || '',
-                symbol: symbol || ''
+                symbol: symbol || '',
+                all: all === 'true',
             };
 
             ctx.validate(keysRule, options);
 
-            let nodesInfo = (await ctx.curl(
-                apiServerProvider
-                + `/api/address/tokens?address=${address}&nodes_info=1&limit=${limit}&page=${page}`, {
-                    dataType: 'json'
-                }
-            )).data;
-
-            // http://localhost:7101/api/contract/detail?contract_address=25CecrU94dmMdbhC3LWMKxtoaL4Wv8PChGvVJM6PxkHAyvXEhB
-            let tokenInfo = (await ctx.curl(
-              apiServerProvider
-                +`/api/contract/detail?contract_address=${mainTokenContract}`, {
-                    dataType: 'json'
-                }
-            )).data;
-            // console.log('tokenInfo: ', tokenInfo);
+            let nodesInfo;
+            let tokenInfo;
+            if (options.all) {
+                nodesInfo = await ctx.service.address.getMultiTokensInfo(options);
+                tokenInfo = nodesInfo;
+            } else {
+                nodesInfo = (await ctx.curl(
+                  apiServerProvider
+                  + `/api/address/tokens?address=${address}&nodes_info=1&limit=${limit}&page=${page}`, {
+                      dataType: 'json'
+                  }
+                )).data;
+                // http://localhost:7101/api/contract/detail?contract_address=25CecrU94dmMdbhC3LWMKxtoaL4Wv8PChGvVJM6PxkHAyvXEhB
+                tokenInfo = await ctx.service.address.getMultiTokensInfo({});
+            }
 
             const tokenInfoFormatted = {};
             tokenInfo.forEach(item => {
-              tokenInfoFormatted[item.symbol] = item;
+                tokenInfoFormatted[item.symbol] = item;
             });
 
             if (contract_address) {
@@ -95,6 +102,40 @@ class addressController extends Controller {
             this.formatOutput('get', result);
         }
         catch (error) {
+            this.formatOutput('error', error, 422);
+        }
+    }
+
+    async getTokensInfo() {
+        const { ctx } = this;
+        const { page, limit } = ctx.query;
+
+        try {
+            const keysRule = {
+                page: {
+                    type: 'int',
+                    required: true,
+                    allowEmpty: true,
+                    min: 0
+                },
+                limit: {
+                    type: 'int',
+                    required: true,
+                    allowEmpty: true,
+                    max: 100,
+                    min: 0
+                }
+            };
+
+            const options = {
+                page: parseInt(page, 10),
+                limit: parseInt(limit, 10)
+            };
+
+            ctx.validate(keysRule, options);
+
+            this.formatOutput('get', await ctx.service.address.getMultiTokensInfo(options));
+        } catch(error) {
             this.formatOutput('error', error, 422);
         }
     }

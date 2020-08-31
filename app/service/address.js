@@ -25,11 +25,12 @@ class ProxyService extends Service {
             let nodesInfoCount = 0;
 
             const getBalance = (contractInstance, item, index) => {
+                // console.log('item2333', item, item.symbol);
                 contractInstance.GetBalance.call({
                     symbol: item.symbol,
                     owner: options.address
                 }, (err, result) => {
-                    let tokenInfo = {
+                    tokensInfoArray[index] = {
                         token_name: item.symbol,
                         chain_id: item.chain_id,
                         symbol: item.symbol,
@@ -39,8 +40,6 @@ class ProxyService extends Service {
                         contract_address: item.contract_address,
                         balance: result.balance || 0
                     };
-
-                    tokensInfoArray[index] = tokenInfo;
                     nodesInfoCount++;
 
                     if (nodesInfoCount === nodesInfoLength) {
@@ -66,54 +65,22 @@ class ProxyService extends Service {
                     });
                 }
 
-                // Backup 方案, 不走rpc，走 aelf-block-api
-                // const contract_address = item.contract_address;
-                // const url = nodesHttpProviderSelect(item.api_domain, item.api_ip)
-                //     + '/api/address/balance?'
-                //     + `address=${options.address}`
-                //     + `&contract_address=${contract_address}`;
-
-                // let tokenInfo = {};
-
-                // ctx.curl(url, {
-                //     dataType: 'json',
-                //     timeout: GETBALANCETIMEOUT
-                // }).then(resut => {
-                //     tokenInfo = resut.data;
-                //     tokenInfo.error = 0;
-
-                // }).catch(error => {
-                //     let message = error.message;
-                //     // Don not expose IP.
-                //     message = message.split(',')[0];
-                //     tokenInfo.msg = message;
-                //     tokenInfo.error = 1;
-
-                // }).finally(() => {
-                //     tokenInfo.token_name = item.token_name;
-                //     tokenInfo.chain_id = item.chain_id;
-                //     tokenInfo.symbol = item.symbol;
-                //     tokenInfo.name = item.name;
-                //     tokenInfo.address = options.address;
-                //     tokenInfo.contract_address = contract_address;
-
-                //     tokenInfo.income = tokenInfo.income || 0;
-                //     tokenInfo.expenditure = tokenInfo.expenditure || 0;
-                //     tokenInfo.balance = tokenInfo.balance || 0;
-
-                //     tokensInfoArray[index] = tokenInfo;
-                //     nodesInfoCount++;
-
-                //     if (nodesInfoCount === nodesInfoLength) {
-                //         resolve(tokensInfoArray);
-                //     }
-                // });
             });
         });
 
-        const tokensBalance = await getTokensBalance();
+        return await getTokensBalance();
+    }
 
-        return tokensBalance;
+    async getMultiTokensInfo(options) {
+        const { page, limit} = options;
+
+        const aelf0 = this.ctx.app.mysql.get('aelf0');
+        const getTxsSql = limit
+          ? 'select * from contract_aelf20 order by id limit ? offset ?'
+          : 'select * from contract_aelf20 order by id';
+        const sqlVal = limit ? [limit, page * limit] : [];
+
+        return await aelf0.query(getTxsSql, sqlVal);
     }
 
 }
