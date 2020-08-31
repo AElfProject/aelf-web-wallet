@@ -70,14 +70,17 @@ class addressController extends Controller {
                 nodesInfo = await ctx.service.address.getMultiTokensInfo(options);
                 tokenInfo = nodesInfo;
             } else {
-                nodesInfo = (await ctx.curl(
+                const getNodesInfo = ctx.curl(
                   apiServerProvider
                   + `/api/address/tokens?address=${address}&nodes_info=1&limit=${limit}&page=${page}`, {
                       dataType: 'json'
                   }
-                )).data;
-                // http://localhost:7101/api/contract/detail?contract_address=25CecrU94dmMdbhC3LWMKxtoaL4Wv8PChGvVJM6PxkHAyvXEhB
-                tokenInfo = await ctx.service.address.getMultiTokensInfo({});
+                );
+                const getTokenInfo = ctx.service.address.getMultiTokensInfo({});
+
+                const result = await new Promise.all([getNodesInfo, getTokenInfo]);
+                nodesInfo = result[0].data;
+                tokenInfo = result[1];
             }
 
             const tokenInfoFormatted = {};
