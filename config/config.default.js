@@ -57,6 +57,7 @@ module.exports = appInfo => {
     config.sequelize = {
         dialect: 'mysql',
         host: '127.0.0.1',
+        username: '',
         user: '',
         password: '',
         port: 3306,
