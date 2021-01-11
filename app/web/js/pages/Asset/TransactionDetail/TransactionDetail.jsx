@@ -319,7 +319,7 @@ export default class TransactionDetail extends Component {
         let html = '';
         let notTransferHtml = '';
         let method = Transaction && Transaction.MethodName || '';
-        if (Status !== 'NotExisted') {
+        if (['pending', 'failed', 'mined'].includes(Status.toLowerCase())) {
 
             if (method === 'CrossChainReceiveToken') {
                 try {
