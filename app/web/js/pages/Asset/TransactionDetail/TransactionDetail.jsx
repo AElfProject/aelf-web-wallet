@@ -337,6 +337,11 @@ export default class TransactionDetail extends Component {
                 html = '';
                 notTransferHtml = this.renderNotTransfer(txResult);
             }
+        } else {
+            html = <div className={style.list}>
+                <div className={style.title}>Message</div>
+                <div className={style.text}>{txResult.Error || '-'}</div>
+            </div>;
         }
 
         const feeHTML = this.renderFeeHTML(Logs);
