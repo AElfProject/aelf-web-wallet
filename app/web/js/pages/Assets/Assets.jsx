@@ -83,7 +83,7 @@ export default class Assets extends Component {
 
                     onClick={() => historyPush(dir)}
                 >
-                    <div className={style.txListMask}></div>
+                    <div className={style.txListMask}/>
                     <div className={style.listLeft}>
                         {/*<div className={style.logoContainer}>*/}
                         {/*<img src="https://pbs.twimg.com/profile_images/933992260680552448/tkxR4vpn_400x400.jpg" alt=""/>*/}
@@ -287,7 +287,7 @@ export default class Assets extends Component {
         return (
             <div style={pageContainerStyle} className='asstes-container'>
                 <div className={style.background} style={backgroundStyle}>
-                    <div className={style.backgroundMask}></div>
+                    <div className={style.backgroundMask}/>
                     <div className={style.container} style={containerStyle}>
                         <div className={style.walletInfo}>
                             <div className={style.balance}>

@@ -19,6 +19,7 @@ import getPageContainerStyle from '../../utils/getPageContainerStyle';
 import {FormattedMessage} from 'react-intl';
 
 import style from './NavWithDrawer.scss';
+import WalletUtil from "../../utils/Wallet/wallet";
 require('./NavWithDrawer.css'); // 样式调整在HomePage/HomePage.css中
 
 export default class NavWithDrawer extends Component {
@@ -29,8 +30,14 @@ export default class NavWithDrawer extends Component {
         }
         this.state = {
             open: false,
-            hidden: true
+            hidden: true,
+            walletInstance: new WalletUtil(),
+            sideBarHTML: <div/>
         };
+    }
+
+    componentDidMount() {
+        this.getSideBar();
     }
 
     onOpenChange() {
@@ -40,13 +47,8 @@ export default class NavWithDrawer extends Component {
     }
 
     sidebarClick(walletInfo) {
-        let lastuse = {
-            address: walletInfo.address,
-            walletName: walletInfo.walletName
-        };
-        localStorage.setItem('lastuse', JSON.stringify(lastuse));
+        this.state.walletInstance.setLastUse(walletInfo.address, walletInfo.walletName);
         this.setState({
-            // lastuse: lastuse,
             open: !this.state.open
         });
 
@@ -61,13 +63,14 @@ export default class NavWithDrawer extends Component {
         }
     }
 
-    getSideBar() {
+    async getSideBar() {
         // (e) => this.sidebarClick(index, e) react的事件机制
         // https://doc.react-china.org/docs/handling-events.html
         // TODO, 从storage获取数据并拼接。
-        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+        const { walletInstance } = this.state;
+        let walletInfoList = await walletInstance.getWalletInfoList();
         let listItems = [];
-        let walletInUse = JSON.parse(localStorage.getItem('lastuse')).address;
+        let walletInUse = walletInstance.getLastUse().address;
         for (let address in walletInfoList) {
             let walletId = walletInfoList[address].walletId;
             let walletName = walletInfoList[address].walletName;
@@ -90,27 +93,58 @@ export default class NavWithDrawer extends Component {
         let listContainerStyle = getPageContainerStyle();
         listContainerStyle.height -= 80;
 
-        return (
-            <div className={style.sideContainer}>
-                <div style={listContainerStyle}>
-                    {listItems}
-                </div>
-                <div className={style.addWallet}
-                    onClick={() => hashHistory.push('/get-wallet/guide')}
-                >
-                    {/*<div>扫一扫</div>*/}
-                    <div className={style.addWalletIcon}/>
-                    <div
+        const walletType = walletInstance.getWalletType();
+        if (walletType === 'local') {
+            this.setState({
+                sideBarHTML:  <div className={style.sideContainer}>
+                    <div style={listContainerStyle}>
+                        {listItems}
+                    </div>
+                    <div className={style.addWallet}
+                         onClick={() => hashHistory.push('/get-wallet/guide')}
                     >
-                        <FormattedMessage
-                            id='aelf.Create'
-                            defaultMessage='Create'
-                        />
+                        {/*<div>扫一扫</div>*/}
+                        <div className={style.addWalletIcon}/>
+                        <div
+                        >
+                            <FormattedMessage
+                              id='aelf.Create'
+                              defaultMessage='Create'
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
+            });
+        } else {
+            this.setState({
+                sideBarHTML:  <div className={style.sideContainer}>
+                    <div style={listContainerStyle}>
+                        {listItems}
+                    </div>
+                </div>
+            });
+        }
 
-        );
+        // return (
+        //     <div className={style.sideContainer}>
+        //         <div style={listContainerStyle}>
+        //             {listItems}
+        //         </div>
+        //         <div className={style.addWallet}
+        //             onClick={() => hashHistory.push('/get-wallet/guide')}
+        //         >
+        //             {/*<div>扫一扫</div>*/}
+        //             <div className={style.addWalletIcon}/>
+        //             <div
+        //             >
+        //                 <FormattedMessage
+        //                     id='aelf.Create'
+        //                     defaultMessage='Create'
+        //                 />
+        //             </div>
+        //         </div>
+        //     </div>
+        // );
     }
 
     componentDidUpdate() {
@@ -123,11 +157,14 @@ export default class NavWithDrawer extends Component {
 
     render() {
         // fix in codepen
-        const sidebar = this.getSideBar();
+        const sidebar = <div/>;
+        const {
+            sideBarHTML,
+            walletInstance
+        } = this.state;
 
-        const lastuse = localStorage.getItem('lastuse');
-        const walletInUseName = lastuse ? JSON.parse(localStorage.getItem('lastuse')).walletName
-        : 'Please select wallet';
+        const lastuse = walletInstance.getLastUse();
+        const walletInUseName = lastuse ?  walletInstance.getLastUse().walletName : 'Please select wallet';
         let showLeftClick = this.props.showLeftClick;
 
         let isAssetsPage = hashHistory.getCurrentLocation().pathname.match('/assets');
@@ -178,7 +215,7 @@ export default class NavWithDrawer extends Component {
                             overflowX: 'hidden'
                         }
                     }
-                    sidebar={sidebar}
+                    sidebar={sideBarHTML || sidebar}
                     open={this.state.open}
                     onOpenChange={() => this.onOpenChange()}
                 >

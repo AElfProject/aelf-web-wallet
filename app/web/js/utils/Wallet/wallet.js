@@ -11,9 +11,8 @@ const LOGIN_INFO = {
 const EXTENSION_WALLET_LOCALSTORAGE = 'walletInfoList-extension';
 export default class WalletUtil {
   constructor(options) {
-    this.type = 'local' || options.type; // local, extension, app
+    this.type = (options && options.type) || this.getWalletType() || 'local'; // local, extension, app
   }
-
   // Demo
   // {
   //   "gfo7u3XLrSbQt6rpjkcGHDUH7YP6udkTVfbTGY4uQCuiUGtg2": {
@@ -41,8 +40,8 @@ export default class WalletUtil {
   //     }
   //   }
   // }
-  async getWalletInfoList (type = 'local') {
-    if (type === 'local') {
+  async getWalletInfoList () {
+    if (this.type === 'local') {
       return this.getWalletInfoListFromLocal();
     }
     return  this.getWalletInfoListFromExtension();
@@ -110,6 +109,8 @@ export default class WalletUtil {
     };
 
     localStorage.setItem(EXTENSION_WALLET_LOCALSTORAGE, JSON.stringify(walletInfoList));
+    this.setLastUse(detail.address, detail.name, 'extension');
+    this.setWalletType('extension');
 
     return walletInfoList;
   }
@@ -121,6 +122,23 @@ export default class WalletUtil {
   * }
   * */
   getLastUse() {
-    JSON.parse(localStorage.getItem('lastuse'));
+    return JSON.parse(localStorage.getItem(this.type === 'local' ? 'lastuse' : 'lastUseExtension'));
+  }
+  setLastUse(address, walletName) {
+    localStorage.setItem(
+      // this.type === 'local' ? 'lastuse' : 'lastUseExtension',
+      this.type === 'local' ? 'lastuse' : 'lastUseExtension',
+      JSON.stringify({
+        address,
+        walletName
+      })
+    );
+  }
+
+  setWalletType(type = 'local') {
+    localStorage.setItem('walletType', type);
+  }
+  getWalletType() {
+    return localStorage.getItem('walletType') || 'local';
   }
 }
