@@ -1,0 +1,126 @@
+import { Toast } from 'antd-mobile';
+import {NightElfCheck} from "../NightElf/NightElf";
+
+const {CURRENT_CHAIN_ID} = window.defaultConfig.ADDRESS_INFO;
+const LOGIN_INFO = {
+  chainId: CURRENT_CHAIN_ID,
+  payload: {
+    method: 'LOGIN'
+  }
+};
+const EXTENSION_WALLET_LOCALSTORAGE = 'walletInfoList-extension';
+export default class WalletUtil {
+  constructor(options) {
+    this.type = 'local' || options.type; // local, extension, app
+  }
+
+  // Demo
+  // {
+  //   "gfo7u3XLrSbQt6rpjkcGHDUH7YP6udkTVfbTGY4uQCuiUGtg2": {
+  //     "walletId": "gfo7u3XLrSbQt6rpjkcGHDUH7YP6udkTVfbTGY4uQCuiUGtg2",
+  //     "assets": [
+  //       {
+  //         "contractAddress": "",
+  //         "tokenName": ""
+  //       }
+  //     ],
+  //     "BIP44Path": "m/44'/1616'/0'/0/0",
+  //     "childWallet": "",
+  //     "address": "gfo7u3XLrSbQt6rpjkcGHDUH7YP6udkTVfbTGY4uQCuiUGtg2",
+  //     "walletName": "find01",
+  //     "AESEncryptoPrivateKey": "U2FsdGVkX19e8nZ6aqmDSk6qFQn4OnQudyMEZBDOkw98o8WS+Y/zusHvRLQjhcja1In/gfN3U3rd6ACKT+Ax20NQl0Jds/437jU4v+RsZwyIA1NifszAbFtGwkdQYQvt",
+  //     "AESEncryptoMnemonic": null,
+  //     "publicKey": {
+  //       "x": "5ea879312c82db561757c1409243f60bf328982d5f960d98334f82249909b2c4",
+  //       "y": "19d760b6481bb5d9d494871c014204c195c8e151b0238a3274e73d6d23e331a3"
+  //     },
+  //     "signedAddress": {
+  //       "r": "5d9262354f9e4c38bd3541fb69469adcb4b032d426f53f067756e613843ecfdf",
+  //       "s": "b60d5a1633971167152b56ab4a5a78970066195f80abfd4471fd313024990d5f",
+  //       "recoveryParam": 1
+  //     }
+  //   }
+  // }
+  async getWalletInfoList (type = 'local') {
+    if (type === 'local') {
+      return this.getWalletInfoListFromLocal();
+    }
+    return  this.getWalletInfoListFromExtension();
+  }
+
+  async getWalletInfoListFromLocal(key = 'walletInfoList') {
+    return JSON.parse(localStorage.getItem(key));
+  }
+
+  // 获取用户地址 和 签名数据
+  async getWalletInfoListFromExtension() {
+    const checkResult = await NightElfCheck.getInstance().check;
+    console.log('checkResult: ', checkResult);
+
+    const aelf = NightElfCheck.initAelfInstanceByExtension();
+    const accountInfo = await aelf.login(LOGIN_INFO);
+    // console.log('accountInfo: ', accountInfo);
+    if (accountInfo.error) {
+      Toast.info(result.errorMessage.message || result.errorMessage, 1);
+      return;
+    }
+    const detail = JSON.parse(accountInfo.detail);
+
+    const localWallet = await this.getWalletInfoListFromLocal(EXTENSION_WALLET_LOCALSTORAGE);
+    let signedAddress = localWallet && localWallet[detail.address] && localWallet[detail.address].signedAddress;
+    if (!signedAddress) {
+      const result = await aelf.getSignature({
+        appName: 'Web Wallet',
+        address: detail.address,
+        hexToBeSign: detail.address
+      });
+
+      console.log('getSignatureResult: ', result);
+      if (result.error) {
+        Toast.info(result.errorMessage.message || result.errorMessage, 1);
+        return;
+      }
+
+      const { signature } = result;
+      signedAddress = {
+        r: signature.slice(0, 64), // getSignatureResult.signature
+        s: signature.slice(64, 128),
+        recoveryParam: signature.slice(129, 130),
+      };
+    }
+
+    const walletInfoList = {
+      [detail.address]: {
+        "walletId": detail.address,
+        "assets": [
+          {
+            "contractAddress": "",
+            "tokenName": ""
+          }
+        ],
+        "BIP44Path": "m/44'/1616'/0'/0/0",
+        "childWallet": "",
+        "address": detail.address,
+        "walletName": detail.name,
+        "AESEncryptoPrivateKey": null, // extension save only
+        "AESEncryptoMnemonic": null,
+        "publicKey": detail.publicKey,
+        "signedAddress": signedAddress
+      }
+    };
+
+    localStorage.setItem(EXTENSION_WALLET_LOCALSTORAGE, JSON.stringify(walletInfoList));
+
+    return walletInfoList;
+  }
+
+  /*
+  * {
+  *   "address": "rzkFus4yjkv9w5ppHNAnvLjkEZiAK7yiQ1rkfU9QBQuPtFtGy",
+  *   "walletName":"find00"
+  * }
+  * */
+  getLastUse() {
+    JSON.parse(localStorage.getItem('lastuse'));
+  }
+}

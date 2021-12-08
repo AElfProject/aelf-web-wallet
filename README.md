@@ -22,9 +22,6 @@ at first
 
 ```shell
 config/config.default.js
-# set your own metaSource // api from aelf-block-api
-# set your own config.keys
-# set your own sequelize
 
 config/config.node.js
 # set you own apiServerProvider // api from aelf-block-api

@@ -39,7 +39,7 @@ export default class NavWithDrawer extends Component {
         });
     }
 
-    siderbarClick(walletInfo) {
+    sidebarClick(walletInfo) {
         let lastuse = {
             address: walletInfo.address,
             walletName: walletInfo.walletName
@@ -62,7 +62,7 @@ export default class NavWithDrawer extends Component {
     }
 
     getSideBar() {
-        // (e) => this.siderbarClick(index, e) react的事件机制
+        // (e) => this.sidebarClick(index, e) react的事件机制
         // https://doc.react-china.org/docs/handling-events.html
         // TODO, 从storage获取数据并拼接。
         let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
@@ -77,66 +77,14 @@ export default class NavWithDrawer extends Component {
                     <div
                         className={style.list + ' ' + (isSelected ? style.selected : '')}
                         key={address}
-                        onClick={e => this.siderbarClick(walletInfoList[address], e)}
+                        onClick={e => this.sidebarClick(walletInfoList[address], e)}
                     >
-                        <div className={style.icon}></div>
+                        <div className={style.icon}/>
                         <div>{walletName}</div>
                     </div>
                 )
             );
 
-            // 测试用
-            // listItems.push(
-            //     (
-            //         <div
-            //             className={style.list + ' ' + (isSelected ? style.selected : '')}
-            //             key={address + '1'}
-            //             onClick={(e) => this.siderbarClick(walletInfoList[address], e)}
-            //         >
-            //             <div className={style.icon}></div>
-            //             <div>{walletName}</div>
-            //         </div>
-            //     )
-            // );
-            //
-            // listItems.push(
-            //     (
-            //         <div
-            //             className={style.list + ' ' + (isSelected ? style.selected : '')}
-            //             key={address + '2'}
-            //             onClick={(e) => this.siderbarClick(walletInfoList[address], e)}
-            //         >
-            //             <div className={style.icon}></div>
-            //             <div>{walletName}</div>
-            //         </div>
-            //     )
-            // );
-            //
-            // listItems.push(
-            //     (
-            //         <div
-            //             className={style.list + ' ' + (isSelected ? style.selected : '')}
-            //             key={address + '3'}
-            //             onClick={(e) => this.siderbarClick(walletInfoList[address], e)}
-            //         >
-            //             <div className={style.icon}></div>
-            //             <div>{walletName}</div>
-            //         </div>
-            //     )
-            // );
-            //
-            // listItems.push(
-            //     (
-            //         <div
-            //             className={style.list + ' ' + (isSelected ? style.selected : '')}
-            //             key={address + '4'}
-            //             onClick={(e) => this.siderbarClick(walletInfoList[address], e)}
-            //         >
-            //             <div className={style.icon}></div>
-            //             <div>{walletName}</div>
-            //         </div>
-            //     )
-            // );
         }
 
         let listContainerStyle = getPageContainerStyle();
@@ -151,7 +99,7 @@ export default class NavWithDrawer extends Component {
                     onClick={() => hashHistory.push('/get-wallet/guide')}
                 >
                     {/*<div>扫一扫</div>*/}
-                    <div className={style.addWalletIcon}></div>
+                    <div className={style.addWalletIcon}/>
                     <div
                     >
                         <FormattedMessage
@@ -192,14 +140,14 @@ export default class NavWithDrawer extends Component {
             onClick={() => {
                 hashHistory.push('/qrcode');
             }}
-        ></Svg>;
+        />;
 
         let iconInNavBar = showLeftClick
             ? <Icon type="left" />
             : (isAssetsPage ? qrcodeIcon : '');
 
         let bottomHtml = <div className={style.bottomTabBar}>
-            <BottomTabBar></BottomTabBar>
+            <BottomTabBar/>
         </div>;
         if (this.props.hiddenBottom) {
             bottomHtml = '';
@@ -214,7 +162,7 @@ export default class NavWithDrawer extends Component {
                             icon={'menu22'}
                             onClick={() => this.onOpenChange()}
                             style={{width: 22, height: 22}}
-                        ></Svg>
+                        />
                     ]}
                 >{walletInUseName}</NavBar>
                 <Drawer

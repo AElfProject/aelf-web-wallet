@@ -64,6 +64,7 @@ import Transactions from './pages/Transactions/Transactions';
 
 import QRCode from './pages/QRCode/QRCode';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
+import DevDemo from './pages/DevDemo/DevDemo';
 
 // bind to window, fetch polyfill.
 import 'whatwg-fetch';
@@ -116,37 +117,37 @@ function initPage() {
                     {/*<Provider store={store}>*/}
                     <Router history={hashHistory}>
                         <Route path="/" component={HomePage}>
-                            <Route path="/assets" component={Assets}></Route>
-                            {/*<Route path="/qrcode" component={QRCode}></Route>*/}
-                            <Route path="/personalcenter/home" component={personalCenterHome}></Route>
-                            <Route path="/personalcenter/walletlist" component={WalletList}></Route>
+                            <Route path="/assets" component={Assets}/>
+                            {/*<Route path="/qrcode" component={QRCode}/></Route>*/}
+                            <Route path="/personalcenter/home" component={personalCenterHome}/>
+                            <Route path="/personalcenter/walletlist" component={WalletList}/>
                         </Route>
 
-                        <Route path="/qrcode" component={QRCode}></Route>
+                        <Route path="/qrcode" component={QRCode}/>
 
-                        <Route path="/transactiondetail" component={AssetTransactionDetail}></Route>
-                        <Route path="/personalcenter/walletmanage" component={WalletManage}></Route>
+                        <Route path="/transactiondetail" component={AssetTransactionDetail}/>
+                        <Route path="/personalcenter/walletmanage" component={WalletManage}/>
 
-                        <Route path="/assethome" component={AssetHome}></Route>
-                        <Route path="/assettransfer" component={AssetTransfer}></Route>
-                        <Route path="/personalcenter/passwordchange" component={PasswordChange}></Route>
+                        <Route path="/assethome" component={AssetHome}/>
+                        <Route path="/assettransfer" component={AssetTransfer}/>
+                        <Route path="/personalcenter/passwordchange" component={PasswordChange}/>
 
-                        <Route path="/personalcenter/about" component={personalCenterAbout}></Route>
-                        <Route path="/personalcenter/about/privacy" component={Privacy}></Route>
-                        <Route path="/personalcenter/about/service" component={Service}></Route>
+                        <Route path="/personalcenter/about" component={personalCenterAbout}/>
+                        <Route path="/personalcenter/about/privacy" component={Privacy}/>
+                        <Route path="/personalcenter/about/service" component={Service}/>
 
-                        <Route path="/personalcenter/unconfirmedtransactions" component={UnconfirmedTransactions}></Route>
+                        <Route path="/personalcenter/unconfirmedtransactions" component={UnconfirmedTransactions}/>
 
-                        <Route path="/personalcenter/help" component={personalCenterHelpCenter}></Route>
-                        <Route path="/personalcenter/whatismnemonic" component={WhatIsMnemonic}></Route>
-                        <Route path="/personalcenter/whatiskeystore" component={WhatIsKeyStore}></Route>
-                        <Route path="/personalcenter/whatisprivatepublickey" component={WhatIsPrivatePublicKey}></Route>
-                        <Route path="/personalcenter/whatisaelfwallet" component={WhatIsAElfWallet}></Route>
-                        <Route path="/personalcenter/howtochangepassword" component={HowToChangePassword}></Route>
-                        <Route path="/personalcenter/forget" component={ForgetPassword} ></Route>
-                        <Route path="/personalcenter/notesoncrosschaintransfer" component={NotesOnCrossChainTransfer} ></Route>
-                        <Route path="/personalcenter/systemsetting" component={personalCenterSystemSetting}></Route>
-                        <Route path="/personalcenter/systemsetting/network" component={systemSettingNetwork}></Route>
+                        <Route path="/personalcenter/help" component={personalCenterHelpCenter}/>
+                        <Route path="/personalcenter/whatismnemonic" component={WhatIsMnemonic}/>
+                        <Route path="/personalcenter/whatiskeystore" component={WhatIsKeyStore}/>
+                        <Route path="/personalcenter/whatisprivatepublickey" component={WhatIsPrivatePublicKey}/>
+                        <Route path="/personalcenter/whatisaelfwallet" component={WhatIsAElfWallet}/>
+                        <Route path="/personalcenter/howtochangepassword" component={HowToChangePassword}/>
+                        <Route path="/personalcenter/forget" component={ForgetPassword} />
+                        <Route path="/personalcenter/notesoncrosschaintransfer" component={NotesOnCrossChainTransfer} />
+                        <Route path="/personalcenter/systemsetting" component={personalCenterSystemSetting}/>
+                        <Route path="/personalcenter/systemsetting/network" component={systemSettingNetwork}/>
 
                         <Route path="/get-wallet/backup" component={getWalletBackup} />
 
@@ -157,14 +158,15 @@ function initPage() {
                             <Route path="/get-wallet/import" component={getWalletImport} />
                         </Route>
 
-                        <Route path="/error" component={ErrorPage}></Route>
+                        <Route path="/error" component={ErrorPage}/>
+                        <Route path="/dev-demo" component={DevDemo}/>
 
-                        <Route path='/contactaddress' component={ContactAddressPage}></Route>
-                        <Route path='/contactaddress/newcontactaddress' component={NewContactAddressPage}></Route>
+                        <Route path='/contactaddress' component={ContactAddressPage}/>
+                        <Route path='/contactaddress/newcontactaddress' component={NewContactAddressPage}/>
 
-                        <Route path='/transactions' component={Transactions} ></Route>
+                        <Route path='/transactions' component={Transactions} />
 
-                        <Route path='/addtoken' component={AddToken} ></Route>
+                        <Route path='/addtoken' component={AddToken} />
 
                     </Router>
                     {/*</Provider>*/}
