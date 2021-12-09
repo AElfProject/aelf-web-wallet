@@ -1,14 +1,10 @@
 import { Toast } from 'antd-mobile';
 import {NightElfCheck} from "../NightElf/NightElf";
+import {
+  LOGIN_INFO,
+  EXTENSION_WALLET_LOCALSTORAGE,
+} from '../../constant/config';
 
-const {CURRENT_CHAIN_ID} = window.defaultConfig.ADDRESS_INFO;
-const LOGIN_INFO = {
-  chainId: CURRENT_CHAIN_ID,
-  payload: {
-    method: 'LOGIN'
-  }
-};
-const EXTENSION_WALLET_LOCALSTORAGE = 'walletInfoList-extension';
 export default class WalletUtil {
   constructor(options) {
     this.type = (options && options.type) || this.getWalletType() || 'local'; // local, extension, app

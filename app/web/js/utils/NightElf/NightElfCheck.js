@@ -3,6 +3,7 @@
  * @author hzz780
  */
 import serviceProvider from '../serviceProvider';
+import {LOGIN_INFO} from "../../constant/config";
 
 console.log('getProvider: ', serviceProvider);
 const HTTP_PROVIDER = serviceProvider.getProvider();
@@ -63,11 +64,11 @@ export default class NightElfCheck {
     }
 
     static async getContractInstance(inputInitParams) {
-        const {loginInfo, contractAddress} = inputInitParams;
+        const {contractAddress} = inputInitParams;
         await NightElfCheck.getInstance().check;
         const aelf = NightElfCheck.getAelfInstanceByExtension();
 
-        const accountInfo = await aelf.login(loginInfo);
+        const accountInfo = await aelf.login(LOGIN_INFO);
         if (accountInfo.error) {
             throw Error(accountInfo.errorMessage.message || accountInfo.errorMessage);
         }
@@ -83,11 +84,11 @@ export default class NightElfCheck {
 
     // singleton to get, new to init
     static async initContractInstance(inputInitParams) {
-        const {loginInfo, contractAddress} = inputInitParams;
+        const {contractAddress} = inputInitParams;
         await NightElfCheck.getInstance().check;
         const aelf = NightElfCheck.getAelfInstanceByExtension();
 
-        const accountInfo = await aelf.login(loginInfo);
+        const accountInfo = await aelf.login(LOGIN_INFO);
         if (accountInfo.error) {
             throw Error(accountInfo.errorMessage.message || accountInfo.errorMessage);
         }

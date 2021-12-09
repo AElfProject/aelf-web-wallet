@@ -29,10 +29,12 @@ import {CrossChainMethods} from '../../../utils/crossChain';
 
 import {FormattedMessage} from 'react-intl';
 import WalletUtil from "../../../utils/Wallet/wallet";
+import {getViewResult, NightElfCheck} from "../../../utils/NightElf/NightElf";
 
 export default class Transfer extends Component {
     constructor(props) {
         super(props);
+        const walletUtilInstance = new WalletUtil();
         this.state = {
             decimals: 0,
             balance: new BigNumber(0),
@@ -40,9 +42,9 @@ export default class Transfer extends Component {
             amountError: null,
             memoError: null,
             addressError: null,
-            isCrossChain: false
+            isCrossChain: false,
+            walletType: walletUtilInstance.getWalletType()
         };
-        const walletUtilInstance = new WalletUtil();
 
         this.walletAddress = walletUtilInstance.getLastUse().address;
         this.contractAddress = getParam('contract_address', window.location.href);
@@ -186,7 +188,40 @@ export default class Transfer extends Component {
         }
     }
 
+    async normalTransferExtension(options) {
+        const {contractAddress, tokenName, address, amountBig, memo, decimals} = options;
+        const tokenContract = await NightElfCheck.initContractInstance({
+            contractAddress,
+        });
+
+        const result = await tokenContract.Transfer({
+            symbol: tokenName,
+            to: address,
+            amount: amountBig.multipliedBy(Math.pow(10, decimals)).toNumber(),
+            memo
+        });
+
+        if (result.errorMessage) {
+            Toast.fail(result.errorMessage.message, 3, () => { }, false);
+            return;
+        }
+
+        Toast.hide();
+        hashHistory.push(`/transactiondetail?txid=${getViewResult('TransactionId', result)}`
+          + `&token=${tokenName}&contract_address=${contractAddress}&decimals=${decimals}`);
+    }
+
     async normalTransfer(options) {
+        const walletUtilInstance = new WalletUtil();
+        const walletType = walletUtilInstance.getWalletType();
+        if (walletType !== 'local') {
+            await this.normalTransferExtension(options);
+            return;
+        }
+        await this.normalTransferLocal(options);
+    }
+
+    async normalTransferLocal(options) {
         const {password, contractAddress, tokenName, address, amountBig, memo, decimals} = options;
 
         try {
@@ -253,8 +288,7 @@ export default class Transfer extends Component {
     }
 
     render() {
-        const {addressError, amountError, memoError, passwordError} = this.state;
-
+        const {addressError, amountError, memoError, passwordError, walletType} = this.state;
         let addressErrorText;
         if (addressError) {
             addressErrorText = <div className={style.error}>{addressError}</div>;
@@ -282,7 +316,7 @@ export default class Transfer extends Component {
                     opacity: 0.5
                 }}
             />;
-        if (this.state.address && this.state.amount && this.state.password) {
+        if (this.state.address && this.state.amount && (this.state.password || walletType !== 'local')) {
             createButton
                 = <AelfButton
                     text="Send"
@@ -350,7 +384,7 @@ export default class Transfer extends Component {
                             />
                         </List>
 
-                        <List>
+                        {walletType === 'local' && <List>
                             <div className="aelf-input-title">
                                 <div><FormattedMessage id = 'aelf.Password' /></div>
                                 {passwordErrorText}
@@ -362,7 +396,7 @@ export default class Transfer extends Component {
                                 onChange={password => this.inputPassword(password)}
                                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                             />
-                        </List>
+                        </List>}
 
                         <div className={style.crossChain} onClick={() => hashHistory.push('/personalcenter/notesoncrosschaintransfer')}>
                             <FormattedMessage id = 'aelf.Notes on cross chain transfer' />

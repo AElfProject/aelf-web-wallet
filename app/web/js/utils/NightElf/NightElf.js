@@ -6,9 +6,9 @@ import NightElfCheckTemp from './NightElfCheck';
 
 // export const NightElfCheck = isPhone ? AelfBridgeCheck : NightElfCheckTemp;
 export const NightElfCheck = NightElfCheckTemp;
-// export const getViewResult = (key, result) => {
-//   if (!result) {
-//     return undefined;
-//   }
-//   return result[key] || (result.result && result.result[key]);
-// };
+export const getViewResult = (key, result) => {
+  if (!result) {
+    return undefined;
+  }
+  return result[key] || (result.result && result.result[key]);
+};
