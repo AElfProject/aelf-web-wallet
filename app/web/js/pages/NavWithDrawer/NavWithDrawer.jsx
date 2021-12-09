@@ -52,6 +52,8 @@ export default class NavWithDrawer extends Component {
             open: !this.state.open
         });
 
+        this.getSideBar();
+
         // 艹，这代码好恶心。
         let targetPath = `/assets?address=${walletInfo.address}`;
         let notSameWallet = !hashHistory.getCurrentLocation().pathname.match(targetPath);
