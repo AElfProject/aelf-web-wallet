@@ -69,6 +69,8 @@ export default class NavWithDrawer extends Component {
         // TODO, 从storage获取数据并拼接。
         const { walletInstance } = this.state;
         let walletInfoList = await walletInstance.getWalletInfoList();
+
+        console.log('walletInfoList: ', walletInfoList);
         let listItems = [];
         let walletInUse = walletInstance.getLastUse().address;
         for (let address in walletInfoList) {

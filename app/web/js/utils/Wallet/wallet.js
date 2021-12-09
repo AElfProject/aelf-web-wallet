@@ -40,14 +40,26 @@ export default class WalletUtil {
   //     }
   //   }
   // }
-  async getWalletInfoList () {
+  getWalletInfoListSync (storageType = '') {
     if (this.type === 'local') {
       return this.getWalletInfoListFromLocal();
     }
-    return  this.getWalletInfoListFromExtension();
+    if (this.type === 'extension' || storageType === 'extension-local') {
+      return this.getWalletInfoListFromLocal(EXTENSION_WALLET_LOCALSTORAGE);
+    }
   }
 
-  async getWalletInfoListFromLocal(key = 'walletInfoList') {
+  async getWalletInfoList (storageType = '') {
+    if (this.type === 'local') {
+      return this.getWalletInfoListFromLocal();
+    }
+    if (storageType === 'extension-local') {
+      return this.getWalletInfoListFromLocal(EXTENSION_WALLET_LOCALSTORAGE);
+    }
+    return this.getWalletInfoListFromExtension();
+  }
+
+  getWalletInfoListFromLocal(key = 'walletInfoList') {
     return JSON.parse(localStorage.getItem(key));
   }
 
@@ -58,7 +70,7 @@ export default class WalletUtil {
 
     const aelf = NightElfCheck.initAelfInstanceByExtension();
     const accountInfo = await aelf.login(LOGIN_INFO);
-    // console.log('accountInfo: ', accountInfo);
+    console.log('accountInfo: ', accountInfo);
     if (accountInfo.error) {
       Toast.info(result.errorMessage.message || result.errorMessage, 1);
       return;

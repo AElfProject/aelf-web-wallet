@@ -3,6 +3,7 @@
  * @author huangzongzhe
  * 2018.12.13
  */
+import WalletUtil from "./Wallet/wallet";
 
 export default function addressCheck(address = '', options = {
     compareToUse: true
@@ -36,7 +37,8 @@ export default function addressCheck(address = '', options = {
     const length = addressForTx.length;
     if (length <= 51 && length >= 47) {
         // 业务功能
-        let addressUse = JSON.parse(localStorage.getItem('lastuse')).address;
+        const walletUtilInstance = new WalletUtil();
+        let addressUse = walletUtilInstance.getLastUse().address;
         if (addressForTx === addressUse && options.compareToUse) {
             output = {
                 ready: false,

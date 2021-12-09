@@ -82,6 +82,7 @@ import {antdChooseLocale, chooseLocale} from './utils/utils';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import zh from 'react-intl/locale-data/zh';
 import en from 'react-intl/locale-data/en';
+import WalletUtil from "./utils/Wallet/wallet";
 // import enUS from 'antd-mobile/lib/locale-provider/en_US';
 /* eslint-disable fecs-camelcase */
 
@@ -92,7 +93,8 @@ require('./../style/ant-mobile-aelf.css');
 
 function initPage() {
     // TODO: localStorage file, asyncStorage统一成一个方法。
-    let walletInfoList = localStorage.getItem('walletInfoList');
+    const walletUtilInstance = new WalletUtil();
+    let walletInfoList = walletUtilInstance.getWalletInfoListSync();
 
     // TODO: 通过localStorage 判断所选语言
     if (!walletInfoList) {

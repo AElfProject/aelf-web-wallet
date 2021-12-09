@@ -27,6 +27,7 @@ import {
 import style from './Assets.scss';
 
 import BigNumber from 'bignumber.js';
+import WalletUtil from "../../utils/Wallet/wallet";
 // window.BigNumber = BigNumber;
 
 require('./Assets.css');
@@ -35,11 +36,13 @@ const NUM_ROWS = 20;
 let pageIndex = 0;
 
 function getTokens(callback, pIndex = 0) {
+    const walletUtilInstance = new WalletUtil();
+
     get('/address/api/tokens', {
         limit: NUM_ROWS, // 13
         page: pIndex, // 0
         order: 'desc', // asc
-        address: JSON.parse(localStorage.getItem('lastuse')).address
+        address: walletUtilInstance.getLastUse().address
     }).then(result => {
         callback(result);
     }).catch(error => {
@@ -230,7 +233,9 @@ export default class Assets extends Component {
 
     renderAddress() {
         if (whetherBackupCheck()) {
-            const {address} = JSON.parse(localStorage.getItem('lastuse'));
+            const walletUtilInstance = new WalletUtil();
+            const address = walletUtilInstance.getLastUse().address;
+
             let walletAddressShow = addressPrefixSuffix(addressOmit(address));
             let walletAddress = addressPrefixSuffix(address);
             return (
@@ -268,7 +273,8 @@ export default class Assets extends Component {
     // TODO: 刷新该页面，下拉，快去点击资产进入到交易列表页，会报错，有内存泄漏的可能。暂无思路。
     render() {
         // check
-        let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+        const walletUtilInstance = new WalletUtil();
+        let walletAddress = walletUtilInstance.getLastUse().address;
         if (this.walletAddressTemp && walletAddress !== this.walletAddressTemp) {
             this.onRefresh(false);
         }

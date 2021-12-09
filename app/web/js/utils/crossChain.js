@@ -10,6 +10,7 @@ import checkStatus from './checkStatus';
 import {
     get
 } from './apisauce';
+import WalletUtil from "./Wallet/wallet";
 
 const CSRF = document.cookie.match(/csrfToken=[^;]*/)[0].replace('csrfToken=', '');
 export class CrossChainMethods {
@@ -332,8 +333,9 @@ export class CrossChainMethods {
 }
 
 function getLocalWallet() {
-    let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
-    let address = JSON.parse(localStorage.lastuse).address;
+    const walletUtilInstance = new WalletUtil();
+    let walletInfoList = walletUtilInstance.getWalletInfoListSync();
+    let address = walletUtilInstance.getLastUse().address;
     return {
         address,
         signedAddress: walletInfoList[address].signedAddress,

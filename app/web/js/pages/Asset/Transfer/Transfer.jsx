@@ -28,6 +28,7 @@ import {getWallet} from '../../../utils/initAelf';
 import {CrossChainMethods} from '../../../utils/crossChain';
 
 import {FormattedMessage} from 'react-intl';
+import WalletUtil from "../../../utils/Wallet/wallet";
 
 export default class Transfer extends Component {
     constructor(props) {
@@ -41,7 +42,9 @@ export default class Transfer extends Component {
             addressError: null,
             isCrossChain: false
         };
-        this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+        const walletUtilInstance = new WalletUtil();
+
+        this.walletAddress = walletUtilInstance.getLastUse().address;
         this.contractAddress = getParam('contract_address', window.location.href);
         this.tokenName = getParam('token', window.location.href);
     }

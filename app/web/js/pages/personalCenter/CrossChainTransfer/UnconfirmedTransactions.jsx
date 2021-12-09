@@ -12,6 +12,7 @@ import style from './UnconfirmedTransactions.scss';
 import {CrossChainMethods} from '../../../utils/crossChain';
 import {getWallet} from '../../../utils/initAelf';
 import {get} from "../../../utils/apisauce";
+import WalletUtil from "../../../utils/Wallet/wallet";
 
 const Item = List.Item;
 const prompt = Modal.prompt;
@@ -84,7 +85,8 @@ class UnconfirmedTransactions extends Component {
   }
 
   fetchData() {
-    const address = JSON.parse(localStorage.lastuse).address;
+    const walletUtilInstance = new WalletUtil();
+    const address = walletUtilInstance.getLastUse().address;
 
     const offset = 0;
     const limit = 100;

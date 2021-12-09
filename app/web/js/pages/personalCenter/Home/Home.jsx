@@ -3,7 +3,7 @@
  * 2018.07.31
  */
 import React, {
-	Component
+  Component
 } from 'react'
 
 import { List } from 'antd-mobile'
@@ -11,15 +11,22 @@ import { hashHistory } from 'react-router'
 
 import style from './Home.scss'
 
-import Svg from '../../../components/Svg/Svg'
 import ListContent from '../../../components/ListContent/ListContent'
 
 // react-intl 国际化测试
 import { FormattedMessage } from 'react-intl'
+import WalletUtil from "../../../utils/Wallet/wallet";
 
 const Item = List.Item;
 
 class personalCenterHome extends Component {
+  constructor() {
+    super();
+    const walletUtilInstance = new WalletUtil();
+    this.state = {
+      walletType: walletUtilInstance.getWalletType()
+    };
+  }
 
   componentDidMount() {
     // 比如微信就会弹个底窗上来，就resize了
@@ -30,26 +37,28 @@ class personalCenterHome extends Component {
     };
   }
 
-	render() {
-		return (
-			<div className={style.container + ' ' + 'aelf-personal-pages aelf-solid'}>
+  render() {
+    const { walletType } = this.state;
 
-	            <List className={'aelf-list'}>
-	                <Item onClick={() => hashHistory.push('/personalcenter/walletmanage?title=WalletManagement')}>
-                        <ListContent
-                            type="small"
-                            icon="wallet16"
-                            text={
-                                <FormattedMessage
-                                    id = 'aelf.WalletDetail'
-                                    defaultMessage = 'Wallet Detail'
-                                />
-                            }
-                        />
-                    </Item>
-	            </List>
+    return (
+      <div className={style.container + ' ' + 'aelf-personal-pages aelf-solid'}>
 
-                {/* <List className={'aelf-list'}>
+        {walletType === 'local' && <List className={'aelf-list'}>
+          <Item onClick={() => hashHistory.push('/personalcenter/walletmanage?title=WalletManagement')}>
+            <ListContent
+              type="small"
+              icon="wallet16"
+              text={
+                <FormattedMessage
+                  id = 'aelf.WalletDetail'
+                  defaultMessage = 'Wallet Detail'
+                />
+              }
+            />
+          </Item>
+        </List>}
+
+        {/* <List className={'aelf-list'}>
                     <Item onClick={() => hashHistory.push('/transactions')}>
                         <ListContent
                             icon="tx_history16"
@@ -63,9 +72,9 @@ class personalCenterHome extends Component {
                     </Item>
                 </List> */}
 
-                {/* <div className={style.blank}></div> */}
+        {/* <div className={style.blank}></div> */}
 
-                {/* <List className={'aelf-list'}>
+        {/* <List className={'aelf-list'}>
                     <Item onClick={() => hashHistory.push('/contactaddress')}>
                         <ListContent
                             type="small"
@@ -79,76 +88,76 @@ class personalCenterHome extends Component {
                         ></ListContent>
                     </Item>
                 </List> */}
-                <List className={'aelf-list'}>
-                    <Item onClick={() => hashHistory.push('/personalcenter/systemsetting')}>
-                        <ListContent
-                            type="small"
-                            icon="setting16"
-                            text={
-                                <FormattedMessage
-                                    id = 'aelf.SystemSetting'
-                                    defaultMessage = 'System Setting'
-                                />
-                            }
-                        />
-                    </Item>
-                </List>
-                <List className={'aelf-list'}>
-                    <Item onClick={() => hashHistory.push('/personalcenter/help?title=HelpCenter')}>
-                        <ListContent
-                            type="small"
-                            icon="help16"
-                            text={
-                                <FormattedMessage
-                                    id = 'aelf.HelpCenter'
-                                    defaultMessage = 'Help Center'
-                                />
-                            }
-                        />
-                    </Item>
-                </List>
-                <List className={'aelf-list'}>
-                    <Item onClick={() => hashHistory.push('/personalcenter/about?title=AboutELFWallet')}>
-                        <ListContent
-                            type="small"
-                            icon="about16"
-                            text={
-                                <FormattedMessage
-                                    id = 'aelf.About'
-                                    defaultMessage = "About ELF Official Wallet"
-                                />
-                            }
-                        />
-                    </Item>
-                </List>
-                <List className={'aelf-list'}>
-                    <Item onClick={() => hashHistory.push('/personalcenter/unconfirmedtransactions')}>
-                        <ListContent
-                            type="small"
-                            // icon="about16"
-                            text={
-                                <FormattedMessage
-                                    id = 'aelf.Cross chain transactions to be confirmed'
-                                    defaultMessage = "Cross chain transactions to be confirmed"
-                                />
-                            }
-                        />
-                    </Item>
-                </List>
+        <List className={'aelf-list'}>
+          <Item onClick={() => hashHistory.push('/personalcenter/systemsetting')}>
+            <ListContent
+              type="small"
+              icon="setting16"
+              text={
+                <FormattedMessage
+                  id = 'aelf.SystemSetting'
+                  defaultMessage = 'System Setting'
+                />
+              }
+            />
+          </Item>
+        </List>
+        <List className={'aelf-list'}>
+          <Item onClick={() => hashHistory.push('/personalcenter/help?title=HelpCenter')}>
+            <ListContent
+              type="small"
+              icon="help16"
+              text={
+                <FormattedMessage
+                  id = 'aelf.HelpCenter'
+                  defaultMessage = 'Help Center'
+                />
+              }
+            />
+          </Item>
+        </List>
+        <List className={'aelf-list'}>
+          <Item onClick={() => hashHistory.push('/personalcenter/about?title=AboutELFWallet')}>
+            <ListContent
+              type="small"
+              icon="about16"
+              text={
+                <FormattedMessage
+                  id = 'aelf.About'
+                  defaultMessage = "About ELF Official Wallet"
+                />
+              }
+            />
+          </Item>
+        </List>
+        <List className={'aelf-list'}>
+          <Item onClick={() => hashHistory.push('/personalcenter/unconfirmedtransactions')}>
+            <ListContent
+              type="small"
+              // icon="about16"
+              text={
+                <FormattedMessage
+                  id = 'aelf.Cross chain transactions to be confirmed'
+                  defaultMessage = "Cross chain transactions to be confirmed"
+                />
+              }
+            />
+          </Item>
+        </List>
 
-                {/*<List>*/}
-	                {/*<Item onClick={() => hashHistory.push('/personalcenter/walletmanage?title=钱包管理')}>钱包管理</Item>*/}
-	            {/*</List>*/}
-	            {/*<List>*/}
-	                {/*<Item onClick={() => hashHistory.push('/personalcenter/about?title=关于我们')}>关于我们</Item>*/}
-	            {/*</List>*/}
-	            {/*<List>*/}
-	                {/*<Item onClick={() => hashHistory.push('/personalcenter/help?title=帮助中心')}>帮助中心</Item>*/}
-	            {/*</List>*/}
+        {/*<List>*/}
+        {/*<Item onClick={() => hashHistory.push('/personalcenter/walletmanage?title=钱包管理')}>钱包管理</Item>*/}
+        {/*</List>*/}
+        {/*<List>*/}
+        {/*<Item onClick={() => hashHistory.push('/personalcenter/about?title=关于我们')}>关于我们</Item>*/}
+        {/*</List>*/}
+        {/*<List>*/}
+        {/*<Item onClick={() => hashHistory.push('/personalcenter/help?title=帮助中心')}>帮助中心</Item>*/}
+        {/*</List>*/}
 
-			</div>
-		);
-	}
+      </div>
+    );
+  }
 }
 
 export default personalCenterHome
