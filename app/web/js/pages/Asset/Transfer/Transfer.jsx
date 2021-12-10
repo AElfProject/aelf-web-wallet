@@ -25,11 +25,12 @@ import {
 } from '../../../utils/utils';
 
 import {getWallet} from '../../../utils/initAelf';
-import {CrossChainMethods} from '../../../utils/crossChain';
+import {CrossChainMethods, getCrossInfo} from '../../../utils/crossChain';
 
 import {FormattedMessage} from 'react-intl';
 import WalletUtil from "../../../utils/Wallet/wallet";
 import {getViewResult, NightElfCheck} from "../../../utils/NightElf/NightElf";
+import {CrossChainMethodsExtension} from "../../../utils/crossChainForExtension";
 
 export default class Transfer extends Component {
     constructor(props) {
@@ -143,7 +144,79 @@ export default class Transfer extends Component {
         this.setState = () => {};
     }
 
-    async crossTransfer(options) {
+    async crossTransferExtension(options) {
+        const {address, tokenName, amountBig, amount, memo, contractAddress, decimals} = options;
+
+        const CROSS_INFO = getCrossInfo({
+            symbol: tokenName,
+            to: address
+        }, window.defaultConfig.chainId);
+
+        // console.log('crossTransferExtension CROSS_INFO', CROSS_INFO);
+
+        const walletUtilInstance = new WalletUtil();
+        const walletAddress = walletUtilInstance.getLastUse().address;
+        const wallet = {
+            address: walletAddress
+        };
+        const crossInstance = new window.NightElf.CrossChain({
+            wallet,
+            CROSS_INFO
+        });
+
+        try {
+            const crossParams = {
+                to: address,
+                symbol: tokenName,
+                amount: amountBig.multipliedBy(Math.pow(10, decimals)).toNumber(),
+                memo
+            };
+
+            Toast.loading('Cross chain transfer', 30);
+            const result = await crossInstance.send(crossParams);
+            if (result.error) {
+                Toast.hide();
+                Toast.fail(result.error, 3, () => { }, false);
+                return;
+            }
+            const crossTxId = JSON.parse(result.detail).crossTransferTxId;
+
+            // 绑定跨链关系
+            const crossInstanceLocal = new CrossChainMethods({});
+            await crossInstanceLocal.bindSent({
+                txId: crossTxId,
+                transferParams: {
+                    transfer: crossParams
+                },
+                sendInfo: {
+                    sendNode: CROSS_INFO.from.url,
+                    receiveNode: CROSS_INFO.to.url,
+                    mainChainId: CROSS_INFO.mainChainId,
+                    issueChainId: CROSS_INFO.issueChainId
+                },
+                amountShow: amount
+            });
+
+            Toast.hide();
+
+            hashHistory.push(`/transactiondetail?txid=${crossTxId}&is_cross_chain=1`
+              + `&token=${tokenName}&contract_address=${contractAddress}&decimals=${decimals}`);
+        } catch(e) {
+            Toast.fail(e.message || 'Something Error', 3, () => { }, false);
+        }
+    }
+
+    async crossTransfer() {
+        const walletUtilInstance = new WalletUtil();
+        const walletType = walletUtilInstance.getWalletType();
+        if (walletType !== 'local') {
+            await this.crossTransferLocalExtension(options);
+            return;
+        }
+        await this.crossTransferLocal(options);
+    }
+
+    async crossTransferLocal(options) {
         const {password, address, tokenName, amountBig, amount, memo, contractAddress, decimals} = options;
         let wallet;
         try {
