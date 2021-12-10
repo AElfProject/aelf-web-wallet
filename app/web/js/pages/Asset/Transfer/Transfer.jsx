@@ -206,11 +206,11 @@ export default class Transfer extends Component {
         }
     }
 
-    async crossTransfer() {
+    async crossTransfer(options) {
         const walletUtilInstance = new WalletUtil();
         const walletType = walletUtilInstance.getWalletType();
         if (walletType !== 'local') {
-            await this.crossTransferLocalExtension(options);
+            await this.crossTransferExtension(options);
             return;
         }
         await this.crossTransferLocal(options);

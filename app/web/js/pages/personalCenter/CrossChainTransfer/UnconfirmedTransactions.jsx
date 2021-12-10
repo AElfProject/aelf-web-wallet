@@ -62,7 +62,15 @@ class UnconfirmedTransactions extends Component {
   confirmTransfer(options) {
     const {password, fromChain, transfer} = options;
 
-    const wallet = getWallet(password);
+    let wallet;
+    try {
+      wallet = getWallet(password || '?');
+    } catch(e) {
+      Toast.hide();
+      Toast.fail('Wrong Password', 3, () => {}, false);
+      return;
+    }
+
     const crossInstance = new CrossChainMethods({
       wallet,
       WEB_API_INFO: window.defaultConfig.WEB_API_INFO,
