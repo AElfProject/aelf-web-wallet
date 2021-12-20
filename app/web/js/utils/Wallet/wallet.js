@@ -61,8 +61,14 @@ export default class WalletUtil {
 
   // 获取用户地址 和 签名数据
   async getWalletInfoListFromExtension() {
-    const checkResult = await NightElfCheck.getInstance().check;
-    console.log('checkResult: ', checkResult);
+    try {
+      const checkResult = await NightElfCheck.getInstance().check;
+      console.log('checkResult: ', checkResult);
+    } catch (error) {
+      Toast.info(error.message || error.errorMessage, 3);
+      return;
+    }
+
 
     const aelf = NightElfCheck.initAelfInstanceByExtension();
     const accountInfo = await aelf.login(LOGIN_INFO);
