@@ -20,7 +20,7 @@
       }
     </script -->
 </head>
-<link rel="stylesheet" href="../public/style/browser_reset.css?t=20181127">
+<link rel="stylesheet" href="../public/style/browser_reset.css?t=20211220">
 
 <!-- <link rel="stylesheet" href="../style/browser_reset.css"> -->
 <body>
