@@ -11,7 +11,7 @@ export default function walletStatusCheck () {
     const walletUtilInstance = new WalletUtil();
     const walletInfoList = walletUtilInstance.getWalletInfoListSync();
     const walletType = walletUtilInstance.getWalletType();
-    if (Object.keys(walletInfoList).length) {
+    if (walletInfoList && Object.keys(walletInfoList).length) {
         return true;
     }
     if (walletType === 'local') {

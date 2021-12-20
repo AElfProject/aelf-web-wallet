@@ -131,10 +131,19 @@ class personalCenterHome extends Component {
           </Item>
         </List>
         <List className={'aelf-list'}>
+          <Item onClick={() => hashHistory.push('/connect')}>
+            <ListContent
+              type="small"
+              icon="contact16"
+              text={'Change Wallet Type'}
+            />
+          </Item>
+        </List>
+        <List className={'aelf-list'}>
           <Item onClick={() => hashHistory.push('/personalcenter/unconfirmedtransactions')}>
             <ListContent
               type="small"
-              // icon="about16"
+              icon="tx_history16"
               text={
                 <FormattedMessage
                   id = 'aelf.Cross chain transactions to be confirmed'

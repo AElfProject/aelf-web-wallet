@@ -125,6 +125,15 @@ export default class NavWithDrawer extends Component {
                     <div style={listContainerStyle}>
                         {listItems}
                     </div>
+                    <div className={style.addWallet}
+                         onClick={async () => {
+                             await walletInstance.clearWallet();
+                             hashHistory.push('/connect');
+                         }}
+                    >
+                        <div className={style.addWalletIconBlank}/>
+                        <div>Logout</div>
+                    </div>
                 </div>
             });
         }

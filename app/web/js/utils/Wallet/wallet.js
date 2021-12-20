@@ -2,7 +2,7 @@ import { Toast } from 'antd-mobile';
 import {NightElfCheck} from "../NightElf/NightElf";
 import {
   LOGIN_INFO,
-  EXTENSION_WALLET_LOCALSTORAGE,
+  EXTENSION_WALLET_LOCALSTORAGE, CURRENT_CHAIN_ID,
 } from '../../constant/config';
 
 export default class WalletUtil {
@@ -144,9 +144,23 @@ export default class WalletUtil {
   }
 
   setWalletType(type = 'local') {
+    this.type = type;
     localStorage.setItem('walletType', type);
   }
   getWalletType() {
-    return localStorage.getItem('walletType') || 'local';
+    return localStorage.getItem('walletType');
+  }
+
+  async clearWallet() {
+    await NightElfCheck.getInstance().check;
+    const aelf = NightElfCheck.initAelfInstanceByExtension();
+    await aelf.logout({
+      chainId: CURRENT_CHAIN_ID,
+      address: this.getLastUse().address
+    });
+
+    localStorage.removeItem('walletType');
+    localStorage.removeItem('lastUseExtension');
+    localStorage.removeItem('walletInfoList-extension');
   }
 }

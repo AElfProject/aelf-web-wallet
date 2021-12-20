@@ -16,6 +16,7 @@ import {Router, Route, hashHistory} from 'react-router';
 
 import getWalletNav from './pages/getWallet/Nav/Nav';
 import getWalletGuide from './pages/getWallet/Guide/Guide';
+import getTypeSelect from './pages/TypeSelect/TypeSelect';
 import getWalletAgreement from './pages/getWallet/Agreement/Agreement';
 import getWalletCreate from './pages/getWallet/Create/Create';
 import getWalletBackup from './pages/getWallet/Backup/Backup';
@@ -95,13 +96,19 @@ function initPage() {
     // TODO: localStorage file, asyncStorage统一成一个方法。
     const walletUtilInstance = new WalletUtil();
     let walletInfoList = walletUtilInstance.getWalletInfoListSync();
+    let walletType = walletUtilInstance.getWalletType();
 
     // TODO: 通过localStorage 判断所选语言
+    if (!walletType) {
+        hashHistory.replace('/connect');
+    }
     if (!walletInfoList) {
-        hashHistory.replace('/get-wallet/guide');
+        if (!walletType) {} else if (walletType === 'local') {
+            hashHistory.replace('/get-wallet/guide');
+        }
     }
     else if (hashHistory.getCurrentLocation().pathname === '/') {
-        hashHistory.replace('/assets');
+        hashHistory.replace('/connect');
     }
 
     // remove welcome-page
@@ -152,6 +159,8 @@ function initPage() {
                         <Route path="/personalcenter/systemsetting/network" component={systemSettingNetwork}/>
 
                         <Route path="/get-wallet/backup" component={getWalletBackup} />
+
+                        <Route path="/connect" component={getTypeSelect} />
 
                         <Route path="/agreement" component={getWalletAgreement} />
                         <Route path="/get-wallet/nav" component={getWalletNav}>
