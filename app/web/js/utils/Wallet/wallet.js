@@ -92,7 +92,7 @@ export default class WalletUtil {
       signedAddress = {
         r: signature.slice(0, 64), // getSignatureResult.signature
         s: signature.slice(64, 128),
-        recoveryParam: +signature.slice(129, 130),
+        recoveryParam: Number.parseInt(signature.slice(129, 130), 10),
       };
     }
 
