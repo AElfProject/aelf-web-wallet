@@ -89,6 +89,33 @@ class addressController extends Controller {
             });
 
             if (contract_address) {
+                if (!nodesInfo.length) {
+                    const getNodesInfoResult = await ctx.curl(
+                      apiServerProvider
+                      + `/api/nodes/info`, {
+                          dataType: 'json'
+                      }
+                    );
+                    const getTokensResult = await ctx.curl(
+                      apiServerProvider
+                      + `/api/contract/detail?contract_address=${contract_address}`, {
+                          dataType: 'json'
+                      }
+                    );
+                    const tokensInfo = getTokensResult.data;
+
+                    nodesInfo = getNodesInfoResult.data.list;
+                    nodesInfo = tokensInfo.map(tokenItem => {
+                        const nodeInfo = nodesInfo.find(nodeItem => {
+                            return nodeItem.contract_address === tokenItem.contract_address;
+                        });
+                        return {
+                            ...tokenItem,
+                            ...nodeInfo
+                        }
+                    });
+                }
+
                 nodesInfo = [nodesInfo.find(item => {
                     if (item.contract_address === contract_address
                         && item.symbol === symbol) {
