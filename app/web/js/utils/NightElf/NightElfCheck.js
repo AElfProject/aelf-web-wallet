@@ -4,6 +4,7 @@
  */
 import serviceProvider from '../serviceProvider';
 import {LOGIN_INFO} from "../../constant/config";
+import WalletUtil from "../Wallet/wallet";
 
 console.log('getProvider: ', serviceProvider);
 const HTTP_PROVIDER = serviceProvider.getProvider();
@@ -63,16 +64,29 @@ export default class NightElfCheck {
         contractInstances = {};
     }
 
+    static async checkAccount() {
+        const aelf = NightElfCheck.getAelfInstanceByExtension();
+        const accountInfo = await aelf.login(LOGIN_INFO);
+        const addressFromExtension = JSON.parse(accountInfo.detail).address;
+
+        const walletUtil = new WalletUtil();
+        const lastUse = walletUtil.getLastUse().address;
+        return lastUse.toLowerCase() === addressFromExtension.toLowerCase();
+    }
+
     static async getContractInstance(inputInitParams) {
         const {contractAddress} = inputInitParams;
         await NightElfCheck.getInstance().check;
         const aelf = NightElfCheck.getAelfInstanceByExtension();
 
-        const accountInfo = await aelf.login(LOGIN_INFO);
+        // const accountInfo = await aelf.login(LOGIN_INFO);
+        const walletUtil = new WalletUtil();
+        const accountInfo = await walletUtil.getWalletInfoList();
         if (accountInfo.error) {
             throw Error(accountInfo.errorMessage.message || accountInfo.errorMessage);
         }
-        const address = JSON.parse(accountInfo.detail).address;
+        // const address = JSON.parse(accountInfo.detail).address;
+        const address = Object.keys(accountInfo)[0];
 
         await aelf.chain.getChainStatus();
 
@@ -88,11 +102,21 @@ export default class NightElfCheck {
         await NightElfCheck.getInstance().check;
         const aelf = NightElfCheck.getAelfInstanceByExtension();
 
-        const accountInfo = await aelf.login(LOGIN_INFO);
+        // const accountInfo = await aelf.login(LOGIN_INFO);
+        //
+        // console.log('accountInfo', accountInfo);
+        // if (accountInfo.error) {
+        //     throw Error(accountInfo.errorMessage.message || accountInfo.errorMessage);
+        // }
+        // const address = JSON.parse(accountInfo.detail).address;
+        // const accountInfo = await aelf.login(LOGIN_INFO);
+        const walletUtil = new WalletUtil();
+        const accountInfo = await walletUtil.getWalletInfoList();
         if (accountInfo.error) {
             throw Error(accountInfo.errorMessage.message || accountInfo.errorMessage);
         }
-        const address = JSON.parse(accountInfo.detail).address;
+        // const address = JSON.parse(accountInfo.detail).address;
+        const address = Object.keys(accountInfo)[0];
 
         await aelf.chain.getChainStatus();
 

@@ -31,6 +31,7 @@ import {FormattedMessage} from 'react-intl';
 import WalletUtil from "../../../utils/Wallet/wallet";
 import {getViewResult, NightElfCheck} from "../../../utils/NightElf/NightElf";
 import {CrossChainMethodsExtension} from "../../../utils/crossChainForExtension";
+import {LOADING_TIME_LONG} from "../../../constant/config";
 
 export default class Transfer extends Component {
     constructor(props) {
@@ -47,19 +48,20 @@ export default class Transfer extends Component {
             walletType: walletUtilInstance.getWalletType()
         };
 
-        this.walletAddress = walletUtilInstance.getLastUse().address;
+        this.refreshBalance = this.refreshBalance.bind(this);
+        this.inputAmount = this.inputAmount.bind(this);
         this.contractAddress = getParam('contract_address', window.location.href);
         this.tokenName = getParam('token', window.location.href);
     }
 
-    inputAmount(amount) {
+    inputAmount(amount, callback = () => {}) {
         let amountBig = new BigNumber(amount);
 
         if (amountBig.isNaN() || !amountBig.isFinite() || !amountBig.gt(0)) {
             this.setState({
                 amount,
                 amountError: 'Invalid Number'
-            });
+            }, callback);
             return;
         }
 
@@ -67,47 +69,47 @@ export default class Transfer extends Component {
             this.setState({
                 amount,
                 amountError: 'insufficient'
-            });
+            }, callback);
             return;
         }
 
         this.setState({
             amount,
             amountError: null
-        });
+        }, callback);
     }
 
-    inputMemo(memo) {
+    inputMemo(memo, callback = () => {}) {
         if (memo.replace(/[^\u0000-\u00ff]/g, 'aa').length > 64) {
             const memoError = 'Too long memo';
             this.setState({
                 memo,
                 memoError
-            });
+            }, callback);
             return;
         }
 
         this.setState({
             memo,
             memoError: null
-        });
+        }, callback);
     }
 
-    inputAddress(address) {
+    inputAddress(address, callback = () => {}) {
         // checkAddress
         let addressCheckResult = addressCheck(address);
         if (!addressCheckResult.ready) {
             this.setState({
                 address,
                 addressError: addressCheckResult.message
-            });
+            }, callback);
             return;
         }
         this.setState({
             address: address,
             isCrossChain: addressCheckResult.isCrossChain || false,
             addressError: null
-        });
+        }, callback);
     }
 
     inputPassword(password) {
@@ -118,17 +120,26 @@ export default class Transfer extends Component {
     }
 
     componentDidMount() {
-        let address = this.walletAddress;
+        this.refreshBalance();
+    }
+
+    componentWillUnmount() {
+        this.setState = () => {};
+    }
+
+    refreshBalance(callback = () => {}) {
+        const walletUtilInstance = new WalletUtil();
+        let address = walletUtilInstance.getLastUse().address;
 
         getBalanceAndTokenName(address, this.contractAddress, this.tokenName, output => {
             const tokenInfo = output[0] || {};
 
             const {
-              balance,
-              decimals,
-              token_name
+                balance,
+                decimals,
+                token_name
             } = tokenInfo;
-              // const balanceObj = tokenInfo.balance;
+            // const balanceObj = tokenInfo.balance;
             let balanceBig = (new BigNumber(balance)).div(Math.pow(10, decimals));
 
             this.setState({
@@ -136,12 +147,8 @@ export default class Transfer extends Component {
                 balance: balanceBig,
                 tokenName: this.tokenName || token_name,
                 contract_address: this.contractAddress
-            });
+            }, callback);
         });
-    }
-
-    componentWillUnmount() {
-        this.setState = () => {};
     }
 
     async crossTransferExtension(options) {
@@ -172,7 +179,7 @@ export default class Transfer extends Component {
                 memo
             };
 
-            Toast.loading('Cross chain transfer', 30);
+            Toast.loading('Cross chain transfer', LOADING_TIME_LONG);
             const result = await crossInstance.send(crossParams);
             if (result.error) {
                 Toast.hide();
@@ -245,7 +252,7 @@ export default class Transfer extends Component {
                 amountShow: amount,
                 fromChain: window.defaultConfig.chainId
             };
-            Toast.loading('Cross chain transfer', 30);
+            Toast.loading('Cross chain transfer', LOADING_TIME_LONG);
             const result =await crossInstance.send(crossParams);
             if (result.isNotReady) {
                 Toast.hide();
@@ -330,12 +337,25 @@ export default class Transfer extends Component {
     }
 
     // TODO: 使用string 转bigNumber操作.
-    transfer() {
-        // TODO:
-        // check amount
+    async transfer() {
         let {
-            password, address, memo, amount, addressError, memoError, amountError, isCrossChain, decimals
+            password, address, memo, amount, addressError, memoError, amountError, isCrossChain, decimals, walletType
         } = this.state;
+
+        if (walletType !== 'local') {
+            const result = await NightElfCheck.checkAccount();
+            if (!result) {
+                const walletUtil = new WalletUtil();
+                const walletInfo = await walletUtil.getWalletInfoList();
+                this.inputAddress(Object.keys(walletInfo)[0]);
+                this.refreshBalance(() => {
+                    this.inputAmount(amount, () => {
+                        this.transfer();
+                    });
+                });
+                return;
+            }
+        }
 
         const errorMessage = addressError || memoError || amountError;
         if (errorMessage) {
@@ -344,7 +364,7 @@ export default class Transfer extends Component {
         }
 
         const loadingMessage = isCrossChain ? 'Cross chain transfer...' : 'Loading...';
-        Toast.loading(loadingMessage, 30);
+        Toast.loading(loadingMessage, LOADING_TIME_LONG);
         // 为了能展示loading, 不惜牺牲用户50毫秒。sad
         setTimeout(() => {
             // check balance
