@@ -84,6 +84,7 @@ import {IntlProvider, addLocaleData} from 'react-intl';
 import zh from 'react-intl/locale-data/zh';
 import en from 'react-intl/locale-data/en';
 import WalletUtil from "./utils/Wallet/wallet";
+import {themeChangeByHash} from './utils/themeChangeByHash'
 // import enUS from 'antd-mobile/lib/locale-provider/en_US';
 /* eslint-disable fecs-camelcase */
 
@@ -118,12 +119,15 @@ function initPage() {
     setTimeout(() => {
         welcomePage.style.display = 'none';
     }, 600);
+    themeChangeByHash();
 
     setTimeout(() => {
         ReactDOM.render(
             <IntlProvider locale={localStorage.language || 'en-US'} messages={chooseLocale()} >
                 <LocaleProvider locale={antdChooseLocale()} >
                     {/*<Provider store={store}>*/}
+                    <div className='aelf-bg-mask'>
+                    <div className='aelf-bg-light'>
                     <Router history={hashHistory}>
                         <Route path="/" component={HomePage}>
                             <Route path="/assets" component={Assets}/>
@@ -180,6 +184,8 @@ function initPage() {
                         <Route path='/addtoken' component={AddToken} />
 
                     </Router>
+                    </div>
+                    </div>
                     {/*</Provider>*/}
                 </LocaleProvider>
             </IntlProvider>,
