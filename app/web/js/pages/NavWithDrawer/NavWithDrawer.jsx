@@ -70,11 +70,15 @@ export default class NavWithDrawer extends Component {
         // https://doc.react-china.org/docs/handling-events.html
         // TODO, 从storage获取数据并拼接。
         const { walletInstance } = this.state;
+        let walletInUse = walletInstance.getLastUse().address;
         let walletInfoList = await walletInstance.getWalletInfoList();
 
-        console.log('walletInfoList: ', walletInfoList);
         let listItems = [];
-        let walletInUse = walletInstance.getLastUse().address;
+        let walletType = walletInstance.getWalletType();
+        if (walletType !== 'local' && walletInUse !== Object.keys(walletInfoList)[0]) {
+            window.location.reload();
+        }
+
         for (let address in walletInfoList) {
             let walletId = walletInfoList[address].walletId;
             let walletName = walletInfoList[address].walletName;
@@ -97,7 +101,6 @@ export default class NavWithDrawer extends Component {
         let listContainerStyle = getPageContainerStyle();
         listContainerStyle.height -= 80;
 
-        const walletType = walletInstance.getWalletType();
         if (walletType === 'local') {
             this.setState({
                 sideBarHTML:  <div className={style.sideContainer}>
