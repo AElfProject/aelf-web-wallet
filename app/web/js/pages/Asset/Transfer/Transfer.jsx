@@ -346,8 +346,8 @@ export default class Transfer extends Component {
             const result = await NightElfCheck.checkAccount();
             if (!result) {
                 const walletUtil = new WalletUtil();
-                const walletInfo = await walletUtil.getWalletInfoList();
-                this.inputAddress(Object.keys(walletInfo)[0]);
+                await walletUtil.getWalletInfoList();
+                this.inputAddress(address);
                 this.refreshBalance(() => {
                     this.inputAmount(amount, () => {
                         this.transfer();
