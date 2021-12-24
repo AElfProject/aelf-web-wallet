@@ -189,8 +189,8 @@ class Mnemonic extends Component {
 
 		return (
 			<div>
-				<div className={style.page} style={containerStyle}>
-					<div>
+				<div className={style.page + ' aelf-bg-style-wallet'} style={containerStyle}>
+					<div className='aelf-bg-light'>
 						<NavBar 
 							icon={<Icon type="left" />}
 							onLeftClick={() => this.props.onLeftClick()}>
@@ -242,8 +242,8 @@ class Mnemonic extends Component {
 					</div>
 				</div>
 
-				<div className={style.page} style={confirmContainerStyle}>
-					<div>
+				<div className={style.page + ' aelf-bg-style-wallet'} style={confirmContainerStyle}>
+					<div className='aelf-bg-light'>
 						<NavBar 
 							icon={<Icon type="left" />}
 							onLeftClick={() => this.toggleConfirm()}>
