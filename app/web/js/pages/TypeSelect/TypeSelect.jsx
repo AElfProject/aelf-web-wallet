@@ -28,10 +28,9 @@ export default class TypeSelect extends Component {
 
           <div className={style.bottom}>
             <div className={style.typeCard} onClick={async () => {
-              walletUtil.setWalletType('extension');
               const wallet = await walletUtil.getWalletInfoListFromExtension();
-              console.log('wallet:', wallet);
               if (wallet) {
+                walletUtil.setWalletType('extension');
                 hashHistory.push('/assets');
               }
             }}>
@@ -47,8 +46,8 @@ export default class TypeSelect extends Component {
               </div>
             </div>
             <div className={style.typeCard} onClick={() => {
-              walletUtil.setWalletType('local');
               const walletInfoList = walletUtil.getWalletInfoListSync();
+              walletUtil.setWalletType('local');
               if (!walletInfoList) {
                 hashHistory.replace('/get-wallet/guide');
               } else {
