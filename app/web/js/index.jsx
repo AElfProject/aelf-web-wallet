@@ -104,9 +104,10 @@ function initPage() {
         hashHistory.replace('/connect');
     }
     if (!walletInfoList) {
-        if (!walletType) {} else if (walletType === 'local') {
-            hashHistory.replace('/get-wallet/guide');
-        }
+        hashHistory.replace('/connect');
+        // if (!walletType) {} else if (walletType === 'local') {
+        //     hashHistory.replace('/get-wallet/guide');
+        // }
     }
     else if (hashHistory.getCurrentLocation().pathname === '/') {
         hashHistory.replace('/connect');
