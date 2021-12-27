@@ -7,6 +7,7 @@
 // TODO: 重点关注Int64的处理！！！！！！！！
 import React, {Component} from 'react';
 import {List, InputItem, Toast} from 'antd-mobile';
+import cmp from 'semver-compare';
 import style from './Transfer.scss';
 import {hashHistory} from 'react-router';
 import { BigNumber } from 'bignumber.js';
@@ -217,6 +218,17 @@ export default class Transfer extends Component {
         const walletUtilInstance = new WalletUtil();
         const walletType = walletUtilInstance.getWalletType();
         if (walletType !== 'local') {
+            const aelf = new window.NightElf.AElf({});
+            const version = aelf.getVersion();
+            if (!aelf || !version) {
+                Toast.fail('Can not find NightElf. Please download and install NightElf browser extension. ', 3, () => { }, false);
+                return;
+            }
+            if (cmp(version.replace('v', ''), '1.2.2') === -1) {
+                Toast.fail('Please update NightElf to v1.2.2 or laster.', 3, () => { }, false);
+                return;
+            }
+
             await this.crossTransferExtension(options);
             return;
         }
