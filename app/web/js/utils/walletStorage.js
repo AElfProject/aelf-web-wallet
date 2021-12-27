@@ -6,6 +6,7 @@
 // Immutability Is Important
 // https://reactjs.org/tutorial/tutorial.html#why-immutability-is-important
 import aelf from 'aelf-sdk';
+import WalletUtil from "./Wallet/wallet";
 
 // TODO: 将localStorage部分封装到aelf-sdk中去，
 // node部分使用file（json）存储，RN使用AsyncStorage.
@@ -39,7 +40,8 @@ export default function insertWalletInfo(walletInfoInput, password) {
     // console.log('aelf decrypto: ', aelf.wallet.AESDecrypt(walletInfo.AESEncryptoMnemonic, password));
     // console.log('wallet info: ', walletInfo);
 
-    let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList')) || {};
+    const walletUtilInstance = new WalletUtil();
+    let walletInfoList = walletUtilInstance.getWalletInfoListSync() || {};
     // 日哦, 哪里配错了？不让我用。。。babel?
     // walletInfoList[walletInfo.address] = {
     //     ...walletInfo,
@@ -60,10 +62,7 @@ export default function insertWalletInfo(walletInfoInput, password) {
     }, walletInfo);
     localStorage.setItem('walletInfoList', JSON.stringify(walletInfoList));
     localStorage.setItem('agreement', true);
-    localStorage.setItem('lastuse', JSON.stringify({
-        address: walletInfo.address,
-        walletName: walletInfo.walletName
-    }));
+    walletUtilInstance.setLastUse(walletInfo.address, walletInfo.walletName);
     return walletInfo;
     // return true;
 }

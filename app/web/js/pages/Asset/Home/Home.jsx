@@ -27,6 +27,7 @@ import {
 import getPrice from '../../../utils/getPrice';
 
 import {FormattedMessage} from 'react-intl';
+import WalletUtil from "../../../utils/Wallet/wallet";
 
 export default class Home extends Component {
     constructor(props) {
@@ -41,7 +42,8 @@ export default class Home extends Component {
         // 得把作用域绑上，不然子组件里执行函数，无法执行this.setState这些。
         this.getBalanceAndTokenName = this.getBalanceAndTokenName.bind(this);
 
-        this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+        const walletUtilInstance = new WalletUtil();
+        this.walletAddress = walletUtilInstance.getLastUse().address;
     }
 
     getBalanceAndTokenName() {

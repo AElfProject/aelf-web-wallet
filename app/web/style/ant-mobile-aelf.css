@@ -20,3 +20,8 @@
 .aelf-list:active {
     background: rgba(255, 255, 255, 0.1);
 }
+
+.aelf-personal-pages {
+    max-width: 520px;
+    margin: auto;
+}

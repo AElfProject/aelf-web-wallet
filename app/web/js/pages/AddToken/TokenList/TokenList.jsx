@@ -14,6 +14,7 @@ import contractMergeArr from '../../../utils/contractMergeArr';
 import getContracts from '../../../utils/getContracts';
 import getTokens from '../../../utils/getTokens';
 import {SCROLLFOOTER} from '../../../constants';
+import WalletUtil from "../../../utils/Wallet/wallet";
 
 require('./TokenList.css');
 
@@ -184,8 +185,9 @@ export default class TokenList extends React.Component {
                                 this.setState({
                                     compare
                                 });
-                                let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
-                                let address = JSON.parse(localStorage.lastuse).address;
+                                const walletUtilInstance = new WalletUtil();
+                                let walletInfoList = walletUtilInstance.getWalletInfoListSync();
+                                let address = walletUtilInstance.getLastUse().address;
                                 let TokenMessage = {
                                     address,
                                     contract_address: tokenAddress,

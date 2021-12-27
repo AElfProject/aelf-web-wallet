@@ -27,6 +27,7 @@ import {
   SCROLLFOOTER
 } from '../../../constants';
 import getPrice from '../../../utils/getPrice';
+import WalletUtil from "../../../utils/Wallet/wallet";
 require('./TransactionsList.css');
 
 const NUM_ROWS = 20;
@@ -34,13 +35,13 @@ let pageIndex = 0;
 
 /* eslint-disable */
 function getTxs(callback, pIndex = 0) {
-
+  const walletUtilInstance = new WalletUtil();
   const params = {
     symbol: getParam('token', window.location.href),
     limit: NUM_ROWS, // 13
     page: pIndex, // 0
     order: 'desc', // asc
-    address: JSON.parse(localStorage.getItem('lastuse')).address,
+    address: walletUtilInstance.getLastUse().address,
   };
   const paramsUnconfirmed = Object.assign({type: 'unconfirmed'}, params);
 
@@ -80,7 +81,8 @@ export default class TransactionsList extends Component {
       useBodyScroll: false
     };
 
-    this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+    const walletUtilInstance = new WalletUtil();
+    this.walletAddress = walletUtilInstance.getLastUse().address;
   }
 
   // PullToRefresh start

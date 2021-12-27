@@ -20,6 +20,7 @@ import Search from './Search/Search';
 import Svg from '../../components/Svg/Svg';
 
 import style from './Transactions.scss';
+import WalletUtil from "../../utils/Wallet/wallet";
 
 require('./Transactions.css');
 
@@ -28,9 +29,12 @@ export default class Transactions extends React.Component {
 
     constructor(props) {
         super(props);
+        const walletUtilInstance = new WalletUtil();
+        let address = walletUtilInstance.getLastUse().address;
         this.state = {
+            walletUtilInstance,
             open: false,
-            walletAddress: JSON.parse(localStorage.lastuse).address,
+            walletAddress: address,
             searchValue: null,
             searchShow: false
         };
@@ -69,11 +73,9 @@ export default class Transactions extends React.Component {
     }
 
     siderBarClick(walletInfo) {
-        let lastuse = {
-            address: walletInfo.address,
-            walletName: walletInfo.walletName
-        };
-        localStorage.setItem('lastuse', JSON.stringify(lastuse));
+        // local only, will not change extension/app
+        const walletUtilInstance = new WalletUtil();
+        walletUtilInstance.setLastUse(walletInfo.address, walletInfo.walletName);
         this.setState({
             // lastuse: lastuse,
             open: !this.state.open,
@@ -97,9 +99,10 @@ export default class Transactions extends React.Component {
         // (e) => this.siderbarClick(index, e) react的事件机制
         // https://doc.react-china.org/docs/handling-events.html
         // TODO, 从storage获取数据并拼接。
-        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+        const walletUtilInstance = new WalletUtil();
+        let walletInfoList = walletUtilInstance.getWalletInfoListSync();
         let listItems = [];
-        let walletInUse = JSON.parse(localStorage.getItem('lastuse')).address;
+        let walletInUse = walletUtilInstance.getLastUse().address;
         for (let address in walletInfoList) {
             let walletId = walletInfoList[address].walletId;
             let walletName = walletInfoList[address].walletName;
@@ -111,7 +114,7 @@ export default class Transactions extends React.Component {
                         key={address}
                         onClick={e => this.siderBarClick(walletInfoList[address], e)}
                     >
-                        <div className={style.icon}></div>
+                        <div className={style.icon}/>
                         <div>{walletName}</div>
                     </div>
                 )

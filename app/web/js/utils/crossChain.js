@@ -10,6 +10,7 @@ import checkStatus from './checkStatus';
 import {
     get
 } from './apisauce';
+import WalletUtil from "./Wallet/wallet";
 
 const CSRF = document.cookie.match(/csrfToken=[^;]*/)[0].replace('csrfToken=', '');
 export class CrossChainMethods {
@@ -45,7 +46,7 @@ export class CrossChainMethods {
 
         const {fromChain, transfer} = params;
         const {to: toAddress} = transfer;
-        const toChain = this.getChainName(toAddress);
+        const toChain = getChainName(toAddress);
 
         const {symbol} = transfer;
         const {issueChainId} = this.TOKEN_CROSS_SUPPORT[symbol];
@@ -194,7 +195,7 @@ export class CrossChainMethods {
     isReadyToSend(params) {
         const {transfer} = params;
         const {to: toAddress} = transfer;
-        const toChain = this.getChainName(toAddress);
+        const toChain = getChainName(toAddress);
 
         const {symbol} = transfer;
         if (!this.TOKEN_CROSS_SUPPORT[symbol]) {
@@ -228,13 +229,6 @@ export class CrossChainMethods {
     }
 
     // name AELF; id: 9992731
-    getChainName(address) {
-        const chainName = address.split('_')[2];
-        if (chainName) {
-            return address.split('_')[2];
-        }
-        throw Error('Invalid address, please use ELF_xxx_chainName.');
-    }
 
     // {
     //       "tx_id": "7578daf824216c9faf6e08d84c6744615c420aa84199a1962a77e9789a4b5872",
@@ -331,15 +325,54 @@ export class CrossChainMethods {
     }
 }
 
+function getChainName(address) {
+    const chainName = address.split('_')[2];
+    if (chainName) {
+        return address.split('_')[2];
+    }
+    throw Error('Invalid address, please use ELF_xxx_chainName.');
+}
+
 function getLocalWallet() {
-    let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
-    let address = JSON.parse(localStorage.lastuse).address;
+    const walletUtilInstance = new WalletUtil();
+    let walletInfoList = walletUtilInstance.getWalletInfoListSync();
+    let address = walletUtilInstance.getLastUse().address;
     return {
         address,
         signedAddress: walletInfoList[address].signedAddress,
         publicKey: walletInfoList[address].publicKey
     };
 }
+
+export const getCrossInfo = function (transfer, fromChain) {
+    const {to: toAddress, symbol} = transfer;
+    const {issueChainId} = window.defaultConfig.TOKEN_CROSS_SUPPORT[symbol];
+    const fromChainAPIInfo = window.defaultConfig.WEB_API_INFO[fromChain];
+
+    const toChain = getChainName(toAddress);
+    const toChainAPIInfo = window.defaultConfig.WEB_API_INFO[toChain];
+
+    fromChainAPIInfo.name = fromChain
+    toChainAPIInfo.name = toChain;
+    return {
+        mainChainId: window.defaultConfig.WEB_API_INFO.AELF.id,//9992731,
+        issueChainId: issueChainId,// 9992731, // Token issue chain id
+        from: fromChainAPIInfo,
+        //   {
+        //     url: 'https://explorer-test.aelf.io/chain',
+        //     id: 9992731,
+        //     mainTokenContract: 'JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE',
+        //     crossChainContract: '2SQ9LeGZYSWmfJcYuQkDQxgd3HzwjamAaaL4Tge2eFSXw2cseq'
+        // },
+        to: toChainAPIInfo
+        //   {
+        //     url: 'https://tdvv-wallet-test.aelf.io/chain', // provider url
+        //     id: 1866392, // chain id
+        //     mainTokenContract: '7RzVGiuVWkvL4VfVHdZfQF2Tri3sgLe9U991bohHFfSRZXuGX',
+        //     crossChainContract: '2snHc8AMh9QMbCAa7XXmdZZVM5EBZUUPDdLjemwUJkBnL6k8z9'
+        // }
+    };
+};
 
 window.CrossChainMethods = CrossChainMethods;
 window.Wallet = AElf.wallet;

@@ -4,8 +4,11 @@
  * 2019.01
  */
 
+import WalletUtil from "./Wallet/wallet";
+
 // Mark
 export default function getWalletList() {
-    const walletList = localStorage.getItem('walletInfoList');
-    return walletList;
+    const walletUtilInstance = new WalletUtil();
+
+    return walletUtilInstance.getWalletInfoListSync();
 }

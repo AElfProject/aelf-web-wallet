@@ -11,10 +11,13 @@ import getParam from '../../../utils/getParam' // 还有类似方法的话，合
 
 import initAelf from '../../../utils/initAelf'
 import hexToString from '../../../utils/hexToString'
+import WalletUtil from "../../../utils/Wallet/wallet";
 
 const Item = List.Item;
 // const aelf = initAelf();
-// const walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+// const walletUtilInstance = new WalletUtil();
+// let walletInfoList = walletUtilInstance.getWalletInfoListSync();
+// let address = walletUtilInstance.getLastUse().address;
 // React component
 // TODO, 这里以后考虑使用ListView
 // https://mobile.ant.design/components/list-view-cn/#components-list-view-demo-basic
@@ -75,7 +78,7 @@ function getTxs () {
 
 
 
-// PullToRefresh start 
+// PullToRefresh start
 const data = [{
     img: 'https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png',
     title: 'Meet hotel',
@@ -188,7 +191,9 @@ class Home extends Component {
 
     // getCid from url. -> get Balance -> getTransactions
     getBalance() {
-        let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+        const walletUtilInstance = new WalletUtil();
+
+        let walletAddress = walletUtilInstance.getLastUse().address;
         return this.aelf.contractMethods.BalanceOf(walletAddress);
     }
 

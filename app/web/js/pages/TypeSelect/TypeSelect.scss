@@ -1,0 +1,84 @@
+.container {
+    color: #FFF;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}
+
+.top {
+    padding: 0 24px 0 24px;
+}
+
+.blank {
+    margin: 58px 0 0 0;
+}
+
+.blank12 {
+    height: 12px;
+    width: 12px;
+}
+
+.welcome {
+    font-weight: 100;
+    font-size: 36px;
+    margin: 62px 0 0px 0;
+}
+
+.wallet {
+    font-size: 36px;
+    margin: 48px 0 8px 0;
+    font-weight: 700;
+}
+
+.description {
+    font-size: 14px;
+    font-weight: 100;
+    margin: 0;
+}
+
+.bottom {
+    width: 100%;
+    margin: 0 auto 80px 0;
+}
+
+.btn {
+    border-radius: 100px;
+}
+
+.typeCard {
+    width: 85%;
+    min-width: 300px;
+    height: 118px;
+    margin: 0 auto 16px auto;
+    border-radius: 4px;
+    background: rgba(233, 211, 255, 0.1);
+}
+.typeCard:hover {
+    background: rgba(233, 211, 255, 0.2);
+    cursor: pointer;
+}
+
+.typeContainer {
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+}
+.typeLeft {
+    width: 200px;
+    margin: 0 8px 0 0;
+}
+.typeLogo {
+    width: 48px;
+    height: 48px;
+}
+.typeTitle {
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.typeText {
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 18px;
+}

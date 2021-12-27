@@ -10,6 +10,7 @@ import {Toast} from 'antd-mobile';
 import {
     serviceProvider
 } from '../utils/utils';
+import WalletUtil from "./Wallet/wallet";
 
 let hasAlert = false;
 
@@ -66,8 +67,10 @@ export default function init(options = {}) {
 export function getWallet(password) {
     let wallet = '';
     if (password) {
-        let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
-        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+        const walletUtilInstance = new WalletUtil();
+        let walletInfoList = walletUtilInstance.getWalletInfoListSync();
+        let walletAddress = walletUtilInstance.getLastUse().address;
+
         let AESEncryptPrivateKey = walletInfoList[walletAddress].AESEncryptoPrivateKey;
 
         let privateKey = '';

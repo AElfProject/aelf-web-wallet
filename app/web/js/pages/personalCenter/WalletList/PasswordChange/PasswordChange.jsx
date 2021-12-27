@@ -23,6 +23,7 @@ import { FormattedMessage } from 'react-intl'
 import aelf from 'aelf-sdk'
 
 import style from './PasswordChange.scss'
+import WalletUtil from "../../../../utils/Wallet/wallet";
 
 const Item = List.Item;
 class PasswordChange extends Component {
@@ -46,8 +47,10 @@ class PasswordChange extends Component {
     changePassword() {
     	let password = this.state.password;
 
-        let walletId = JSON.parse(localStorage.getItem('lastuse')).address;
-        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+        const walletUtilInstance = new WalletUtil();
+        let walletInfoList = walletUtilInstance.getWalletInfoListSync();
+
+        let walletId = walletUtilInstance.getLastUse().address;
         let walletInfo = walletInfoList[walletId];
 
         let privateKey = false;
@@ -99,7 +102,7 @@ class PasswordChange extends Component {
                 defaultMessage = 'Submit'
             />
             </div>;
-        if (this.state.newPassword && true) {
+        if (this.state.newPassword) {
             // changeButton =
             //     <AelfButton
             //         onClick={() => this.changePassword()}
@@ -120,7 +123,9 @@ class PasswordChange extends Component {
         }
 
         let containerStyle = getPageContainerStyle();
-        let walletName = JSON.parse(localStorage.getItem('lastuse')).walletName;
+
+      const walletUtilInstance = new WalletUtil();
+        let walletName = walletUtilInstance.getLastUse().walletName;
 
 		return (
 			<div className={'aelf-dash'}>
