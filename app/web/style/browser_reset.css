@@ -14,8 +14,8 @@ body {
   top: 0;
   bottom: 0;
 
-  max-width: 520px;
-  max-width: 520px;
+  /* max-width: 520px;
+  max-width: 520px; */
   margin: auto !important;
 }
 
@@ -47,11 +47,15 @@ body {
   bottom: 0;
   right: 0;
   /*background: url("../assets/background/bg1@3x.jpg") no-repeat;*/
-  background: url("../assets/background/bg4.svg") no-repeat;
+  background: url("../assets/background/bg_circle1.svg"),
+    linear-gradient(169deg, #2c113f 0%, #16112d 100%);
   /*background: url("../assets/background/bg3_long.svg") no-repeat;*/
   /*background-size: contain;*/
+  background-repeat: no-repeat;
   background-size: contain;
-  background-color: #1a1134;
+  background-position: center;
+  transition: all 0.6s;
+  /* background-color: #1a1134; */
 }
 
 .aelf-logo-container {
@@ -64,7 +68,7 @@ body {
 .aelf-wallet-description {
   margin: 0 0 50px 0;
   text-align: center;
-  color: #FFF;
+  color: #fff;
   font-size: 12px;
 }
 
@@ -76,7 +80,6 @@ body {
   /*background-size: cover;*/
   background-position: center;
 }
-
 
 /* 一些elf的基础样式 */
 .aelf-blue {
@@ -92,7 +95,7 @@ body {
 }
 
 .aelf-content-container {
-  color: #A6A6A6;
+  color: #a6a6a6;
   /*text-align: center;*/
   /*padding: 11px 0px 50px 0px;*/
   padding: 0px 0px 50px 0px;
@@ -101,55 +104,43 @@ body {
 
 #root {
   /*background: url("../assets/background/bg2_long.svg") no-repeat;*/
-  background: url("../assets/background/bg2.svg") no-repeat;
+  /* background: url("../assets/background/bg2.svg") no-repeat; */
   /*background-size: contain;*/
-  background-size: cover;
-  background-color: #200a43;
+  /* background-image: linear-gradient(to top, #290079, #9d01db); */
   width: 100%;
   /*min-height: 100%;*/
   height: 100%;
   position: fixed;
   left: 0;
   top: 0;
-}
-
-@media (min-width: 768px) {
-  #root {
-    /*background: url("../assets/background/bg2_long.svg") no-repeat;*/
-    background: url("../assets/background/bg2.svg") no-repeat;
-    /*background-size: contain;*/
-    background-size: cover;
-    background-color: #200a43;
-    width: 100%;
-    /*min-height: 100%;*/
-    height: 100%;
-    position: relative;
-    left: 0;
-    top: 0;
-  }
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.6s;
 }
 
 .aelf-bg-light {
-  background: url("../assets/background/bg1_long.svg") no-repeat;
+  /* background: url("../assets/background/bg1_long.svg") no-repeat; */
   /*background-size: contain;*/
   background-size: cover;
-  background-color: #2d0379;
+  /* background-color: #2d0379; */
   width: 100%;
   height: 100%;
+  max-width: 520px;
+  margin: auto;
   /*overflow: scroll;*/
   /*min-height: 100%;*/
 }
 .aelf-bg-light-2 {
   /*background: url("../assets/background/bg1_long.svg") no-repeat;*/
   /*background-color: ;*/
-  /*background: url("../assets/background/bg_circle1.svg");*/
-  background-image: url("../assets/background/bg_circle2.svg"), linear-gradient(to top, #290079 , #9D01DB);
   background-position: center;
   /*background-size: contain;*/
   background-size: cover;
-  background-color: #2d0379;
+  /* background-color: linear-gradient(#9d01db, #290079); */
   width: 100%;
   height: 100%;
+  max-width: 520px;
+  margin: auto;
   /*overflow: scroll;*/
   /*min-height: 100%;*/
 }
@@ -172,5 +163,30 @@ body {
   color: #260073 !important;
 }
 .am-modal-button-group-h .am-modal-button {
-  color: #AC00E6 !important;
+  color: #ac00e6 !important;
+}
+
+.am-pull-to-refresh-indicator {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.aelf-bg-theme {
+  background-image: url("../assets/background/bg_circle3.svg"),
+    linear-gradient(to top, #290079, #9d01db);
+  background-size: auto 100%;
+}
+.aelf-bg-mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(00, 00, 00, 0.7);
+  /* transition: all 0.6s; */
+}
+.aelf-bg-style-wallet {
+  background-image: url("../assets/background/bg_circle2.svg"),
+    linear-gradient(to top, #290079, #9d01db);
+  background-size: auto 100%;
+}
+.aelf-bg-style-wallet .aelf-bg-mask {
+  background-color: transparent;
 }
