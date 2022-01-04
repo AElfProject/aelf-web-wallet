@@ -98,7 +98,8 @@ export default class Create extends Component {
 
     toggleAgreementHTML() {
         this.setState({
-            agreementDisplay: !this.state.agreementDisplay
+            agreementDisplay: !this.state.agreementDisplay,
+            agree: true
         });
     }
 

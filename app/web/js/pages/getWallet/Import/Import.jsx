@@ -149,7 +149,8 @@ class Import extends Component {
 
     toggleAgreementHTML() {
         this.setState({
-            agreementDisplay: !this.state.agreementDisplay
+            agreementDisplay: !this.state.agreementDisplay,
+            agree: true
         });
     }
 
