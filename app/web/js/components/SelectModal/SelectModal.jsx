@@ -63,6 +63,14 @@ export default class SelectModal extends Component {
           })}
         </div>
         <div className="modal-select-button-wrapper">
+        <Button
+            className="white"
+            onClick={() => {
+              this.props.onCancel && this.props.onCancel();
+            }}
+          >
+            <FormattedMessage id="aelf.Cancel" />
+          </Button>
           <Button
             text="Next"
             className="blue"
@@ -71,14 +79,6 @@ export default class SelectModal extends Component {
             }}
           >
             <FormattedMessage id="aelf.Sure" />
-          </Button>
-          <Button
-            className="white"
-            onClick={() => {
-              this.props.onCancel && this.props.onCancel();
-            }}
-          >
-            <FormattedMessage id="aelf.Cancel" />
           </Button>
         </div>
       </div>
@@ -100,6 +100,14 @@ export default class SelectModal extends Component {
           </div>
         </div>
         <div className="modal-select-button-wrapper">
+        <Button
+            className="white"
+            onClick={() => {
+              this.props.onCancel && this.props.onCancel();
+            }}
+          >
+            <FormattedMessage id="aelf.Cancel" />
+          </Button>
           <Button
             text="Next"
             className="blue"
@@ -112,14 +120,6 @@ export default class SelectModal extends Component {
             }}
           >
             <FormattedMessage id="aelf.Copy" />
-          </Button>
-          <Button
-            className="white"
-            onClick={() => {
-              this.props.onCancel && this.props.onCancel();
-            }}
-          >
-            <FormattedMessage id="aelf.Cancel" />
           </Button>
         </div>
       </div>
