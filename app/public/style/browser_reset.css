@@ -203,7 +203,7 @@ body {
 
 .modal-select-content {
   padding: 16px 16px 24px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ECECEC;
 }
 
 .modal-select-privateKey {
@@ -222,9 +222,11 @@ body {
   letter-spacing: 0;
   line-height: 14px;
   font-weight: 400;
-  margin-left: 12px;
+  /* margin-left: 12px; */
   margin-bottom: 24px;
   cursor: pointer;
+  padding-left: 24px;
+  background: url('../assets/svg_icon/check.svg') left center no-repeat;
 }
 .modal-select-content-item:last-child {
   margin-bottom: 0;
@@ -232,6 +234,7 @@ body {
 
 .modal-select-content-item-select {
   color: #ac00e6;
+  background-image: url('../assets/svg_icon/checked.svg');
 }
 
 .modal-select-button-wrapper {
@@ -246,23 +249,29 @@ body {
   height: auto;
   line-height: 1;
   border-radius: 2px;
+  font-size: 12px;
   font-weight: 400;
   padding: 8px 18px;
   box-sizing: border-box;
 }
+
+.modal-select-button-wrapper .am-button::before {
+  border: none !important;
+}
+
 .modal-select-button-wrapper .am-button.am-button-active.blue {
   background-color: #ac00e6;
 }
 .modal-select-button-wrapper .blue {
   background: #ac00e6;
   color: #fff;
-  border: none;
+  border: 1px solid #ac00e6 !important;
+  margin-left: 10px;
 }
 
 .modal-select-button-wrapper .white {
   color: #fff;
   color: #666666;
   border: none;
-  border: 1px solid #cfcfcf;
-  margin-left: 10px;
+  border: 1px solid #cfcfcf !important;
 }
