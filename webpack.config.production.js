@@ -86,13 +86,15 @@ module.exports = {
             hash: true,
             chunks: ['wallet'],
             template: './app/web/page/index.tpl',
-            filename: './view/index.tpl'
+            filename: './view/index.tpl',
+            timestamp: new Date().getTime()
         }),
         new HtmlWebpackPlugin({
             hash: true,
             chunks: ['transactionDetail'],
             template: './app/web/page/transactionDetail.tpl',
-            filename: './view/transactionDetail.tpl'
+            filename: './view/transactionDetail.tpl',
+            timestamp: new Date().getTime()
         }),
         new CleanWebpackPlugin(pathsToClean, cleanOptions)
     ]
