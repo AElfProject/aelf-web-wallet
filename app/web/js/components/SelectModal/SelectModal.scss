@@ -1,0 +1,12 @@
+.selectModal {
+  position: fixed;
+  background: #fff;
+  border-radius: 4px;
+  width: 300px;
+  margin: auto;
+  z-index: 9999;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}

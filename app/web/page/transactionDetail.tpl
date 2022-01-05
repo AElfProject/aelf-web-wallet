@@ -7,7 +7,7 @@
   <title>TxDetail-AElf</title>
   <link href="/favicon.ico" rel="bookmark" type="image/x-icon">
 </head>
-<link rel="stylesheet" href="../public/style/browser_reset.css">
+<link rel="stylesheet" href="../public/style/browser_reset.css?t=<%= htmlWebpackPlugin.options.timestamp %>">
 <body>
 <!-- react component start -->
 <div id="root"></div>

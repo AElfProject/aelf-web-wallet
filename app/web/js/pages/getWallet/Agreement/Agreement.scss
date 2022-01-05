@@ -13,10 +13,21 @@
 
 .agreement {
 	max-width: 520px;
-	background: url("../../../../assets/background/bg1_long.svg") no-repeat;
+	//background: url("../../../../assets/background/bg1_long.svg") no-repeat;
 	background-size: cover;
-    position: fixed;
-    top: 0;
 	color: #FFF;
+	margin: auto;
+}
+
+.background {
+	position: fixed;
+	width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+	background-repeat: no-repeat;
+	background-position: center;
+    right: 0;
     z-index: 9999;
 }
