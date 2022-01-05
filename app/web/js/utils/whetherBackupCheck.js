@@ -14,7 +14,7 @@ function whetherBackupCheck () {
 
     let walletId = walletUtilInstance.getLastUse().address;
     let walletInfoList = walletUtilInstance.getWalletInfoListSync();
-    let walletInfo = walletInfoList[walletId];
+    let walletInfo = walletInfoList[walletId] || {};
 
     // import wallet: walletInfo.hasBackup === undefined;
     // create wallet: default walletInfo.hasBackup === false;

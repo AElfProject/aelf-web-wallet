@@ -37,7 +37,7 @@ export default class WalletUtil {
   //   }
   // }
   getWalletInfoListSync (storageType = '') {
-    if (this.type === 'local') {
+    if (this.type === 'local' || storageType === 'local') {
       return this.getWalletInfoListFromLocal();
     }
     if (this.type === 'extension' || storageType === 'extension-local') {
@@ -123,8 +123,8 @@ export default class WalletUtil {
     };
 
     localStorage.setItem(EXTENSION_WALLET_LOCALSTORAGE, JSON.stringify(walletInfoList));
-    this.setLastUse(detail.address, detail.name, 'extension');
     this.setWalletType('extension');
+    this.setLastUse(detail.address, detail.name, 'extension');
 
     return walletInfoList;
   }
@@ -136,7 +136,7 @@ export default class WalletUtil {
   * }
   * */
   getLastUse() {
-    return JSON.parse(localStorage.getItem(this.type === 'local' ? 'lastuse' : 'lastUseExtension'));
+    return JSON.parse(localStorage.getItem(this.type === 'local' ? 'lastuse' : 'lastUseExtension')) || {};
   }
   setLastUse(address, walletName) {
     localStorage.setItem(

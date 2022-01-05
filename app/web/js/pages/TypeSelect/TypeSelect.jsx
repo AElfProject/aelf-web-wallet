@@ -46,7 +46,7 @@ export default class TypeSelect extends Component {
               </div>
             </div>
             <div className={style.typeCard} onClick={() => {
-              const walletInfoList = walletUtil.getWalletInfoListSync();
+              const walletInfoList = walletUtil.getWalletInfoListSync('local');
               walletUtil.setWalletType('local');
               if (!walletInfoList) {
                 hashHistory.replace('/get-wallet/guide');
