@@ -26,6 +26,7 @@ import {
 import {FormattedMessage} from 'react-intl';
 
 import style from './WalletManage.scss';
+import WalletUtil from "../../../../utils/Wallet/wallet";
 
 
 const Item = List.Item;
@@ -41,8 +42,9 @@ export default class WalletManage extends Component {
     }
 
     changeName(name) {
-        let walletId = JSON.parse(localStorage.getItem('lastuse')).address;
-        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+        const walletUtilInstance = new WalletUtil();
+        let walletInfoList = walletUtilInstance.getWalletInfoListSync();
+        let walletId = walletUtilInstance.getLastUse().address;
         let walletInfo = walletInfoList[walletId];
         walletInfo.walletName = name;
 
@@ -56,8 +58,9 @@ export default class WalletManage extends Component {
     }
 
     deleteWallet() {
-        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
-        let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+        const walletUtilInstance = new WalletUtil();
+        let walletInfoList = walletUtilInstance.getWalletInfoListSync();
+        let walletAddress = walletUtilInstance.getLastUse().address;
         delete walletInfoList[walletAddress];
 
         localStorage.setItem('walletInfoList', JSON.stringify(walletInfoList));
@@ -70,10 +73,7 @@ export default class WalletManage extends Component {
             }
             else {
                 console.log(each);
-                localStorage.setItem('lastuse', JSON.stringify({
-                    address: walletInfoList[each].address,
-                    walletName: walletInfoList[each].walletName
-                }));
+                walletUtilInstance.setLastUse(walletInfoList[each].address, walletInfoList[each].walletName);
                 count++;
                 lock = true;
                 Toast.success('Deleted', 3, () => {
@@ -99,10 +99,11 @@ export default class WalletManage extends Component {
     }
 
     render() {
+        const walletUtilInstance = new WalletUtil();
+        let walletInfoList = walletUtilInstance.getWalletInfoListSync();
+        let walletAddress = walletUtilInstance.getLastUse().address;
 
-        let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
-        let walletAddressShow = addressPrefixSuffix(JSON.parse(localStorage.getItem('lastuse')).address);
-        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+        let walletAddressShow = addressPrefixSuffix(walletAddress);
         let walletName = walletInfoList[walletAddress].walletName;
 
         if (!whetherBackupCheck()) {

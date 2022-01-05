@@ -6,8 +6,10 @@
 	right: 0;
 	z-index: 999;
 	//background: #FFF;
-    background: url("../../../../../assets/background/bg1_long.svg") no-repeat;
-    background-size: cover;
+    //background: url("../../../../../assets/background/bg1_long.svg") no-repeat;
+    //background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 @media (min-width: 768px) {
 	.page {

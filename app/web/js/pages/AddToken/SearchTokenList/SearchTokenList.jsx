@@ -14,6 +14,7 @@ import bindToken from '../../../utils/bindToken';
 import unbindToken from '../../../utils/unbindToken';
 import {tokenOmit} from '../../../utils/utils';
 import {SCROLLFOOTER} from '../../../constants';
+import WalletUtil from "../../../utils/Wallet/wallet";
 
 export default class SearchTokenList extends React.Component {
     constructor(props) {
@@ -118,8 +119,9 @@ export default class SearchTokenList extends React.Component {
                                     compare
                                 });
 
-                                let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
-                                let address = JSON.parse(localStorage.lastuse).address;
+                                const walletUtilInstance = new WalletUtil();
+                                let walletInfoList = walletUtilInstance.getWalletInfoListSync();
+                                let address = walletUtilInstance.getLastUse().address;
                                 let TokenMessage = {
                                     address,
                                     contract_address: tokenAddress,

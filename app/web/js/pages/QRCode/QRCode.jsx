@@ -20,6 +20,7 @@ import BackupNotice from '../BackupNotice/BackupNotice';
 import clipboard from '../../utils/clipboard';
 import getPageContainerStyle from '../../utils/getPageContainerStyle';
 import addressPrefixSuffix from '../../utils/addressPrefixSuffix';
+import WalletUtil from "../../utils/Wallet/wallet";
 
 class QRCodeTemplate extends Component {
 
@@ -28,8 +29,10 @@ class QRCodeTemplate extends Component {
 	}
 
 	render() {
+		const walletUtilInstance = new WalletUtil();
+		const address = walletUtilInstance.getLastUse().address;
 
-		let walletAddress = addressPrefixSuffix(JSON.parse(localStorage.getItem('lastuse')).address);
+		let walletAddress = addressPrefixSuffix(address);
 		let containerStyle = getPageContainerStyle();
 		// containerStyle.height -= 100;
 		return (

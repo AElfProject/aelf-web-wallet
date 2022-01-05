@@ -1,17 +1,18 @@
-import React, { Component } from 'react'
-import { List, Button, Toast, Modal } from 'antd-mobile'
-import { hashHistory } from 'react-router'
+import React, {Component} from 'react'
+import {Button, List, Modal, Toast} from 'antd-mobile'
+import {hashHistory} from 'react-router'
 import NavNormal from '../../NavNormal/NavNormal'
 import moment from 'moment';
 
-import { FormattedMessage } from 'react-intl'
+import {FormattedMessage} from 'react-intl'
 
 import getPageContainerStyle from '../../../utils/getPageContainerStyle';
 
 import style from './UnconfirmedTransactions.scss';
-import {CrossChainMethods} from '../../../utils/crossChain';
+import {CrossChainMethods, getCrossInfo} from '../../../utils/crossChain';
 import {getWallet} from '../../../utils/initAelf';
 import {get} from "../../../utils/apisauce";
+import WalletUtil from "../../../utils/Wallet/wallet";
 
 const Item = List.Item;
 const prompt = Modal.prompt;
@@ -61,7 +62,15 @@ class UnconfirmedTransactions extends Component {
   confirmTransfer(options) {
     const {password, fromChain, transfer} = options;
 
-    const wallet = getWallet(password);
+    let wallet;
+    try {
+      wallet = getWallet(password || '?');
+    } catch(e) {
+      Toast.hide();
+      Toast.fail('Wrong Password', 3, () => {}, false);
+      return;
+    }
+
     const crossInstance = new CrossChainMethods({
       wallet,
       WEB_API_INFO: window.defaultConfig.WEB_API_INFO,
@@ -82,9 +91,56 @@ class UnconfirmedTransactions extends Component {
       Toast.fail(error.message || 'Something error', 3, () => {}, false);
     });
   }
+  async confirmTransferExtension(options) {
+    const {fromChain, transfer} = options;
+
+    const CROSS_INFO = getCrossInfo(transfer, fromChain);
+    // console.log('crossTransferExtension CROSS_INFO r', CROSS_INFO);
+    // return;
+
+    const walletUtilInstance = new WalletUtil();
+    const walletAddress = walletUtilInstance.getLastUse().address;
+    const wallet = {
+      address: walletAddress
+    };
+    const crossInstance = new window.NightElf.CrossChain({
+      wallet,
+      CROSS_INFO
+    });
+    console.log('crossInstance', crossInstance, options);
+
+    try {
+      const receiveResult = await crossInstance.receive({
+        crossTransferTxId: options.crossTransferTxId
+      })
+
+      const crossReceiveId = JSON.parse(receiveResult.detail).TransactionId;
+
+      console.log('receiveResult Extension: ', receiveResult);
+      if (crossReceiveId) {
+
+        const crossInstanceLocal = new CrossChainMethods({});
+        await crossInstanceLocal.markReceived({
+          txId: options.crossTransferTxId
+        });
+
+        Toast.hide();
+        const {symbol, to} = transfer;
+        const toChain = to.split('_')[2];
+        const decimals = window.defaultConfig.TOKEN_CROSS_SUPPORT[symbol].decimals;
+        hashHistory.push(`/transactiondetail?txid=${crossReceiveId}&token=${symbol}`
+          + `&decimals=${decimals}&from=${fromChain}&to=${toChain}&type=receive`);
+      } else {
+        Toast.fail(JSON.stringify(receiveResult) || 'Something error', 3, () => {}, false);
+      }
+    } catch (error) {
+      Toast.fail(error.message || 'Something error', 3, () => {}, false);
+    }
+  }
 
   fetchData() {
-    const address = JSON.parse(localStorage.lastuse).address;
+    const walletUtilInstance = new WalletUtil();
+    const address = walletUtilInstance.getLastUse().address;
 
     const offset = 0;
     const limit = 100;
@@ -105,8 +161,10 @@ class UnconfirmedTransactions extends Component {
   }
 
   renderList() {
+    const walletUtilInstance = new WalletUtil();
+    const walletType = walletUtilInstance.getWalletType();
     const {listData} = this.state;
-    const listHtml = listData.map(item => {
+    return listData.map(item => {
 
       const almostReady = (new Date()).getTime() - +item.time > (5 * 60 * 1000);
       console.log('almostReady', almostReady);
@@ -133,20 +191,24 @@ class UnconfirmedTransactions extends Component {
             && <div className={style.listItem}>Memo: <span className={style.listItemText}>{item.memo}</span></div>}
             <div className={style.confirmButton}>
               <div className={style.listItemText}>{moment(+item.time).format('YYYY-MM-DD HH:mm')}</div>
-              { almostReady ? <Button
+              {almostReady ? <Button
                 inline
                 size="small"
-                onClick={e => this.passwordPrompt(e, receiveParams)}
-                style={{ color: '#AC00E6', borderColor: '#FFF' }}>
-                <FormattedMessage id = 'aelf.Confirm' />
-              </Button> : <FormattedMessage id = 'aelf.Pending' />}
+                onClick={e => {
+                  if (walletType !== 'local') {
+                    this.confirmTransferExtension(receiveParams);
+                    return;
+                  }
+                  this.passwordPrompt(e, receiveParams)
+                }}
+                style={{color: '#AC00E6', borderColor: '#FFF'}}>
+                <FormattedMessage id='aelf.Confirm'/>
+              </Button> : <FormattedMessage id='aelf.Pending'/>}
             </div>
           </div>
         </Item>
       </List>;
     });
-
-    return listHtml;
   }
 
   render() {

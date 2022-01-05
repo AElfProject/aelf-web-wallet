@@ -9,6 +9,7 @@ import { List } from 'antd-mobile'
 import { hashHistory } from 'react-router'
 
 import addressOmit from '../../../utils/addressOmit'
+import WalletUtil from "../../../utils/Wallet/wallet";
 // import style from './QRCode.scss'
 
 // const Item = List.Item;
@@ -20,7 +21,8 @@ class WalletList extends Component {
 	}
 
 	render() {
-		let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+		const walletUtilInstance = new WalletUtil();
+		let walletInfoList = walletUtilInstance.getWalletInfoListSync();
 	    let listItems = [];
 	    for (let address in walletInfoList) {
 	      listItems.push(
@@ -35,8 +37,6 @@ class WalletList extends Component {
 	        )
 	      );
 	    }
-
-		// let walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
 
 		return (
 			<div>

@@ -4,13 +4,15 @@
  * 2020.01.04
  */
 import AElf from 'aelf-sdk';
+import WalletUtil from "./Wallet/wallet";
 
 // {password = '', successCallback, failCallback}
 // password = password || this.state.password;
 export default function getPrivateKeyAndMnemonic(password) {
     return new Promise((resolve, reject) => {
-        let walletId = JSON.parse(localStorage.getItem('lastuse')).address;
-        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+        const walletUtilInstance = new WalletUtil();
+        let walletInfoList = walletUtilInstance.getWalletInfoListSync();
+        let walletId = walletUtilInstance.getLastUse().address;
         let walletInfo = walletInfoList[walletId];
 
         let privateKey = '';

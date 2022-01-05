@@ -5,14 +5,19 @@
  * 检测不到钱包就跳转到创建钱包页去。
  */
 import { hashHistory } from 'react-router'
+import WalletUtil from "./Wallet/wallet";
 
 export default function walletStatusCheck () {
-    let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
-    for (let each in walletInfoList) {
+    const walletUtilInstance = new WalletUtil();
+    const walletInfoList = walletUtilInstance.getWalletInfoListSync();
+    const walletType = walletUtilInstance.getWalletType();
+    if (walletInfoList && Object.keys(walletInfoList).length) {
         return true;
     }
-    localStorage.removeItem('walletInfoList');
-    localStorage.removeItem('lastuse');
+    if (walletType === 'local') {
+        localStorage.removeItem('walletInfoList');
+        localStorage.removeItem('lastuse');
+    }
     return false;
     // hashHistory.replace('/get-wallet/guide');
     // return false;

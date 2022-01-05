@@ -6,10 +6,13 @@
  */
 import React, { Component } from 'react'
 import { List } from 'antd-mobile';
+import WalletUtil from "../../../utils/Wallet/wallet";
 
 class SideBar extends Component {
 	render() {
-		let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+    const walletUtilInstance = new WalletUtil();
+    let walletInfoList = walletUtilInstance.getWalletInfoListSync();
+
     let listItems = [];
     for (let address in walletInfoList) {
       listItems.push(

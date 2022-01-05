@@ -27,6 +27,7 @@ import {
 // import deserializeParams from '../../../utils/deserializeParams';
 
 import {FormattedMessage} from 'react-intl';
+import WalletUtil from "../../../utils/Wallet/wallet";
 
 // React component
 export default class TransactionDetail extends Component {
@@ -106,7 +107,9 @@ export default class TransactionDetail extends Component {
 
     // 如果有地址，则显示icon，如果只是分享，不显示icon
     renderAmount(from, to, amount, isCrossReceive = false) {
-        const walletInfo = JSON.parse(localStorage.getItem('lastuse')) || {};
+        const walletUtilInstance = new WalletUtil();
+
+        const walletInfo = walletUtilInstance.getLastUse() || {};
         const {address} = walletInfo;
 
         // const isIn = address === to;

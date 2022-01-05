@@ -7,6 +7,7 @@
 // TODO: 重点关注Int64的处理！！！！！！！！
 import React, {Component} from 'react';
 import {List, InputItem, Toast} from 'antd-mobile';
+import cmp from 'semver-compare';
 import style from './Transfer.scss';
 import {hashHistory} from 'react-router';
 import { BigNumber } from 'bignumber.js';
@@ -25,13 +26,18 @@ import {
 } from '../../../utils/utils';
 
 import {getWallet} from '../../../utils/initAelf';
-import {CrossChainMethods} from '../../../utils/crossChain';
+import {CrossChainMethods, getCrossInfo} from '../../../utils/crossChain';
 
 import {FormattedMessage} from 'react-intl';
+import WalletUtil from "../../../utils/Wallet/wallet";
+import {getViewResult, NightElfCheck} from "../../../utils/NightElf/NightElf";
+import {CrossChainMethodsExtension} from "../../../utils/crossChainForExtension";
+import {LOADING_TIME_LONG} from "../../../constant/config";
 
 export default class Transfer extends Component {
     constructor(props) {
         super(props);
+        const walletUtilInstance = new WalletUtil();
         this.state = {
             decimals: 0,
             balance: new BigNumber(0),
@@ -39,21 +45,24 @@ export default class Transfer extends Component {
             amountError: null,
             memoError: null,
             addressError: null,
-            isCrossChain: false
+            isCrossChain: false,
+            walletType: walletUtilInstance.getWalletType()
         };
-        this.walletAddress = JSON.parse(localStorage.getItem('lastuse')).address;
+
+        this.refreshBalance = this.refreshBalance.bind(this);
+        this.inputAmount = this.inputAmount.bind(this);
         this.contractAddress = getParam('contract_address', window.location.href);
         this.tokenName = getParam('token', window.location.href);
     }
 
-    inputAmount(amount) {
+    inputAmount(amount, callback = () => {}) {
         let amountBig = new BigNumber(amount);
 
         if (amountBig.isNaN() || !amountBig.isFinite() || !amountBig.gt(0)) {
             this.setState({
                 amount,
                 amountError: 'Invalid Number'
-            });
+            }, callback);
             return;
         }
 
@@ -61,47 +70,47 @@ export default class Transfer extends Component {
             this.setState({
                 amount,
                 amountError: 'insufficient'
-            });
+            }, callback);
             return;
         }
 
         this.setState({
             amount,
             amountError: null
-        });
+        }, callback);
     }
 
-    inputMemo(memo) {
+    inputMemo(memo, callback = () => {}) {
         if (memo.replace(/[^\u0000-\u00ff]/g, 'aa').length > 64) {
             const memoError = 'Too long memo';
             this.setState({
                 memo,
                 memoError
-            });
+            }, callback);
             return;
         }
 
         this.setState({
             memo,
             memoError: null
-        });
+        }, callback);
     }
 
-    inputAddress(address) {
+    inputAddress(address, callback = () => {}) {
         // checkAddress
         let addressCheckResult = addressCheck(address);
         if (!addressCheckResult.ready) {
             this.setState({
                 address,
                 addressError: addressCheckResult.message
-            });
+            }, callback);
             return;
         }
         this.setState({
             address: address,
             isCrossChain: addressCheckResult.isCrossChain || false,
             addressError: null
-        });
+        }, callback);
     }
 
     inputPassword(password) {
@@ -112,17 +121,26 @@ export default class Transfer extends Component {
     }
 
     componentDidMount() {
-        let address = this.walletAddress;
+        this.refreshBalance();
+    }
+
+    componentWillUnmount() {
+        this.setState = () => {};
+    }
+
+    refreshBalance(callback = () => {}) {
+        const walletUtilInstance = new WalletUtil();
+        let address = walletUtilInstance.getLastUse().address;
 
         getBalanceAndTokenName(address, this.contractAddress, this.tokenName, output => {
             const tokenInfo = output[0] || {};
 
             const {
-              balance,
-              decimals,
-              token_name
+                balance,
+                decimals,
+                token_name
             } = tokenInfo;
-              // const balanceObj = tokenInfo.balance;
+            // const balanceObj = tokenInfo.balance;
             let balanceBig = (new BigNumber(balance)).div(Math.pow(10, decimals));
 
             this.setState({
@@ -130,15 +148,94 @@ export default class Transfer extends Component {
                 balance: balanceBig,
                 tokenName: this.tokenName || token_name,
                 contract_address: this.contractAddress
-            });
+            }, callback);
         });
     }
 
-    componentWillUnmount() {
-        this.setState = () => {};
+    async crossTransferExtension(options) {
+        const {address, tokenName, amountBig, amount, memo, contractAddress, decimals} = options;
+
+        const CROSS_INFO = getCrossInfo({
+            symbol: tokenName,
+            to: address
+        }, window.defaultConfig.chainId);
+
+        // console.log('crossTransferExtension CROSS_INFO', CROSS_INFO);
+
+        const walletUtilInstance = new WalletUtil();
+        const walletAddress = walletUtilInstance.getLastUse().address;
+        const wallet = {
+            address: walletAddress
+        };
+        const crossInstance = new window.NightElf.CrossChain({
+            wallet,
+            CROSS_INFO
+        });
+
+        try {
+            const crossParams = {
+                to: address,
+                symbol: tokenName,
+                amount: amountBig.multipliedBy(Math.pow(10, decimals)).toNumber(),
+                memo
+            };
+
+            Toast.loading('Cross chain transfer', LOADING_TIME_LONG);
+            const result = await crossInstance.send(crossParams);
+            if (result.error) {
+                Toast.hide();
+                Toast.fail(result.error, 3, () => { }, false);
+                return;
+            }
+            const crossTxId = JSON.parse(result.detail).crossTransferTxId;
+
+            // 绑定跨链关系
+            const crossInstanceLocal = new CrossChainMethods({});
+            await crossInstanceLocal.bindSent({
+                txId: crossTxId,
+                transferParams: {
+                    transfer: crossParams
+                },
+                sendInfo: {
+                    sendNode: CROSS_INFO.from.url,
+                    receiveNode: CROSS_INFO.to.url,
+                    mainChainId: CROSS_INFO.mainChainId,
+                    issueChainId: CROSS_INFO.issueChainId
+                },
+                amountShow: amount
+            });
+
+            Toast.hide();
+
+            hashHistory.push(`/transactiondetail?txid=${crossTxId}&is_cross_chain=1`
+              + `&token=${tokenName}&contract_address=${contractAddress}&decimals=${decimals}`);
+        } catch(e) {
+            Toast.fail(e.message || 'Something Error', 3, () => { }, false);
+        }
     }
 
     async crossTransfer(options) {
+        const walletUtilInstance = new WalletUtil();
+        const walletType = walletUtilInstance.getWalletType();
+        if (walletType !== 'local') {
+            const aelf = new window.NightElf.AElf({});
+            const version = aelf.getVersion();
+            if (!aelf || !version) {
+                Toast.fail('Can not find NightElf. Please download and install NightElf browser extension. ', 3, () => { }, false);
+                return;
+            }
+            if (cmp(version.replace('v', ''), '1.2.2') === -1) {
+                Toast.fail('Please update NightElf to v1.2.2 or laster.', 3, () => { }, false);
+                return;
+            }
+
+            await this.crossTransferExtension(options);
+            return;
+        }
+        await this.crossTransferLocal(options);
+    }
+
+    async crossTransferLocal(options) {
         const {password, address, tokenName, amountBig, amount, memo, contractAddress, decimals} = options;
         let wallet;
         try {
@@ -167,7 +264,7 @@ export default class Transfer extends Component {
                 amountShow: amount,
                 fromChain: window.defaultConfig.chainId
             };
-            Toast.loading('Cross chain transfer', 30);
+            Toast.loading('Cross chain transfer', LOADING_TIME_LONG);
             const result =await crossInstance.send(crossParams);
             if (result.isNotReady) {
                 Toast.hide();
@@ -183,7 +280,40 @@ export default class Transfer extends Component {
         }
     }
 
+    async normalTransferExtension(options) {
+        const {contractAddress, tokenName, address, amountBig, memo, decimals} = options;
+        const tokenContract = await NightElfCheck.initContractInstance({
+            contractAddress,
+        });
+
+        const result = await tokenContract.Transfer({
+            symbol: tokenName,
+            to: address,
+            amount: amountBig.multipliedBy(Math.pow(10, decimals)).toNumber(),
+            memo
+        });
+
+        if (result.errorMessage) {
+            Toast.fail(result.errorMessage.message, 3, () => { }, false);
+            return;
+        }
+
+        Toast.hide();
+        hashHistory.push(`/transactiondetail?txid=${getViewResult('TransactionId', result)}`
+          + `&token=${tokenName}&contract_address=${contractAddress}&decimals=${decimals}`);
+    }
+
     async normalTransfer(options) {
+        const walletUtilInstance = new WalletUtil();
+        const walletType = walletUtilInstance.getWalletType();
+        if (walletType !== 'local') {
+            await this.normalTransferExtension(options);
+            return;
+        }
+        await this.normalTransferLocal(options);
+    }
+
+    async normalTransferLocal(options) {
         const {password, contractAddress, tokenName, address, amountBig, memo, decimals} = options;
 
         try {
@@ -219,12 +349,25 @@ export default class Transfer extends Component {
     }
 
     // TODO: 使用string 转bigNumber操作.
-    transfer() {
-        // TODO:
-        // check amount
+    async transfer() {
         let {
-            password, address, memo, amount, addressError, memoError, amountError, isCrossChain, decimals
+            password, address, memo, amount, addressError, memoError, amountError, isCrossChain, decimals, walletType
         } = this.state;
+
+        if (walletType !== 'local') {
+            const result = await NightElfCheck.checkAccount();
+            if (!result) {
+                const walletUtil = new WalletUtil();
+                await walletUtil.getWalletInfoList();
+                this.inputAddress(address);
+                this.refreshBalance(() => {
+                    this.inputAmount(amount, () => {
+                        this.transfer();
+                    });
+                });
+                return;
+            }
+        }
 
         const errorMessage = addressError || memoError || amountError;
         if (errorMessage) {
@@ -233,7 +376,7 @@ export default class Transfer extends Component {
         }
 
         const loadingMessage = isCrossChain ? 'Cross chain transfer...' : 'Loading...';
-        Toast.loading(loadingMessage, 30);
+        Toast.loading(loadingMessage, LOADING_TIME_LONG);
         // 为了能展示loading, 不惜牺牲用户50毫秒。sad
         setTimeout(() => {
             // check balance
@@ -250,8 +393,7 @@ export default class Transfer extends Component {
     }
 
     render() {
-        const {addressError, amountError, memoError, passwordError} = this.state;
-
+        const {addressError, amountError, memoError, passwordError, walletType} = this.state;
         let addressErrorText;
         if (addressError) {
             addressErrorText = <div className={style.error}>{addressError}</div>;
@@ -279,7 +421,7 @@ export default class Transfer extends Component {
                     opacity: 0.5
                 }}
             />;
-        if (this.state.address && this.state.amount && this.state.password) {
+        if (this.state.address && this.state.amount && (this.state.password || walletType !== 'local')) {
             createButton
                 = <AelfButton
                     text="Send"
@@ -347,7 +489,7 @@ export default class Transfer extends Component {
                             />
                         </List>
 
-                        <List>
+                        {walletType === 'local' && <List>
                             <div className="aelf-input-title">
                                 <div><FormattedMessage id = 'aelf.Password' /></div>
                                 {passwordErrorText}
@@ -359,7 +501,7 @@ export default class Transfer extends Component {
                                 onChange={password => this.inputPassword(password)}
                                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                             />
-                        </List>
+                        </List>}
 
                         <div className={style.crossChain} onClick={() => hashHistory.push('/personalcenter/notesoncrosschaintransfer')}>
                             <FormattedMessage id = 'aelf.Notes on cross chain transfer' />

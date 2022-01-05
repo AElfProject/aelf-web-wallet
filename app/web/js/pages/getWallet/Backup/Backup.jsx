@@ -20,6 +20,7 @@ import NavNormal from '../../NavNormal/NavNormal'
 import aelf from 'aelf-sdk'
 
 import { FormattedMessage } from 'react-intl'
+import WalletUtil from "../../../utils/Wallet/wallet";
 
 const prompt = Modal.prompt;
 
@@ -27,9 +28,10 @@ const prompt = Modal.prompt;
 class Backup extends Component {
     constructor() {
         super();
+        const walletUtilInstance = new WalletUtil();
+        let walletInfoList = walletUtilInstance.getWalletInfoListSync();
 
-        let walletId = JSON.parse(localStorage.getItem('lastuse')).address;
-        let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+        let walletId = walletUtilInstance.getLastUse().address;
         let walletInfo = walletInfoList[walletId];
 
         this.state = {

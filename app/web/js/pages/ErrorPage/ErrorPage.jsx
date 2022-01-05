@@ -37,7 +37,7 @@ export default class ErrorPage extends Component {
                     }}
                     onClick={() => hashHistory.push('/assets')}
                     text='Back Home'
-                ></AelfButton>
+                />
             </div>
         );
     }

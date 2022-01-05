@@ -3,9 +3,17 @@
  * @author huangzongzhe
  * 2018.12.13
  */
+import WalletUtil from "./Wallet/wallet";
+
 function whetherBackupCheck () {
-    let walletId = JSON.parse(localStorage.getItem('lastuse')).address;
-    let walletInfoList = JSON.parse(localStorage.getItem('walletInfoList'));
+    const walletUtilInstance = new WalletUtil();
+    const walletType = walletUtilInstance.getWalletType();
+    if (walletType !== 'local') {
+        return true;
+    }
+
+    let walletId = walletUtilInstance.getLastUse().address;
+    let walletInfoList = walletUtilInstance.getWalletInfoListSync();
     let walletInfo = walletInfoList[walletId];
 
     // import wallet: walletInfo.hasBackup === undefined;

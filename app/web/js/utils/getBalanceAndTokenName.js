@@ -33,18 +33,5 @@ export default function getBalanceAndTokenName(walletAddress, contractAddress, s
         failCall(error);
         // Toast.fail(error.message, 6);
     });
-
-    // apisauce.get('wallet/api/proxy', {
-    //     token: getParam('token', window.location.href),
-    //     ptype: 'api',
-    //     action: 'address_balance',
-    //     address: walletAddress,
-    //     contract_address: contractAddress
-    // }).then(result => {
-    //     successCall(result.result);
-    // }).catch(error => {
-    //     failCall(error);
-    //     console.log('error:', error);
-    // });
 }
 
