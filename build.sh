@@ -32,11 +32,11 @@ echo 'running webpack'
 
 if [ ${start_mode} = 'dev' ]
 then
-    webpack && echo 'webpack done'
+    npm run build:dev && echo 'webpack done'
     npm run dev
     echo 'npm run dev'
 else
-    webpack --config webpack.config.production.js && echo 'webpack done'
+    npm run build && echo 'webpack done'
     npm stop && npm start
     echo 'npm stop && npm start'
 fi
