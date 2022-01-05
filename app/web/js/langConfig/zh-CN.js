@@ -156,5 +156,7 @@ export default {
     'aelf.Notes on cross chain transfer 6':
       '2. 跨链转账需要发两笔交易，一笔发送交易，一笔确认交易。两笔交易中间会需要等待一定的区块确认时间。在 ‘设置 - 待确认跨链转账’，可以查看待确认的跨链转账。',
     'aelf.Notes on cross chain transfer 7': '3. 请确保您有足够的代币支付两个链中的交易手续费。',
-    'aelf.Notes on cross chain transfer 8': '4. 确认交易请在‘设置 - 系统设置’中，选择到对应的接收钱包中查看，发起交易的钱包无法查看该交易。'
+    'aelf.Notes on cross chain transfer 8': '4. 确认交易请在‘设置 - 系统设置’中，选择到对应的接收钱包中查看，发起交易的钱包无法查看该交易。',
+    'aelf.Sure': '确定',
+    'aelf.Cancel': '取消'
 };

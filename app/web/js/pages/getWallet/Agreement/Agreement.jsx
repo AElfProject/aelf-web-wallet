@@ -21,8 +21,9 @@ class Agreement extends Component {
         
         console.log('agreementDisplay： ', agreementDisplay);
         return (
-            <div>
-                <div style={ argeementStyle } className={ style.agreement }>
+            <div className={ style.background + ' aelf-bg-style-wallet'} style={ argeementStyle }>
+                {/* <div className='aelf-bg-style-wallet'> */}
+                <div className={ style.agreement }>
                     <div className={style.center}>
                         {/*<h3>AELF钱包服务协议与隐私政策</h3>*/}
                         <h3>AElf Privacy Policy</h3>
@@ -53,6 +54,7 @@ class Agreement extends Component {
                         />
                     </Button>
                 </div>
+                {/* </div> */}
             </div>
         );
     }

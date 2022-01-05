@@ -52,8 +52,8 @@ module.exports = {
                         localIdentName: 'AELF-[path][name]_[local]-[hash:base64:5]',
                         // localIdentName: '[path][name]__[local]--[hash:base64:5]',
                         // getLocalIdent: (context, localIdentName, localName, options) => {
-                        // 	console.log('localIdentName', localName);
-                        // 	return 'whatever_random_class_name'
+                        //   console.log('localIdentName', localName);
+                        //   return 'whatever_random_class_name'
                         // }
                     }
                 },
@@ -83,14 +83,18 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
+            hash: true,
             chunks: ['wallet'],
             template: './app/web/page/index.tpl',
-            filename: './view/index.tpl'
+            filename: './view/index.tpl',
+            timestamp: new Date().getTime()
         }),
         new HtmlWebpackPlugin({
+            hash: true,
             chunks: ['transactionDetail'],
             template: './app/web/page/transactionDetail.tpl',
-            filename: './view/transactionDetail.tpl'
+            filename: './view/transactionDetail.tpl',
+            timestamp: new Date().getTime()
         }),
         new CleanWebpackPlugin(pathsToClean, cleanOptions)
     ]

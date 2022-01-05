@@ -3,7 +3,7 @@ import { Modal, Button, WhiteSpace, List, InputItem, Toast } from 'antd-mobile'
 import style from './Backup.scss'
 
 import Mnemonic from './pages/Mnemonic'
-
+import SelectModal from "../../../components/SelectModal/SelectModal";
 import moneyKeyboardWrapProps from '../../../utils/moneyKeyboardWrapProps'
 import { historyPush } from '../../../utils/historyChange'
 import clipboard from '../../../utils/clipboard'
@@ -215,7 +215,18 @@ class Backup extends Component {
                     </div>
                 </div>
 
-                <Modal
+                <SelectModal
+                    visible={!this.state.privateKeyModal}
+                    privateKey={this.state.privateKey}
+                    type="backup"
+                    onSure={()=>{
+                        this.onClose('privateKeyModal')
+                    }}
+                    onCancel={() => {
+                        this.onClose('privateKeyModal')
+                    }}
+                    />
+                {/* <Modal
                     popup
                     visible={this.state.privateKeyModal}
                     onClose={() => this.onClose('privateKeyModal')}
@@ -265,7 +276,7 @@ class Backup extends Component {
                           data-clipboard-target="#privateKeyBackUp"
                           style={{display: 'none'}}>copy</button>
                     </div>
-                </Modal>
+                </Modal> */}
 
 
                {mnemonicHtml}
