@@ -12,12 +12,12 @@ import SelectModal from "../../../../components/SelectModal/SelectModal";
 
 require("./SelectLanguage.css");
 
-const walletKeys = Object.keys(window.defaultConfig.WALLET_INFO);
+const walletKeys = Object.entries(window.defaultConfig.WALLET_INFO);
 
-const select = walletKeys.map((item) => {
+const select = walletKeys.map(([key,item]) => {
   return {
-    label: item,
-    value: item,
+    label: item.name,
+    value: key,
   };
 });
 
@@ -42,7 +42,7 @@ class SelectChain extends React.Component {
     if (window.defaultConfig.ADDRESS_INFO.CURRENT_CHAIN_ID === label[0]) {
       return;
     }
-    window.location.href = window.defaultConfig.WALLET_INFO[label[0]];
+    window.location.href = window.defaultConfig.WALLET_INFO[label[0]].url;
   }
 
   onClickHandler() {

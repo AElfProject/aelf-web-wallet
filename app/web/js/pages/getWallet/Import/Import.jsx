@@ -254,8 +254,8 @@ class Import extends Component {
 
                         <Flex.Item style={{ padding: '15px 0', color: '#FFF', flex: 'none', opacity: 0.5 }}>
                             <FormattedMessage
-                                id = 'aelf.Agree'
-                                defaultMessage = 'Agree'
+                                id = 'aelf.Agree to'
+                                defaultMessage = 'Agree to the'
                             />
                             <span
                             className="aelf-blue"
@@ -263,7 +263,7 @@ class Import extends Component {
                                 color: '#26B7FF'
                             }}
                             onClick={() => this.toggleAgreementHTML()}
-                        >《<FormattedMessage id = 'aelf.Service and Privacy Policy' defaultMessage = 'Service and Privacy Policy' />》</span>
+                        ><FormattedMessage id = 'aelf.Service and Privacy Policy' defaultMessage = 'Service and Privacy Policy' /></span>
                         </Flex.Item>
                         <Flex.Item>
                             <div onClick={() => this.toggleAgreement()}>
