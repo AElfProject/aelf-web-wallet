@@ -121,7 +121,7 @@ export default {
     'aelf.changelanguage': '选择语言',
     'aelf.Switch To': '切换到',
     'aelf.languageSelect': '请选择',
-    'aelf.Transaction Record': '交易记录',
+    'aelf.Transaction Records': '交易记录',
     'aelf.Send': '发送',
     'aelf.Receive': '接收',
     'aelf.Copy URL': '复制链接',

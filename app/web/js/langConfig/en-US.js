@@ -14,7 +14,7 @@ export default {
     'aelf.HelpCenter': 'Help Center',
     'aelf.About': 'About aelf Wallet',
     'aelf.Cross chain transactions to be confirmed': 'Unconfirmed cross chain transactions',
-    'aelf.Wallet Select': 'Switch Wallet',
+    'aelf.Wallet Select': 'Switch Chain',
     'aelf.Wallet Select Tip': 'Tip: You need to reimport the mnemonic or private key in the new wallet.',
     'aelf.Contact': 'Contact',
     'aelf.Copy Address': 'Copy Address',
@@ -120,7 +120,7 @@ export default {
     'aelf.changelanguage': 'Language change',
     'aelf.Switch To': 'Switch To',
     'aelf.languageSelect': 'Select',
-    'aelf.Transaction Record': 'Transaction Record',
+    'aelf.Transaction Records': 'Transaction Records',
     'aelf.Receive': 'Receive',
     'aelf.Send': 'Send',
     'aelf.Copy URL': 'Copy URL',
@@ -158,7 +158,7 @@ export default {
       '2. Cross chain transfer requires two transactions, one sending transaction and one confirming transaction, with a certain block confirmation time in the middle.' +
       "You can view the cross chain transfer to be confirmed in 'Settings - Unconfirmed cross chain transactions'.",
     'aelf.Notes on cross chain transfer 7': '3. Please make sure you have enough token to pay the fee in the two chain.',
-    'aelf.Notes on cross chain transfer 8': "4. Please turn to 'Settings - SystemSettings - Switch Wallet', select the receive wallet to get the confirming transaction." +
+    'aelf.Notes on cross chain transfer 8': "4. Please turn to 'Settings - SystemSettings - Switch Chain', select the receive wallet to get the confirming transaction." +
       'You can not see the confirming transaction in this wallet.',
     'aelf.Sure': 'OK',
     'aelf.Cancel': 'Cancel'
