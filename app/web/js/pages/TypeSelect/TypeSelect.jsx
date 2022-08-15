@@ -37,7 +37,7 @@ export default class TypeSelect extends Component {
               <div className={style.typeContainer}>
                 <div className={style.typeLeft}>
                   <div className={style.typeTitle}>Browser Extension</div>
-                  <div className={style.typeText}>Use your NightElf with with web wallet</div>
+                  <div className={style.typeText}>Connect your NightELF with aelf Web Wallet</div>
                 </div>
 
                 <div className={style.typeLogo}>

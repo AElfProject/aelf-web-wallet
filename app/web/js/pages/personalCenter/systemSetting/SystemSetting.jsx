@@ -59,7 +59,7 @@ class SystemSetting extends Component {
                 <NavNormal/>
                 <div className='aelf-blank40'/>
                 <NoticePanel
-                    mainTitle={<FormattedMessage id='aelf.System Setting' defaultMessage='System Setting' />}
+                    mainTitle={<FormattedMessage id='aelf.System Settings' defaultMessage='System Settings' />}
                     iconHidden={true}
                 />
                 {/*<NoticePanel*/}

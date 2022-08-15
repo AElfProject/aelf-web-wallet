@@ -95,8 +95,8 @@ class personalCenterHome extends Component {
               icon="setting16"
               text={
                 <FormattedMessage
-                  id = 'aelf.SystemSetting'
-                  defaultMessage = 'System Setting'
+                  id = 'aelf.SystemSettings'
+                  defaultMessage = 'System Settings'
                 />
               }
             />
