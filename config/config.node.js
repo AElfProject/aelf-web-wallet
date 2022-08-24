@@ -14,8 +14,18 @@ module.exports = {
     mainTokenContract: 'JRmBduh4nXWi1aXgdUsj5gJrzeZb2LxmrAbf7W99faZSvoAaE',
     commonPrivateKey: 'f6e512a3c259e5f9af981d7f99d245aa5bc52fe448495e0b0dd56e8406be6f71',
     WALLET_INFO: encodeURIComponent(JSON.stringify({
-        AELF: 'https://aelf-wallet-test.aelf.io',
-        tDVV: 'https://tdvv-wallet-test.aelf.io',
+        AELF: {
+            url: 'https://aelf-wallet-test.aelf.io',
+            name: 'MainChain AELF'
+        },
+        tDVV: {
+            url: 'https://tdvv-wallet-test.aelf.io',
+            name: 'SideChain tDVV'
+        },
+        tDVW: {
+            url: 'https://tdvw-wallet-test.aelf.io',
+            name: 'SideChain tDVW'
+        }
     })),
     // TODO use api instead of hard code config
     WEB_API_INFO: encodeURIComponent(JSON.stringify({
