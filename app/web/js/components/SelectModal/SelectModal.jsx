@@ -13,12 +13,12 @@ const SELECT = [
   },
 ];
 
-const walletKeys = Object.keys(window.defaultConfig.WALLET_INFO);
+const walletKeys = Object.entries(window.defaultConfig.WALLET_INFO);
 
-const CHAIN_SELECT = walletKeys.map((item) => {
+const CHAIN_SELECT = walletKeys.map(([key,item]) => {
   return {
-    label: item,
-    value: item,
+    label: item.name,
+    value: key,
   };
 });
 
@@ -39,7 +39,7 @@ export default class SelectModal extends Component {
     return (
       <div>
         <div className="modal-select-title">
-          <FormattedMessage id="aelf.changelanguage" />
+          <FormattedMessage id={ _type === "language" ? "aelf.changelanguage" : "aelf.Switch To"} />
         </div>
         <div className="modal-select-content">
           {selectData.map((item) => {

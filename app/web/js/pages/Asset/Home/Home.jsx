@@ -124,7 +124,7 @@ export default class Home extends Component {
 
         return (
             <div>
-                <NavNormal navTitle={<FormattedMessage id = 'aelf.Transaction Record' />}/>
+                <NavNormal navTitle={<FormattedMessage id = 'aelf.Transaction Records' />}/>
                 <div style={pageContainerStyle} className={style.container}>
                     <div>
                         <div className={style.assetsInfoContainer}>
