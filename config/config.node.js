@@ -16,11 +16,11 @@ module.exports = {
     WALLET_INFO: encodeURIComponent(JSON.stringify({
         AELF: {
             url: 'https://aelf-wallet-test.aelf.io',
-            name: 'MainChain AELF'
+            name: 'aelf MainChain'
         },
         tDVV: {
             url: 'https://tdvv-wallet-test.aelf.io',
-            name: 'SideChain tDVV'
+            name: 'aelf dAppChain'
         },
         tDVW: {
             url: 'https://tdvw-wallet-test.aelf.io',
